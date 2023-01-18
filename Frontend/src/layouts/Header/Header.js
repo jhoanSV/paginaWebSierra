@@ -24,11 +24,13 @@ export function Header() {
                     <input type="text" name="busqueda" className="caja-texto" placeholder="Buscar producto"/>
                 </div>
 
-                <a className="user" href="index.html" style={{textDecoration: "none" }}>
-                    <img
-                    src={require("../../Assets/png/icono2.png")}
-                    width="100%" height="100%"/>
-                </a>
+                <div className="user">
+                    <a href="index.html" style={{textDecoration: "none" }}>
+                        <img
+                        src={require("../../Assets/png/icono2.png")}
+                        width="100%" height="100%"/>
+                    </a>
+                </div>
             </div>
             <div className="seccion2">
                 <nav className="menu">
