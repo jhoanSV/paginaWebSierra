@@ -21,7 +21,7 @@ export function Header() {
 
                 <div className="barra-busqueda">
                     <i className="fi fi-rr-search lupa"></i>
-                    <input type="text" name="busqueda" className="caja-texto" placeholder="jdjdjjdjd"/>
+                    <input type="text" name="busqueda" className="caja-texto" placeholder="Buscar producto"/>
                 </div>
 
                 <a className="user" href="index.html" style={{textDecoration: "none" }}>
