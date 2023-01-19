@@ -4,20 +4,21 @@ import "./header.scss";
 import "../../scss/index.scss"
 
 
-export function Header() {
+export function Header({reDireccion}) {
     
     return(
         <header className="cabecera">
             <div className="seccion1">
-                <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'/>
                 
-                <a className="logo" href="index.html" style={{textDecoration: "none" }}>
-                    <img
-                        src={require("../../Assets/png/LogoSierra.png")}
-                        width="100%"
-                        height="100%"
-                    />
-                </a>
+                <div className="logo">
+                    <a href="index.html" style={{textDecoration: "none" }}>
+                        <img
+                            src={require("../../Assets/png/LogoSierra.png")}
+                            width="100%"
+                            height="100%"
+                        />
+                    </a>
+                </div>
 
                 <div className="barra-busqueda">
                     <i className="fi fi-rr-search lupa"></i>
@@ -27,15 +28,14 @@ export function Header() {
                 <div className="user">
                     <a href="index.html" style={{textDecoration: "none" }}>
                         <img
-                        src={require("../../Assets/png/icono2.png")}
+                        src={require("../../Assets/png/tuercaUsuario.png")}
                         width="100%" height="100%"/>
                     </a>
                 </div>
-            </div>
-            <div className="seccion2">
+                
                 <nav className="menu">
                     <ul className="navbar">
-                        <a id="btn-iz" href="index.html">
+                        <a id="btn-iz" onClick={reDireccion}>
                             <li>
                                 Inicio
                             </li>
@@ -57,6 +57,10 @@ export function Header() {
                         </a>
                     </ul>
                 </nav>
+
+            </div>
+            <div className="seccion2">
+                
             </div>
         </header>       
     );
