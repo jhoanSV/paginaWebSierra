@@ -1,6 +1,7 @@
 import React , { useState } from "react";
 import { Navigation } from "./routes";
 import { Header } from "./layouts";
+import { Footer } from "./layouts";
 import { Home } from "./pages";
 
 
@@ -18,7 +19,8 @@ export default function App() {
   return (
       <>
         <Header reDireccion={reDireccion}></Header>
-        <body>Holippro</body>
+        <Home></Home>
+        <Footer></Footer>
       </>
       
   );

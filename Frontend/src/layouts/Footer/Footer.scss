@@ -1,0 +1,50 @@
+@import "../../scss/index.scss";
+
+*{
+    box-sizing: border-box;
+}
+
+.row h5{
+    padding-left: 0;
+}
+
+footer {
+    display: block;
+    background-color: $azulPrincipal;
+    color: $blancoPrincipal;
+    font-size: 19px;
+    width: 100%;
+}
+
+footer .container{
+    margin: 0;
+}
+
+.logoF img{
+    width: 95%;
+}
+
+.piePagina .col{
+    width: 30%;
+    height: 100%;
+}
+
+.redes{
+    color: $blancoPrincipal;
+}
+
+.redes .col-4{
+    width: auto;
+    padding: 0;
+    margin-right: 4%;
+}
+
+.redes a{
+    color: $blancoPrincipal;
+}
+
+.redes a:hover{
+    color: $blancoPrincipal;
+}
+
+

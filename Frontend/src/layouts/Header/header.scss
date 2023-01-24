@@ -1,3 +1,5 @@
+@import "../../scss/index.scss";
+
 *{
     box-sizing: border-box;
 }
@@ -35,7 +37,6 @@
 .logo{
     width: 18.59%;
     //height: 64px;Si no se define este la cabecera toma una altura mayor c:
-	vertical-align: middle;
     position: relative;
     left: 1.64%;
     top: 13.97%;
@@ -106,7 +107,7 @@
 }
 
 .navbar a:hover{
-    background-color: #F2CD05;
+    background-color: $amarilloPrincipal;
 }
 
 .navbar li{

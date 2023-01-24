@@ -1,10 +1,12 @@
-import React from 'react';
-import home from './Home.scss';
+import React from "react";
+import "./Home.scss";
 
 
 
 export function Home() {
     return (
-        <h2>Home</h2>
+        <div className="inicio">
+            Inicio c:
+        </div>
     );
 }
