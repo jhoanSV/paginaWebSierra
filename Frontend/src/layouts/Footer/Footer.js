@@ -1,11 +1,11 @@
 import React from "react";
 
-import "./Footer.scss";
+import "./_Footer.scss";
 
 export function Footer(){
     return(
         <footer>
-            <div className="container px-4 py-4">                
+            <div className="container-xxl px-4 py-4">                
                 <div className="row gx-5 justify-content-start piePagina">
 
                     <div className="col align-self-center logoF">

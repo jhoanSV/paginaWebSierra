@@ -5,7 +5,7 @@ import { Footer } from "./layouts";
 import { Home } from "./pages";
 
 
-import './App.scss';
+import './_App.scss';
 
 export default function App() {
   
