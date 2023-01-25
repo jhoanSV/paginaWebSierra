@@ -1,13 +1,17 @@
-@import "../../scss/index.scss";
+@import "../../scss/_index.scss";
 
 .cabecera{
     background-image: url(../../Assets/png/HeaderPrincipal.png);
 	background-size: cover;
-    padding: 20px 5px 0px;
+    padding: 20px 0px 0px;
 }
 
 *{
     box-sizing: border-box;
+}
+
+.w-60{
+    width: 60%;
 }
 
 .col.logo{
@@ -30,186 +34,17 @@
     }
 }
 
-.menu{
-    display: flex;
-    width: 60%;
-}
-
-.navbar{
-    width: 100%;
-    list-style: none;
-}
-
-.menu .navbar{
-    display: flex;
-	padding: 0;
-    margin: 0;
-    justify-content: center;
-}
-
-.navbar a{
+.btn-navBar.btn-navBar{
+    height: 50px;
     font-size: 15px;
     font-weight: 600;
     color: black;
-    text-decoration: none;
-    background-color: #ffff;
+    background-color: $blancoPrincipal;
     border-style: solid;
-    border-color: #D0D9F2;
+    border-color: $azulClaro;
     border-width: 1px;
-    padding: 2% 7%;
 }
 
-.navbar a:hover{
+.btn.btn-navBar:hover{
     background-color: $amarilloPrincipal;
 }
-
-.navbar li{
-    cursor: pointer;    
-    text-align: center;
-    vertical-align: middle
-}
-
-.user img{
-    width: 100%;
-}
-
-#btn-iz{
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
-}
-
-#btn-der{
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
-}
-//barnav col-8
-
-
-
-/*
-.cabecera{
-    height: 18.04%;
-    background-image: url(../../Assets/png/HeaderPrincipal.png);
-	background-size: cover;
-	padding: 20px 5px 5px; //Se pone un paddin mayor en top para que cuadre mejor
-}
-
-.cabecera .seccion1{
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
-    display: flex;
-	align-items: flex-start;
-    z-index: 0;
-	//justify-content: space-between;
-}
-
-.seccion2{
-    width: 100%;
-    margin: 0 auto;
-    display: flex;
-    z-index: 1;
-	align-items: center;
-    justify-content: center;
-}
-
-.logo img{//imagen dentro del logo
-    width: 100%;
-}
-
-.logo{
-    width: 18.59%;
-    //height: 64px;Si no se define este la cabecera toma una altura mayor c:
-    position: relative;
-    left: 1.64%;
-    top: 13.97%;
-}
-
-.barra-busqueda{
-    width: 39.7%;
-    //height: 28.8%;
-    position: relative;
-    left: 11.56%;//se calcula que quede en el centro (50-18.59-(39.7/2))
-}
-
-.caja-texto{
-    padding-left: 10px;
-    font-size: 20px;
-    border: none;
-    width: 100%;
-    height: 40px;
-    border-radius: 10px;
-}
-
-.lupa{
-	position: absolute;
-    top: 25%;
-    right: 2%;
-}
-
-.user{
-    width: 4.87%;
-    position: relative;
-    left: 32.6%;//Suma de los porcentajes de los divs que hay y restar el % requerido
-}
-
-.user a{
-    padding-right: 5px;
-}
-
-.menu{
-    display: flex;
-    position: absolute;
-    left: 20%;
-    top: 78px;
-    width: 60%;
-}
-
-.navbar{
-    width: 100%;
-    list-style: none;
-}
-
-.menu .navbar{
-    display: flex;
-	padding: 0;
-    margin: 0;
-    justify-content: center;
-}
-
-.navbar a{
-    font-size: 15px;
-    font-weight: 600;
-    color: black;
-    text-decoration: none;
-    background-color: #ffff;
-    border-style: solid;
-    border-color: #D0D9F2;
-    border-width: 1px;
-    padding: 2% 7%;
-}
-
-.navbar a:hover{
-    background-color: $amarilloPrincipal;
-}
-
-.navbar li{
-    cursor: pointer;    
-    text-align: center;
-    vertical-align: middle
-}
-
-.user img{
-    width: 100%;
-}
-
-#btn-iz{
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
-}
-
-#btn-der{
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
-}
-*/

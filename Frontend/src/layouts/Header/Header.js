@@ -7,7 +7,7 @@ export function Header({reDireccion}) {
     
     return(
         <header>
-            <div className="container-xxl cabecera">
+            <div className="container-xxl px-4 cabecera">
                 <div className="row">
 
                     <div className="col logo">
@@ -22,10 +22,12 @@ export function Header({reDireccion}) {
 
                     <div className="col-5 buscar">
                         <div className="input-group mb-3">
-                            <button className="btn btn-outline-secondary" type="button" id="button-addon1">
-                                o
-                            </button>
-                            <input type="text" className="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1"/>
+                            <input type="text" className="form-control" placeholder="Buscar Producto" aria-label="Example text with button addon" aria-describedby="button-addon1"/>
+                            <span class="input-group-text" id="basic-addon1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                            </span>
                         </div>
                     </div>
 
@@ -41,31 +43,17 @@ export function Header({reDireccion}) {
 
                 </div>
 
-                <div className="row">
-                    <nav className="menu">
-                        <ul className="navbar">
-                            <a id="btn-iz" onClick={reDireccion}>
-                                <li>
-                                    Inicio
-                                </li>
-                            </a>
-                            <a href="index.html">
-                                <li>
-                                    Productos
-                                </li>
-                            </a>
-                            <a href="index.html">
-                                <li>
-                                    Quienes Somos
-                                </li>
-                            </a>
-                            <a id="btn-der" href="index.html">
-                                <li>
-                                    Contactanos
-                                </li>
-                            </a>
-                        </ul>
-                    </nav>
+                <div className="row justify-content-center">
+                    <div className="col">
+                        <div class="d-flex justify-content-center">
+                            <div class="btn-group w-60 flex-wrap">
+                                <button type="button" class="btn btn-navBar btn-lg">Inicio</button>
+                                <button type="button" class="btn btn-navBar btn-lg">Productos</button>
+                                <button type="button" class="btn btn-navBar btn-lg">Quienes somos</button>
+                                <button type="button" class="btn btn-navBar btn-lg">Contactanos</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>       
