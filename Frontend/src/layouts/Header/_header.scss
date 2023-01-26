@@ -10,8 +10,8 @@
     box-sizing: border-box;
 }
 
-.w-60{
-    width: 60%;
+.w-67{
+    width: 67%;
 }
 
 .col.logo{
@@ -34,17 +34,20 @@
     }
 }
 
-.btn-navBar.btn-navBar{
+.btn.btn-navBar{
     height: 50px;
-    font-size: 15px;
+    font-size: 1rem;
     font-weight: 600;
     color: black;
     background-color: $blancoPrincipal;
     border-style: solid;
     border-color: $azulClaro;
     border-width: 1px;
+    --bs-btn-border-radius: 0.9rem;
+    --bs-btn-active-bg: #F2CB05;//Cambiar después a uno más oscuro c:
 }
 
 .btn.btn-navBar:hover{
     background-color: $amarilloPrincipal;
 }
+

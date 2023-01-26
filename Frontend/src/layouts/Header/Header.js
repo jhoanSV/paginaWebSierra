@@ -7,7 +7,7 @@ export function Header({reDireccion}) {
     
     return(
         <header>
-            <div className="container-xxl px-4 cabecera">
+            <div className="container-xxl px-4 g-0 cabecera">
                 <div className="row">
 
                     <div className="col logo">
@@ -46,7 +46,7 @@ export function Header({reDireccion}) {
                 <div className="row justify-content-center">
                     <div className="col">
                         <div class="d-flex justify-content-center">
-                            <div class="btn-group w-60 flex-wrap">
+                            <div class="btn-group w-67 flex-wrap">
                                 <button type="button" class="btn btn-navBar btn-lg">Inicio</button>
                                 <button type="button" class="btn btn-navBar btn-lg">Productos</button>
                                 <button type="button" class="btn btn-navBar btn-lg">Quienes somos</button>

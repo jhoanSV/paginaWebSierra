@@ -3,3 +3,21 @@
 .inicio{
     height: 500px;
 }
+
+.avi{
+    background-color: $azulPrincipal;
+}
+
+.col .fs-2{
+    color: $blancoPrincipal;
+    span{
+        color: $amarilloPrincipal;
+    }
+    p{
+        margin: 0;
+    }
+}
+
+.carousel-item img{
+    width: 100%;
+}

@@ -6,7 +6,7 @@ export function Footer(){
     return(
         <footer>
             <div className="container-xxl px-4 py-4 piePagina ">                
-                <div className="row gx-5 justify-content-start ">
+                <div className="row g-0">
 
                     <div className="col align-self-center logoF">
                         <a href="index.html" style={{textDecoration: "none" }}>
