@@ -19,41 +19,41 @@ export function Footer(){
                     </div>
 
                     <div className="col">
-                        <div className="row">
+                        <div className="row g-0">
                             Catalogos
                         </div>
-                        <div className="row">
+                        <div className="row g-0">
                             Horarios
                         </div>
-                        <div className="row">
+                        <div className="row g-0">
                             Trabaja con nosotros
                         </div>
-                        <div className="row">
+                        <div className="row g-0">
                             <h5>
                                 Call Center
                             </h5>
                         </div>
-                        <div className="row">
+                        <div className="row g-0">
                             Horarios 8:00 am a 5:00 pm Lunes a Viernes
                         </div>
-                        <div className="row">
+                        <div className="row g-0">
                             Celular: 313 423 7538
                         </div>
                     </div>
 
                     <div className="col align-self-center">
-                        <div className="row">
+                        <div className="row g-0">
                             <h5>
                                 Politicas
                             </h5>
                         </div>
-                        <div className="row">
+                        <div className="row g-0">
                             Cambios y Devoluciones
                         </div>
-                        <div className="row">
+                        <div className="row g-0">
                             Politica de Datos
                         </div>
-                        <div className="row gx-4 justify-content-start redes">
+                        <div className="row g-0 gx-4 justify-content-start redes">
                             <div className="col-4">
                                 <a href="https://www.facebook.com/profile.php?id=100089239757422">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
