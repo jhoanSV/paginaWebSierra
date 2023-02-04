@@ -4,6 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.scss';
 import "../node_modules/bootstrap/dist/js/bootstrap";
+import "./Componentes/CarruselInf";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

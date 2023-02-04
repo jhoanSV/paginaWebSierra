@@ -53,7 +53,7 @@ export function Footer(){
                         <div className="row g-0">
                             Politica de Datos
                         </div>
-                        <div className="row g-0 gx-4 justify-content-start redes">
+                        <div className="row g-0 justify-content-start redes">
                             <div className="col-4">
                                 <a href="https://www.facebook.com/profile.php?id=100089239757422">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">

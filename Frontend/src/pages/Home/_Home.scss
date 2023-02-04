@@ -1,14 +1,27 @@
 @import "../../scss/index.scss";
 
-.inicio{
-    //height: 500px;
+/*.inicio{
+    height: 500px;
+}*/
+
+.btn-catalogo{
+    background-color: $azulClaro;
+    border: 0.0625rem;
+    text-align: center;
+    border-radius: 5rem;
+    a{
+        text-decoration: none;
+        color: black;
+        font-size: 5rem;
+    }
+    
 }
 
 .avi{
     background-color: $azulPrincipal;
 }
 
-.col .fs-2{
+.avi .col .fs-2{
     color: $blancoPrincipal;
     span{
         color: $amarilloPrincipal;
@@ -20,4 +33,8 @@
 
 .carousel-item img{
     width: 100%;
+}
+
+#carrusel1, #carrusel2{
+    height: 22.125rem;
 }

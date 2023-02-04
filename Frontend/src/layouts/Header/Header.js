@@ -55,6 +55,7 @@ export function Header({reDireccion}) {
                         </div>
                     </div>
                 </div>
+                
             </div>
         </header>       
     );
