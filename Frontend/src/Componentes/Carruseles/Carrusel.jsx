@@ -14,13 +14,13 @@ export function Carrusel(props){
                     <button type="button" data-bs-target={`#${props.idCarrusel}`} data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
                 <div className="carousel-inner h-100">
-                    <div className="carousel-item center active">
+                    <div className="carousel-item active">
                         <img src={require(`../../Assets/jpg/Promociones/${data[0].cod}.jpg`)} className="d-block w-100" alt="..."/>
                     </div>
-                    <div className="carousel-item center">
+                    <div className="carousel-item">
                         <img src={require(`../../Assets/jpg/Promociones/${data[0].cod}.jpg`)} className="d-block w-100" alt="..."/>
                     </div>
-                    <div className="carousel-item center">
+                    <div className="carousel-item">
                         <img src={require(`../../Assets/jpg/Promociones/${data[1].cod}.jpg`)} className="d-block w-100" alt="..."/>
                     </div>
                 </div>

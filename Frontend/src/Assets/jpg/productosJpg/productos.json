@@ -1,10 +1,24 @@
 [
     {
-        "cod" : "img1",
-        "descripcion" : "descripcion img1"
-    },
-    {
         "cod" : "CheemsOk",
         "descripcion" : "Todo ok c:"
+    },
+    {
+        "cod" : "A0001",
+        "descripcion" : "producto1"
+    },
+    {
+        "cod" : "A0002",
+        "descripcion" : "producto2"
+    },
+    {
+        "cod" : "A0003A",
+        "descripcion" : "producto3"
+    },
+    {
+        "cod" : "A0003AB",
+        "descripcion" : "producto4"
     }
+
+
 ]
