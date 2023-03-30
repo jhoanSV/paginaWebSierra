@@ -1,8 +1,35 @@
 @import "../../scss/_index.scss";
 
-.caja{
+.descFont{
+    font-size: 1.1875rem;
+    font-weight: bold;
+}
+
+.codFont{
+    
+}
+
+.frame1{
     width: 13rem;
+    cursor: pointer;
+}
+
+.caja{
+    background-color: $blancoPrincipal;
+    width: 100%;
     border-style: solid;
     border-color: gray;
-    border-width: 1px;
+    border-width: 0.0625rem;
+    box-shadow: 0.1875rem 0.1875rem 0.1875rem gray;
+    img{
+        width: 100%;
+    }
+    transition: 200ms;
+}
+
+.caja:hover{
+    //width: 14rem;
+    transform: scale(1.05, 1.05);
+    box-shadow: 0.2rem 0.2rem 0.2rem $azulPrincipal;
+    transition: 200ms;
 }
