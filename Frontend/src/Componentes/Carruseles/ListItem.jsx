@@ -9,14 +9,30 @@ export const ListItem=({codigo, descripcion})=>{
     return(
         //src={require(`../../Assets/jpg/Promociones/${data[0].cod}.jpg`)}
         <>
-            <div className="frame1">
-                <div className="caja p-4" data-bs-toggle="modal" data-bs-target="#producto">
-                    <img
-                        src={require(`../../Assets/jpg/productosJpg/${codigo}.png`)}
-                        alt="img de producto"
-                    />                    
-                    <div className="descFont montserratFont">{descripcion}</div>
-                    <div className="codFont">Cod: {codigo}</div>
+            
+            <div className="caja p-4" data-bs-toggle="modal" data-bs-target="#producto">
+                                   
+                
+
+                <div className="row">
+                    <div className="col">
+                        <div className="row row-cols-1 g-0">
+
+                            <div className="col">
+                                <img
+                                    src={require(`../../Assets/jpg/productosJpg/${codigo}.png`)}
+                                    alt="img de producto"
+                                />
+                            </div>
+
+                            <div className="col">
+                                <div className="descFont montserratFont">{descripcion}</div>
+                                <div className="codFont">Cod: {codigo}</div>
+                            </div>
+
+                        </div>                        
+                    </div>
+
                 </div>
             </div>
 

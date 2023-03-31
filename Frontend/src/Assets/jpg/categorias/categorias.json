@@ -1,0 +1,32 @@
+[
+    {
+        "id" : "1",
+        "descripcion" : "ebanisteria",
+        "color" : "amarillo"
+    },
+    {
+        "cod" : "2",
+        "descripcion" : "estudiantil",
+        "color" : "rojo"
+    },
+    {
+        "cod" : "3",
+        "descripcion" : "gas",
+        "color" : "naranja"
+    },
+    {
+        "cod" : "4",
+        "descripcion" : "griferia",
+        "color" : "azul"
+    },
+    {
+        "cod" : "5",
+        "descripcion" : "electricos",
+        "color" : "verde"
+    },
+    {
+        "cod" : "6",
+        "descripcion" : "tornilleria",
+        "color" : "gris cafesacio"
+    }
+]

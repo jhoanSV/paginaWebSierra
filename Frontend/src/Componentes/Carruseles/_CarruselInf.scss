@@ -1,6 +1,41 @@
 @import "../../scss/_index.scss";
 
-.carousel.h22{
-    background-color: $azulPrincipal;
-    height: 22.125rem;
+.whcarrusel{
+    width: 100%;
+    height: 20rem;//alto fijo jaska
+    .d-flex{//contiene cada item
+        //background-color: $azulPrincipal;//borrar después
+        width: 100%;
+        height: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+#leftButton{
+    color: $blancoPrincipal;
+    transition: 300ms;
+}
+
+#rightButton{
+    color: $blancoPrincipal;
+    transition: 300ms;
+}
+
+.whcarrusel:hover{
+    #leftButton{
+        color: $grisPrincipal;
+    }
+    
+    #rightButton{
+        color: $grisPrincipal;
+    }
+}
+
+.whcarrusel #rightButton:hover{
+    color: $amarilloPrincipal;
+}
+
+.whcarrusel #leftButton:hover{
+    color: $amarilloPrincipal;
 }

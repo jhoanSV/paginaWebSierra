@@ -2,12 +2,31 @@ import React from "react";
 import { Carrusel } from "../../Componentes/Carruseles/Carrusel";
 import { CarruselInf } from "../../Componentes/Carruseles";
 import arJason from "../../Assets/jpg/productosJpg/productos.json";
+import categ from "../../Assets/jpg/categorias/categorias.json";
 import "./_Home.scss";
 
-
-
-
 export function Home() {
+
+    const itItems = categ.map( item => 
+
+        <>
+            <div className="col">
+
+                <img
+
+                    src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
+                    alt="categoria"
+                
+                />
+
+            </div>
+
+
+        </>
+        
+        
+    );
+
     return (
         <div className="inicio px-4 py-3">
             <section id="sierra">
@@ -63,7 +82,7 @@ export function Home() {
                                 </div>
 
                                 <div className="col btn-catalogo">
-                                    <a href="">
+                                    <a href="www.ferresierra.com">
                                         Descarga nuestro catalogo
                                     </a>                                                                      
                                 </div>
@@ -72,6 +91,18 @@ export function Home() {
                         </div>
 
                     </div>
+
+                    <div className="row  g-0 py-3 gx-4">
+
+                        <div className="col row-cols-3 d-flex flex-wrap">
+
+                            {itItems}
+
+                        </div>
+
+                    </div>
+
+
                 </div>
             </section>
 
