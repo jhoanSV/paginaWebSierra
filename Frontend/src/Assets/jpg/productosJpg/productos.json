@@ -1,7 +1,7 @@
 [
     {
-        "cod" : "CheemsOk",
-        "descripcion" : "Todo ok c:"
+        "cod" : "AP019",
+        "descripcion" : "productoX"
     },
     {
         "cod" : "A0001",
@@ -19,6 +19,4 @@
         "cod" : "A0003AB",
         "descripcion" : "producto4"
     }
-
-
 ]

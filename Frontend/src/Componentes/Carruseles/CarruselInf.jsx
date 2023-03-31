@@ -8,16 +8,6 @@ import FlatList from "flatlist-react/lib";
 //`../Assets/productosJpg/${data.cod}.jpg`
 
 export function CarruselInf(props){
-    const Item=({item})=>{
-        return (
-            <>
-                <ListItem
-                    //elemento = {<>aloh</>}
-                    elemento = {item}
-                />
-            </>                   
-        );
-    }
     
     /*function Item() {
         return (
@@ -31,18 +21,23 @@ export function CarruselInf(props){
         );
     }*/
 
-    return(
-        <div>
-            <li className="d-flex">
-                <FlatList
-                    list={props.lista1}//lista de elementos que usa para contar
-                    renderItem={Item}
-                />
+    const listItems = props.lista1.map(item =>
+        <>
+            <ListItem 
+                codigo = {item.cod}
+                descripcion = {item.descripcion}
             
-            </li>
-
-        </div>
+            />
         
-
+        </>
     );
+
+    return (
+        <div>
+            <ul className="d-flex">
+                {listItems}
+            </ul>
+        </div>
+    );
+
 }

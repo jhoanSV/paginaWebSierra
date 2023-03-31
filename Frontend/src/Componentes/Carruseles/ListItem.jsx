@@ -1,7 +1,7 @@
 import React from "react";
 import "./_ListItem.scss";
 
-export const ListItem=(props)=>{
+export const ListItem=({codigo, descripcion})=>{
 
 
 
@@ -9,17 +9,14 @@ export const ListItem=(props)=>{
     return(
         //src={require(`../../Assets/jpg/Promociones/${data[0].cod}.jpg`)}
         <>
-            <div>
-                holiprro: {props.elemento}
-            </div>
             <div className="frame1">
                 <div className="caja p-4" data-bs-toggle="modal" data-bs-target="#producto">
                     <img
-                        src={require(`../../Assets/jpg/productosJpg/A0001.png`)}
+                        src={require(`../../Assets/jpg/productosJpg/${codigo}.png`)}
                         alt="img de producto"
                     />                    
-                    <div className="descFont montserratFont">Descripción</div>
-                    <div className="codFont">Cod: A0001</div>
+                    <div className="descFont montserratFont">{descripcion}</div>
+                    <div className="codFont">Cod: {codigo}</div>
                 </div>
             </div>
 
