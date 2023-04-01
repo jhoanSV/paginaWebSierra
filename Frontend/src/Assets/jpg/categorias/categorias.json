@@ -2,31 +2,31 @@
     {
         "id" : "1",
         "descripcion" : "ebanisteria",
-        "color" : "amarillo"
+        "color" : "Yellow"
     },
     {
         "cod" : "2",
         "descripcion" : "estudiantil",
-        "color" : "rojo"
+        "color" : "Red"
     },
     {
         "cod" : "3",
         "descripcion" : "gas",
-        "color" : "naranja"
+        "color" : "Naranja"
     },
     {
         "cod" : "4",
         "descripcion" : "griferia",
-        "color" : "azul"
+        "color" : "Azul"
     },
     {
         "cod" : "5",
         "descripcion" : "electricos",
-        "color" : "verde"
+        "color" : "Verde"
     },
     {
         "cod" : "6",
         "descripcion" : "tornilleria",
-        "color" : "gris cafesacio"
+        "color" : "Cafe"
     }
 ]

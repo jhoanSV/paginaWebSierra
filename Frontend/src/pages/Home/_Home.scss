@@ -1,5 +1,11 @@
 @import "../../scss/index.scss";
 
+@mixin borde($prop1){
+    transform: scale(1.01, 1.01);
+    transition: 200ms;
+    box-shadow: 0.01rem 0.01rem 1.5rem 0.3rem $prop1;
+}
+
 /*.inicio{
     height: 500px;
 }*/
@@ -29,6 +35,45 @@
     p{
         margin: 0;
     }
+}
+
+.c-categ{
+    width: 25rem;
+    height: 25rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    img{
+        cursor: pointer;
+        transition: 200ms;
+    }
+}
+
+.c-categ #catYellow:hover{
+    @include borde($amarilloPrincipal);
+}
+
+.c-categ #catRed:hover{
+    @include borde(red);
+}
+
+.c-categ #catNaranja:hover{
+    @include borde(#f2894f);
+}
+
+.c-categ #catAzul:hover{
+    @include borde(#0097e0);
+}
+
+.c-categ #catVerde:hover{
+    @include borde(#02a55a);
+}
+
+.c-categ #catCafe:hover{
+    @include borde(#83706b);
+}
+
+#categorias{
+    justify-content: space-between;
 }
 
 .carousel-item img{

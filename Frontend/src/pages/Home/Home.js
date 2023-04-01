@@ -10,10 +10,10 @@ export function Home() {
     const itItems = categ.map( item => 
 
         <>
-            <div className="col">
+            <div className="c-categ">
 
                 <img
-
+                    id={(`cat${item.color}`)}
                     src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
                     alt="categoria"
                 
@@ -23,8 +23,6 @@ export function Home() {
 
 
         </>
-        
-        
     );
 
     return (
@@ -41,7 +39,7 @@ export function Home() {
                     </div>
                     
 
-                    <div className="row g-0 py-3 gx-4">
+                    <div className="row py-3 gx-4">
                         <div className="col-5">
                         
 
@@ -92,11 +90,15 @@ export function Home() {
 
                     </div>
 
-                    <div className="row  g-0 py-3 gx-4">
+                    <div className="row py-3 gx-4 justify-content-center">
 
-                        <div className="col row-cols-3 d-flex flex-wrap">
+                        <div className="col">
 
-                            {itItems}
+                            <div id="categorias" className="d-flex flex-wrap">
+
+                                {itItems}
+
+                            </div>
 
                         </div>
 
