@@ -1,9 +1,5 @@
 [
     {
-        "cod" : "AP019",
-        "descripcion" : "productoX"
-    },
-    {
         "cod" : "A0001",
         "descripcion" : "producto1"
     },
@@ -18,5 +14,21 @@
     {
         "cod" : "A0003AB",
         "descripcion" : "producto4"
+    },
+    {
+        "cod" : "A0003C",
+        "descripcion" : "producto5"
+    },
+    {
+        "cod" : "A0004",
+        "descripcion" : "producto6"
+    },
+    {
+        "cod" : "AEV14",
+        "descripcion" : "producto7"
+    },
+    {
+        "cod" : "AP001",
+        "descripcion" : "producto8"
     }
 ]

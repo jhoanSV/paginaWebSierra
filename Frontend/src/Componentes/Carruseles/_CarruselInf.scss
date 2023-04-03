@@ -13,11 +13,13 @@
 }
 
 #leftButton{
+    border-style: none;
     color: $blancoPrincipal;
     transition: 300ms;
 }
 
 #rightButton{
+    border-style: none;
     color: $blancoPrincipal;
     transition: 300ms;
 }
@@ -39,3 +41,4 @@
 .whcarrusel #leftButton:hover{
     color: $amarilloPrincipal;
 }
+

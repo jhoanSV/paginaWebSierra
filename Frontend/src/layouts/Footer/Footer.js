@@ -5,7 +5,7 @@ import "./_Footer.scss";
 export function Footer(){
     return(
         <footer>
-            <div className="container-xxl px-4 py-4 piePagina ">                
+            <div className="container-fluid px-4 py-4 piePagina ">                
                 <div className="row g-0">
 
                     <div className="col align-self-center logoF">

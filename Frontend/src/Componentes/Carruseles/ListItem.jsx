@@ -15,7 +15,7 @@ export const ListItem=({codigo, descripcion})=>{
                 
 
                 <div className="row">
-                    <div className="col">
+                    <div className="col h-100">
                         <div className="row row-cols-1 g-0">
 
                             <div className="col imgProducto">

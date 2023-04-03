@@ -28,7 +28,7 @@ export function Home() {
     return (
         <div className="inicio px-4 py-3">
             <section id="sierra">
-                <div className="container-xxl p-0">
+                <div className="container-fluid p-0">
                     
                     <div className="row g-0 avi">
                         <div className="col ">
@@ -43,7 +43,7 @@ export function Home() {
                         <div className="col-5">
                         
 
-                            <div className="row row-cols-1 g-0">
+                            <div className="row row-cols-1 gy-2">
 
                                 <div className="col ">
                                     <Carrusel
@@ -109,7 +109,7 @@ export function Home() {
             </section>
 
             <section id="masProductos">
-                <div className="container-xxl p-0">
+                <div className="container-fluid p-0">
                     <div className="row g-0">
                         <div className="col">
                             <div className="fs-2 gx-1">

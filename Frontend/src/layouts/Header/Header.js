@@ -7,7 +7,7 @@ export function Header({reDireccion}) {
     
     return(
         <header>
-            <div className="container-xxl px-4 g-0 cabecera">
+            <div className="container-fluid px-4 g-0 cabecera">
                 <div className="row">
 
                     <div className="col logo">
@@ -16,6 +16,7 @@ export function Header({reDireccion}) {
                                 src={require("../../Assets/png/LogoSierra.png")}
                                 width="2207px"
                                 height="839px"
+                                alt="LogoSierra"
                             />
                         </a>                      
                     </div>
@@ -34,10 +35,12 @@ export function Header({reDireccion}) {
                     <div className="col user">
                         <a href="index.html" style={{textDecoration: "none" }}>
                             <img
-                            className="offset-9"
-                            src={require("../../Assets/png/tuercaUsuario.png")}
-                            width="2965px"
-                            height="2965px"/>
+                                className="offset-9"
+                                src={require("../../Assets/png/tuercaUsuario.png")}
+                                width="2965px"
+                                height="2965px"
+                                alt="User"
+                            />
                         </a>                        
                     </div>
 
