@@ -18,7 +18,7 @@ export const ListItem=({codigo, descripcion})=>{
                     <div className="col">
                         <div className="row row-cols-1 g-0">
 
-                            <div className="col">
+                            <div className="col imgProducto">
                                 <img
                                     src={require(`../../Assets/jpg/productosJpg/${codigo}.png`)}
                                     alt="img de producto"

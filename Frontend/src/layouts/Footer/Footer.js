@@ -12,8 +12,9 @@ export function Footer(){
                         <a href="index.html" style={{textDecoration: "none" }}>
                             <img
                                 src={require("../../Assets/png/LogoSierra.png")}
-                                width="100%"
-                                height="100%"
+                                width="2207px"
+                                height="839px"
+                                alt="logoSierra"
                             />
                         </a>
                     </div>

@@ -38,11 +38,13 @@
 }
 
 .c-categ{
-    width: 25rem;
-    height: 25rem;
+    width: 30%;
+    height: auto;
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
     img{
+        width: 100%;
+        height: auto;
         cursor: pointer;
         transition: 200ms;
     }
