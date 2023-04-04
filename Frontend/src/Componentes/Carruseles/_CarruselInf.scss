@@ -1,10 +1,13 @@
 @import "../../scss/_index.scss";
 
-.whcarrusel{
+.cCarrusel{
     width: 100%;
-    height: 20rem;//alto fijo jaska
+    height: auto;//alto fijo jaska
+    position: relative;
     .d-flex{//contiene cada item
         //background-color: $azulPrincipal;//borrar después
+        position: relative;
+        left: 0.625rem;
         width: 100%;
         height: 100%;
         justify-content: space-between;
@@ -13,18 +16,28 @@
 }
 
 #leftButton{
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 50px;
     border-style: none;
-    color: $blancoPrincipal;
+    color: transparent;
+    background-color: transparent;
     transition: 300ms;
 }
 
 #rightButton{
+    position: absolute;
+    z-index: 100;
+    right: 0;
+    top: 50px;
     border-style: none;
-    color: $blancoPrincipal;
+    color: transparent;
+    background-color: transparent;
     transition: 300ms;
 }
 
-.whcarrusel:hover{
+.cCarrusel:hover{
     #leftButton{
         color: $grisPrincipal;
     }
@@ -34,11 +47,11 @@
     }
 }
 
-.whcarrusel #rightButton:hover{
+.cCarrusel #rightButton:hover{
     color: $amarilloPrincipal;
 }
 
-.whcarrusel #leftButton:hover{
+.cCarrusel #leftButton:hover{
     color: $amarilloPrincipal;
 }
 

@@ -21,13 +21,13 @@
     box-shadow: 0.1875rem 0.1875rem 0.1875rem gray;
     transition: 200ms;
     .col{
-        height: 12vw;
+        height: auto;
     }
 }
 
 .imgProducto img{
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 
 .caja:hover{
