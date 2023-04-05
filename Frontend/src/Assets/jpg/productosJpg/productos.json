@@ -30,5 +30,21 @@
     {
         "cod" : "AP001",
         "descripcion" : "producto8"
+    },
+    {
+        "cod" : "AP007",
+        "descripcion" : "producto9"
+    },
+    {
+        "cod" : "AP008",
+        "descripcion" : "producto10"
+    },
+    {
+        "cod" : "AP010",
+        "descripcion" : "producto11"
+    },
+    {
+        "cod" : "AP017",
+        "descripcion" : "producto12"
     }
 ]

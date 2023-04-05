@@ -4,15 +4,26 @@
     width: 100%;
     height: auto;//alto fijo jaska
     position: relative;
-    .d-flex{//contiene cada item
+    overflow: hidden;
+    /*.d-flex{//contiene cada item
         //background-color: $azulPrincipal;//borrar después
         position: relative;
-        left: 0.625rem;
+        left: 200px;
         width: 100%;
         height: 100%;
-        justify-content: space-between;
+        //justify-content: space-between;
         align-items: center;
-    }
+    }*/
+}
+
+#pContainer{//contiene cada item
+    //background-color: $azulPrincipal;//borrar después
+    position: relative;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    //justify-content: space-between;
+    align-items: center;
 }
 
 #leftButton{
