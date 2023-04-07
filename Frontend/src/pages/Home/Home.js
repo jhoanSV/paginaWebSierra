@@ -121,7 +121,7 @@ export function Home() {
                     <div className="row g-0">
                         <div className="col">
                             <CarruselInf 
-                                lista1={arJason}                            
+                                lista1={arJason.slice(0,12)}
                             />
                         </div>                            
                     </div>

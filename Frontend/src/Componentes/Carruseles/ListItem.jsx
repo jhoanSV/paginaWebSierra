@@ -11,9 +11,7 @@ export const ListItem=({codigo, descripcion})=>{
         <>
             
             <div className="caja p-4" data-bs-toggle="modal" data-bs-target="#producto">
-                                   
                 
-
                 <div className="row">
                     <div className="col h-100">
                         <div className="row row-cols-1 g-0">
@@ -32,8 +30,8 @@ export const ListItem=({codigo, descripcion})=>{
 
                         </div>                        
                     </div>
-
                 </div>
+                
             </div>
 
             <div class="modal fade" id="producto" tabindex="-1" aria-labelledby="productoLabel" aria-hidden="true">
