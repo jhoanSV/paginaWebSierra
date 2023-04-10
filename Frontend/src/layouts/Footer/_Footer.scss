@@ -1,15 +1,15 @@
 @import "../../scss/index";
 
+*{
+    box-sizing: border-box;
+}
+
 .piePagina {
     display: block;
     background-color: $azulPrincipal;
     color: $blancoPrincipal;
     font-size: 19px;
     width: 100%;
-}
-
-*{
-    box-sizing: border-box;
 }
 
 .row h5{

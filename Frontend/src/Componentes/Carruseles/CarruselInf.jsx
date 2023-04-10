@@ -43,6 +43,7 @@ export function CarruselInf(props){
             item.style.left = "0%";
             posX = item.style.left;
             item.style.left = (parseFloat(posX) - 100) + "%";
+            item.style.transition = "800ms";
         }else if((props.lista1.length/5) > ((parseFloat(posX)-100)/(-100))){            
             item.style.left = (parseFloat(posX) - 100) + "%";
         }

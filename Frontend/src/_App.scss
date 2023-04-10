@@ -1,0 +1,19 @@
+
+.btn-wapp{
+    display: block;
+    width: 5.44rem;
+    height: auto;
+    position: fixed;
+    bottom: 1.875rem;
+    left: 1.875rem;
+    z-index: 100;
+    opacity: 0.7;
+    img{
+        width: 100%;
+        height: auto;
+    }
+}
+
+.btn-wapp:hover{
+    opacity: 1;
+}

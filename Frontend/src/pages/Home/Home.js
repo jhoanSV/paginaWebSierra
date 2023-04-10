@@ -79,10 +79,17 @@ export function Home() {
 
                                 </div>
 
-                                <div className="col btn-catalogo">
-                                    <a href="www.ferresierra.com">
-                                        Descarga nuestro catalogo
-                                    </a>                                                                      
+                                <div className="col">
+                                    <div className="btn-catalogo">
+                                        <a href={require("../../Assets/docs/CATALOGO-NUEVO-FEB-2023.pdf")} download>
+                                            <img
+                                                src={require("../../Assets/png/DescargaCatalogo.png")}
+                                                width="713"
+                                                height="240"
+                                                alt="BotonCatalogo"
+                                            />
+                                        </a>
+                                    </div>
                                 </div>
 
                             </div>
