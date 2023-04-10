@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./_header.scss";
 
@@ -51,7 +52,9 @@ export function Header({reDireccion}) {
                         <div className="d-flex justify-content-center">
                             <div className="btn-group w-67 flex-wrap">
                                 <button type="button" class="btn btn-navBar btn-lg">Inicio</button>
-                                <button type="button" class="btn btn-navBar btn-lg">Productos</button>
+                                <Link to="productos">
+                                    <button type="button" class="btn btn-navBar btn-lg">Productos</button>
+                                </Link>
                                 <button type="button" class="btn btn-navBar btn-lg">Quienes somos</button>
                                 <button type="button" class="btn btn-navBar btn-lg">Contactanos</button>
                             </div>

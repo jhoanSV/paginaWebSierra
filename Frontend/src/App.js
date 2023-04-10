@@ -1,20 +1,14 @@
 //import React , { useState } from "react";
 //import { Navigation } from "./routes";
+import { Routes, Route } from "react-router-dom"
 import { Header } from "./layouts";
 import { Footer } from "./layouts";
 import { Home } from "./pages";
-
+import { Products } from "./pages"
 
 import './_App.scss';
 
 export default function App() {
-  
-  function reDireccion (){
-    alert(
-      "Ahora cómo hago para que cambie a inicio jjdjdjd"
-    )
-    
-  }
 
   return (
       <>
@@ -27,8 +21,16 @@ export default function App() {
                 alt="iconWapp"                
             />
         </a>
-        <Header reDireccion={reDireccion}></Header>
-        <Home></Home>
+
+        <Header></Header>
+
+        <div className="App">
+          <Routes>
+            <Route path="/" element={ <Home /> } />
+            <Route path="productos" element={ <Products /> } />
+          </Routes>
+        </div>
+
         <Footer></Footer>
       </>
       
