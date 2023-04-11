@@ -1,36 +1,93 @@
 @import "../../scss/_index.scss";
 
-.cabecera{
-    background-image: url(../../Assets/png/HeaderPrincipal.png);
-	background-size: cover;
-    padding: 20px 0px 0px;
-}
-
 *{
     box-sizing: border-box;
 }
 
-.w-67{
-    width: 67%;
-}
-
-.col.logo{
-    max-width: (100 / 3)*1%;
-    img{
-        width: (3*18.59)*1%;
-        height: auto;
+.cabecera{
+    background-image: url(../../Assets/png/HeaderPrincipal.png);
+	background-size: cover;
+    padding: 1.25rem 0px 0px;
+    @include tablet{
+        padding: 0.4rem 0px 0px;
     }
 }
 
-.col-5.buscar{
-    max-width: (100 / 3)*1%;
+.grupoBotones{
+    display: flex;
+    justify-content: center;
+    .g1{
+        width: 67%;
+        @include tablet{
+            display: none;
+        }
+    }
+}
+
+.col.g2{
+    display: none;
+    @include tablet{
+        display: flex;
+        align-items: center;
+        .menuNav{
+            .bi{
+                width: 2em;
+                height: 2em;
+            }
+            height: max-content;
+            color: $blancoPrincipal;
+            background-color: transparent;
+            border-style: none;
+        }
+    }
+}
+
+.col.logo{
+    max-width: calc((100 / 3)*1%);
+    img{
+        width: calc((3*18.59)*1%);
+        height: auto;
+        @include tablet{
+            height: 6.25rem;
+            width: auto;
+        }
+    }
+}
+
+.buscar{
+    max-width: 41.6667%;
+}
+
+.col.buscar{
+    max-width: calc((100 / 3)*1%);
+    @include tablet{
+        .caja-buscar{
+            display: none;
+        }
+        max-width: max-content;
+    }
+}
+
+.input-group-text{
+    @include tablet{
+        border-radius: 30px !important;
+    }
 }
 
 .col.user{
-    max-width: (100 / 3)*1%;
+    max-width: calc((100 / 3)*1%);
+    a{
+        margin: 0 0 0 calc((100 - (3*4.87))*1%);
+        @include tablet{
+            margin: 0 0 0 calc((100 - 34)*1%);
+        }
+    }
     img{
-        width: (3*4.87)*1%;
+        width: calc((3*4.87)*1%);
         height: auto;
+        @include tablet{
+            width: 34%;
+        }
     }
 }
 

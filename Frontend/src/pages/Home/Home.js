@@ -70,8 +70,7 @@ export function Home() {
                                     <video 
                                         width="100%"
                                         height="auto"
-                                        src=""                                    
-                                        controls
+                                        src={require("../../Assets/mp4/video1.mp4")}
                                         autoPlay
                                         muted
                                         loop
