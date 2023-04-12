@@ -8,9 +8,21 @@
     background-image: url(../../Assets/png/HeaderPrincipal.png);
 	background-size: cover;
     padding: 1.25rem 0px 0px;
-    @include tablet{
-        padding: 0.4rem 0px 0px;
-    }
+}
+
+.btn-buscar{
+    display: none;
+    position: absolute;
+    right: 15%;
+    //top: 45%;
+    border-radius: 1.5rem;
+    
+}
+
+.ghost-buscador{
+    display: none;
+    position: absolute;
+    top: 100%;
 }
 
 .grupoBotones{
@@ -18,60 +30,26 @@
     justify-content: center;
     .g1{
         width: 67%;
-        @include tablet{
-            display: none;
-        }
     }
 }
 
 .col.g2{
-    display: none;
-    @include tablet{
-        display: flex;
-        align-items: center;
-        .menuNav{
-            .bi{
-                width: 2em;
-                height: 2em;
-            }
-            height: max-content;
-            color: $blancoPrincipal;
-            background-color: transparent;
-            border-style: none;
-        }
-    }
+    display: none;    
 }
 
 .col.logo{
     max-width: calc((100 / 3)*1%);
-    img{
-        width: calc((3*18.59)*1%);
-        height: auto;
-        @include tablet{
-            height: 6.25rem;
-            width: auto;
+    a{
+        img{
+            width: calc((3*18.59)*1%);
+            height: auto;
         }
     }
-}
-
-.buscar{
-    max-width: 41.6667%;
+    
 }
 
 .col.buscar{
     max-width: calc((100 / 3)*1%);
-    @include tablet{
-        .caja-buscar{
-            display: none;
-        }
-        max-width: max-content;
-    }
-}
-
-.input-group-text{
-    @include tablet{
-        border-radius: 30px !important;
-    }
 }
 
 .col.user{
@@ -108,3 +86,53 @@
     background-color: $amarilloPrincipal;
 }
 
+@include tablet{
+    .cabecera{
+        padding: 0.4rem 0px 0px;
+        .row.position-relative{
+            display: flex;
+            align-items: center;
+        }
+        .btn-buscar{
+            display: flex;
+            width: max-content;
+            .bi{
+                font-size: 2.5vw;
+                margin: 0 0.8vw 0 0.8vw;
+            }      
+        }
+    }
+
+    .grupoBotones .g1{//Esconde Botones de nav
+        display: none;
+    }
+
+    .col.g2{//muestra el menu de nav
+        display: flex;
+        align-items: center;
+        .menuNav{
+            .bi{
+                font-size: 7.8vw;
+            }
+            height: max-content;
+            color: $blancoPrincipal;
+            background-color: transparent;
+            border-style: none;
+        }
+    }
+
+    .col.logo{//redimensiona el logo sierra
+        a img{
+            //height: 5rem;
+            width: 23.8vw;
+        }
+    }
+    
+    .col.buscar{//oculta la barra de buscar
+        display: none;
+    }
+
+    
+    
+    
+}
