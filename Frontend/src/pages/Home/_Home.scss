@@ -6,7 +6,8 @@
     box-shadow: 0.01rem 0.01rem 1.5rem 0.3rem $prop1;
 }
 
-.btn-catalogo{
+.btn-catalogo1{
+    position: relative;
     border-style: solid;
     border-width: 0.0625rem;
     border-color: black;
@@ -74,4 +75,25 @@
 
 #categorias{
     justify-content: space-between;
+}
+
+@include tablet{
+    //cuadrar letra del aviso "eres ferretero..."
+}
+
+@include mobile{
+    #carrusel2{
+        display: none;
+    }
+
+    .btn-catalogo1{
+        background-image: url("../../Assets/png/icono2.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        width:50%;
+        img{
+            visibility: hidden;
+        }
+        
+    }
 }

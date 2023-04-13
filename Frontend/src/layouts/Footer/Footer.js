@@ -6,7 +6,7 @@ export function Footer(){
     return(
         <footer>
             
-            <div className="container-fluid px-4 py-4 piePagina ">                
+            <div className="container-fluid px-4 py-4 piePagina">                
                 <div className="row g-0">
 
                     <div className="col align-self-center logoF">
@@ -55,7 +55,7 @@ export function Footer(){
                         <div className="row g-0">
                             Politica de Datos
                         </div>
-                        <div className="row g-0 justify-content-start redes">
+                        <div className="row g-0 redes">
                             <div className="col-4">
                                 <a href="https://www.facebook.com/profile.php?id=100089239757422"
                                 target="_blank" rel="noreferrer">

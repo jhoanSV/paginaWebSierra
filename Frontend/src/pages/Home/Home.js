@@ -51,7 +51,7 @@ export function Home() {
                                     />
                                 </div>
 
-                                <div className="col ">
+                                <div className="col" id="carrusel2">
                                     <Carrusel
                                         idCarrusel={"car2"}
                                     />
@@ -79,7 +79,7 @@ export function Home() {
                                 </div>
 
                                 <div className="col">
-                                    <div className="btn-catalogo">
+                                    <div className="btn-catalogo1">
                                         <a href={require("../../Assets/docs/CATALOGO-NUEVO-FEB-2023.pdf")} download>
                                             <img
                                                 src={require("../../Assets/png/DescargaCatalogo.png")}

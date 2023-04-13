@@ -6,8 +6,14 @@ export function Header() {
 
     function showGhost() {
         const item = document.querySelector(".ghost-buscador");
+        const item2 = document.querySelector(".caja-buscar");
         item.style.display = "flex";
-        item.focus();
+        item2.focus();
+    }
+
+    function hideGhost() {
+        const item = document.querySelector(".ghost-buscador");
+        item.style.display = "none";
     }
     
     return(
@@ -19,17 +25,18 @@ export function Header() {
                         <i class="bi bi-search"></i>
                     </button>
 
-                    <div id="phantom" className="ghost-buscador">
+                    <div className="ghost-buscador">
 
-                        <input type="text" className="caja-buscar" placeholder="Buscar Producto" aria-label="campo de texto para busqueda"/>
-
+                        <input type="text" className="caja-buscar" placeholder="Buscar Producto" 
+                        aria-label="campo de texto para busqueda"  onBlur={() => hideGhost()}                        
+                        />
 
                     </div>
 
 
                     <div className="col g2">
                         <button className="menuNav" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-list-ul"></i>
+                            <i class="bi bi-list"></i>
                         </button>
 
                         <ul className="dropdown-menu">

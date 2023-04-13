@@ -93,6 +93,7 @@
             display: flex;
             align-items: center;
         }
+        
         .btn-buscar{
             display: flex;
             width: max-content;
@@ -110,6 +111,7 @@
     .col.g2{//muestra el menu de nav
         display: flex;
         align-items: center;
+        padding: 0; 
         .menuNav{
             .bi{
                 font-size: 7.8vw;
@@ -124,7 +126,7 @@
     .col.logo{//redimensiona el logo sierra
         a img{
             //height: 5rem;
-            width: 23.8vw;
+            width: 29.8vw;
         }
     }
     
