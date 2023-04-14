@@ -26,13 +26,13 @@ export function Home() {
     );
 
     return (
-        <div className="inicio px-4 py-3">
+        <div className="inicio">
             <section id="sierra">
                 <div className="container-fluid p-0">
                     
-                    <div className="row g-0 avi">
+                    <div className="row g-0 avi fs-2">
                         <div className="col ">
-                            <div className="d-flex justify-content-center fs-2 gx-1">
+                            <div className="d-flex justify-content-center gx-1">
                                 <p>Eres <span> Ferretero? </span> tenemos precios especiales para ti... contactanos</p>
                             </div>
                         </div>

@@ -15,8 +15,7 @@
     position: absolute;
     right: 15%;
     //top: 45%;
-    border-radius: 1.5rem;
-    
+    border-radius: 1.5rem;    
 }
 
 .ghost-buscador{
@@ -34,7 +33,7 @@
 }
 
 .col.g2{
-    display: none;    
+    display: none;   
 }
 
 .col.logo{
@@ -56,15 +55,12 @@
     max-width: calc((100 / 3)*1%);
     a{
         margin: 0 0 0 calc((100 - (3*4.87))*1%);
-        @include tablet{
-            margin: 0 0 0 calc((100 - 34)*1%);
-        }
-    }
-    img{
-        width: calc((3*4.87)*1%);
-        height: auto;
-        @include tablet{
-            width: 34%;
+        img{
+            width: calc((3*4.87)*1%);
+            height: auto;
+            @include tablet{
+                width: 34%;
+            }
         }
     }
 }
@@ -79,7 +75,7 @@
     border-color: $azulClaro;
     border-width: 1px;
     --bs-btn-border-radius: 0.9rem;
-    --bs-btn-active-bg: #F2CB05;//Cambiar después a uno más oscuro c:
+    --bs-btn-active-bg: #F2CB05;//Cambiar después a uno más oscuro c: definir color en colors.scss
 }
 
 .btn.btn-navBar:hover{
@@ -132,6 +128,16 @@
     
     .col.buscar{//oculta la barra de buscar
         display: none;
+    }
+
+    .col.user{// redimensiona user
+        a{
+            margin: 0 0 0 calc((100 - 32)*1%);
+            img{
+                width: 32%;
+            }
+        }
+
     }
 
     
