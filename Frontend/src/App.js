@@ -18,7 +18,7 @@ export default function App() {
                 src={require("./Assets/png/WappIcon.png")}
                 width="479px"
                 height="480"
-                alt="iconWapp"                
+                alt="iconWapp"              
             />
         </a>
 

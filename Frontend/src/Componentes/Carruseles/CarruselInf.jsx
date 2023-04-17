@@ -7,24 +7,14 @@ import { ListItem } from "./index";
 
 //`../Assets/productosJpg/${data.cod}.jpg`
 
-export function CarruselInf(props){
+export function CarruselInf(props){//Aquí recibe la LIST1
 
-
-    /*const listItems = props.lista1.slice(1,4).map((item, index) => //el 3 no lo toca
-        <>  
-            <ListItem
-                key={index}//para que cada item tenga como llave el index
-                codigo = {item.cod}
-                descripcion = {item.descripcion}
-            
-            />
-        
-        </>
-    );*/
+    const vent = window.matchMedia("(max-width: 576px)");
+    var showed = 5;
 
     function listItems (){      
         return (
-            props.lista1.map((item, index) => //el 3 no lo toca
+            props.lista1.map((item, index) =>
                 <>  
                     <ListItem
                         key={index}//para que cada item tenga como llave el index
@@ -39,12 +29,16 @@ export function CarruselInf(props){
     function next(){
         const item = document.querySelector("#pContainer");
         var posX = item.style.left;
-        if(parseFloat(posX) === 0 || !parseFloat(posX)){
+        if(vent.matches){
+            showed = 1
+        }        
+        console.log(props.lista1.length + "/" + showed);
+        if(parseFloat(posX) === 0 || !parseFloat(posX)){//valida cuando no se ha movido o se devolvió al primero
             item.style.left = "0%";
             posX = item.style.left;
             item.style.left = (parseFloat(posX) - 100) + "%";
             item.style.transition = "800ms";
-        }else if((props.lista1.length/5) > ((parseFloat(posX)-100)/(-100))){            
+        }else if((props.lista1.length/showed) > ((parseFloat(posX)-100)/(-100))){//
             item.style.left = (parseFloat(posX) - 100) + "%";
         }
     }

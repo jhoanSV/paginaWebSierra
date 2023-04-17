@@ -40,7 +40,7 @@ export function Home() {
                     
 
                     <div className="row py-3 gx-4">
-                        <div className="col-5">
+                        <div className="col-5 caja-carrusel">
                         
 
                             <div className="row row-cols-1 gy-2">
@@ -63,7 +63,7 @@ export function Home() {
 
                         </div>
 
-                        <div className="col-7">
+                        <div className="caja-video">
                             <div className="row row-cols-1 g-0">
                                 
                                 <div className="col">

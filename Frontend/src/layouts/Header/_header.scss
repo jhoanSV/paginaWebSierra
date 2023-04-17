@@ -54,13 +54,10 @@
 .col.user{
     max-width: calc((100 / 3)*1%);
     a{
-        margin: 0 0 0 calc((100 - (3*4.87))*1%);
+        margin: 0 0 0 calc((100 - (16))*1%);
         img{
-            width: calc((3*4.87)*1%);
+            width: 16%;
             height: auto;
-            @include tablet{
-                width: 34%;
-            }
         }
     }
 }
@@ -132,9 +129,9 @@
 
     .col.user{// redimensiona user
         a{
-            margin: 0 0 0 calc((100 - 32)*1%);
+            margin: 0 0 0 calc((100 - 36)*1%);
             img{
-                width: 32%;
+                width: 36%;
             }
         }
 

@@ -10,6 +10,11 @@
     padding: 1.12vw 1.69vw;
 }
 
+.caja-video{
+    flex: 1;
+    width: 58.3333333%;
+}
+
 .btn-catalogo1{
     position: relative;
     border-style: solid;
@@ -32,11 +37,12 @@
 
 .avi .col{
     color: $blancoPrincipal;
-    font-size: 2.25vw;
+    font-size: 2.025rem;
     span{
         color: $amarilloPrincipal;
     }
     p{
+        text-align: center;
         margin: 0;
     }
 }
@@ -91,14 +97,45 @@
         display: none;
     }
 
+    .avi .col{
+        font-size: 1.5625rem;
+    }
+
     .btn-catalogo1{
         background-image: url("../../Assets/png/icono2.png");
         background-repeat: no-repeat;
         background-size: contain;
-        width:50%;
+        position: fixed;
+        bottom: calc(2.5rem + 15vw);
+        right: 0.875rem;
+        z-index: 1;      
+        width: 14vw;
+        height: 14vw;
+        box-shadow: none;
+        a{
+            font-size: 6vw;
+        }
         img{
             visibility: hidden;
+            width: 7.7vw;
+            height: 7.7vw;
         }
-        
+    }
+
+    .row.py-3.gx-4{
+        padding: 0 20px;
+    }
+
+    .caja-video{
+        order: -1;
+        flex: auto;
+    }
+
+    .col-5.caja-carrusel{
+        width: 100%;
+    }
+
+    .c-categ{
+        width: 100%;
     }
 }

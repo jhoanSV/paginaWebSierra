@@ -1,12 +1,12 @@
 @import "../../scss/_index.scss";
 
 .descFont{
-    font-size: 1.33vw;
+    font-size: 1.1875rem;
     font-weight: bold;
 }
 
 .codFont{
-    font-size: 1.12vw;
+    font-size: 1rem;
 }
 
 .caja{
@@ -36,4 +36,11 @@
     transform: scale(1.05, 1.05);
     box-shadow: 0.2rem 0.2rem 0.2rem $azulPrincipal;
     transition: 200ms;
+}
+
+@include tablet{
+    .caja{
+        min-width: 44%;
+        margin: 0 28% 0 28%;
+    }
 }
