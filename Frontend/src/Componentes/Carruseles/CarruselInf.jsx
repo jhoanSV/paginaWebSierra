@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./_CarruselInf.scss";
 import { ListItem } from "./index";
 //import FlatList from "flatlist-react/lib";
@@ -9,8 +9,8 @@ import { ListItem } from "./index";
 
 export function CarruselInf(props){//Aquí recibe la LIST1
 
-    const vent = window.matchMedia("(max-width: 576px)");
-    var showed = 5;
+    const vent = window.matchMedia("(max-width: 564px)");
+    const [showed, setShowed] = useState(5)
 
     function listItems (){      
         return (
@@ -30,8 +30,8 @@ export function CarruselInf(props){//Aquí recibe la LIST1
         const item = document.querySelector("#pContainer");
         var posX = item.style.left;
         if(vent.matches){
-            showed = 1
-        }        
+            setShowed(1);
+        }
         console.log(props.lista1.length + "/" + showed);
         if(parseFloat(posX) === 0 || !parseFloat(posX)){//valida cuando no se ha movido o se devolvió al primero
             item.style.left = "0%";

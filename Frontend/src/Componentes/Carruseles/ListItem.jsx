@@ -10,7 +10,7 @@ export const ListItem=({codigo, descripcion})=>{
         //src={require(`../../Assets/jpg/Promociones/${data[0].cod}.jpg`)}
         <>
             
-            <div className="caja p-4" data-bs-toggle="modal" data-bs-target="#producto">
+            <div className="caja" data-bs-toggle="modal" data-bs-target="#producto">
                 
                 <div className="row">
                     <div className="col h-100">
@@ -25,7 +25,7 @@ export const ListItem=({codigo, descripcion})=>{
 
                             <div className="col">
                                 <div className="descFont montserratFont">{descripcion}</div>
-                                <div className="codFont">Cod: {codigo}</div>
+                                <div className="codFont">{codigo}</div>
                             </div>
 
                         </div>                        
