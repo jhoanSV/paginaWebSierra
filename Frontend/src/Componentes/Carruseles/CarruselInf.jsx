@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./_CarruselInf.scss";
 import { ListItem } from "./index";
 //import FlatList from "flatlist-react/lib";
@@ -9,8 +9,23 @@ import { ListItem } from "./index";
 
 export function CarruselInf(props){//Aquí recibe la LIST1
 
-    const vent = window.matchMedia("(max-width: 564px)");
-    const [showed, setShowed] = useState(5)
+    const vent = window.matchMedia("(max-width: 636px)");
+    const [showed, setShowed] = useState(5);
+    const [move, setMove] = useState(-20);
+    const [lproductos, setLProductos] = useState(props.lista1.length);
+    const [posMax, setposMax] = useState(-(lproductos * 10)); 
+    
+    useEffect(() => {
+        if(vent.matches){
+            setShowed(1);
+            setMove(-100);
+            console.log("tablet: " + move + " " + showed);
+        }else{
+            setShowed(5);
+            setMove(-20);
+            console.log("tablet: " + move + " " + showed);
+        }
+      }, [move, showed]);
 
     function listItems (){      
         return (
@@ -26,30 +41,25 @@ export function CarruselInf(props){//Aquí recibe la LIST1
         )
     }
 
-    function next(){
+    const Next=()=>{
         const item = document.querySelector("#pContainer");
-        var posX = item.style.left;
-        if(vent.matches){
-            setShowed(1);
-        }
-        console.log(props.lista1.length + "/" + showed);
-        if(parseFloat(posX) === 0 || !parseFloat(posX)){//valida cuando no se ha movido o se devolvió al primero
-            item.style.left = "0%";
-            posX = item.style.left;
-            item.style.left = (parseFloat(posX) - 100) + "%";
+        var posX = (parseFloat(item.style.translate));
+
+        if (!item.style.translate) posX = 0;
+
+        if (lproductos > showed && posMax <= posX){
             item.style.transition = "800ms";
-        }else if((props.lista1.length/showed) > ((parseFloat(posX)-100)/(-100))){//
-            item.style.left = (parseFloat(posX) - 100) + "%";
+            item.style.translate = (posX + move) + "%";
         }
     }
 
-    function prev(){
+    function Prev(){
         const item = document.querySelector("#pContainer");
-        var posX = item.style.left;
-        if(parseFloat(posX) == null || !parseFloat(posX)){
+        var posX = (parseFloat(item.style.translate));
+        if(!item.style.translate || posX === 0){
             return console.log(posX + " después se acomoda estoxD");
         }
-        item.style.left = (parseFloat(posX) + 100) + "%";
+        item.style.translate = (posX - move) + "%";
     }
 
 
@@ -57,13 +67,13 @@ export function CarruselInf(props){//Aquí recibe la LIST1
         <div className="containter px-0 py-4">
             <div className="cCarrusel">
 
-                <button id="leftButton" onClick={() => prev()}>
+                <button id="leftButton" onClick={() => Prev()}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
                         <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
                     </svg>
                 </button>
 
-                <button id="rightButton" onClick={() => next()}>
+                <button id="rightButton" onClick={() => Next()}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
                         <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
                     </svg>

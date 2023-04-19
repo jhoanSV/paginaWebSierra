@@ -3,14 +3,19 @@
 .descFont{
     font-size: 1.1875rem;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .codFont{
     font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .caja{
     height: 100%;
+    width: 14%;
     min-width: 14%;
     cursor: pointer;
     margin: 0 3% 0 3%;
@@ -21,7 +26,6 @@
     border-width: 0.0625rem;
     box-shadow: 0.1875rem 0.1875rem 0.1875rem gray;
     transition: 200ms;
-    overflow: hidden;
     .col{
         height: auto;
     }
@@ -39,9 +43,11 @@
     transition: 200ms;
 }
 
-@media (max-width: 596px){
+@media (max-width: 636px){
     .caja{
         min-width: 44%;
         margin: 0 28% 0 28%;
+        padding: 4%;
+
     }
 }
