@@ -9,10 +9,13 @@ import { ListItem } from "./index";
 
 export function CarruselInf(props){//Aquí recibe la LIST1
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-    const [lproductos, setLProductos] = useState(props.lista1.length - 1);
-    var showed = 0;
+    const [lProductos, setLProductos] = useState(props.lista1.length);    
+    var paso = 0;
+    var show = 5;//variable "SeVe"
     var move = 0;
-    var posMax = (-((lproductos + 2) * 10));    
+    var posMax = (-((lProductos + 1) * 10));
+
+    if(show > lProductos) show = lProductos;
 
     window.addEventListener('resize', function() {
         const item = document.querySelector("#pContainer");
@@ -25,20 +28,20 @@ export function CarruselInf(props){//Aquí recibe la LIST1
     });
 
     if(screenWidth < 636 ){
-        showed = 1;
+        paso = 1;
         move = -100;
-        posMax = (-(lproductos * 100));
+        posMax = (-(lProductos * 100));
     }else{
-        showed = 5;
+        paso = 5;
         move = -20;
     }
 
     function listItems (){      
         return (
-            props.lista1.map((item, index) =>
+            props.lista1.slice(0,show).map((item) =>
                 <>  
-                    <ListItem
-                        key={index}//para que cada item tenga como llave el index
+                    <ListItem key={(item.id).toString()}
+                        llave = {item.id}
                         codigo = {item.cod}
                         descripcion = {item.descripcion}                    
                     />
@@ -53,7 +56,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1
 
         if (!item.style.translate) posX = 0;
         
-        if (lproductos > showed && posMax < posX){
+        if (lProductos > paso && posMax < posX){
             item.style.transition = "800ms";
             item.style.translate = (posX + move) + "%";
         }
@@ -90,6 +93,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1
                     {listItems()}
                     
                 </ul>
+                
             </div>
         </div>
     );

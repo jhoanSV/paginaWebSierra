@@ -43,6 +43,10 @@
     transition: 200ms;
 }
 
+.modal.fade{
+    position: absolute;
+}
+
 @media (max-width: 636px){
     .caja{
         min-width: 44%;

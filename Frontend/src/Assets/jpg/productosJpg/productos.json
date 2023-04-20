@@ -1,49 +1,61 @@
 [
     {
+        "id" : "1",
         "cod" : "A0001",
         "descripcion" : "producto1"
     },
     {
+        "id" : "2",
         "cod" : "A0002",
         "descripcion" : "producto2"
     },
     {
+        "id" : "3",
         "cod" : "A0003A",
         "descripcion" : "producto3"
     },
     {
+        "id" : "4",
         "cod" : "A0003AB",
         "descripcion" : "producto4"
     },
     {
+        "id" : "5",
         "cod" : "A0003C",
         "descripcion" : "producto5"
     },
     {
+        "id" : "6",
         "cod" : "A0004",
         "descripcion" : "producto6"
     },
     {
+        "id" : "7",
         "cod" : "AEV14",
         "descripcion" : "producto7"
     },
     {
+        "id" : "8",
         "cod" : "AP001",
         "descripcion" : "producto8"
     },
     {
+        "id" : "9",
         "cod" : "AP007",
         "descripcion" : "producto9"
     },
     {
+        "id" : "10",
         "cod" : "AP008",
         "descripcion" : "producto10"
     },
     {
+        "id" : "11",
         "cod" : "AP010",
         "descripcion" : "producto11"
     },
     {
+        "id" : "12",
         "cod" : "AP017",
         "descripcion" : "producto12"
     }

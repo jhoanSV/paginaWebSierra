@@ -1,7 +1,7 @@
 import React from "react";
 import "./_ListItem.scss";
 
-export const ListItem=({codigo, descripcion})=>{
+export const ListItem=({llave, codigo, descripcion})=>{
 
 
 
@@ -10,7 +10,7 @@ export const ListItem=({codigo, descripcion})=>{
         //src={require(`../../Assets/jpg/Promociones/${data[0].cod}.jpg`)}
         <>
             
-            <div className="caja" data-bs-toggle="modal" data-bs-target="#producto">
+            <div className="caja" data-bs-toggle="modal" data-bs-target={`#producto${llave}`}>
                 
                 <div className="row">
                     <div className="col h-100">
@@ -34,11 +34,11 @@ export const ListItem=({codigo, descripcion})=>{
                 
             </div>
 
-            <div class="modal fade" id="producto" tabindex="-1" aria-labelledby="productoLabel" aria-hidden="true">
+            <div class="modal fade" id={`producto${llave}`} tabIndex="-1" aria-labelledby="productoLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="productolLabel">Descripción</h1>
+                            <h1 class="modal-title fs-5" id="productolLabel">{descripcion}</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
