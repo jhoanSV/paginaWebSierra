@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./_CarruselInf.scss";
 import { ListItem } from "./index";
 //import FlatList from "flatlist-react/lib";
@@ -8,24 +8,30 @@ import { ListItem } from "./index";
 //`../Assets/productosJpg/${data.cod}.jpg`
 
 export function CarruselInf(props){//Aquí recibe la LIST1
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [lproductos, setLProductos] = useState(props.lista1.length - 1);
+    var showed = 0;
+    var move = 0;
+    var posMax = (-((lproductos + 2) * 10));    
 
-    const vent = window.matchMedia("(max-width: 636px)");
-    const [showed, setShowed] = useState(5);
-    const [move, setMove] = useState(-20);
-    const [lproductos, setLProductos] = useState(props.lista1.length);
-    const [posMax, setposMax] = useState(-(lproductos * 10)); 
-    
-    useEffect(() => {
-        if(vent.matches){
-            setShowed(1);
-            setMove(-100);
-            console.log("tablet: " + move + " " + showed);
-        }else{
-            setShowed(5);
-            setMove(-20);
-            console.log("tablet: " + move + " " + showed);
+    window.addEventListener('resize', function() {
+        const item = document.querySelector("#pContainer");
+        setScreenWidth(window.innerWidth);
+        console.log(screenWidth);
+        if(screenWidth < 636 ){            
+            item.style.translate = "0%";
+            console.log("entra aquí?");
         }
-      }, [move, showed]);
+    });
+
+    if(screenWidth < 636 ){
+        showed = 1;
+        move = -100;
+        posMax = (-(lproductos * 100));
+    }else{
+        showed = 5;
+        move = -20;
+    }
 
     function listItems (){      
         return (
@@ -46,8 +52,8 @@ export function CarruselInf(props){//Aquí recibe la LIST1
         var posX = (parseFloat(item.style.translate));
 
         if (!item.style.translate) posX = 0;
-
-        if (lproductos > showed && posMax <= posX){
+        
+        if (lproductos > showed && posMax < posX){
             item.style.transition = "800ms";
             item.style.translate = (posX + move) + "%";
         }
