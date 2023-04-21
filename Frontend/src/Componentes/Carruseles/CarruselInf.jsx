@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./_CarruselInf.scss";
 import { ListItem } from "./index";
 //import FlatList from "flatlist-react/lib";
@@ -11,34 +11,43 @@ export function CarruselInf(props){//Aquí recibe la LIST1
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [lProductos, setLProductos] = useState(props.lista1.length); 
     const [charge, setCharge] = useState(5);//variable "SeVe"
+    const [bef, setBef] = useState(0);
+    const [move, setMove] = useState(0);
     var paso = 5;//lo que se agrega para cargar
-    var show = 0;// lo que muestra
-    var move = 0;
-    var posMax = 0;
 
     if(charge > lProductos) setCharge(lProductos);
 
     window.addEventListener('resize', function() {
         const item = document.querySelector("#pContainer");
         setScreenWidth(window.innerWidth);
-        console.log(screenWidth);
-        if(screenWidth < 636 ){            
-            item.style.translate = "0%";
-            console.log("entra aquí?");
-        }
+        item.style.left = "0%";
     });
 
-    if(screenWidth < 636 ){
-        show = 1;
-        move = -100;
-        posMax = (-(lProductos + 1 * 100));
-    }else{
-        show = 5;
-        move = -20;
-        posMax = (-((lProductos) * 10));
+    useEffect(() => {
+        check();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const check = () =>{
+        if(screenWidth < 636 ){
+            setBef(1);//show = 1;
+            setMove(-100);
+        }else{
+            setBef(5);//show = 5;
+            setMove(-20);
+        }
     }
 
-    function listItems (){      
+    useEffect(() => {
+        console.log(bef);
+        console.log(move);
+        if(bef === charge && bef === lProductos){
+            setMove(0);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [bef]);
+
+    function listItems (){
         return (
             props.lista1.slice(0,charge).map((item) =>
                 <>  
@@ -52,35 +61,36 @@ export function CarruselInf(props){//Aquí recibe la LIST1
         )
     }
 
-    const Next=()=>{
-        const item = document.querySelector("#pContainer");
-        var posX = (parseFloat(item.style.translate));
-        item.style.transition = "800ms";
-
-        if (!item.style.translate) posX = 0;
-        
-        console.log(charge + " , "+ lProductos + " , " + show);
-        if (charge > show && posMax < posX){//si hay más por mostrar, mueva
-            item.style.translate = (posX + move) + "%";            
-        }else if(charge >= lProductos){//lo que carga es mayor al numero de productos?, disminuye paso
-            paso = lProductos - show;
-            setCharge(charge + paso);
-            console.log(charge + " >= "+ lProductos);
-        }else{
-            setCharge(charge + paso);
-            item.style.translate = (posX + move) + "%";
-            console.log(charge + " <= "+ lProductos);
+    function lazy (){
+        if ((charge + paso) >= lProductos && lProductos !== charge){
+            paso = lProductos - charge;
         }
-        console.log(posMax + " , " + item.style.translate);
+    }
+
+    const Next = () => {
+        const item = document.querySelector("#pContainer");
+        var posX = (parseFloat(item.style.left));
+        item.style.transition = "800ms";
+        
+        if (!item.style.left) posX = 0;
+        
+        if (bef === charge && bef < lProductos){
+            lazy();
+            setCharge(charge + paso);
+        }
+        setBef(bef + 1);
+        item.style.left = (posX + move) + "%";
     }
 
     function Prev(){
         const item = document.querySelector("#pContainer");
-        var posX = (parseFloat(item.style.translate));
-        if(!item.style.translate || posX === 0){
+        var posX = (parseFloat(item.style.left));
+        check();
+        if(!item.style.left || posX === 0){
             return console.log(posX + " después se acomoda estoxD");
         }
-        item.style.translate = (posX - move) + "%";
+        setBef(bef - 1);
+        item.style.left = (posX - move) + "%";
     }
 
 
