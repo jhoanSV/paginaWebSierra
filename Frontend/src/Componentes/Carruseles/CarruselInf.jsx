@@ -9,13 +9,14 @@ import { ListItem } from "./index";
 
 export function CarruselInf(props){//Aquí recibe la LIST1
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-    const [lProductos, setLProductos] = useState(props.lista1.length);    
-    var paso = 0;
-    var show = 5;//variable "SeVe"
+    const [lProductos, setLProductos] = useState(props.lista1.length); 
+    const [charge, setCharge] = useState(5);//variable "SeVe"
+    var paso = 5;//lo que se agrega para cargar
+    var show = 0;// lo que muestra
     var move = 0;
-    var posMax = (-((lProductos + 1) * 10));
+    var posMax = 0;
 
-    if(show > lProductos) show = lProductos;
+    if(charge > lProductos) setCharge(lProductos);
 
     window.addEventListener('resize', function() {
         const item = document.querySelector("#pContainer");
@@ -28,17 +29,18 @@ export function CarruselInf(props){//Aquí recibe la LIST1
     });
 
     if(screenWidth < 636 ){
-        paso = 1;
+        show = 1;
         move = -100;
-        posMax = (-(lProductos * 100));
+        posMax = (-(lProductos + 1 * 100));
     }else{
-        paso = 5;
+        show = 5;
         move = -20;
+        posMax = (-((lProductos) * 10));
     }
 
     function listItems (){      
         return (
-            props.lista1.slice(0,show).map((item) =>
+            props.lista1.slice(0,charge).map((item) =>
                 <>  
                     <ListItem key={(item.id).toString()}
                         llave = {item.id}
@@ -53,13 +55,23 @@ export function CarruselInf(props){//Aquí recibe la LIST1
     const Next=()=>{
         const item = document.querySelector("#pContainer");
         var posX = (parseFloat(item.style.translate));
+        item.style.transition = "800ms";
 
         if (!item.style.translate) posX = 0;
         
-        if (lProductos > paso && posMax < posX){
-            item.style.transition = "800ms";
+        console.log(charge + " , "+ lProductos + " , " + show);
+        if (charge > show && posMax < posX){//si hay más por mostrar, mueva
+            item.style.translate = (posX + move) + "%";            
+        }else if(charge >= lProductos){//lo que carga es mayor al numero de productos?, disminuye paso
+            paso = lProductos - show;
+            setCharge(charge + paso);
+            console.log(charge + " >= "+ lProductos);
+        }else{
+            setCharge(charge + paso);
             item.style.translate = (posX + move) + "%";
+            console.log(charge + " <= "+ lProductos);
         }
+        console.log(posMax + " , " + item.style.translate);
     }
 
     function Prev(){
