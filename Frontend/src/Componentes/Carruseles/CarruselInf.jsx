@@ -13,6 +13,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1
     const [charge, setCharge] = useState(5);//variable "SeVe"
     const [bef, setBef] = useState(0);
     const [move, setMove] = useState(0);
+    const [back, setBack] = useState(0);
     var paso = 5;//lo que se agrega para cargar
 
     if(charge > lProductos) setCharge(lProductos);
@@ -32,9 +33,11 @@ export function CarruselInf(props){//Aquí recibe la LIST1
         if(screenWidth < 636 ){
             setBef(1);//show = 1;
             setMove(-100);
+            setBack(-100);
         }else{
             setBef(5);//show = 5;
             setMove(-20);
+            setBack(-20);
         }
     }
 
@@ -43,6 +46,12 @@ export function CarruselInf(props){//Aquí recibe la LIST1
         console.log(move);
         if(bef === charge && bef === lProductos){
             setMove(0);
+        }else{
+            if(screenWidth < 636 ){
+                setMove(-100);
+            }else{
+                setMove(-20);
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [bef]);
@@ -78,19 +87,21 @@ export function CarruselInf(props){//Aquí recibe la LIST1
             lazy();
             setCharge(charge + paso);
         }
-        setBef(bef + 1);
+        if (bef !== lProductos){
+            setBef(bef + 1);
+        }
         item.style.left = (posX + move) + "%";
     }
 
     function Prev(){
         const item = document.querySelector("#pContainer");
         var posX = (parseFloat(item.style.left));
-        check();
         if(!item.style.left || posX === 0){
             return console.log(posX + " después se acomoda estoxD");
         }
         setBef(bef - 1);
-        item.style.left = (posX - move) + "%";
+        console.log("back: " + back);
+        item.style.left = (posX - back) + "%";
     }
 
 

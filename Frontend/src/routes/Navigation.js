@@ -7,7 +7,7 @@ export function LoggedNavigation() {
     return (
       <BrowserRouter>
           <Routes>
-              <Route path='/' element={ <Inicio /> } />
+              <Route path='/' element={ <Inicio /> } />            
           </Routes>
       </BrowserRouter>
     );
