@@ -1,11 +1,26 @@
 @import "../../scss/index.scss";
 
 .about{
+    position: relative;
     padding: 1.12vw 1.69vw;
+    min-height: 30rem;
+}
+
+.log-anima{
+    video{
+        width: 30%;
+        height: auto;
+    }
 }
 
 .qSomos{
+    position: relative;
     h1{
+        color: $azulPrincipal;
+        position: relative;
         text-align: center;
+        margin-bottom: 1.1875rem;
     }
+    opacity: 0;
+    transform: translateY(100px);
 }
