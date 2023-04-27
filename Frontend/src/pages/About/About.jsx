@@ -15,19 +15,15 @@ export function About() {
             <div className="about">
                 <div className="row">
                     <div className="col">
-                        
-                        <div>
-                            <div className="col log-anima d-flex justify-content-center">
+                        <div className="col log-anima d-flex justify-content-center">
 
-                                <video 
-                                    width="100%"
-                                    height="auto"
-                                    src={require("../../Assets/mp4/ArtemisUjuu.mp4")}
-                                    autoPlay
-                                    muted
-                                />
+                            <img 
+                                width="2207px"
+                                height="839px"
+                                src={require("../../Assets/png/LogoSierraAnima.png")}
+                                alt="sierra-anima"
+                            />
 
-                            </div>
                         </div>
 
                         <div className="qSomos montserratFont">

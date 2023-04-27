@@ -3,9 +3,7 @@
 import { Routes, Route } from "react-router-dom"
 import { Header } from "./layouts";
 import { Footer } from "./layouts";
-import { Home } from "./pages";
-import { Products } from "./pages";
-import { About } from "./pages";
+import { Home, Products, About, Privacy } from "./pages";
 
 import './_App.scss';
 
@@ -30,6 +28,7 @@ export default function App() {
             <Route path="/" element={ <Home /> } />
             <Route path="productos" element={ <Products /> } />
             <Route path='/about' element={ <About /> } />
+            <Route path='/privacy' element={ <Privacy /> } />
           </Routes>
         </div>
 
