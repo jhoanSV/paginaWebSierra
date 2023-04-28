@@ -15,13 +15,14 @@ export function About() {
             <div className="about">
                 <div className="row">
                     <div className="col">
-                        <div className="col log-anima d-flex justify-content-center">
+                        <div className="col log-anima">
 
-                            <img 
+                            <video
                                 width="2207px"
                                 height="839px"
-                                src={require("../../Assets/png/LogoSierraAnima.png")}
-                                alt="sierra-anima"
+                                src={require("../../Assets/mp4/anima1.1.mp4")}
+                                autoPlay
+                                muted                                
                             />
 
                         </div>
