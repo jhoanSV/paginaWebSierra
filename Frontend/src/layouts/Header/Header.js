@@ -1,5 +1,6 @@
 import React from "react";
 import "./_header.scss";
+import { Link } from "react-router-dom";
 
 
 export function Header() {
@@ -86,15 +87,14 @@ export function Header() {
                     <div className="col">
                         <div className="grupoBotones">
                             <div className="btn-group g1 flex-wrap">
-                                <button type="button" class="btn btn-navBar btn-lg">Inicio</button>
-                                <button type="button" class="btn btn-navBar btn-lg">Productos</button>
-                                <button type="button" class="btn btn-navBar btn-lg">Quienes somos</button>
-                                <button type="button" class="btn btn-navBar btn-lg">Contactanos</button>
+                                <Link to="/" type="button" class="btn btn-navBar btn-lg">Inicio</Link>
+                                <Link to="/products" type="button" class="btn btn-navBar btn-lg">Productos</Link>
+                                <Link to="/about" type="button" class="btn btn-navBar btn-lg">Quienes somos</Link>
+                                <Link to="/" type="button" class="btn btn-navBar btn-lg">Contactanos</Link>
                             </div>
                         </div>
                     </div>
                 </div>
-                
             </div>
         </header>       
     );

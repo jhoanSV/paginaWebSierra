@@ -6,6 +6,7 @@ export function About() {
     useEffect(() => {
 
         const qSomosDiv = document.querySelector(".qSomos");
+
         qSomosDiv.classList.add("anima-Entrada");
 
     }, []);
@@ -17,12 +18,12 @@ export function About() {
                     <div className="col">
                         <div className="col log-anima">
 
-                            <video
+                            <img
                                 width="2207px"
                                 height="839px"
-                                src={require("../../Assets/mp4/anima1.1.mp4")}
-                                autoPlay
-                                muted                                
+                                src={require("../../Assets/gif/animaTemp.gif")}
+                                alt="anima"                                
+                                id="anima1"
                             />
 
                         </div>

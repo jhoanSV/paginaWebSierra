@@ -1,14 +1,17 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Inicio } from "../pages/Home";
+import { Routes, Route } from 'react-router-dom';
+import { Home, Products, About, Privacy } from "../pages";
 
 
-export function LoggedNavigation() {
+export function /*LoggedNavigation*/Navigation() {
     return (
-      <BrowserRouter>
+      <>
           <Routes>
-              <Route path='/' element={ <Inicio /> } />            
+              <Route path='/' element={ <Home /> } />
+              <Route path='/products' element={ <Products /> } />
+              <Route path='/about' element={ <About /> } />
+              <Route path='/privacy' element={ <Privacy /> } />
           </Routes>
-      </BrowserRouter>
+      </>
     );
-  }
+}

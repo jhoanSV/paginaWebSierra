@@ -1,9 +1,9 @@
 //import React , { useState } from "react";
 //import { Navigation } from "./routes";
-import { Routes, Route } from "react-router-dom"
 import { Header } from "./layouts";
 import { Footer } from "./layouts";
-import { Home, Products, About, Privacy } from "./pages";
+//import { Home, Products, About, Privacy } from "./pages";
+import { Navigation } from "./routes";
 
 import './_App.scss';
 
@@ -23,18 +23,10 @@ export default function App() {
 
         <Header></Header>
 
-        <div className="App">
-          <Routes>
-            <Route path="/" element={ <Home /> } />
-            <Route path="productos" element={ <Products /> } />
-            <Route path='/about' element={ <About /> } />
-            <Route path='/privacy' element={ <Privacy /> } />
-          </Routes>
-        </div>
+        <Navigation></Navigation>
 
         <Footer></Footer>
       </>
       
   );
 }
-
