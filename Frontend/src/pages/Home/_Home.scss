@@ -60,28 +60,34 @@
     }
 }
 
+.c-categ img:hover{
+    transform: scale(1.01, 1.01);
+    transition: 200ms;
+    box-shadow: 0.01rem 0.01rem 1.5rem 0.3rem currentColor;
+}
+
 .c-categ #catYellow:hover{
-    @include borde($amarilloPrincipal);
+    @include borde($cEbanisteria);
 }
 
 .c-categ #catRed:hover{
-    @include borde(red);
+    @include borde($cEstudiantil);
 }
 
 .c-categ #catNaranja:hover{
-    @include borde(#f2894f);
+    @include borde($cGas);
 }
 
 .c-categ #catAzul:hover{
-    @include borde(#0097e0);
+    @include borde($cGriferia);
 }
 
 .c-categ #catVerde:hover{
-    @include borde(#02a55a);
+    @include borde($cElectricos);
 }
 
 .c-categ #catCafe:hover{
-    @include borde(#83706b);
+    @include borde($cTornilleria);
 }
 
 #categorias{

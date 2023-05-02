@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./_Footer.scss";
 
@@ -53,7 +54,7 @@ export function Footer(){
                             Cambios y Devoluciones
                         </div>
                         <div className="row g-0">
-                            Politica de Datos
+                            <Link to="/privacy">Politica de Datos</Link>
                         </div>
                         <div className="row g-0 redes">
                             <div className="col-4">

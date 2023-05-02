@@ -21,7 +21,7 @@ export function About() {
                             <img
                                 width="2207px"
                                 height="839px"
-                                src={require("../../Assets/gif/animaTemp.gif")}
+                                src={require("../../Assets/gif/anima1.3.gif")}
                                 alt="anima"                                
                                 id="anima1"
                             />

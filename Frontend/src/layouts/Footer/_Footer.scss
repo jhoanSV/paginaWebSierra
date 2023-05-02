@@ -9,6 +9,11 @@
     background-color: $azulPrincipal;
     color: $blancoPrincipal;
     font-size: 19px;
+    a{
+        color: $blancoPrincipal;
+        text-decoration: none;
+        --bs-link-hover-color: #F2CB05;
+    }
 }
 
 .row h5{

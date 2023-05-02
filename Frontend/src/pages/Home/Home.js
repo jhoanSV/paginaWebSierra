@@ -1,28 +1,32 @@
 import React from "react";
+import "./_Home.scss";
 import { Carrusel } from "../../Componentes/Carruseles/Carrusel";
 import { CarruselInf } from "../../Componentes/Carruseles";
 import arJason from "../../Assets/jpg/productosJpg/productos.json";
 import categ from "../../Assets/jpg/categorias/categorias.json";
-import "./_Home.scss";
+import { Link } from "react-router-dom";
 
 export function Home() {
 
     const itItems = categ.map( item => 
 
         <>
-            <div className="c-categ">
+            <div key={item.id} className="c-categ">
 
-                <img
-                    id={(`cat${item.color}`)}
-                    src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
-                    alt="categoria"
-                
-                />
+                <Link to="/products">
+                    <img
+                        style={{color: `${item.color}`}}
+                        //id={(`cat${item.color}`)}
+                        src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
+                        alt="categoria"
+                    />
+                </Link>
 
             </div>
 
 
         </>
+        
     );
 
     return (
