@@ -12,7 +12,7 @@ export function /*LoggedNavigation*/Navigation() {
               <Route path='products' element={ <Products /> } />
               <Route path='about' element={ <About /> } />
               <Route path='privacy' element={ <Privacy /> } />
-              <Route path='categories/:id'   />
+              <Route path='categories/:name' element={ <Categories /> } />
           </Routes>
       </>
     );

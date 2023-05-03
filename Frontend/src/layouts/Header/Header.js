@@ -41,8 +41,8 @@ export function Header() {
                         </button>
 
                         <ul className="dropdown-menu">
-                            <li><a className="dropdown-item" href="/inicio">Inicio</a></li>
-                            <li><a className="dropdown-item" href="/productos">Productos</a></li>
+                            <li><a className="dropdown-item" href="/">Inicio</a></li>
+                            <li><a className="dropdown-item" href="/products">Productos</a></li>
                             <li><a className="dropdown-item" href="/about">Quienes somos</a></li>
                             <li><a className="dropdown-item" href="/contactanos">Contactanos</a></li>
                         </ul>

@@ -4,41 +4,41 @@
         "descripcion" : "ebanisteria",
         "gif" : "rutagif",
         "cat" : "rutaal catalogo",
-        "color" : "#ffcc29"
+        "color" : "cEba"
     },
     {
         "id" : "2",
         "descripcion" : "estudiantil",
         "gif" : "rutagif",
         "cat" : "rutaal catalogo",
-        "color" : "$cEstudiantil"
+        "color" : "cEst"
     },
     {
         "id" : "3",
         "descripcion" : "gas",
         "gif" : "rutagif",
         "cat" : "rutaal catalogo",
-        "color" : "$cGas"
+        "color" : "cGas"
     },
     {
         "id" : "4",
         "descripcion" : "griferia",
         "gif" : "rutagif",
         "cat" : "rutaal catalogo",
-        "color" : "$cGriferia"
+        "color" : "cGri"
     },
     {
         "id" : "5",
         "descripcion" : "electricos",
         "gif" : "rutagif",
         "cat" : "rutaal catalogo",
-        "color" : "$cElectricos"
+        "color" : "cElec"
     },
     {
         "id" : "6",
         "descripcion" : "tornilleria",
         "gif" : "rutagif",
         "cat" : "rutaal catalogo",
-        "color" : "$cTornilleria"
+        "color" : "cTor"
     }
 ]

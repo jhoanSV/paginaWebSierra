@@ -8,26 +8,28 @@ import { Link } from "react-router-dom";
 
 export function Home() {
 
-    const itItems = categ.map( item => 
+    const itItems = categ.map( item => {
 
-        <>
-            <div key={item.id} className="c-categ">
+        return(
+            <>
+                <div key={item.id} className="c-categ">
 
-                <Link to="/products">
-                    <img
-                        style={{color: `${item.color}`}}
-                        //id={(`cat${item.color}`)}
-                        src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
-                        alt="categoria"
-                    />
-                </Link>
+                    <Link to={`/categories/${item.descripcion}`}>
+                        <img
+                            //style={{color: `${item.color}`}}
+                            //id={(`cat${item.color}`)}
+                            className={`${item.color}`}
+                            src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
+                            alt="categoria"
+                        />
+                    </Link>
 
-            </div>
+                </div>
 
 
-        </>
-        
-    );
+            </>
+        );
+    });
 
     return (
         <div className="inicio">

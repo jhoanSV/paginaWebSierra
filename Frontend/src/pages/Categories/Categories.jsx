@@ -5,12 +5,12 @@ import list from "../../Assets/jpg/categorias/categorias.json";
 
 export function Categories() {
     
-    const { name } = useParams();
+    let { name } = useParams();
     const cat = list.find((i) => i.descripcion === name);
 
     return (
-        <div>
-            Categories
+        <div className="categoria">
+            {`${cat.descripcion}`}
             
         </div>
     );

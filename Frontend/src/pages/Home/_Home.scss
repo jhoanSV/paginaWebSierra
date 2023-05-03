@@ -1,11 +1,5 @@
 @import "../../scss/index.scss";
 
-@mixin borde($prop1){
-    transform: scale(1.01, 1.01);
-    transition: 200ms;
-    box-shadow: 0.01rem 0.01rem 1.5rem 0.3rem $prop1;
-}
-
 .inicio{
     padding: 1.12vw 1.69vw;
 }
@@ -64,30 +58,6 @@
     transform: scale(1.01, 1.01);
     transition: 200ms;
     box-shadow: 0.01rem 0.01rem 1.5rem 0.3rem currentColor;
-}
-
-.c-categ #catYellow:hover{
-    @include borde($cEbanisteria);
-}
-
-.c-categ #catRed:hover{
-    @include borde($cEstudiantil);
-}
-
-.c-categ #catNaranja:hover{
-    @include borde($cGas);
-}
-
-.c-categ #catAzul:hover{
-    @include borde($cGriferia);
-}
-
-.c-categ #catVerde:hover{
-    @include borde($cElectricos);
-}
-
-.c-categ #catCafe:hover{
-    @include borde($cTornilleria);
 }
 
 #categorias{
