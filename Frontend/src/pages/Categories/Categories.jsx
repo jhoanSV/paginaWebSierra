@@ -2,6 +2,7 @@ import React from 'react';
 import "./_Categories.scss";
 import { useParams } from 'react-router-dom';
 import list from "../../Assets/jpg/categorias/categorias.json";
+//import aja from "../../Assets/gif/"
 
 export function Categories() {
     

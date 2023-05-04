@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./_CarruselInf.scss";
 import { ListItem } from "./index";
 //import FlatList from "flatlist-react/lib";
@@ -8,28 +8,36 @@ import { ListItem } from "./index";
 //`../Assets/productosJpg/${data.cod}.jpg`
 
 export function CarruselInf(props){//Aquí recibe la LIST1
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-    const [lProductos, setLProductos] = useState(props.lista1.length); 
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth); 
     const [charge, setCharge] = useState(5);//variable "SeVe"
     const [bef, setBef] = useState(0);
     const [move, setMove] = useState(0);
     const [back, setBack] = useState(0);
+    const lProductos = props.lista1.length;
+    const pConte = useRef();
     var paso = 5;//lo que se agrega para cargar
 
     if(charge > lProductos) setCharge(lProductos);
 
-    window.addEventListener('resize', function() {
+    /*window.addEventListener('resize', function() {
         const item = document.querySelector("#pContainer");
         setScreenWidth(window.innerWidth);
         item.style.left = "0%";
+    });*/
+
+    const resize_ob = new ResizeObserver(function() {
+        console.log("??????hptphtphptpht");
+        pConte.current.style.left = "0%";
     });
 
     useEffect(() => {
-        check();
+        resize_ob.observe(document.querySelector("#pContainer"));
+        check();//este check va acá adentro de useEffect porque si no causa re-renders
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const check = () =>{
+        console.log("chekeame esta");
         if(screenWidth < 636 ){
             setBef(1);//show = 1;
             setMove(-100);
@@ -121,7 +129,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1
                     </svg>
                 </button>
 
-                <ul id="pContainer" className="d-flex py-3 px-0 m-0">
+                <ul id="pContainer" className="d-flex py-3 px-0 m-0" ref={pConte}>
 
                     {listItems()}
                     

@@ -2,43 +2,43 @@
     {
         "id" : "1",
         "descripcion" : "ebanisteria",
-        "gif" : "rutagif",
-        "cat" : "rutaal catalogo",
+        "gif" : "../../Assets/gif/ebanisteria.png",
+        "cat" : "../../Assets/docs/CATALOGO-NUEVO-FEB-2023.pdf",
         "color" : "cEba"
     },
     {
         "id" : "2",
         "descripcion" : "estudiantil",
-        "gif" : "rutagif",
-        "cat" : "rutaal catalogo",
+        "gif" : "../../Assets/gif/estudiantil.png",
+        "cat" : "../../Assets/docs/CATALOGO-NUEVO-FEB-2023.pdf",
         "color" : "cEst"
     },
     {
         "id" : "3",
         "descripcion" : "gas",
-        "gif" : "rutagif",
-        "cat" : "rutaal catalogo",
+        "gif" : "../../Assets/gif/gas.png",
+        "cat" : "../../Assets/docs/CATALOGO-NUEVO-FEB-2023.pdf",
         "color" : "cGas"
     },
     {
         "id" : "4",
         "descripcion" : "griferia",
-        "gif" : "rutagif",
-        "cat" : "rutaal catalogo",
+        "gif" : "../../Assets/gif/griferia.png",
+        "cat" : "../../Assets/docs/CATALOGO-NUEVO-FEB-2023.pdf",
         "color" : "cGri"
     },
     {
         "id" : "5",
         "descripcion" : "electricos",
-        "gif" : "rutagif",
-        "cat" : "rutaal catalogo",
+        "gif" : "../../Assets/gif/electricos.png",
+        "cat" : "../../Assets/docs/CATALOGO-NUEVO-FEB-2023.pdf",
         "color" : "cElec"
     },
     {
         "id" : "6",
         "descripcion" : "tornilleria",
-        "gif" : "rutagif",
-        "cat" : "rutaal catalogo",
+        "gif" : "../../Assets/gif/tornilleria.png",
+        "cat" : "../../Assets/docs/CATALOGO-NUEVO-FEB-2023.pdf",
         "color" : "cTor"
     }
 ]
