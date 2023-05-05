@@ -19,9 +19,15 @@ export function CarruselInf(props){//Aquí recibe la LIST1
 
     if(charge > lProductos) setCharge(lProductos);
 
-    const resize_ob = new ResizeObserver(function() {
+    /*window.addEventListener('resize', function() {
+        const item = document.querySelector("#pContainer");
         setScreenWidth(window.innerWidth);
-        //pConte.current.style.left = "0%";
+        item.style.left = "0%";
+    });*/
+
+    const resize_ob = new ResizeObserver(function() {
+        console.log("??????hptphtphptpht");
+        pConte.current.style.left = "0%";
     });
 
     useEffect(() => {
@@ -29,14 +35,6 @@ export function CarruselInf(props){//Aquí recibe la LIST1
         check();//este check va acá adentro de useEffect porque si no causa re-renders
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    useEffect(() => {
-        if(screenWidth < 636 ){
-            pConte.current.style.left = "0%";
-            check();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [screenWidth]);
 
     const check = () =>{
         console.log("chekeame esta");
@@ -46,7 +44,6 @@ export function CarruselInf(props){//Aquí recibe la LIST1
             setBack(-100);
         }else{
             setBef(5);//show = 5;
-            console.log("??????hptphtphptpht");
             setMove(-20);
             setBack(-20);
         }
@@ -60,10 +57,8 @@ export function CarruselInf(props){//Aquí recibe la LIST1
         }else{
             if(screenWidth < 636 ){
                 setMove(-100);
-                setBack(-100);
             }else{
                 setMove(-20);
-                setBack(-20);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
