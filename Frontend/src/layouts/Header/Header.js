@@ -49,7 +49,7 @@ export function Header() {
                     </div>
 
                     <div className="col logo">
-                        <a href="index.html" style={{textDecoration: "none" }}>
+                        <a href="/" style={{textDecoration: "none" }}>
                             <img
                                 src={require("../../Assets/png/LogoSierra.png")}
                                 width="2207px"

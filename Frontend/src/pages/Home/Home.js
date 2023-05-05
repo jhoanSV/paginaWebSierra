@@ -15,9 +15,7 @@ export function Home() {
                 <div key={item.id} className="c-categ">
 
                     <Link to={`/categories/${item.descripcion}`}>
-                        <img
-                            //style={{color: `${item.color}`}}
-                            //id={(`cat${item.color}`)}
+                        <img                            
                             className={`${item.color}`}
                             src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
                             alt="categoria"
