@@ -1,7 +1,8 @@
 import { React } from 'react';
-import "./_Categories.scss";
-import { useParams } from 'react-router-dom';
 import list from "../../Assets/jpg/categorias/categorias.json";
+import "./_Categories.scss";
+import { CategoryMenu } from '../../Componentes/Carruseles/CategoryMenu';
+import { useParams } from 'react-router-dom';
 //import aja from "../../Assets/gif/ebanisteria.png";
 
 export function Categories() {
@@ -33,11 +34,14 @@ export function Categories() {
                     <div className="col pdfViewer">                        
                         <iframe 
                             title="pdf"
-                            //src="https://drive.google.com/file/d/1IPUFXtvUWSbA8gajjFVrrsk-Uqx12SH3/preview?usp=embed_googleplus"
                             src={`${cat.cat}`}
                             frameborder="0"
                         />
                     </div>
+                </div>
+
+                <div>
+                    <CategoryMenu/>
                 </div>
                 
             </div>

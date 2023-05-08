@@ -12,7 +12,7 @@ export function Home() {
 
         return(
             <>
-                <div key={item.id} className="c-categ">
+                <div className="c-categ">
 
                     <Link to={`/categories/${item.descripcion}`}>
                         <img                            
