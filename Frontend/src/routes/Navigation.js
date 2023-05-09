@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Home, Products, About, Privacy, Categories} from "../pages";
+import { Home, Products, About, Privacy, Catalogo} from "../pages";
 
 
 
@@ -12,7 +12,7 @@ export function /*LoggedNavigation*/Navigation() {
               <Route path='products' element={ <Products /> } />
               <Route path='about' element={ <About /> } />
               <Route path='privacy' element={ <Privacy /> } />
-              <Route path='categories/:name' element={ <Categories /> } />
+              <Route path='catalogo' element={ <Catalogo /> } />
           </Routes>
       </>
     );

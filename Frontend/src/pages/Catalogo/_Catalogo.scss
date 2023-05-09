@@ -1,0 +1,13 @@
+.categoria{
+    position: relative;
+}
+
+.col.pdfViewer {
+    display: flex;
+    justify-content: center;
+    margin: 1.25rem 0rem;
+    iframe {
+        width: 70%;
+        height: 1057px;
+    }
+}
