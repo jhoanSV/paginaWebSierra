@@ -12,12 +12,10 @@ export function Home() {
 
         return(
             <>
-                <div key={item.id} className="c-categ">
+                <div className="c-categ">
 
-                    <Link to={`/categories/${item.descripcion}`}>
-                        <img
-                            //style={{color: `${item.color}`}}
-                            //id={(`cat${item.color}`)}
+                    <Link to={`catalogo`}>
+                        <img                            
                             className={`${item.color}`}
                             src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
                             alt="categoria"

@@ -9,7 +9,7 @@ export function Carrusel(props){
         <>
             <div id={`${props.idCarrusel}`} className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-indicators">
-                    <button id="color-indicator" type="button" data-bs-target={`#${props.idCarrusel}`} data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button id="color-indicator" type="button" data-bs-target={`#${props.idCarrusel}`} data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
                     <button id="color-indicator" type="button" data-bs-target={`#${props.idCarrusel}`} data-bs-slide-to="1" aria-label="Slide 2"></button>
                     <button id="color-indicator" type="button" data-bs-target={`#${props.idCarrusel}`} data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
