@@ -8,17 +8,17 @@ export function CategoryMenu() {
     const items = categs;
 
     const Items = () => (
-        <ul>
+        <ul className="lista-cat">
           {
             items.map((item, index) => (
                 <li key={index}>
                     <Link to={`/categories/${item.descripcion}`}>
                         <img
                             className="logoMenuCat"
-                            src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
+                            src={require(`../../Assets/png/Logos/${item.descripcion}.png`)}
                             alt="imgCategory"
                         />
-                        {item.descripcion}
+                        <span>{item.descripcion}</span>
                     </Link>                    
                 </li>
             ))
@@ -27,8 +27,13 @@ export function CategoryMenu() {
     );
 
     return (
-        <div className="menu-category">
-            <Items/>
-        </div>        
+        <div className="container-menu">
+            <div className="menu-category">
+                <div className="menu-button" role="button">
+                    <i className="bi bi-chevron-left"></i>
+                </div>  
+                <Items/>
+            </div>            
+        </div>
     );
 }
