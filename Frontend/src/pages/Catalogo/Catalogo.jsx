@@ -1,12 +1,17 @@
-import { React } from 'react';
-//import list from "../../Assets/jpg/categorias/categorias.json";
-import "./_Catalogo.scss";
+import { React, useState } from "react";
 import { CategoryMenu } from "../../Componentes/Carruseles/CategoryMenu";
-import { Document, Page } from "react-pdf";
-//import { useParams } from 'react-router-dom';
-//import aja from "../../Assets/gif/ebanisteria.png";
+import "./_Catalogo.scss";
+
+import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
+import pdfFile from "../../Assets/docs/Catalogo.pdf";
 
 export function Catalogo() {
+    const [numPages, setNumPages] = useState(null);
+    const [pageNumber, setPageNumber] = useState(1);
+
+    const onDocumentLoadSuccess = ({ numPages }) => {
+        setNumPages(numPages);
+    };
     
     window.scrollTo(0, 0);
     /*let { name } = useParams();
@@ -14,12 +19,13 @@ export function Catalogo() {
 
     return (
         <>
-            <div className="categoria">                
+            <div className="categoria">
 
                 <div className="row">
-                    <div className="col pdfViewer">                      
-                        <Document file="../../Assets/docs/Catalogo.pdf">
-                            <Page/>
+                    <div className="col pdfViewer">
+                        <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess} >
+                            <Page pageNumber={pageNumber}/>
+                            <Page pageNumber={pageNumber+1}/>
                         </Document>
                     </div>
                 </div>
