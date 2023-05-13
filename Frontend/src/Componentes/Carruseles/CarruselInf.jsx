@@ -38,7 +38,6 @@ export function CarruselInf(props){//Aquí recibe la LIST1
     useEffect(() => {
         if(screenWidth < 636 ){
             pConte.current.style.left = "0%";
-<<<<<<< Updated upstream
             setBef(1);//show = 1;
             setMove(-100);
             setBack(-100);
@@ -47,11 +46,6 @@ export function CarruselInf(props){//Aquí recibe la LIST1
             setBef(5);//show = 5;
             setMove(-20);
             setBack(-20);
-=======
-            check();
-        }else{
-            check();
->>>>>>> Stashed changes
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [screenWidth]);

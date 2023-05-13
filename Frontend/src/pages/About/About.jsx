@@ -7,7 +7,9 @@ export function About() {
 
         const qSomosDiv = document.querySelector(".qSomos");
 
-        qSomosDiv.classList.add("anima-Entrada");
+        setTimeout(() => {
+            qSomosDiv.classList.add("anima-Entrada");
+          }, 500);
 
     }, []);
 
