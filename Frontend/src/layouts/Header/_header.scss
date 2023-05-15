@@ -49,10 +49,12 @@
 
 .col.buscar{
     max-width: calc((100 / 3)*1%);
+    display: none;//mientras tante
 }
 
 .col.user{
     max-width: calc((100 / 3)*1%);
+    display: none;//mientras tante
     a{
         margin: 0 0 0 calc((100 - (16))*1%);
         img{

@@ -2,8 +2,11 @@ import { React, useState } from "react";
 import { CategoryMenu } from "../../Componentes/Carruseles/CategoryMenu";
 import "./_Catalogo.scss";
 
-import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
-import pdfFile from "../../Assets/docs/Catalogo.pdf";
+import { Document, Outline, Page, pdfjs } from "react-pdf";
+
+import pdfFile from "../../Assets/docs/Catalogo.pdf";//Catalogo.pdf
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export function Catalogo() {
     const [numPages, setNumPages] = useState(null);
@@ -24,8 +27,13 @@ export function Catalogo() {
                 <div className="row">
                     <div className="col pdfViewer">
                         <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess} >
-                            <Page pageNumber={pageNumber}/>
-                            <Page pageNumber={pageNumber+1}/>
+                            <Outline
+                                onItemClick={({ dest, pageIndex, pageNumber }) => alert('Clicked pageIndex ' + pageIndex + '!')}
+                            />
+                            <Page pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false}/>
+                        </Document>
+                        <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess} >
+                            <Page pageNumber={pageNumber+1} renderTextLayer={false} renderAnnotationLayer={false}/>
                         </Document>
                     </div>
                 </div>
