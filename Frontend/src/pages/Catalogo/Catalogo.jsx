@@ -15,10 +15,15 @@ export function Catalogo() {
     const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
     };
+
+    //getContext('2d', { willReadFrequently: true });
     
     window.scrollTo(0, 0);
     /*let { name } = useParams();
     const cat = list.find((i) => i.descripcion === name);*/
+    /*<Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess} >
+        <Page pageNumber={pageNumber+1} renderTextLayer={false} renderAnnotationLayer={false}/>
+    </Document>*/
 
     return (
         <>
@@ -26,15 +31,17 @@ export function Catalogo() {
 
                 <div className="row">
                     <div className="col pdfViewer">
-                        <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess} >
-                            <Outline
-                                onItemClick={({ dest, pageIndex, pageNumber }) => alert('Clicked pageIndex ' + pageIndex + '!')}
+                        <Document className={"rctPdf"} file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
+                            <Outline                          
                             />
-                            <Page pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false}/>
+                            <div style={{ flex: 1 }}>
+                                <Page pageIndex={pageNumber} renderTextLayer={false} renderAnnotationLayer={false}/>
+                            </div>
+                            <div style={{ flex: 1 }}>
+                                <Page pageNumber={pageNumber+1} renderTextLayer={false} renderAnnotationLayer={false}/>
+                            </div>
                         </Document>
-                        <Document file={pdfFile} onLoadSuccess={onDocumentLoadSuccess} >
-                            <Page pageNumber={pageNumber+1} renderTextLayer={false} renderAnnotationLayer={false}/>
-                        </Document>
+                        
                     </div>
                 </div>
 
