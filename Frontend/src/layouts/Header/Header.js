@@ -44,7 +44,7 @@ export function Header() {
                             <li><a className="dropdown-item" href="/">Inicio</a></li>
                             <li><a className="dropdown-item" href="/products">Productos</a></li>
                             <li><a className="dropdown-item" href="/about">Quienes somos</a></li>
-                            <li><a className="dropdown-item" href="/contactanos">Contactanos</a></li>
+                            <li><a className="dropdown-item" href="/contactUs">Contactanos</a></li>
                         </ul>
                     </div>
 
@@ -90,7 +90,7 @@ export function Header() {
                                 <Link to="/" type="button" className="btn btn-navBar btn-lg">Inicio</Link>
                                 <Link to="/products" type="button" className="btn btn-navBar btn-lg">Productos</Link>
                                 <Link to="/about" type="button" className="btn btn-navBar btn-lg">Quienes somos</Link>
-                                <Link to="/" type="button" className="btn btn-navBar btn-lg">Contactanos</Link>
+                                <Link to="/contactUs" type="button" className="btn btn-navBar btn-lg">Contactanos</Link>
                             </div>
                         </div>
                     </div>

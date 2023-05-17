@@ -1,5 +1,6 @@
-.categoria{
+.catalogo{
     position: relative;
+    min-height: 30rem;
 }
 
 .col.pdfViewer {
@@ -14,4 +15,8 @@
 
 .rctPdf{
     display: flex;
+}
+
+.hide-outline{
+    display: none;
 }

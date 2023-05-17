@@ -1,0 +1,13 @@
+@import "../../scss/_colors.scss";
+
+.ctnUs{
+    position: relative;
+    padding: 1.12vw 1.69vw;
+    min-height: 30rem;
+}
+.titulo{
+    border-bottom: 4px solid $amarilloPrincipal;
+    h1{
+        color: $azulPrincipal;
+    }
+}

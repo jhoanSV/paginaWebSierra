@@ -14,7 +14,7 @@ export function Home() {
             <>
                 <div className="c-categ">
 
-                    <Link to={`catalogo`}>
+                    <Link to={`catalogo/${item.descripcion}`}>
                         <img                            
                             className={`${item.color}`}
                             src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
