@@ -11,22 +11,64 @@ export function ContactUs() {
                 <h1>Contactanos</h1>
             </div>
             <div className="row row-cols-2 gy-2">
+                <div className="montserratFont w-100">
+                    <p className="font-19 p-3" id="mediaQ">"!Contactanos para cualquier consulta! Si buscas oportunidades de colaboración,
+                        trabajar con nosotros o ser cliente, envianos un mensaje. ¡Esperamos construir juntos
+                        una alianza estrategica!"</p>
+                </div>
+
                 <div className="col montserratFont">
                     <p className="font-19 p-3">"!Contactanos para cualquier consulta! Si buscas oportunidades de colaboración,
                     trabajar con nosotros o ser cliente, envianos un mensaje. ¡Esperamos construir juntos
                     una alianza estrategica!"</p>
 
-                    <iframe src={source}
-                        id="mapaSierra"
-                        title="mapa"
-                        width="600"
-                        height="600"
-                        allowFullScreen="" 
-                        loading="lazy" 
-                        referrerPolicy="no-referrer-when-downgrade"
-                    />            
+                    <div className="iframeContainer">
+                        <iframe src={source}
+                            id="mapaSierra"
+                            title="mapa"
+                            width="600"
+                            height="600"
+                            allowFullScreen="" 
+                            loading="lazy" 
+                            referrerPolicy="no-referrer-when-downgrade"
+                        />            
+                    </div>
                 </div>
-                <div className="col">
+                
+                <div className="col f100">
+                    <form className="row g-3 my-3">
+                        <div class="col-mb-12">
+                            <label for="Nombre" className="form-label">Nombre completo:</label>
+                            <input type="text" className="form-control" id="Nombre" placeholder="Nombre" required/>
+                        </div>
+                        <div className="col-mb-12">
+                            <label for="correo" className="form-label">Correo Electrónico:</label>
+                            <input type="email" className="form-control" id="correo" placeholder="Correo" />
+                        </div>
+                        <div className="col-mb-12">
+                            <label for="celNum" className="form-label">Celular:</label>
+                            <input type="number" className="form-control" id="celNum" placeholder="Celular" />
+                        </div>
+                        <div className="col-6">
+                            <label for="soli" className="form-label">Tipo de solicitud:</label>
+                            <select className="form-select" id="soli" required>
+                                <option selected disabled value="Elige">...</option>
+                                <option>Quiero ser cliente</option>
+                                <option>Quiero ser proveedor</option>
+                                <option>Trabaja con nosotros</option>
+                            </select>
+                        </div>
+                        <div className="col-mb-12">
+                            <label for="comentarios" class="form-label">Comentarios</label>
+                            <textarea class="form-control" id="comentarios" rows="3"></textarea>
+                        </div>
+
+                        <div>
+                            <a className="boton" id="btn-submit" href="comentarios">
+                                <span className="font-19">Enviar</span>
+                            </a>
+                        </div>
+                    </form>
 
                 </div>
             </div>
