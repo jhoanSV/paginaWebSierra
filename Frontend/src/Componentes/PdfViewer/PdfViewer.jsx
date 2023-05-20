@@ -32,11 +32,11 @@ export function PdfViewer({ prop }) {
                 outlines.map((item) => setBookmark(item.dest[0]+1));
             }}
         />
-        <div style={{ flex: 1 }}>
+        <div className="pagePdf">
             <Page pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false}                                    
             />
         </div>
-        <div style={{ flex: 1 }}>
+        <div className="pagePdf">
             <Page pageNumber={pageNumber+1} renderTextLayer={false} renderAnnotationLayer={false}/>
         </div>
     </Document>
