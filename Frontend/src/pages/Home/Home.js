@@ -15,7 +15,7 @@ export function Home() {
                 <div className="c-categ">
 
                     <Link to={"catalogo"} state={{ bookM: `${item.descripcion.toUpperCase()}` }}>
-                        <img                            
+                        <img
                             className={`${item.color}`}
                             src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
                             alt="categoria"
