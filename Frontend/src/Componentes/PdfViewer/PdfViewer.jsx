@@ -4,6 +4,7 @@ import "./_pdfViewer.scss";
 import { Document, Page, Outline, pdfjs } from "react-pdf";
 
 import pdfFile from "../../Assets/docs/Catalogo.pdf";//Catalogo.pdf
+import { offset } from "@popperjs/core";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -21,7 +22,19 @@ export function PdfViewer({ prop }) {
     useEffect(() => {
         setPageNumber(bookmark);
         console.log("Pagina supuestamente actual: " + pageNumber + " y " + (pageNumber+1));
-    },[bookmark])
+    },[bookmark]);
+
+    function changePage(offset) {
+        setPageNumber(prevPageNumber => prevPageNumber + offset);
+    }
+    
+    function previousPage() {
+        changePage(-2);
+    }
+    
+    function nextPage() {
+        changePage(2);
+    }
 
     /*------------------------------------------*/
     return (
@@ -32,13 +45,17 @@ export function PdfViewer({ prop }) {
                 outlines.map((item) => setBookmark(item.dest[0]+1));
             }}
         />
-        <div className="pagePdf">
-            <Page pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false}                                    
-            />
-        </div>
-        <div className="pagePdf">
-            <Page pageNumber={pageNumber+1} renderTextLayer={false} renderAnnotationLayer={false}/>
-        </div>
+        <Page className={"pagePdf"} pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false}/>
+        <Page  className={"pagePdf"} pageNumber={pageNumber+1} renderTextLayer={false} renderAnnotationLayer={false}/>
+
+        <button onClick={previousPage} className="prevPdf">
+            <i className="bi bi-arrow-left-circle-fill"></i>
+        </button>
+
+        <button onClick={nextPage} className="nextPdf">
+            <i className="bi bi-arrow-right-circle-fill"></i>
+        </button>
+
     </Document>
   )
 }
