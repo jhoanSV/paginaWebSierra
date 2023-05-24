@@ -1,4 +1,4 @@
-@import "../../scss/_index.scss";
+@import "../../scss/_colors.scss";
 
 .cCarrusel{
     width: 100%;
@@ -16,7 +16,7 @@
 
 #leftButton{
     position: absolute;
-    z-index: 100;
+    z-index: 2;
     left: 0;
     top: 41%;
     border-style: none;
@@ -27,7 +27,7 @@
 
 #rightButton{
     position: absolute;
-    z-index: 100;
+    z-index: 2;
     right: 0;
     top: 41%;
     border-style: none;

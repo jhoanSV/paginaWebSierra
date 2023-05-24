@@ -1,6 +1,5 @@
 import { React } from "react";
 import { useLocation } from "react-router-dom";
-import { CategoryMenu } from "../../Componentes/Carruseles/CategoryMenu";
 import { PdfViewer } from "../../Componentes/PdfViewer/PdfViewer";
 import "./_Catalogo.scss";
 
@@ -21,10 +20,6 @@ export function Catalogo() {
                             prop={bookMark}
                         />                        
                     </div>
-                </div>
-
-                <div>
-                    <CategoryMenu/>
                 </div>
                 
             </div>

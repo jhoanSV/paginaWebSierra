@@ -6,6 +6,7 @@ import { Footer } from "./layouts";
 import { Navigation } from "./routes";
 
 import './_App.scss';
+import { CategoryMenu } from "./Componentes/Carruseles";
 
 export default function App() {
 
@@ -20,6 +21,10 @@ export default function App() {
                 alt="iconWapp"              
             />
         </a>
+
+        <div>
+          <CategoryMenu/>
+        </div>
 
         <Header></Header>
 

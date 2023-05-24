@@ -1,7 +1,8 @@
 //@import "../../scss/colors";
 .container-menu{
-    position: absolute;
-    top: 100px;
+    position: fixed;
+    top: 20vh;
+    z-index: 3;
 }
 
 .menu-category{
@@ -11,11 +12,11 @@
     border-width: 0.19rem;
     border-color: rgba(128, 128, 128, 0.37);
     border-radius: 0rem 3rem 3rem 0rem;
-    max-width: 85px;
+    max-width: 66px;
 }
 
 .logoMenuCat{
-    width: 50.34px;
+    width: 36.34px;
 }
 
 .lista-cat{
@@ -27,10 +28,30 @@
         text-decoration: none;
     }
     span{
+        position: relative;
+        text-transform: capitalize;
         margin: 0rem 1.3rem;
+        color: black;
     }
     li{
+        position: relative;
         margin: 10px 0px;
+        overflow: hidden;
+    }
+    li:before{
+        width: 0px;
+        height: 46px;
+        content: "";
+        display: block;
+        background: currentColor 50%;
+        position: absolute;
+        transition: 500ms;
+        left: 50px;
+        cursor: pointer;
+    }
+    li:hover:before{
+       width: 120px;
+       transition: 500ms
     }
 }
 

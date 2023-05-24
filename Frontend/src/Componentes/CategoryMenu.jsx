@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import "./_CategoryMenu.scss";
-import categs from "../../Assets/jpg/categorias/categorias.json";
+import categs from "../Assets/jpg/categorias/categorias.json";
 import { Link } from "react-router-dom";
 
 export function CategoryMenu() {
@@ -13,15 +13,15 @@ export function CategoryMenu() {
         <ul className="lista-cat">
           {
             items.map((item, index) => (
-                <li key={index}>
+                <li key={index} className={`${item.color}`}>
                     <Link to={`/categories/${item.descripcion}`}>
                         <img
                             className="logoMenuCat"
-                            src={require(`../../Assets/png/Logos/${item.descripcion}.png`)}
+                            src={require(`../Assets/png/Logos/${item.descripcion}.png`)}
                             alt="imgCategory"
                         />
                         <span>{item.descripcion}</span>
-                    </Link>                    
+                    </Link>
                 </li>
             ))
           }
@@ -33,14 +33,14 @@ export function CategoryMenu() {
         const menuWidth = menuCategory.current.offsetWidth;
         const contentWidth = menuCategory.current.offsetWidth;
 
-        if (menuWidth === 85) {
+        if (menuWidth === 66) {
             // Establecer un ancho inicial fijo
             menuCategory.current.style.maxWidth = "300px";
             menuCategory.current.style.transition = "700ms"
             //menuButton.current.style.left = "182px";
         } else {
             // Establecer el ancho al valor real del contenido
-            menuCategory.current.style.maxWidth = 85 + "px";
+            menuCategory.current.style.maxWidth = 66 + "px";
             //menuButton.current.style.left = "82px";
         }
     }

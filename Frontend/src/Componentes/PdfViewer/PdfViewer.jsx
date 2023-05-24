@@ -4,7 +4,8 @@ import "./_pdfViewer.scss";
 import { Document, Page, Outline, pdfjs } from "react-pdf";
 
 import pdfFile from "../../Assets/docs/Catalogo.pdf";//Catalogo.pdf
-import { offset } from "@popperjs/core";
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -45,8 +46,8 @@ export function PdfViewer({ prop }) {
                 outlines.map((item) => setBookmark(item.dest[0]+1));
             }}
         />
-        <Page className={"pagePdf"} pageNumber={pageNumber} renderTextLayer={false} renderAnnotationLayer={false}/>
-        <Page  className={"pagePdf"} pageNumber={pageNumber+1} renderTextLayer={false} renderAnnotationLayer={false}/>
+        <Page className={"pagePdf"} pageNumber={pageNumber}/>
+        <Page  className={"pagePdf"} pageNumber={pageNumber+1}/>
 
         <button onClick={previousPage} className="prevPdf">
             <i className="bi bi-arrow-left-circle-fill"></i>
