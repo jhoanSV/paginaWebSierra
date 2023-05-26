@@ -7,6 +7,7 @@ export function CategoryMenu() {
 
     const menuCategory = useRef();
     const menuButton = useRef();
+    const arrowButton = useRef();
     const items = categs;
 
     const Items = () => (
@@ -14,7 +15,7 @@ export function CategoryMenu() {
           {
             items.map((item, index) => (
                 <li key={index} className={`${item.color}`}>
-                    <Link to={`/categories/${item.descripcion}`}>
+                    <Link to={"catalogo"} state={{ bookM: `${item.descripcion.toUpperCase()}` }}>
                         <img
                             className="logoMenuCat"
                             src={require(`../Assets/png/Logos/${item.descripcion}.png`)}
@@ -36,7 +37,8 @@ export function CategoryMenu() {
         if (menuWidth === 66) {
             // Establecer un ancho inicial fijo
             menuCategory.current.style.maxWidth = "300px";
-            menuCategory.current.style.transition = "700ms"
+            menuCategory.current.style.transition = "700ms";
+            arrowButton.current.style.transform = "";
             //menuButton.current.style.left = "182px";
         } else {
             // Establecer el ancho al valor real del contenido
@@ -51,10 +53,10 @@ export function CategoryMenu() {
         <div className="container-menu">
             <div className="menu-category" ref={menuCategory}>
                 <div className="menu-button" role="button" ref={menuButton} onClick={move}>
-                    <i className="bi bi-chevron-left"></i>
+                    <i class="bi bi-chevron-right"></i>
                 </div>  
                 <Items/>
-            </div>            
+            </div>
         </div>
     );
 }

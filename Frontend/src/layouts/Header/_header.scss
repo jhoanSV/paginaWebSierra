@@ -1,4 +1,5 @@
-@import "../../scss/_index.scss";
+@import "../../scss/colors";
+@import "../../scss/mediaQueries";
 
 *{
     box-sizing: border-box;
@@ -13,9 +14,10 @@
 .btn-buscar{
     display: none;
     position: absolute;
-    right: 15%;
+    right: 3%;
     //top: 45%;
-    border-radius: 1.5rem;    
+    border-radius: 1.5rem;
+    z-index: 1;
 }
 
 .ghost-buscador{
@@ -32,12 +34,13 @@
     }
 }
 
-.col.g2{
+.g2{
     display: none;   
 }
 
 .col.logo{
     max-width: calc((100 / 3)*1%);
+    z-index: 1;
     a{
         img{
             width: calc((3*18.59)*1%);
@@ -49,12 +52,12 @@
 
 .col.buscar{
     max-width: calc((100 / 3)*1%);
-    display: none;//mientras tante
+    display: none;//mientras tanto
 }
 
 .col.user{
     max-width: calc((100 / 3)*1%);
-    display: none;//mientras tante
+    display: none;//mientras tanto
     a{
         margin: 0 0 0 calc((100 - (16))*1%);
         img{
@@ -87,10 +90,11 @@
         .row.position-relative{
             display: flex;
             align-items: center;
+            justify-content: center;
         }
         
         .btn-buscar{
-            display: flex;
+            display: none;//display: flex;
             width: max-content;
             .bi{
                 font-size: 2.5vw;
@@ -103,10 +107,11 @@
         display: none;
     }
 
-    .col.g2{//muestra el menu de nav
+    .g2{//muestra el menu de nav
         display: flex;
         align-items: center;
-        padding: 0; 
+        padding: 0;
+        position: absolute;
         .menuNav{
             .bi{
                 font-size: 7.8vw;

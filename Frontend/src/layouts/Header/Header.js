@@ -35,7 +35,7 @@ export function Header() {
                     </div>
 
 
-                    <div className="col g2">
+                    <div className="g2">
                         <button className="menuNav" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <i className="bi bi-list"></i>
                         </button>

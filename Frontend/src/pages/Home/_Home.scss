@@ -1,4 +1,5 @@
-@import "../../scss/index.scss";
+@import "../../scss/colors";
+@import "../../scss/mediaQueries";
 
 .inicio{
     padding: 1.12vw 3.69vw;
@@ -78,24 +79,7 @@
     }
 
     .btn-catalogo1{
-        background-image: url("../../Assets/png/icono2.png");
-        background-repeat: no-repeat;
-        background-size: contain;
-        position: fixed;
-        bottom: calc(2.5rem + 15vw);
-        right: 0.875rem;
-        z-index: 1;      
-        width: 14vw;
-        height: 14vw;
-        box-shadow: none;
-        a{
-            font-size: 6vw;
-        }
-        img{
-            visibility: hidden;
-            width: 7.7vw;
-            height: 7.7vw;
-        }
+        display: none;
     }
 
     .row.py-3.gx-4{

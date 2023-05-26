@@ -1,4 +1,6 @@
 //@import "../../scss/colors";
+@import "../scss/mediaQueries";
+
 .container-menu{
     position: fixed;
     top: 20vh;
@@ -30,17 +32,20 @@
     span{
         position: relative;
         text-transform: capitalize;
+        font-weight: bold;
         margin: 0rem 1.3rem;
         color: black;
     }
     li{
+        display: flex;
+        align-items: center;
         position: relative;
         margin: 10px 0px;
-        overflow: hidden;
+        height: 53.55px;
     }
     li:before{
         width: 0px;
-        height: 46px;
+        height: 55px;
         content: "";
         display: block;
         background: currentColor 50%;
@@ -48,6 +53,9 @@
         transition: 500ms;
         left: 50px;
         cursor: pointer;
+    }
+    li:hover img{
+        transform: scale(1.2);
     }
     li:hover:before{
        width: 120px;
@@ -68,3 +76,10 @@
     border-radius: 0rem 2rem 2rem 0rem;
     transition: 1s;
 }
+
+@include tablet{
+    .container-menu{
+        display: none;
+    }
+}
+
