@@ -77,6 +77,10 @@
     transition: 1s;
 }
 
+.menu-button-anima::before{
+    transform: rotate(180deg);
+}
+
 @include tablet{
     .container-menu{
         display: none;

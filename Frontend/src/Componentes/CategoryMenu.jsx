@@ -7,7 +7,7 @@ export function CategoryMenu() {
 
     const menuCategory = useRef();
     const menuButton = useRef();
-    const arrowButton = useRef();
+    const anima = useRef();
     const items = categs;
 
     const Items = () => (
@@ -32,17 +32,17 @@ export function CategoryMenu() {
     const move = () => {
         
         const menuWidth = menuCategory.current.offsetWidth;
-        const contentWidth = menuCategory.current.offsetWidth;
 
         if (menuWidth === 66) {
             // Establecer un ancho inicial fijo
             menuCategory.current.style.maxWidth = "300px";
             menuCategory.current.style.transition = "700ms";
-            arrowButton.current.style.transform = "";
+            anima.current.classList.add("menu-button-anima");
             //menuButton.current.style.left = "182px";
         } else {
             // Establecer el ancho al valor real del contenido
             menuCategory.current.style.maxWidth = 66 + "px";
+            anima.current.classList.remove("menu-button-anima");
             //menuButton.current.style.left = "82px";
         }
     }
@@ -53,7 +53,7 @@ export function CategoryMenu() {
         <div className="container-menu">
             <div className="menu-category" ref={menuCategory}>
                 <div className="menu-button" role="button" ref={menuButton} onClick={move}>
-                    <i class="bi bi-chevron-right"></i>
+                    <i className="bi bi-chevron-right" ref={anima}></i>
                 </div>  
                 <Items/>
             </div>
