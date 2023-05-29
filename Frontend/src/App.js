@@ -6,14 +6,14 @@ import { Footer } from "./layouts";
 import { Navigation } from "./routes";
 
 import './_App.scss';
-import { CategoryMenu } from "./Componentes/Carruseles";
+import { CategMenuMobile, CategoryMenu } from "./Componentes/Menus";
 
 export default function App() {
 
   return (
       <>
         <a href="https://api.whatsapp.com/send/?phone=573134237538&text&type=phone_number&app_absent=0" className="btn-wapp" 
-        target="_blank" rel="noreferrer">
+          target="_blank" rel="noreferrer">
             <img
                 src={require("./Assets/png/WappIcon.png")}
                 width="479px"
@@ -21,6 +21,8 @@ export default function App() {
                 alt="iconWapp"              
             />
         </a>
+
+        <CategMenuMobile/>
 
         <div>
           <CategoryMenu/>

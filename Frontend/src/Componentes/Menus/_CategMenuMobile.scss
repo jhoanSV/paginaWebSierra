@@ -1,0 +1,37 @@
+@import '../../scss/colors';
+@import '../../scss/mediaQueries';
+
+.lstStylN{
+    list-style: none;
+}
+
+.items-menu-mob{
+    width: 90%;
+    margin: 0 3.2px;
+    padding: 7px;
+    border: 2px solid #193773;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.menu-mob{
+    background-color: rgba($color: $azulPrincipal, $alpha: 0.6);
+    border-radius: 2rem;
+    width: 3.654rem;
+    position: fixed;
+    bottom: 5.625rem;
+    right: 1.0625rem;
+    z-index: 3;
+    //input{}
+    label, .logoCatalogo{
+        width: 100%;
+    }
+    .mob-btn{
+        width: 80%;
+        position: relative;
+    }
+}
+
+.logoCatMob{
+    width: 100%;
+}

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import "./_CategoryMenu.scss";
-import categs from "../Assets/jpg/categorias/categorias.json";
+import categs from "../../Assets/jpg/categorias/categorias.json";
 import { Link } from "react-router-dom";
 
 export function CategoryMenu() {
@@ -18,7 +18,7 @@ export function CategoryMenu() {
                     <Link to={"catalogo"} state={{ bookM: `${item.descripcion.toUpperCase()}` }}>
                         <img
                             className="logoMenuCat"
-                            src={require(`../Assets/png/Logos/${item.descripcion}.png`)}
+                            src={require(`../../Assets/png/Logos/${item.descripcion}.png`)}
                             alt="imgCategory"
                         />
                         <span>{item.descripcion}</span>
