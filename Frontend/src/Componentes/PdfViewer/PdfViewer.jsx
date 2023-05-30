@@ -11,18 +11,17 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 export function PdfViewer({ prop }) {
 
-    const [numPages, setNumPages] = useState(null);
+    /*const [numPages, setNumPages] = useState(null);*/
     const [bookmark, setBookmark] = useState(1);
     const [pageNumber, setPageNumber] = useState(1);
 
 
-    const onDocumentLoadSuccess = ({ numPages }) => {
+    /*const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
-    };
+    };*/
 
     useEffect(() => {
         setPageNumber(bookmark);
-        console.log("Pagina supuestamente actual: " + pageNumber + " y " + (pageNumber+1));
     },[bookmark]);
 
     function changePage(offset) {
@@ -40,7 +39,7 @@ export function PdfViewer({ prop }) {
     /*------------------------------------------*/
     return (
 
-    <Document className={"rctPdf"} file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
+    <Document className={"rctPdf"} file={pdfFile} /*onLoadSuccess={onDocumentLoadSuccess}*/>
         <Outline className={"hide-outline"} onLoadSuccess={ (outline) => {
                 const outlines = outline.filter(item => item.title === prop);
                 outlines.map((item) => setBookmark(item.dest[0]+1));
