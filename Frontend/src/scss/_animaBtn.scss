@@ -1,4 +1,4 @@
-a.boton{
+button.boton{
 	position: relative;
 	display: block;
 	padding: 18px 10px;
@@ -17,8 +17,8 @@ a.boton{
 	//background:#10B87B;
 }
  
-a.boton:after,
-a.boton:before{
+button.boton:after,
+button.boton:before{
 	width: 80px;
 	height: 200px;
 	content: '';
@@ -32,26 +32,26 @@ a.boton:before{
 	cursor: pointer;
 }
  
-a.boton:before{
+button.boton:before{
 	left: -65%;
 }
  
-a.boton:hover{
+button.boton:hover{
 	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
 	//background:#12C987
 }
  
-a.boton:hover:after,
-a.boton:hover:before{
+button.boton:hover:after,
+button.boton:hover:before{
 	transform: rotate(45deg), scaleX(130%);
 	background: rgba(255,255,255,0.1);
 	transition: all ease 0.5s;
 }
  
-a.boton:hover:after{
+button.boton:hover:after{
 	right: 130%;
 }
  
-a.boton:hover:before{
+button.boton:hover:before{
 	left: 130%;
 }

@@ -41,9 +41,9 @@ export function Header() {
                         </button>
 
                         <ul className="dropdown-menu">
-                            <li><a className="dropdown-item" href="/">Inicio</a></li>
-                            <li><a className="dropdown-item" href="/products">Productos</a></li>
-                            <li><a className="dropdown-item" href="/about">Quienes somos</a></li>
+                            <li><Link to="/" type="button" className="dropdown-item">Inicio</Link></li>
+                            <li><Link to="catalogo" type="button" className="dropdown-item">Productos</Link></li>
+                            <li><Link to="/about" type="button" className="dropdown-item">Quienes somos</Link></li>
                             <li><a className="dropdown-item" href="/contactUs">Contactanos</a></li>
                         </ul>
                     </div>
@@ -88,7 +88,7 @@ export function Header() {
                         <div className="grupoBotones">
                             <div className="btn-group g1 flex-wrap">
                                 <Link to="/" type="button" className="btn btn-navBar btn-lg">Inicio</Link>
-                                <Link to="/products" type="button" className="btn btn-navBar btn-lg">Productos</Link>
+                                <Link to="catalogo" type="button" className="btn btn-navBar btn-lg">Productos</Link>
                                 <Link to="/about" type="button" className="btn btn-navBar btn-lg">Quienes somos</Link>
                                 <Link to="/contactUs" type="button" className="btn btn-navBar btn-lg">Contactanos</Link>
                             </div>

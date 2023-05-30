@@ -1,10 +1,12 @@
-@import "../../scss/index";
+@import '../../scss/colors';
+@import '../../scss/mediaQueries';
 
 *{
     box-sizing: border-box;
 }
 
 .piePagina {
+    min-height: 100%;
     display: block;
     background-color: $azulPrincipal;
     color: $blancoPrincipal;

@@ -1,9 +1,10 @@
 @import "../../scss/colors.scss";
+@import "../../scss/mediaQueries.scss";
 
 .about{
     position: relative;
     padding: 1.12vw 70px;
-    min-height: 30rem;
+    min-height: 71.98vh;
 }
 
 .log-anima{
@@ -26,3 +27,9 @@
     opacity: 0;
     transform: translateY(100px);
 }
+
+/*@include tablet{
+    .about{
+        min-height: 51.9rem;
+    }
+}*/
