@@ -5,15 +5,19 @@ let source = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1406.0504614
 
 export function ContactUs() {
 
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyW7znJY5fMHnvpRO5gY89oy9zgsmo2UiGgfJNSPv1InRzsbdTr/exec';
-
     const handleSubmit = (e) =>{
-        const form = document.forms['submit-form'];
+        const form = document.getElementById('form');
+        e.preventDefault();
 
-        e.preventDefault()
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => console.log('Success!', response))
-        .catch(error => console.error('Error!', error.message))
+        let data = new FormData(form);
+        fetch('https://script.google.com/macros/s/AKfycbwC-m3n98LLIDyba4pV4wRqUGZY2XE5baLf-G9aaQqwQJhesy-fXC5sXQMr0ybOamCrFg/exec'
+            ,{
+                method: "POST",
+                body: data
+            })
+            .then(res => res.text())
+            .then(data => alert(data));
+
     }
     
     return (
@@ -48,23 +52,23 @@ export function ContactUs() {
                     </div>
                     
                     <div className="col f100">
-                        <form className="row g-3 my-3" name="submit-form">
+                        <form className="row g-3 my-3" id='form' onSubmit={handleSubmit}>
                             <div className="col-mb-12">
                                 <label className="form-label">Nombre completo:</label>
-                                <input type="text" className="form-control" id="Nombre" placeholder="Nombre" required/>
+                                <input type="text" className="form-control" name="name" placeholder="Nombre" required/>
                             </div>
                             <div className="col-mb-12">
                                 <label className="form-label">Correo Electrónico:</label>
-                                <input type="email" className="form-control" id="correo" placeholder="Correo"/>
+                                <input type="email" className="form-control" name="email" placeholder="Correo"/>
                             </div>
                             <div className="col-mb-12">
                                 <label className="form-label">Celular:</label>
-                                <input type="number" className="form-control" id="celNum" placeholder="Celular"/>
+                                <input type="number" className="form-control" name="celNum" placeholder="Celular"/>
                             </div>
                             <div className="col-6">
                                 <label className="form-label">Tipo de solicitud:</label>
-                                <select className="form-select" id="soli" required>
-                                    <option defaultValue={'...'} disabled value="Elige">...</option>
+                                <select className="form-select" name="soli" required>
+                                    <option selected disabled>...</option>
                                     <option>Quiero ser cliente</option>
                                     <option>Quiero ser proveedor</option>
                                     <option>Trabaja con nosotros</option>
@@ -72,11 +76,11 @@ export function ContactUs() {
                             </div>
                             <div className="col-mb-12">
                                 <label className="form-label">Comentarios</label>
-                                <textarea className="form-control" id="comentarios" rows="3"/>
+                                <textarea className="form-control" name="coms" rows="3"/>
                             </div>
 
                             <div>
-                                <button type="submit" className="boton" id="btn-submit" onClick={handleSubmit}>
+                                <button type="submit" className="boton" id="btn-submit">
                                     <span className="font-19">Enviar</span>
                                 </button>
                             </div>
