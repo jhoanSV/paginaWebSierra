@@ -82,7 +82,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1
         return(
             props.lista1.slice(0,charge).map((item, index) =>
                 <>  
-                    <ListItem 
+                    <ListItem
                         key={index}
                         llave = {item.id}//Para apuntar a cada modal
                         codigo = {item.cod}

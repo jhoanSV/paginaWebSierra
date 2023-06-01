@@ -11,14 +11,14 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 export function PdfViewer({ prop }) {
 
-    /*const [numPages, setNumPages] = useState(null);*/
+    const [numPages, setNumPages] = useState(null);
     const [bookmark, setBookmark] = useState(1);
     const [pageNumber, setPageNumber] = useState(1);
 
 
-    /*const onDocumentLoadSuccess = ({ numPages }) => {
+    const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
-    };*/
+    };
 
     useEffect(() => {
         setPageNumber(bookmark);
@@ -39,22 +39,35 @@ export function PdfViewer({ prop }) {
     /*------------------------------------------*/
     return (
 
-    <Document className={"rctPdf"} file={pdfFile} /*onLoadSuccess={onDocumentLoadSuccess}*/>
+    <Document className={"rctPdf"} file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
         <Outline className={"hide-outline"} onLoadSuccess={ (outline) => {
                 const outlines = outline.filter(item => item.title === prop);
                 outlines.map((item) => setBookmark(item.dest[0]+1));
             }}
         />
-        <Page className={"pagePdf"} pageNumber={pageNumber}/>
-        <Page  className={"pagePdf"} pageNumber={pageNumber+1}/>
+        {/*<Page className={"pagePdf"} pageNumber={pageNumber}/>
+        <Page  className={"pagePdf"} pageNumber={pageNumber+1}/>*/}
 
-        <button onClick={previousPage} className="prevPdf">
+        {Array.from(
+            new Array(numPages).slice(82 - 2,82 + 3),
+            (el, index) => (
+                <>
+                    <Page
+                        key={`page_${index + 1}`}
+                        className={"pagePdf"}
+                        pageNumber={(82-2)}
+                    />
+                </>
+            ),
+        )}
+
+        {/*<button onClick={previousPage} className="prevPdf">
             <i className="bi bi-arrow-left-circle-fill"></i>
         </button>
 
         <button onClick={nextPage} className="nextPdf">
             <i className="bi bi-arrow-right-circle-fill"></i>
-        </button>
+        </button>*/}
 
     </Document>
   )
