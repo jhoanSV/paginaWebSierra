@@ -7,6 +7,7 @@ export function ContactUs() {
 
     const handleSubmit = (e) =>{
         const form = document.getElementById('form');
+        const btn = document.getElementById('btn-submit')
         e.preventDefault();
 
         let data = new FormData(form);
@@ -17,6 +18,8 @@ export function ContactUs() {
             })
             .then(res => res.text())
             .then(data => alert(data));
+        btn.disabled = true;
+        btn.classList.add('botonDis');
 
     }
     
@@ -63,15 +66,15 @@ export function ContactUs() {
                             </div>
                             <div className="col-mb-12">
                                 <label className="form-label">Celular:</label>
-                                <input type="number" className="form-control" name="celNum" placeholder="Celular"/>
+                                <input type="number" className="form-control" name="celNum" placeholder="Celular" required/>
                             </div>
                             <div className="col-6">
                                 <label className="form-label">Tipo de solicitud:</label>
                                 <select className="form-select" name="soli" required>
-                                    <option selected disabled>...</option>
-                                    <option>Quiero ser cliente</option>
-                                    <option>Quiero ser proveedor</option>
-                                    <option>Trabaja con nosotros</option>
+                                    <option value=''>...</option>
+                                    <option value='cliente'>Quiero ser cliente</option>
+                                    <option value='proveedor'>Quiero ser proveedor</option>
+                                    <option value='trabajo'>Trabaja con nosotros</option>
                                 </select>
                             </div>
                             <div className="col-mb-12">

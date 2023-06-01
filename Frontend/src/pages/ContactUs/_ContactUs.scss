@@ -29,6 +29,15 @@
     width: inherit;
 }
 
+#btn-submit:disabled{
+    background: linear-gradient(270deg, #576b93, #7b828f);
+    cursor: not-allowed;
+}
+
+button.botonDis::after,button.botonDis::before{
+    background: transparent !important;
+}
+
 #mediaQ{
     display: none;
 }
