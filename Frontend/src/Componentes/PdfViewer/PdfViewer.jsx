@@ -15,6 +15,7 @@ export function PdfViewer({ prop }) {
     const [bookmark, setBookmark] = useState(1);
     const [pageNumber, setPageNumber] = useState(1);
 
+    const [catPag, setCatPage] = useState([]);
 
     const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
@@ -22,6 +23,14 @@ export function PdfViewer({ prop }) {
 
     useEffect(() => {
         setPageNumber(bookmark);
+        const initialArray = [];
+        for (let i = 0; i < 9; i++) {
+            initialArray.push(<Page
+                className={"pagePdf"}
+                pageNumber={(bookmark - 4) + i}
+            />);
+        }
+        setCatPage(initialArray);
     },[bookmark]);
 
     function changePage(offset) {
@@ -29,11 +38,22 @@ export function PdfViewer({ prop }) {
     }
     
     function previousPage() {
-        changePage(-2);
+        const newPage = <Page
+            className={"pagePdf"}
+            pageNumber={82}
+        />;
+        setCatPage([newPage,...catPag]);
+        //changePage(-2);
     }
     
     function nextPage() {
-        changePage(2);
+        const newPage = <Page
+            className={"pagePdf"}
+            pageNumber={82}
+        />;
+        setCatPage([...catPag, newPage]);
+        //changePage(2);
+
     }
 
     /*------------------------------------------*/
@@ -48,26 +68,34 @@ export function PdfViewer({ prop }) {
         {/*<Page className={"pagePdf"} pageNumber={pageNumber}/>
         <Page  className={"pagePdf"} pageNumber={pageNumber+1}/>*/}
 
-        {Array.from(
-            new Array(numPages).slice(82 - 2,82 + 3),
+        {/*Array.from(
+            new Array(9),
             (el, index) => (
                 <>
                     <Page
                         key={`page_${index + 1}`}
                         className={"pagePdf"}
-                        pageNumber={(82-2)}
+                        pageNumber={(pageNumber)}
                     />
                 </>
             ),
-        )}
+        )*/
+        }
 
-        {/*<button onClick={previousPage} className="prevPdf">
+        {
+            catPag.map((component, index) => (
+                <div key={index}>{component}</div>
+            ))
+        }
+
+        {<button onClick={previousPage} className="prevPdf">
             <i className="bi bi-arrow-left-circle-fill"></i>
-        </button>
+        </button>}
 
+        {
         <button onClick={nextPage} className="nextPdf">
             <i className="bi bi-arrow-right-circle-fill"></i>
-        </button>*/}
+        </button>}
 
     </Document>
   )

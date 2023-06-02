@@ -104,11 +104,11 @@ export function CarruselInf(props){//Aquí recibe la LIST1
         var posX = (parseFloat(item.style.left));
         item.style.transition = "800ms";
         
-        if (!item.style.left) posX = 0;
+        if (!item.style.left) posX = 0;//Si en los estilos en linea no tiene posición, asigna posX a 0
         
         if (bef === charge && bef < lProductos){
             lazy();
-            setCharge(charge + paso);
+            setCharge(charge + paso);//setea lo que carga a un valor mayor si se da el caso
         }
         if (bef !== lProductos){
             setBef(bef + 1);
