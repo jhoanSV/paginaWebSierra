@@ -22,7 +22,10 @@ export function PdfViewer({ prop }) {
     };
 
     useEffect(() => {
+        var chrg = 4;
+        if(bookmark<5);
         setPageNumber(bookmark);
+
         const initialArray = [];
         for (let i = 0; i < 9; i++) {
             initialArray.push(<Page
