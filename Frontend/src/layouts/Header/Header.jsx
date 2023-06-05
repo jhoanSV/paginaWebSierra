@@ -42,9 +42,12 @@ export function Header() {
 
                         <ul className="dropdown-menu">
                             <li><Link to="/" type="button" className="dropdown-item">Inicio</Link></li>
-                            <li><Link to="catalogo" type="button" className="dropdown-item">Productos</Link></li>
+                            <li><Link to="catalogo" type="button" className="dropdown-item" state={{ bookM: `EBANISTERIA`}}>
+                                    Productos
+                                </Link>
+                            </li>
                             <li><Link to="/about" type="button" className="dropdown-item">Quienes somos</Link></li>
-                            <li><a className="dropdown-item" href="/contactUs">Contactanos</a></li>
+                            <li><Link to="/contactUs" type="button" className="dropdown-item">Contactanos</Link></li>
                         </ul>
                     </div>
 

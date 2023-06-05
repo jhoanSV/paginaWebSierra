@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef } from "react";
+import { React, useState, useEffect } from "react";
 import "./_pdfViewer.scss";
 
 import { Document, Page, Outline, pdfjs } from "react-pdf";
@@ -13,11 +13,11 @@ export function PdfViewer({ prop }) {
 
     const [numPages, setNumPages] = useState(null);
     const [bookmark, setBookmark] = useState();
-    const [lengthArr,setLengthArr] = useState(9);
+    const [lengthArr1,setLengthArr1] = useState();
+    const [lengthArr2,setLengthArr2] = useState();
     //const [pageNumber, setPageNumber] = useState(1);
-    const [catPage, setCatPage] = useState([]);
-
-    var chrg = 4; 
+    const [catPageL, setCatPageL] = useState([]);
+    const [catPageR, setCatPageR] = useState([]);
 
     const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
@@ -25,56 +25,70 @@ export function PdfViewer({ prop }) {
 
     useEffect(() => {
         //setPageNumber(bookmark);
-        if(bookmark < 5) chrg = bookmark - 1 ;
+        //if(bookmark < 5) chrg = bookmark - 1 ;
 
-        const initialArray = [];
-        for (let i = 0; i < 9; i++) {
-            initialArray.push(<Page
+        //console.log("bookmark: " + bookmark + " charge: " + chrg); 
+        const initialArray1 = [];
+        const initialArray2 = [];
+
+        for (let i = 0; i < 5; i++) {
+            initialArray1.push(<Page
                 className={"pagePdf"}
-                pageNumber={(bookmark - chrg) + i}
+                pageNumber={((bookmark-1) - i)}
                 width={560}
             />);
         }
-        setCatPage(initialArray);
+        setLengthArr1(5);
+        setCatPageL(initialArray1);
+
+        for (let i = 0; i < 5; i++) {
+            initialArray2.push(<Page
+                className={"pagePdf"}
+                pageNumber={(bookmark + i)}
+                width={560}
+            />);
+        }
+        setLengthArr2(5);
+        setCatPageR(initialArray2);
+
     },[bookmark]);
     
     function previousPage() {
-        const nPage = bookmark - lengthArr + chrg;
+        const nPage = bookmark - lengthArr1 - 1;
         const array = [];
         const item = document.querySelector('.pagesContainer');
         var posX = (parseFloat(item.style.left));
 
-        if(nPage <= 2){
+        /*if(nPage <= 2){
             return;
-        }else if(posX === -100){
-            item.style.left = (posX - 100) + "%";
-            item.style.transition = '500ms';
-            for (let i = 3; i >= 0; i--) {
+        }else */if(posX === -100){
+            for (let i = 0; i < 4; i++) {
                 array.push(<Page
                     className={"pagePdf"}
                     pageNumber={nPage - i}
                     width={560}
                 />);
-                setCatPage([array,...catPage]);
+                setCatPageL([...catPageL,array]);
             }
-            setLengthArr(lengthArr + 4);
+            setLengthArr1(lengthArr1 + 4);
+            item.style.left = (posX + 100) + "%";
+            item.style.transition = '500ms';
         }else{
             item.style.left = (posX + 100) + "%";
-            item.style.transition = '2000ms';
+            item.style.transition = '1000ms';
         }
-        console.log("2-->" + lengthArr);
         //changePage(-2);
     }
     
     function nextPage() {
-        const nPage = bookmark + lengthArr - chrg;
+        const nPage = bookmark + lengthArr2 + 1;
         const array = [];
         const item = document.querySelector('.pagesContainer');
         var posX = (parseFloat(item.style.left));
 
         if(nPage >= numPages-1){
             return;
-        }else if(-posX === (parseInt(lengthArr/2)-1)*100){
+        }else if(-posX >= ((((lengthArr2+lengthArr1)/2)-2)*100)){
             item.style.left = (posX - 100) + "%";
             for (let i = 0; i < 4; i++) {
                 array.push(<Page
@@ -82,14 +96,13 @@ export function PdfViewer({ prop }) {
                     pageNumber={nPage + i}
                     width={560}
                 />);
-                setCatPage([...catPage,array]);
+                setCatPageR([...catPageR,array]);
             }
-            setLengthArr(lengthArr + 4);
+            setLengthArr2(lengthArr2 + 4);
         }else{
             item.style.left = (posX - 100) + "%";
-            item.style.transition = '2000ms';
+            item.style.transition = '1000ms';
         }
-        console.log("2-->" + lengthArr);
     }
 
     /*------------------------------------------*/
@@ -105,11 +118,19 @@ export function PdfViewer({ prop }) {
                 {bookmark && <div className='pagesContainer'
                     style={ bookmark < 5 ? { left: '0%' } : {left: '-200%'}}>
                     {
-                        catPage.map((component, index) => (
+                        catPageL.reverse().map((paginasL, index) => (
                             <div className='d-flex' key={index}>
-                                {component}
+                                {paginasL}
                             </div>
                         ))
+                    }
+                    {
+                        catPageR.map((paginasR, index) => (
+                            <div className='d-flex' key={index}>
+                                {paginasR}
+                            </div>
+                        ))
+
                     }
                 </div>}
 
