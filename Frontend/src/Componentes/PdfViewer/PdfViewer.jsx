@@ -46,16 +46,20 @@ export function PdfViewer({ prop }) {
     },[bookmark]);
     
     function previousPage() {
+        var newPages = 4;
         const nPage = bookmark - lengthArr + chrg.current - 1;
+        //const nPage = pageNumber - chrg.current - 1;
         const item = document.querySelector('.pagesContainer');
+
         var posX = (parseFloat(item.style.left));
-        console.log("viendo: "+pageNumber);
+        if(pageNumber<5) newPages = pageNumber - 1;
         if((pageNumber === 0) || (pageNumber === -1)){
             return;
-        }else if(posX === -100){
+        }else if(posX === 0){
             item.style.transition = '0ms';
             const array = catPage;
-            for (let i = 0; i < (chrg.current-1); i++) {
+            console.log("Numero página: "+nPage);
+            for (let i = 0; i < newPages; i++) {
                 array.unshift(<Page
                     className={"pagePdf"}
                     pageNumber={nPage - i}
@@ -71,12 +75,16 @@ export function PdfViewer({ prop }) {
             setPageNumber(pageNumber-2);
             item.style.transition = '1000ms';
         }
+        console.log("viendo: "+pageNumber);
     }
     
     function nextPage() {
+        var newPages = 4;
         const nPage = bookmark + lengthArr - chrg.current + 1;
         const item = document.querySelector('.pagesContainer');
         var posX = (parseFloat(item.style.left));
+
+        if(pageNumber>(numPages-5)) newPages = pageNumber - 1;
 
         if((pageNumber === numPages) || (pageNumber === numPages+1)){
             return;
@@ -84,7 +92,7 @@ export function PdfViewer({ prop }) {
             item.style.left = (posX - 100) + "%";
             setPageNumber(pageNumber+2);
             const array = catPage;
-            for (let i = 0; i < (chrg.current-1); i++) {
+            for (let i = 0; i < newPages; i++) {
                 array.push(<Page
                     className={"pagePdf"}
                     pageNumber={nPage + i}
