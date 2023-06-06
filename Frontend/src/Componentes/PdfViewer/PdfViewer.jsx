@@ -17,6 +17,7 @@ export function PdfViewer({ prop }) {
     const [lengthArr2,setLengthArr2] = useState();
     //const [pageNumber, setPageNumber] = useState(1);
     const [catPageL, setCatPageL] = useState([]);
+    const [revCatPageL, setRevCatPageL] = useState([]);
     const [catPageR, setCatPageR] = useState([]);
 
     const onDocumentLoadSuccess = ({ numPages }) => {
@@ -37,17 +38,15 @@ export function PdfViewer({ prop }) {
                 pageNumber={((bookmark-1) - i)}
                 width={560}
             />);
-        }
-        setLengthArr1(5);
-        setCatPageL(initialArray1);
-
-        for (let i = 0; i < 5; i++) {
             initialArray2.push(<Page
                 className={"pagePdf"}
                 pageNumber={(bookmark + i)}
                 width={560}
             />);
         }
+        setLengthArr1(5);
+        setCatPageL(initialArray1);
+
         setLengthArr2(5);
         setCatPageR(initialArray2);
 
@@ -55,24 +54,23 @@ export function PdfViewer({ prop }) {
     
     function previousPage() {
         const nPage = bookmark - lengthArr1 - 1;
-        const array = [];
         const item = document.querySelector('.pagesContainer');
         var posX = (parseFloat(item.style.left));
-
         /*if(nPage <= 2){
             return;
         }else */if(posX === -100){
+            item.style.transition = '0ms';
+            const array = catPageL;
             for (let i = 0; i < 4; i++) {
                 array.push(<Page
                     className={"pagePdf"}
                     pageNumber={nPage - i}
                     width={560}
                 />);
-                setCatPageL([...catPageL,array]);
             }
+            setCatPageL(array);
             setLengthArr1(lengthArr1 + 4);
-            item.style.left = (posX + 100) + "%";
-            item.style.transition = '500ms';
+            item.style.left = (posX - 100) + "%";
         }else{
             item.style.left = (posX + 100) + "%";
             item.style.transition = '1000ms';
@@ -105,6 +103,12 @@ export function PdfViewer({ prop }) {
         }
     }
 
+    const reversedArray = catPageL.slice().reverse();
+
+    const mappedArray = reversedArray.map((paginasL, index) => {
+        return <div className='d-flex' key={index}>{paginasL}</div>;
+    }); 
+
     /*------------------------------------------*/
     return (
         <>
@@ -118,11 +122,7 @@ export function PdfViewer({ prop }) {
                 {bookmark && <div className='pagesContainer'
                     style={ bookmark < 5 ? { left: '0%' } : {left: '-200%'}}>
                     {
-                        catPageL.reverse().map((paginasL, index) => (
-                            <div className='d-flex' key={index}>
-                                {paginasL}
-                            </div>
-                        ))
+                        mappedArray
                     }
                     {
                         catPageR.map((paginasR, index) => (
