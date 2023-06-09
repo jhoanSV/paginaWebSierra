@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef } from "react";
+import { React, useState, useEffect } from "react";
 import "./_pdfViewer.scss";
 
 import { Document, Page, Outline, pdfjs } from "react-pdf";
@@ -16,81 +16,46 @@ export function PdfViewer({ prop }) {
     const [lengthArr,setLengthArr] = useState();
     const [pageNumber, setPageNumber] = useState();
     const [catPage, setCatPage] = useState([]);
-    const chrg = useRef(null);
 
     const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
     };
 
     useEffect(() => {
+        let carga = 8;
+        //carga al principio que sea de 8 c:
         setPageNumber(bookmark);
-        
-        if(bookmark < 5){ chrg.current = bookmark - 1 }else if(bookmark % 2 === 0){
-            chrg.current = 5;
-        }else{
-            chrg.current = 4;
-        };
+        if((bookmark+carga) > numPages) {carga = numPages - bookmark;
+            console.log("carga: "+ carga);
+        }
         
         const initialArray = [];
 
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < carga; i++) {
             initialArray.push(<Page
                 className={"pagePdf"}
-                pageNumber={((bookmark-chrg.current) + i)}
+                pageNumber={((bookmark) + i)}
                 width={560}
             />);
         }
-        setLengthArr(10);
+        setLengthArr(carga);
         setCatPage(initialArray);
 
-    },[bookmark]);
-    
-    function previousPage() {
-        var newPages = 4;
-        const nPage = bookmark - lengthArr + chrg.current - 1;
-        //const nPage = pageNumber - chrg.current - 1;
-        const item = document.querySelector('.pagesContainer');
+    },[bookmark, numPages]);
 
-        var posX = (parseFloat(item.style.left));
-        if(pageNumber<5) newPages = pageNumber - 1;
-        if((pageNumber === 0) || (pageNumber === -1)){
-            return;
-        }else if(posX === 0){
-            item.style.transition = '0ms';
-            const array = catPage;
-            console.log("Numero página: "+nPage);
-            for (let i = 0; i < newPages; i++) {
-                array.unshift(<Page
-                    className={"pagePdf"}
-                    pageNumber={nPage - i}
-                    width={560}
-                />);
-            }
-            setCatPage(array);
-            setLengthArr(lengthArr + 4);
-            item.style.left = (posX - 100) + "%";
-            setPageNumber(pageNumber-2);
-        }else{
-            item.style.left = (posX + 100) + "%";
-            setPageNumber(pageNumber-2);
-            item.style.transition = '1000ms';
-        }
-        console.log("viendo: "+pageNumber);
-    }
-    
     function nextPage() {
         var newPages = 4;
-        const nPage = bookmark + lengthArr - chrg.current + 1;
-        const item = document.querySelector('.pagesContainer');
+        const nPage = bookmark + lengthArr;//ultima pagina que debe generar
+        const item = document.querySelector('.pagesContainer');//esto es lo que se mueve
         var posX = (parseFloat(item.style.left));
-
-        if(pageNumber>(numPages-5)) newPages = pageNumber - 1;
+        console.log("nPage: "+ pageNumber + " nPages: " + numPages);
 
         if((pageNumber === numPages) || (pageNumber === numPages+1)){
             return;
-        }else if(-posX >= (parseInt(lengthArr/2)-2)*100){
-            item.style.left = (posX - 100) + "%";
-            setPageNumber(pageNumber+2);
+        }else if(-posX >= (((lengthArr-1)/2)-1)*100){
+            if((pageNumber+newPages)> numPages) newPages = numPages - bookmark - lengthArr + 1;
+            item.style.left = (posX - 50) + "%";
+            setPageNumber(pageNumber+1);
             const array = catPage;
             for (let i = 0; i < newPages; i++) {
                 array.push(<Page
@@ -101,12 +66,25 @@ export function PdfViewer({ prop }) {
             }
             setCatPage(array);
             setLengthArr(lengthArr + 4);
-        }else{
-            item.style.left = (posX - 100) + "%";
-            setPageNumber(pageNumber+2);
-            item.style.transition = '1000ms';
         }
-    } 
+        item.style.left = (posX - 50) + "%";
+        item.style.transition = '1000ms';
+        setPageNumber(pageNumber+1);
+        console.log("viendo: "+ (pageNumber+1));
+    }
+    
+    function previousPage() {
+        const item = document.querySelector('.pagesContainer');
+
+        var posX = (parseFloat(item.style.left));
+        if(posX === 0){
+            return;
+        }else {
+            item.style.left = (posX + 50) + "%";
+            item.style.transition = '1000ms';
+            setPageNumber(pageNumber-1);
+        }
+    }    
 
     /*------------------------------------------*/
     return (
@@ -119,7 +97,7 @@ export function PdfViewer({ prop }) {
                 />
 
                 {bookmark && <div className='pagesContainer'
-                    style={ bookmark < 5 ? { left: '0%' } : {left: '-200%'}}>
+                    style={{ left: '0%'}}>
                     {
                         catPage.map((paginasR, index) => (
                             <div className='d-flex' key={index}>
