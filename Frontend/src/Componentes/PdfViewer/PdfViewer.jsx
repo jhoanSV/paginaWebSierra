@@ -12,7 +12,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 export function PdfViewer({ prop }) {
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth); 
-    const [rctPdf, setRctPdf] = useState();
+    //const [rctPdf, setRctPdf] = useState();
     const [numPages, setNumPages] = useState(null);
     const [bookmark, setBookmark] = useState();
     const [lengthArr,setLengthArr] = useState();
@@ -21,8 +21,13 @@ export function PdfViewer({ prop }) {
     const [move, setMove] = useState(50);
 
     const resize_ob = new ResizeObserver(function() {
+        setScreenWidth(window.innerWidth);        
+    });
+
+    useEffect(() => {
         const item = document.querySelector(".rctPdf");
-        setScreenWidth(window.innerWidth);
+        //const item2 = document.querySelector(".react-pdf__Page__canvas");
+
         let pct = parseInt(screenWidth * 82 / 100);
         
         if ((pct % 2) === 0){
@@ -30,7 +35,15 @@ export function PdfViewer({ prop }) {
         }else{
             item.style.width = (pct-1) + "px";
         }
-    });
+
+        /*let pxCavna = parseInt(item.style.width);
+        
+        if(screenWidth < 636 ){
+            item2.style.width = (pxCavna) + "px";
+        }else{
+            item2.style.width = (pxCavna/2) + "px";
+        }*/
+    },[screenWidth])
 
     const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
@@ -42,10 +55,10 @@ export function PdfViewer({ prop }) {
 
         console.log("tamaño pantalla" + screenWidth);
         if(screenWidth < 636 ){
-            setRctPdf(document.querySelector('.rctPdf').clientWidth);
+            //setRctPdf(document.querySelector('.rctPdf').clientWidth);
             setMove(100);
         }else{
-            setRctPdf((document.querySelector('.rctPdf').clientWidth)/2);
+            //setRctPdf((document.querySelector('.rctPdf').clientWidth)/2);
             setMove(50);
         }
 
@@ -56,19 +69,17 @@ export function PdfViewer({ prop }) {
         
         const initialArray = [];
 
-        console.log("tamaño hoja: "+rctPdf);
-
         for (let i = 0; i < carga; i++) {
             initialArray.push(<Page
                 className={"pagePdf"}
                 pageNumber={((bookmark) + i)}
-                width={rctPdf}
             />);
         }
         setLengthArr(carga);
         setCatPage(initialArray);
 
-    },[bookmark, numPages, rctPdf, screenWidth]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[bookmark, screenWidth]);
 
     function nextPage() {
         var newPages = 4;
@@ -87,7 +98,6 @@ export function PdfViewer({ prop }) {
                 array.push(<Page
                     className={"pagePdf"}
                     pageNumber={nPage + i}
-                    width={rctPdf}
                 />);
             }
             setCatPage(array);
