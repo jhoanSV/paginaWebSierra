@@ -1,3 +1,5 @@
+@import '../../scss/mediaQueries';
+
 .catalogo{
     position: relative;
     min-height: 40rem;
@@ -8,8 +10,10 @@
     display: flex;
     justify-content: center;
     margin: 1.25rem 0rem;
-    iframe {
-        width: 70%;
-        height: 1057px;
+}
+
+@include tablet{
+    .catalogo{
+        padding: 0px 40px;
     }
 }

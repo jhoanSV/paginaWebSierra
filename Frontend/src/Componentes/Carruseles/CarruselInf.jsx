@@ -19,12 +19,6 @@ export function CarruselInf(props){//Aquí recibe la LIST1
 
     if(charge > lProductos) setCharge(lProductos);
 
-    /*window.addEventListener('resize', function() {
-        const item = document.querySelector("#pContainer");
-        setScreenWidth(window.innerWidth);
-        item.style.left = "0%";
-    });*/
-
     const resize_ob = new ResizeObserver(function() {
         setScreenWidth(window.innerWidth);
     });

@@ -11,44 +11,64 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 export function PdfViewer({ prop }) {
 
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth); 
+    const [rctPdf, setRctPdf] = useState();
     const [numPages, setNumPages] = useState(null);
     const [bookmark, setBookmark] = useState();
     const [lengthArr,setLengthArr] = useState();
     const [pageNumber, setPageNumber] = useState();
     const [catPage, setCatPage] = useState([]);
 
+    const resize_ob = new ResizeObserver(function() {
+        setScreenWidth(window.innerWidth);
+    });
+
+    useEffect(() => {
+        resize_ob.observe(document.querySelector(".catalogo"));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if(screenWidth < 636 ){
+            setRctPdf(document.querySelector('.rctPdf').clientWidth);
+        }else{
+            setRctPdf((document.querySelector('.rctPdf').clientWidth)/2);
+        }
+    }, [screenWidth]);
+
     const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
+        setRctPdf(document.querySelector('.rctPdf').clientWidth);
     };
 
     useEffect(() => {
         let carga = 8;
-        //carga al principio que sea de 8 c:
+
         setPageNumber(bookmark);
         if((bookmark+carga) > numPages) {carga = numPages - bookmark;
             console.log("carga: "+ carga);
         }
         
         const initialArray = [];
+        alert('contenedor del pdf: '+rctPdf);
 
         for (let i = 0; i < carga; i++) {
             initialArray.push(<Page
                 className={"pagePdf"}
                 pageNumber={((bookmark) + i)}
-                width={560}
+                width={(500.5/*rctPdf*/)}
             />);
         }
         setLengthArr(carga);
         setCatPage(initialArray);
 
-    },[bookmark, numPages]);
+    },[bookmark, numPages, rctPdf]);
 
     function nextPage() {
         var newPages = 4;
         const nPage = bookmark + lengthArr;//ultima pagina que debe generar
         const item = document.querySelector('.pagesContainer');//esto es lo que se mueve
         var posX = (parseFloat(item.style.left));
-        console.log("nPage: "+ pageNumber + " nPages: " + numPages);
 
         if((pageNumber === numPages) || (pageNumber === numPages+1)){
             return;
@@ -61,7 +81,7 @@ export function PdfViewer({ prop }) {
                 array.push(<Page
                     className={"pagePdf"}
                     pageNumber={nPage + i}
-                    width={560}
+                    width={rctPdf/2}
                 />);
             }
             setCatPage(array);
@@ -70,7 +90,6 @@ export function PdfViewer({ prop }) {
         item.style.left = (posX - 50) + "%";
         item.style.transition = '1000ms';
         setPageNumber(pageNumber+1);
-        console.log("viendo: "+ (pageNumber+1));
     }
     
     function previousPage() {
@@ -99,9 +118,9 @@ export function PdfViewer({ prop }) {
                 {bookmark && <div className='pagesContainer'
                     style={{ left: '0%'}}>
                     {
-                        catPage.map((paginasR, index) => (
+                        catPage.map((paginas, index) => (
                             <div className='d-flex' key={index}>
-                                {paginasR}
+                                {paginas}
                             </div>
                         ))
                     }
