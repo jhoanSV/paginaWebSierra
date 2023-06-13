@@ -18,31 +18,36 @@ export function PdfViewer({ prop }) {
     const [lengthArr,setLengthArr] = useState();
     const [pageNumber, setPageNumber] = useState();
     const [catPage, setCatPage] = useState([]);
+    const [move, setMove] = useState(50);
 
     const resize_ob = new ResizeObserver(function() {
+        const item = document.querySelector(".rctPdf");
         setScreenWidth(window.innerWidth);
-    });
-
-    useEffect(() => {
-        resize_ob.observe(document.querySelector(".catalogo"));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if(screenWidth < 636 ){
-            setRctPdf(document.querySelector('.rctPdf').clientWidth);
+        let pct = parseInt(screenWidth * 82 / 100);
+        
+        if ((pct % 2) === 0){
+            item.style.width = pct + "px";
         }else{
-            setRctPdf((document.querySelector('.rctPdf').clientWidth)/2);
+            item.style.width = (pct-1) + "px";
         }
-    }, [screenWidth]);
+    });
 
     const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
-        setRctPdf(document.querySelector('.rctPdf').clientWidth);
+        resize_ob.observe(document.querySelector(".catalogo"));
     };
 
     useEffect(() => {
         let carga = 8;
+
+        console.log("tamaño pantalla" + screenWidth);
+        if(screenWidth < 636 ){
+            setRctPdf(document.querySelector('.rctPdf').clientWidth);
+            setMove(100);
+        }else{
+            setRctPdf((document.querySelector('.rctPdf').clientWidth)/2);
+            setMove(50);
+        }
 
         setPageNumber(bookmark);
         if((bookmark+carga) > numPages) {carga = numPages - bookmark;
@@ -50,19 +55,20 @@ export function PdfViewer({ prop }) {
         }
         
         const initialArray = [];
-        alert('contenedor del pdf: '+rctPdf);
+
+        console.log("tamaño hoja: "+rctPdf);
 
         for (let i = 0; i < carga; i++) {
             initialArray.push(<Page
                 className={"pagePdf"}
                 pageNumber={((bookmark) + i)}
-                width={(500.5/*rctPdf*/)}
+                width={rctPdf}
             />);
         }
         setLengthArr(carga);
         setCatPage(initialArray);
 
-    },[bookmark, numPages, rctPdf]);
+    },[bookmark, numPages, rctPdf, screenWidth]);
 
     function nextPage() {
         var newPages = 4;
@@ -81,13 +87,13 @@ export function PdfViewer({ prop }) {
                 array.push(<Page
                     className={"pagePdf"}
                     pageNumber={nPage + i}
-                    width={rctPdf/2}
+                    width={rctPdf}
                 />);
             }
             setCatPage(array);
             setLengthArr(lengthArr + 4);
         }
-        item.style.left = (posX - 50) + "%";
+        item.style.left = (posX - move) + "%";
         item.style.transition = '1000ms';
         setPageNumber(pageNumber+1);
     }
@@ -99,7 +105,7 @@ export function PdfViewer({ prop }) {
         if(posX === 0){
             return;
         }else {
-            item.style.left = (posX + 50) + "%";
+            item.style.left = (posX + move) + "%";
             item.style.transition = '1000ms';
             setPageNumber(pageNumber-1);
         }

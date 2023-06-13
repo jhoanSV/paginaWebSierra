@@ -45,7 +45,6 @@ export function CarruselInf(props){//Aquí recibe la LIST1
     }, [screenWidth]);
 
     const check = () =>{
-        console.log("chekeame esta");
         if(screenWidth < 636 ){
             setBef(1);//show = 1;
             setMove(-100);
