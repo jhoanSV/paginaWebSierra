@@ -84,7 +84,7 @@ export function Home() {
 
                                 <div className="col">
                                     <div className="btn-catalogo1">
-                                        <a href={require("../../Assets/docs/CATALOGO-NUEVO-FEB-2023.pdf")} download>
+                                        <a href={require("../../Assets/docs/Catalogo.pdf")} download>
                                             <div className='d-flex align-items-center'>
                                                 <img
                                                     src={require("../../Assets/png/DescargaCatalogo2.png")}
