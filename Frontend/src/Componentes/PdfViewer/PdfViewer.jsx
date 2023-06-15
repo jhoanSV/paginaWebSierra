@@ -12,7 +12,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 export function PdfViewer({ prop }) {
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth); 
-    //const [rctPdf, setRctPdf] = useState();
+    const [width, setWidth] = useState();
     const [numPages, setNumPages] = useState(null);
     const [bookmark, setBookmark] = useState();
     const [lengthArr,setLengthArr] = useState();
@@ -26,23 +26,20 @@ export function PdfViewer({ prop }) {
 
     useEffect(() => {
         const item = document.querySelector(".rctPdf");
-        //const item2 = document.querySelector(".react-pdf__Page__canvas");
-
         let pct = parseInt(screenWidth * 82 / 100);
+        let widthPage = 0;
         
         if ((pct % 2) === 0){
             item.style.width = pct + "px";
+            widthPage = pct/2;
+            if(screenWidth < 636) widthPage = pct
         }else{
             item.style.width = (pct-1) + "px";
+            widthPage = (pct-1)/2;
+            if(screenWidth < 636) widthPage = pct-1
+            console.log("salio impar que loko");
         }
-
-        /*let pxCavna = parseInt(item.style.width);
-        
-        if(screenWidth < 636 ){
-            item2.style.width = (pxCavna) + "px";
-        }else{
-            item2.style.width = (pxCavna/2) + "px";
-        }*/
+        setWidth(widthPage);
     },[screenWidth])
 
     const onDocumentLoadSuccess = ({ numPages }) => {
@@ -52,15 +49,6 @@ export function PdfViewer({ prop }) {
 
     useEffect(() => {
         let carga = 8;
-
-        console.log("tamaño pantalla" + screenWidth);
-        if(screenWidth < 636 ){
-            //setRctPdf(document.querySelector('.rctPdf').clientWidth);
-            setMove(100);
-        }else{
-            //setRctPdf((document.querySelector('.rctPdf').clientWidth)/2);
-            setMove(50);
-        }
 
         setPageNumber(bookmark);
         if((bookmark+carga) > numPages) {carga = numPages - bookmark;
@@ -75,8 +63,15 @@ export function PdfViewer({ prop }) {
                 pageNumber={((bookmark) + i)}
             />);
         }
+
         setLengthArr(carga);
         setCatPage(initialArray);
+
+        if(screenWidth < 636){
+            setMove(100);
+        }else{
+            setMove(50);
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[bookmark, screenWidth]);
@@ -86,6 +81,12 @@ export function PdfViewer({ prop }) {
         const nPage = bookmark + lengthArr;//ultima pagina que debe generar
         const item = document.querySelector('.pagesContainer');//esto es lo que se mueve
         var posX = (parseFloat(item.style.left));
+
+        if(screenWidth < 636 ){
+            setMove(100);
+        }else{
+            setMove(50);
+        }
 
         if((pageNumber === numPages) || (pageNumber === numPages+1)){
             return;
@@ -111,6 +112,12 @@ export function PdfViewer({ prop }) {
     function previousPage() {
         const item = document.querySelector('.pagesContainer');
 
+        if(screenWidth < 636 ){
+            setMove(100);
+        }else{
+            setMove(50);
+        }
+
         var posX = (parseFloat(item.style.left));
         if(posX === 0){
             return;
@@ -124,7 +131,7 @@ export function PdfViewer({ prop }) {
     /*------------------------------------------*/
     return (
         <>
-            <Document className={"rctPdf"} file={pdfFile} onLoadSuccess={onDocumentLoadSuccess}>
+            <Document className={"rctPdf"} file={pdfFile} loading={'Cargando... Por favor espere'} onLoadSuccess={onDocumentLoadSuccess}>
                 <Outline className={"hide-outline"} onLoadSuccess={ (outline) => {
                         const outlines = outline.filter(item => item.title === prop);
                         outlines.map((item) => setBookmark(item.dest[0]+1));
@@ -135,7 +142,7 @@ export function PdfViewer({ prop }) {
                     style={{ left: '0%'}}>
                     {
                         catPage.map((paginas, index) => (
-                            <div className='d-flex' key={index}>
+                            <div className='d-flex' key={index} style={{ width: `${width}px`}}>
                                 {paginas}
                             </div>
                         ))

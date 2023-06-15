@@ -2,18 +2,12 @@
 
 .catalogo{
     position: relative;
-    min-height: 40rem;
-    padding: 0px 84px;//pendiente por cambio
+    min-height: 26rem;
+    padding: 0px 12px;
 }
 
 .col.pdfViewer {
     display: flex;
     justify-content: center;
     margin: 1.25rem 0rem;
-}
-
-@include tablet{
-    .catalogo{
-        padding: 0px 40px;
-    }
 }
