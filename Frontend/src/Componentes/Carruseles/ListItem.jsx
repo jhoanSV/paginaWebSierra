@@ -1,7 +1,7 @@
 import React from "react";
 import "./_ListItem.scss";
 
-export const ListItem=({llave, codigo, descripcion})=>{
+export const ListItem=({llave, codigo, descripcion, descripcionCompleta})=>{
 
 
 
@@ -38,14 +38,21 @@ export const ListItem=({llave, codigo, descripcion})=>{
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="productolLabel">{descripcion}</h1>
+                            <h1 className="modal-title fs-5 d-block" id="productolLabel">{descripcion}</h1>
+                            <span className="codigo">Cod: {codigo}</span>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <div>Precio:</div>
-                            <div>$ 5800</div>
-                            <div>cantidad: </div>
-                            <div>-  1  +</div>
+                            <div className="imgModal">
+                                <img
+                                    src={require(`../../Assets/jpg/productosJpg/${codigo}.png`)}
+                                    alt="img de producto"
+                                />
+                            </div>
+                            <div>
+                                Descripcion:
+                                {descripcionCompleta}
+                            </div>                            
                         </div>
                     </div>
                 </div>

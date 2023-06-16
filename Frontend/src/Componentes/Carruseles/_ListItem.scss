@@ -3,6 +3,7 @@
 .descFont{
     font-size: 1.1875rem;
     font-weight: bold;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -29,6 +30,11 @@
     .col{
         height: auto;
     }
+}
+
+.imgModal {
+    display: flex;
+    justify-content: center;
 }
 
 .imgProducto img{
