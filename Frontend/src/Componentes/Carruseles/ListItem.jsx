@@ -1,7 +1,7 @@
 import React from "react";
 import "./_ListItem.scss";
 
-export const ListItem=({llave, codigo, descripcion, descripcionCompleta})=>{
+export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
 
 
 
@@ -38,8 +38,10 @@ export const ListItem=({llave, codigo, descripcion, descripcionCompleta})=>{
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5 d-block" id="productolLabel">{descripcion}</h1>
-                            <span className="codigo">Cod: {codigo}</span>
+                            <h1 className="modal-title fs-5 d-block" id="productolLabel">
+                                {descripcion}<br/>
+                                <span className="codigo">Cod: {codigo}</span>
+                            </h1>                            
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
@@ -50,8 +52,8 @@ export const ListItem=({llave, codigo, descripcion, descripcionCompleta})=>{
                                 />
                             </div>
                             <div>
-                                Descripcion:
-                                {descripcionCompleta}
+                                Descripcion:<br/>
+                                {descripcionComp}
                             </div>                            
                         </div>
                     </div>

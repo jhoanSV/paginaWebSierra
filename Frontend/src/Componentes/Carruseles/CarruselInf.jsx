@@ -79,7 +79,8 @@ export function CarruselInf(props){//Aquí recibe la LIST1
                         key={index}
                         llave = {item.id}//Para apuntar a cada modal
                         codigo = {item.cod}
-                        descripcion = {item.descripcion}                    
+                        descripcion = {item.descripcion}
+                        descripcionComp={item.descripcionCompleta}
                     />
                 </>
             )
