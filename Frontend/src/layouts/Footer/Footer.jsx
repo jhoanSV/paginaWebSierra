@@ -11,7 +11,7 @@ export function Footer(){
                 <div className="row g-0">
 
                     <div className="col align-self-center logoF">
-                        <a href="index.html" style={{textDecoration: "none" }}>
+                        <a href="/" style={{textDecoration: "none" }}>
                             <img
                                 src={require("../../Assets/png/LogoSierra.png")}
                                 width="2207px"

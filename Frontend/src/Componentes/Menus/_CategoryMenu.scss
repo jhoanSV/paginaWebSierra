@@ -1,4 +1,4 @@
-//@import "../../scss/colors";
+@import "../../scss/colors";
 @import "../../scss/mediaQueries";
 
 .container-menu{
@@ -64,7 +64,7 @@
 }
 
 .menu-button{
-    background-color: white;
+    background-color: $amarilloPrincipal;
     width: auto;
     padding: 10px 0px;
     position: absolute;
@@ -75,6 +75,7 @@
     border-color: rgba(128, 128, 128, 0.37);
     border-radius: 0rem 2rem 2rem 0rem;
     transition: 1s;
+
 }
 
 .menu-button-anima::before{
