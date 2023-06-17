@@ -1,6 +1,6 @@
 import React from "react";
 import "./_Home.scss";
-import { Carrusel } from "../../Componentes/Carruseles/Carrusel";
+//import { Carrusel } from "../../Componentes/Carruseles/Carrusel";
 import { CarruselInf } from "../../Componentes/Carruseles";
 import arJason from "../../Assets/jpg/productosJpg/productos.json";
 import categ from "../../Assets/jpg/categorias/categorias.json";
@@ -23,7 +23,6 @@ export function Home() {
                     </Link>
 
                 </div>
-
 
             </>
         );
@@ -50,15 +49,55 @@ export function Home() {
                             <div className="row row-cols-1 gy-2">
 
                                 <div className="col ">
-                                    <Carrusel
-                                        idCarrusel={"c1"}
-                                    />
+                                    <div id='carrusel1' className="carousel slide" data-bs-ride="carousel">
+                                        <div className="carousel-indicators">
+                                            <button id="color-indicator" type="button" data-bs-target={`#carrusel1`} data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>                                            
+                                        </div>
+                                        <div className="carousel-inner h-100 c-inner">
+                                            <div className="carousel-item active">
+                                                <div className="test h-100">
+                                                    <img src={require(`../../Assets/jpg/aliados/max.jpg`)} className="d-block w-100 h-100" alt="..."/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button className="carousel-control-prev" type="button" data-bs-target={`#carrusel1`} data-bs-slide="prev">
+                                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span className="visually-hidden">Previous</span>
+                                        </button>
+                                        <button className="carousel-control-next" type="button" data-bs-target={`#carrusel1`} data-bs-slide="next">
+                                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span className="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
                                 </div>
 
-                                <div className="col" id="carrusel2">
-                                    <Carrusel
-                                        idCarrusel={"car2"}
-                                    />
+                                <div className="col">
+                                    <div id='carrusel2' className="carousel slide" data-bs-ride="carousel">
+                                        <div className="carousel-indicators">
+                                            <button id="color-indicator" type="button" data-bs-target={`#carrusel2`} data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button id="color-indicator" type="button" data-bs-target={`#carrusel2`} data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        </div>
+                                        <div className="carousel-inner h-100 c-inner">
+                                            <div className="carousel-item active">
+                                                <div className="test h-100">
+                                                    <img src={require(`../../Assets/jpg/Promociones/promoSuperBonder.jpg`)} className="d-block w-100 h-100" alt="..."/>
+                                                </div>
+                                            </div>
+                                            <div className="carousel-item">
+                                                <div className="test h-100">
+                                                    <img src={require(`../../Assets/jpg/Promociones/promoTronex.jpg`)} className="d-block w-100 h-100" alt="..."/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button className="carousel-control-prev" type="button" data-bs-target={`#carrusel2`} data-bs-slide="prev">
+                                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span className="visually-hidden">Previous</span>
+                                        </button>
+                                        <button className="carousel-control-next" type="button" data-bs-target={`#carrusel2`} data-bs-slide="next">
+                                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span className="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
                                 </div>
 
 
