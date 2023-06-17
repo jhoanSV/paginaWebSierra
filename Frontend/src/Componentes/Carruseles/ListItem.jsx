@@ -24,7 +24,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
                             </div>
 
                             <div className="col">
-                                <div className="descFont montserratFont">{descripcion}</div>
+                                <div className="descFont titleFont">{descripcion}</div>
                                 <div className="codFont">{codigo}</div>
                             </div>
 
@@ -51,8 +51,8 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
                                     alt="img de producto"
                                 />
                             </div>
-                            <div>
-                                Descripcion:<br/>
+                            <div className="genFont">
+                                <strong>Descripcion:</strong><br/>
                                 {descripcionComp}
                             </div>                            
                         </div>

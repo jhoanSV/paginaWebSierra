@@ -30,7 +30,7 @@ export function About() {
 
                         </div>
 
-                        <div className="qSomos montserratFont">
+                        <div className="qSomos genFont">
                             
                                 <h1>¿Quienes Somos?</h1>
                                 <p className="font-19">Somos una empresa colombiana con más de 6 Años de experiencia en la

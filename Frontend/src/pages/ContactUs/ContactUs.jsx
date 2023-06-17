@@ -30,13 +30,13 @@ export function ContactUs() {
                     <h1>Contactanos</h1>
                 </div>
                 <div className="row row-cols-2 gy-2">
-                    <div className="montserratFont w-100">
+                    <div className="genFont w-100">
                         <p className="font-19 p-3" id="mediaQ">"!Contactanos para cualquier consulta! Si buscas oportunidades de colaboración,
                             trabajar con nosotros o ser cliente, envianos un mensaje. ¡Esperamos construir juntos
                             una alianza estrategica!"</p>
                     </div>
 
-                    <div className="col montserratFont">
+                    <div className="col genFont">
                         <p className="font-19 p-3">"!Contactanos para cualquier consulta! Si buscas oportunidades de colaboración,
                         trabajar con nosotros o ser cliente, envianos un mensaje. ¡Esperamos construir juntos
                         una alianza estrategica!"</p>
