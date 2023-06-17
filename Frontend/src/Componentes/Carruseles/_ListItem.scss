@@ -1,4 +1,4 @@
-@import "../../scss/_index.scss";
+@import "../../scss/_colors.scss";
 
 .descFont{
     font-size: 1.1875rem;
@@ -6,6 +6,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.codigo {
+    font: -webkit-control;
 }
 
 .codFont{
