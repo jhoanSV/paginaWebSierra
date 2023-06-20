@@ -1,5 +1,6 @@
 import React from "react";
 import "./_ListItem.scss";
+import { Link } from "react-router-dom";
 
 export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
 
@@ -53,7 +54,13 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
                             </div>
                             <div className="genFont">
                                 <strong>Descripcion:</strong><br/>
-                                {descripcionComp}
+                                {descripcionComp}.
+                                <br/>
+                                <div class="modal-footer" data-bs-dismiss="modal">
+                                    <Link to={'catalogo'} state={{ bookM: `INICIO`}}>
+                                        Mas productos
+                                    </Link>
+                                </div>
                             </div>                            
                         </div>
                     </div>
