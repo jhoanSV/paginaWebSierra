@@ -7,7 +7,8 @@ export function CategMenuMobile() {
 
     const items = categs;
 
-    const Items = () => (
+    //Funcion para mostrar los logos en el menu desplegable
+    const Items = () => (        
         <ul className='p-0 m-0'>
           {
             items.map((item, index) => (

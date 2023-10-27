@@ -5,6 +5,8 @@ let source = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1406.0504614
 
 export function ContactUs() {
 
+    /*Maneja el envio del formulario, manda los valores del mismo
+      a un excel de drive*/
     const handleSubmit = (e) =>{
         const form = document.getElementById('form');
         const btn = document.getElementById('btn-submit')

@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 export function Home() {
 
+    //Funcion para mostrar las categorias en categorias.json
     const itItems = categ.map( item => {
 
         return(

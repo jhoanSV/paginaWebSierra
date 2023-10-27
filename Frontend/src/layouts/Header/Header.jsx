@@ -5,13 +5,15 @@ import { Link } from "react-router-dom";
 
 export function Header() {
 
-    function showGhost() {
+    /*Funcion para mostrar o esconder caja de texto
+      cuando se hace click o se pierde el focus de la caja
+    */
+    function showGhost() {        
         const item = document.querySelector(".ghost-buscador");
         const item2 = document.querySelector(".caja-buscar");
         item.style.display = "flex";
         item2.focus();
     }
-
     function hideGhost() {
         const item = document.querySelector(".ghost-buscador");
         item.style.display = "none";
