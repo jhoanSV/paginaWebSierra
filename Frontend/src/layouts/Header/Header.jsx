@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export function Header() {
 
-    /*Funcion para mostrar o esconder caja de texto
+    /*Funciones para mostrar o esconder caja de texto
       cuando se hace click o se pierde el focus de la caja
     */
     function showGhost() {        
@@ -55,12 +55,19 @@ export function Header() {
 
                     <div className="col logo">
                         <a href="/" style={{textDecoration: "none" }}>
-                            <img
-                                src={require("../../Assets/png/LogoSierra.png")}
-                                width="2207px"
-                                height="839px"
-                                alt="LogoSierra"
-                            />
+                            <picture>
+                                <source
+                                    type="image/avif"
+                                    srcSet={require("../../Assets/avif/LogoSierra.avif")}
+                                />
+                                <img
+                                    src={require("../../Assets/png/LogoSierra.png")}
+                                    width="2207px"
+                                    height="839px"
+                                    alt="LogoSierra"
+                                    decoding="async"
+                                />
+                            </picture>
                         </a>                      
                     </div>
 
@@ -77,12 +84,18 @@ export function Header() {
 
                     <div className="col user">
                         <a href="index.html" style={{textDecoration: "none" }}>
-                            <img
-                                src={require("../../Assets/png/tuercaUsuario.png")}
-                                width="2965px"
-                                height="2965px"
-                                alt="User"
-                            />
+                            <picture>
+                                <source 
+                                    type="image/avif"
+                                    //srcSet={require("../../Assets/avif/LogoSierra.avif")}despues
+                                />
+                                <img
+                                    src={require("../../Assets/png/tuercaUsuario.png")}
+                                    width="2965px"
+                                    height="2965px"
+                                    alt="User"
+                                />
+                            </picture>
                         </a>                        
                     </div>
 

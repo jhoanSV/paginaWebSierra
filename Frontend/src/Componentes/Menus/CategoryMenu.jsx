@@ -16,11 +16,17 @@ export function CategoryMenu() {
             items.map((item, index) => (
                 <li key={index} className={`${item.color}`}>
                     <Link to={"catalogo"} state={{ bookM: `${item.descripcion.toUpperCase()}` }}>
-                        <img
-                            className="logoMenuCat"
-                            src={require(`../../Assets/png/Logos/${item.descripcion}.png`)}
-                            alt="imgCategory"
-                        />
+                        <picture>
+                            <source 
+                                type="image/avif"
+                                srcSet={require(`../../Assets/avif/Logos/${item.descripcion}.avif`)}
+                            />
+                            <img
+                                className="logoMenuCat"
+                                src={require(`../../Assets/png/Logos/${item.descripcion}.png`)}
+                                alt="imgCategory"
+                            />
+                        </picture>
                         <span>{item.descripcion}</span>
                     </Link>
                 </li>

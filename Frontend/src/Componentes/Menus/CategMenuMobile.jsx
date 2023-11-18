@@ -14,11 +14,17 @@ export function CategMenuMobile() {
             items.map((item, index) => (
                 <li key={index} className='lstStylN items-menu-mob'>
                     <Link to={'catalogo'} state={{ bookM: `${item.descripcion.toUpperCase()}` }}>
-                        <img
-                            className='logoCatMob'
-                            src={require(`../../Assets/png/Logos/${item.descripcion}.png`)}
-                            alt='imgCategory'
-                        />
+                        <picture>
+                            <source 
+                                type="image/avif"
+                                srcSet={require(`../../Assets/avif/Logos/${item.descripcion}.avif`)}
+                            />
+                            <img
+                                className="logoMenuCat"
+                                src={require(`../../Assets/png/Logos/${item.descripcion}.png`)}
+                                alt="imgCategory"
+                            />
+                        </picture>
                     </Link>
                 </li>
             ))

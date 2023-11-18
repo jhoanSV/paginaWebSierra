@@ -19,6 +19,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
 
                             <div className="col imgProducto">
                                 <img
+                                    loading="lazy"
                                     src={require(`../../Assets/jpg/productosJpg/${codigo}.png`)}
                                     alt="img de producto"
                                 />
@@ -56,7 +57,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
                                 <strong>Descripcion:</strong><br/>
                                 {descripcionComp}.
                                 <br/>
-                                <div class="modal-footer" data-bs-dismiss="modal">
+                                <div className="modal-footer" data-bs-dismiss="modal">
                                     <Link to={'catalogo'} state={{ bookM: `INICIO`}}>
                                         Mas productos
                                     </Link>

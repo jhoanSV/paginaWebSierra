@@ -6,7 +6,12 @@
 }
 
 .cabecera{
-    background-image: url(../../Assets/png/HeaderPrincipal.png);
+    //background-image: url(../../Assets/png/HeaderPrincipal.png);
+    background-image:
+        image-set(
+            url("../../Assets/avif/HeaderPrincipal.avif") type("image/avif"),
+            url("../../Assets/png/HeaderPrincipal.png") type("image/png")
+        );
 	background-size: cover;
     padding: 1.25rem 0px 0px;
 }
@@ -143,8 +148,4 @@
         }
 
     }
-
-    
-    
-    
 }

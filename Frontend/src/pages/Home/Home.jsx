@@ -16,11 +16,18 @@ export function Home() {
                 <div className="c-categ">
 
                     <Link to={"catalogo"} state={{ bookM: `${item.descripcion.toUpperCase()}` }}>
-                        <img
-                            className={`${item.color}`}
-                            src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
-                            alt="categoria"
-                        />
+                        <picture>
+                            <source
+                                type="image/avif"
+                                srcSet={require(`../../Assets/avif/${item.descripcion}.avif`)}
+                            />
+                            <img
+                                className={`${item.color}`}
+                                src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
+                                alt="categoria"
+                                decoding="async"
+                            />
+                        </picture>
                     </Link>
 
                 </div>
@@ -56,8 +63,19 @@ export function Home() {
                                         </div>
                                         <div className="carousel-inner h-100 c-inner">
                                             <div className="carousel-item active">
-                                                <div className="test h-100">
-                                                    <img src={require(`../../Assets/jpg/aliados/max.jpg`)} className="d-block w-100 h-100" alt="..."/>
+                                                <div className="test h-100">                                                    
+                                                    <picture>
+                                                        <source
+                                                            type="image/avif"
+                                                            srcSet={require("../../Assets/avif/max.avif")}
+                                                        />
+                                                        <img
+                                                            className="d-block w-100 h-100"
+                                                            src={require(`../../Assets/jpg/aliados/max.jpg`)}
+                                                            alt="..."
+                                                            decoding="async"
+                                                        />
+                                                    </picture>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,13 +98,35 @@ export function Home() {
                                         </div>
                                         <div className="carousel-inner h-100 c-inner">
                                             <div className="carousel-item active">
-                                                <div className="test h-100">
-                                                    <img src={require(`../../Assets/jpg/Promociones/promoSuperBonder.jpg`)} className="d-block w-100 h-100" alt="..."/>
+                                                <div className="test h-100">                                                    
+                                                    <picture>
+                                                        <source
+                                                            type="image/avif"
+                                                            srcSet={require("../../Assets/avif/promoSuperBonder.avif")}
+                                                        />
+                                                        <img
+                                                            className="d-block w-100 h-100"
+                                                            src={require(`../../Assets/jpg/Promociones/promoSuperBonder.jpg`)}
+                                                            alt="..."
+                                                            decoding="async"
+                                                        />
+                                                    </picture>
                                                 </div>
                                             </div>
                                             <div className="carousel-item">
                                                 <div className="test h-100">
-                                                    <img src={require(`../../Assets/jpg/Promociones/promoTronex.jpg`)} className="d-block w-100 h-100" alt="..."/>
+                                                    <picture>
+                                                        <source
+                                                            type="image/avif"
+                                                            srcSet={require("../../Assets/avif/promoTronex.avif")}
+                                                        />
+                                                        <img
+                                                            className="d-block w-100 h-100"
+                                                            src={require(`../../Assets/jpg/Promociones/promoTronex.jpg`)}
+                                                            alt="..."
+                                                            decoding="async"
+                                                        />
+                                                    </picture>
                                                 </div>
                                             </div>
                                         </div>

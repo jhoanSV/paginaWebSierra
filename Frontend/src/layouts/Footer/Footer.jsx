@@ -12,12 +12,19 @@ export function Footer(){
 
                     <div className="col align-self-center logoF">
                         <a href="/" style={{textDecoration: "none" }}>
-                            <img
-                                src={require("../../Assets/png/LogoSierra.png")}
-                                width="2207px"
-                                height="839px"
-                                alt="logoSierra"
-                            />
+                            <picture>
+                                <source
+                                    type="image/avif"
+                                    srcSet={require("../../Assets/avif/LogoSierraFtr.avif")}
+                                />
+                                <img
+                                    src={require("../../Assets/png/LogoSierraFtr.png")}
+                                    width="2207px"
+                                    height="839px"
+                                    alt="LogoSierra"
+                                    decoding="async"
+                                />
+                            </picture>
                         </a>
                     </div>
 
