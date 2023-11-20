@@ -1,29 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./_Home.scss";
 //import { Carrusel } from "../../Componentes/Carruseles/Carrusel";
 import { CarruselInf } from "../../Componentes/Carruseles";
 import arJason from "../../Assets/jpg/productosJpg/productos.json";
 import categ from "../../Assets/jpg/categorias/categorias.json";
 import { Link } from "react-router-dom";
+import { useObserver } from "../../Componentes/UseObs";
 
 export function Home() {
+    const [observer, setElements, entries] = useObserver({
+        treshhold: 0.25,
+        rootMargin: 1,
+        root: null
+    });
 
     //Funcion para mostrar las categorias en categorias.json
     const itItems = categ.map( item => {
 
-        return(
+        const imgAvif = require(`../../Assets/avif/${item.descripcion}.avif`)
+        const imgjpg = require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)
+        return(                        
             <>
                 <div className="c-categ">
 
                     <Link to={"catalogo"} state={{ bookM: `${item.descripcion.toUpperCase()}` }}>
                         <picture>
                             <source
+                                className="el_lazy2"
                                 type="image/avif"
-                                srcSet={require(`../../Assets/avif/${item.descripcion}.avif`)}
+                                elsrc={imgAvif}
                             />
                             <img
-                                className={`${item.color}`}
-                                src={require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)}
+                                className={`${item.color} el_lazy`}                                
+                                elsrc={imgjpg}
                                 alt="categoria"
                                 decoding="async"
                             />
@@ -35,6 +44,24 @@ export function Home() {
             </>
         );
     });
+
+    useEffect(() => {
+        const los_elementos = document.querySelectorAll(".el_lazy2");
+        setElements(los_elementos)
+    }, [setElements])
+
+    useEffect(() => {
+        entries.forEach(entry=>{
+            if (entry.isIntersecting){                
+                const elmt = entry.target;                
+                console.log("aa: "+elmt.getAttribute('elsrc'))
+                const elSrcValue = elmt.getAttribute('elsrc')
+                elmt.srcset = elSrcValue
+                //elmt.setAttribute('srcSet', require(elmt.getAttribute('elSrc')))
+                
+            }
+        });
+    }, [entries, observer])
 
     return (
         <div className="inicio">
@@ -70,7 +97,7 @@ export function Home() {
                                                             srcSet={require("../../Assets/avif/max.avif")}
                                                         />
                                                         <img
-                                                            className="d-block w-100 h-100"
+                                                            className="d-block w-100 h-100 el_lazy"
                                                             src={require(`../../Assets/jpg/aliados/max.jpg`)}
                                                             alt="..."
                                                             decoding="async"
@@ -105,7 +132,7 @@ export function Home() {
                                                             srcSet={require("../../Assets/avif/promoSuperBonder.avif")}
                                                         />
                                                         <img
-                                                            className="d-block w-100 h-100"
+                                                            className="d-block w-100 h-100 el_lazy"
                                                             src={require(`../../Assets/jpg/Promociones/promoSuperBonder.jpg`)}
                                                             alt="..."
                                                             decoding="async"
@@ -121,7 +148,7 @@ export function Home() {
                                                             srcSet={require("../../Assets/avif/promoTronex.avif")}
                                                         />
                                                         <img
-                                                            className="d-block w-100 h-100"
+                                                            className="d-block w-100 h-100 el_lazy"
                                                             src={require(`../../Assets/jpg/Promociones/promoTronex.jpg`)}
                                                             alt="..."
                                                             decoding="async"
@@ -169,6 +196,7 @@ export function Home() {
                                                 <img
                                                     src={require("../../Assets/png/DescargaCatalogo2.png")}
                                                     alt="BotonCatalogo"
+                                                    className="el_lazy"
                                                 />
                                                 <h1><span>DESCARGA NUESTRO <br/>CATALOGO!</span></h1>
                                             </div>
