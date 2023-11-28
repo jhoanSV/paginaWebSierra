@@ -53,12 +53,9 @@ export function Home() {
     useEffect(() => {
         entries.forEach(entry=>{
             if (entry.isIntersecting){                
-                const elmt = entry.target;                
-                console.log("aa: "+elmt.getAttribute('elsrc'))
+                const elmt = entry.target;
                 const elSrcValue = elmt.getAttribute('elsrc')
                 elmt.srcset = elSrcValue
-                //elmt.setAttribute('srcSet', require(elmt.getAttribute('elSrc')))
-                
             }
         });
     }, [entries, observer])
