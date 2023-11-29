@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./_Home.scss";
 //import { Carrusel } from "../../Componentes/Carruseles/Carrusel";
 import { CarruselInf } from "../../Componentes/Carruseles";
-import arJason from "../../Assets/jpg/productosJpg/productos.json";
+import arJason from "../../Assets/png/Productos/productos.json";
 import categ from "../../Assets/jpg/categorias/categorias.json";
 import { Link } from "react-router-dom";
 import { useObserver } from "../../Componentes/UseObs";
@@ -56,6 +56,7 @@ export function Home() {
                 const elmt = entry.target;
                 const elSrcValue = elmt.getAttribute('elsrc')
                 elmt.srcset = elSrcValue
+                observer.unobserve(elmt)
             }
         });
     }, [entries, observer])

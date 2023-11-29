@@ -4,25 +4,55 @@ import { Link } from "react-router-dom";
 
 export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
 
-
-
+    let imgjpg = 0
+    let imgAvif = 0
+    try {//intenta buscar la imagen jpg
+        imgjpg = require(`../../Assets/png/Productos/${codigo}.png`)
+    } catch (error) {
+        imgjpg = 0
+    }
+    try {//intenta buscar la imagen AVIF
+        imgAvif = require(`../../Assets/avif/Productos/${codigo}.avif`)
+    } catch (error) {
+        imgAvif = 0
+    }
+    const click_caja = () => {
+        var el_id = "#lazy_modal" + (llave)
+        const elemento = document.querySelector(el_id)
+        const elSrcValue = elemento.getAttribute('elsrc') 
+        elemento.srcset = elSrcValue
+        elemento.removeAttribute("id")
+    }
 
     return(
         //src={require(`../../Assets/jpg/Promociones/${data[0].cod}.jpg`)}
         <>
-            
-            <div className="caja" data-bs-toggle="modal" data-bs-target={`#producto${llave}`}>
+            <div className="caja" data-bs-toggle="modal" data-bs-target={`#producto${llave}`} onClick={click_caja}>
                 
                 <div className="row">
                     <div className="col h-100">
                         <div className="row row-cols-1 g-0">
 
-                            <div className="col imgProducto">
-                                <img
-                                    loading="lazy"
-                                    src={require(`../../Assets/jpg/productosJpg/${codigo}.png`)}
-                                    alt="img de producto"
-                                />
+                            <div className="col imgProducto">                               
+                                { imgAvif ? 
+                                    <picture>
+                                        <source                                            
+                                            type="image/avif"
+                                            srcSet={imgAvif}                                            
+                                        />
+                                        <img                                            
+                                            src={imgjpg}
+                                            alt="categoria"
+                                            decoding="async"
+                                        />
+                                    </picture>
+                                    :
+                                    <img
+                                        src={imgjpg}
+                                        alt="categoria"
+                                        decoding="async"
+                                    />
+                                }
                             </div>
 
                             <div className="col">
@@ -48,10 +78,18 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
                         </div>
                         <div className="modal-body">
                             <div className="imgModal">
-                                <img
-                                    src={require(`../../Assets/jpg/productosJpg/${codigo}.png`)}
-                                    alt="img de producto"
-                                />
+                                <picture>
+                                    <source
+                                        id={`lazy_modal${llave}`}
+                                        type="image/avif"
+                                        elsrc={imgAvif}
+                                    />
+                                    <img
+                                        elsrc={imgjpg}
+                                        alt="categoria"
+                                        decoding="async"
+                                    />
+                                </picture>
                             </div>
                             <div className="genFont">
                                 <strong>Descripcion:</strong><br/>
