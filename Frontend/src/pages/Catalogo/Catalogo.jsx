@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { PdfViewer } from "../../Componentes/PdfViewer/PdfViewer";
+import { PdfViewer2 } from "../../Componentes/PdfViewer/PdfViewer2";
 import "./_Catalogo.scss";
 
 export function Catalogo() {
@@ -21,11 +22,12 @@ export function Catalogo() {
             <div className="catalogo">
 
                 <div className="row">
-                    <div className="col pdfViewer">
-                        <PdfViewer
+                    <div className="pdfViewer">{/*las clase antes era "col pdfViewer"*/}
+                        {/*<PdfViewer
                             key={refreshKey}
                             prop={bookMark}
-                        />                        
+                        />*/}
+                        <PdfViewer2/>
                     </div>
                 </div>
                 

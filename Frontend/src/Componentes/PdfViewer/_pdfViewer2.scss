@@ -1,0 +1,10 @@
+.pagesContainer{
+    display: flex;
+    flex-direction: row;
+    //width: 64.375rem;
+    width: 82%;
+    background-color: aquamarine;
+    padding: 0.625rem 0rem;
+    margin: 0rem 1.25rem;
+    overflow-x: scroll;
+}

@@ -6,8 +6,9 @@
     padding: 0px 12px;
 }
 
-.col.pdfViewer {
+.pdfViewer {//antes era .col.pdfViewer
+    background-color: darksalmon;//borrar
     display: flex;
     justify-content: center;
-    margin: 1.25rem 0rem;
+    //margin: 1.25rem 0rem;
 }

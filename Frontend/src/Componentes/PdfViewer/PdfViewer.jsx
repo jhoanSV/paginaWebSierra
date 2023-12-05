@@ -21,7 +21,7 @@ export function PdfViewer({ prop }) {
     const [move, setMove] = useState(50);
 
     const resize_ob = new ResizeObserver(function() {
-        setScreenWidth(window.innerWidth);        
+        setScreenWidth(window.innerWidth);
     });
 
     useEffect(() => {
