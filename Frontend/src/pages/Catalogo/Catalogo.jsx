@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { PdfViewer } from "../../Componentes/PdfViewer/PdfViewer";
+//import { PdfViewer } from "../../Componentes/PdfViewer/PdfViewer";
 import { PdfViewer2 } from "../../Componentes/PdfViewer/PdfViewer2";
 import "./_Catalogo.scss";
 
