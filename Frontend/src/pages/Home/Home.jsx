@@ -17,7 +17,7 @@ export function Home() {
     //Funcion para mostrar las categorias en categorias.json
     const itItems = categ.map( item => {
 
-        const imgAvif = require(`../../Assets/avif/${item.descripcion}.avif`)
+        const imgAvif = require(`../../Assets/avif/categorias/${item.descripcion}.avif`)
         const imgjpg = require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)
         return(                        
             <>
@@ -83,11 +83,28 @@ export function Home() {
 
                                 <div className="col ">
                                     <div id='carrusel1' className="carousel slide" data-bs-ride="carousel">
-                                        <div className="carousel-indicators">
-                                            <button id="color-indicator" type="button" data-bs-target={`#carrusel1`} data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>                                            
+                                        <div className="carousel-indicators">                                            
+                                            <button type="button" data-bs-target="carrusel1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="carrusel1" data-bs-slide-to="1" aria-label="Slide 2"></button>
                                         </div>
                                         <div className="carousel-inner h-100 c-inner">
                                             <div className="carousel-item active">
+                                                <div className="test h-100">                                                    
+                                                    <picture>
+                                                        <source
+                                                            type="image/avif"
+                                                            srcSet={require("../../Assets/avif/TekBond.avif")}
+                                                        />
+                                                        <img
+                                                            className="d-block w-100 h-100 el_lazy"
+                                                            src={require(`../../Assets/jpg/aliados/TekBond.jpg`)}
+                                                            alt="..."
+                                                            decoding="async"
+                                                        />
+                                                    </picture>
+                                                </div>
+                                            </div>
+                                            <div className="carousel-item">
                                                 <div className="test h-100">                                                    
                                                     <picture>
                                                         <source
@@ -127,11 +144,11 @@ export function Home() {
                                                     <picture>
                                                         <source
                                                             type="image/avif"
-                                                            srcSet={require("../../Assets/avif/promoSuperBonder.avif")}
+                                                            srcSet={require("../../Assets/avif/PromoPegante.avif")}
                                                         />
                                                         <img
                                                             className="d-block w-100 h-100 el_lazy"
-                                                            src={require(`../../Assets/jpg/Promociones/promoSuperBonder.jpg`)}
+                                                            src={require(`../../Assets/jpg/Promociones/PromoPegante.jpg`)}
                                                             alt="..."
                                                             decoding="async"
                                                         />
@@ -143,11 +160,11 @@ export function Home() {
                                                     <picture>
                                                         <source
                                                             type="image/avif"
-                                                            srcSet={require("../../Assets/avif/promoTronex.avif")}
+                                                            srcSet={require("../../Assets/avif/PromoSilicona.avif")}
                                                         />
                                                         <img
                                                             className="d-block w-100 h-100 el_lazy"
-                                                            src={require(`../../Assets/jpg/Promociones/promoTronex.jpg`)}
+                                                            src={require(`../../Assets/jpg/Promociones/PromoSilicona.jpg`)}
                                                             alt="..."
                                                             decoding="async"
                                                         />

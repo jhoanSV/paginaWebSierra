@@ -15,10 +15,10 @@ export function Footer(){
                             <picture>
                                 <source
                                     type="image/avif"
-                                    srcSet={require("../../Assets/avif/LogoSierraFtr.avif")}
+                                    srcSet={require("../../Assets/avif/LogoSivarFtr.avif")}
                                 />
                                 <img
-                                    src={require("../../Assets/png/LogoSierraFtr.png")}
+                                    src={require("../../Assets/png/LogoSivarFtr.png")}
                                     width="2207px"
                                     height="839px"
                                     alt="LogoSierra"

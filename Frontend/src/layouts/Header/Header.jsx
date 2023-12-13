@@ -58,10 +58,10 @@ export function Header() {
                             <picture>
                                 <source
                                     type="image/avif"
-                                    srcSet={require("../../Assets/avif/LogoSierra.avif")}
+                                    srcSet={require("../../Assets/avif/LogoSivar.avif")}
                                 />
                                 <img
-                                    src={require("../../Assets/png/LogoSierra.png")}
+                                    src={require("../../Assets/png/LogoSivar.png")}
                                     width="2207px"
                                     height="839px"
                                     alt="LogoSierra"
