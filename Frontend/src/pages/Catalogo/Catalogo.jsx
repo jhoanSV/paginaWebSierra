@@ -14,7 +14,7 @@ export function Catalogo() {
     useEffect(() => {
         window.scrollTo(0, 0);
 
-        setRefreshKey(prevKey => prevKey + 1);        
+        setRefreshKey(prevKey => prevKey + 1);
     },[bookMark])
 
     return (

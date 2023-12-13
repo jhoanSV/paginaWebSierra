@@ -14,11 +14,18 @@ export function PdfViewer2() {
         root: null
     });
     const [pages, setPages] = useState([
-        { src: require(`../../Assets/jpg/imgsCatalogo/Pagina 1.jpg`)},
-        { src: require(`../../Assets/jpg/imgsCatalogo/Pagina 2.jpg`)},
-        { src: require(`../../Assets/jpg/imgsCatalogo/Pagina 3.jpg`)},
-        { src: require(`../../Assets/jpg/imgsCatalogo/Pagina 4.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina 0.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina 1.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina 2.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina 3.jpg`)},
     ]);
+
+    const last_node = () => {
+        const pagesContainer = document.querySelector(".pagesContainer");
+        const nodes = pagesContainer.childNodes.length
+        console.log("Nodos: "+nodes)
+        setElements([pagesContainer.childNodes[nodes-1]])
+    }
 
     const resize_ob = new ResizeObserver(function() {
         setScreenWidth(window.innerWidth);
@@ -28,39 +35,42 @@ export function PdfViewer2() {
         const pagesContainer = document.querySelector(".pagesContainer");
         resize_ob.observe(document.querySelector(".catalogo"));
 
-        setPageWidth(pagesContainer.clientWidth/2)
+        console.log("ancho: "+(pagesContainer.getBoundingClientRect().width))
+        setPageWidth(pagesContainer.getBoundingClientRect().width/2)
+        // eslint-disable-next-line
     },[])
 
     useEffect(()=>{
         const pagesContainer = document.querySelector(".pagesContainer");
         
-        setPageWidth(pagesContainer.clientWidth/2)
+        setPageWidth(pagesContainer.getBoundingClientRect().width/2)
     },[screenWidth])
 
     useEffect(() => {
-        const pagesContainer = document.querySelector(".pagesContainer");
-        const nodes = pagesContainer.childNodes.length
-        setElements([pagesContainer.childNodes[nodes-1]])
+        last_node()
     }, [setElements])
 
     useEffect(() => {
         entries.forEach(entry=>{
-            if (entry.isIntersecting){                
-                /*const elmt = entry.target;
-                const elSrcValue = elmt.getAttribute('elsrc')
-                elmt.srcset = elSrcValue
-                observer.unobserve(elmt)
-                //!ahora falta ver cómo obtener el numero de pagina correspondiente
-                */
-                const newPages = [
-                    ...pages,
-                    { src: require(`../../Assets/jpg/imgsCatalogo/Pagina ${5}.jpg`)},
-                    { src: require(`../../Assets/jpg/imgsCatalogo/Pagina ${6}.jpg`)},
-                ];
-                setPages(newPages)
-                console.log("interectajsjs")
+            if (entry.isIntersecting){
+                observer.unobserve(entry.target)
+                console.log(pages.length+1)
+                console.log(pages.length+2)
+                try {
+                    const newPages = [
+                        ...pages,
+                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${pages.length+1}.jpg`)},
+                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${pages.length+2}.jpg`)},
+                    ];
+                    setPages(newPages)
+                    console.log("interectajsjs")
+                    last_node()
+                } catch (error) {
+                    console.log("no hay más imágenes jsjs")
+                }
             }
         });
+        // eslint-disable-next-line
     }, [entries, observer])
 
     return (
