@@ -1,11 +1,52 @@
-.pagesContainer{
-    box-shadow: 0px 0px 10px black;
-    display: flex;
-    flex-direction: row;
-    //width: 64.375rem;
-    width: 82%;
-    //background-color: aquamarine;
+@import "../../scss/_colors.scss";
+
+.thePdfViewer{
+    //width: 64.375rem;    
     padding: 0.625rem 0rem;
     margin: 0rem 1.25rem;
-    overflow-x: scroll;
+    display: flex;
+    width: 82%;
+    scrollbar-width: none;
+    overflow: auto visible;
+}
+.thePdfViewer::-webkit-scrollbar {
+    display: none;
+}
+
+.pagesContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.page{
+    border-width: 1px;
+    border-style: groove;
+}
+
+.next, .prev {
+    font-size: 1.875rem;
+    position: absolute;
+    top: 50%;
+    border-style: none;
+    color: transparent;
+    background-color: transparent;
+    transition: 300ms;
+}
+
+.next{
+    right: 0;
+}
+
+.pdfViewer:hover{
+    .next, .prev {
+        color: $grisPrincipal;
+    }
+}
+
+.pdfViewer .next:hover {
+    color: $amarilloPrincipal;
+}
+
+.pdfViewer .prev:hover {
+    color: $amarilloPrincipal;
 }

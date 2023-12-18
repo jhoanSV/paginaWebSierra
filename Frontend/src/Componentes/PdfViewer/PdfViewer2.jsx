@@ -27,27 +27,42 @@ export function PdfViewer2() {
         setElements([pagesContainer.childNodes[nodes-1]])
     }
 
+    const prevF = () => {
+        const pagesContainer = document.querySelector(".pagesContainer");
+        //console.log(pagesContainer.clientWidth)
+        console.log(pagesContainer.scrollLeft)
+    }
+
     const resize_ob = new ResizeObserver(function() {
         setScreenWidth(window.innerWidth);
     });
 
     useEffect(()=>{        
+        const thePdfViewer = document.querySelector(".thePdfViewer");
         const pagesContainer = document.querySelector(".pagesContainer");
         resize_ob.observe(document.querySelector(".catalogo"));
-
-        console.log("ancho: "+(pagesContainer.getBoundingClientRect().width))
-        setPageWidth(pagesContainer.getBoundingClientRect().width/2)
+        //* se configura este Timeout a 0 ms para que calcule el tamaño adecuadamente antes de asignarlo
+        setTimeout(() => {
+            setPageWidth((thePdfViewer.getBoundingClientRect().width-2) / 2);
+            pagesContainer.scrollLeft = 1063;
+        }, 0);
         // eslint-disable-next-line
     },[])
 
     useEffect(()=>{
-        const pagesContainer = document.querySelector(".pagesContainer");
+        const thePdfViewer = document.querySelector(".thePdfViewer");
         
-        setPageWidth(pagesContainer.getBoundingClientRect().width/2)
+        console.log("ancho de nav: " + window.innerWidth)
+        if(window.innerWidth > 502){
+            setPageWidth((thePdfViewer.getBoundingClientRect().width-2)/2)
+        }else{
+            setPageWidth((thePdfViewer.getBoundingClientRect().width-2))
+        }
     },[screenWidth])
 
     useEffect(() => {
         last_node()
+        // eslint-disable-next-line
     }, [setElements])
 
     useEffect(() => {
@@ -75,17 +90,26 @@ export function PdfViewer2() {
 
     return (
         <>
-            <div className="pagesContainer">
-                {
-                    pages.map((page, index) =>(
-                        <ThePage
-                            key={index}
-                            the_src={page.src}
-                            width={pageWidth}
-                        />
-                    ))
-                }
-
+            <div className="thePdfViewer">
+                <div className="pagesContainer" style={{ minWidth: "6000px"}}>
+                    {
+                        pages.map((page, index) =>(
+                            <div className="page" key={index}>
+                                <ThePage
+                                    //key={index}
+                                    the_src={page.src}
+                                    width={pageWidth}
+                                />
+                            </div>
+                        ))
+                    }
+                </div>
+                <button onClick={prevF} className="prev">
+                        <i className="bi bi-arrow-left-circle-fill"></i>
+                </button>
+                <button /*onClick={nextPage}*/ className="next">
+                        <i className="bi bi-arrow-right-circle-fill"></i>
+                </button>
             </div>
         </>
     );
