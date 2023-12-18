@@ -10,6 +10,9 @@ node_modules
  
 # production
 /build
+
+# some resources
+/src/Assets/imgsCatalogo/main
  
 # misc
 .DS_Store
