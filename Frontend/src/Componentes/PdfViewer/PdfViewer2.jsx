@@ -74,7 +74,11 @@ export function PdfViewer2() {
         resize_ob.observe(document.querySelector(".catalogo"));
         //* se configura este Timeout a 0 ms para que calcule el tamaño adecuadamente antes de asignarlo
         setTimeout(() => {
-            setPageWidth((visorWidth / 2)-6);
+            if(window.innerWidth > 502){
+                setPageWidth((visorWidth / 2)-6)
+            }else{
+                setPageWidth((visorWidth - 6))
+            }
             console.log("posición inicial: "+visorWidth)
             if(num!==0){
                 thePdfViewer.scrollTo({
