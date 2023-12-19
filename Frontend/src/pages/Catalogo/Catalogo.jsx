@@ -13,8 +13,10 @@ export function Catalogo() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        console.log("ignorar: "+refreshKey)
 
         setRefreshKey(prevKey => prevKey + 1);
+        // eslint-disable-next-line
     },[bookMark])
 
     return (

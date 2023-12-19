@@ -1,11 +1,10 @@
 @import "../../scss/_colors.scss";
 
-.thePdfViewer{
+.thePdfViewer{    
     //width: 64.375rem;    
     padding: 0.625rem 0rem;
     margin: 0rem 1.25rem;
     display: flex;
-    width: 82%;
     scrollbar-width: none;
     overflow: auto visible;
 }
@@ -15,11 +14,12 @@
 
 .pagesContainer{
     display: flex;
+    height: auto;
     flex-direction: row;
 }
 
 .page{
-    border-width: 1px;
+    border-width: 3px;
     border-style: groove;
 }
 
