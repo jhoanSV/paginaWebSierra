@@ -6,7 +6,25 @@ import { useObserver } from "../UseObs";
 
 export function PdfViewer2() {
 
+    //const numRandom = Math.floor(Math.random() * 91) + 1
+    //numero de pagina que lleva, hacer condicional para que    
+    const jsjs = "Tornilleria"
+    let num = null
+    if (jsjs==="Ebanisteria"){
+        num = 94
+    }else if(jsjs==="Estudiantil"){
+        num = 136
+    }else if(jsjs==="Gas"){
+        num = 52
+    }else if(jsjs==="Griferia"){
+        num = 64
+    }else if(jsjs==="Electricos"){
+        num = 6
+    }else if(jsjs==="Tornilleria"){
+        num = 0
+    }
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [visorWidth, setVisorWidth] = useState(Math.floor(window.innerWidth*82/100));
     const [pageWidth, setPageWidth] = useState()
     const [observer, setElements, entries] = useObserver({
         treshhold: 0.25,
@@ -14,10 +32,12 @@ export function PdfViewer2() {
         root: null
     });
     const [pages, setPages] = useState([
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina 0.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina 1.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina 2.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina 3.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num}.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+1}.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+2}.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+3}.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+4}.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+5}.jpg`)},
     ]);
 
     const last_node = () => {
@@ -28,9 +48,21 @@ export function PdfViewer2() {
     }
 
     const prevF = () => {
-        const pagesContainer = document.querySelector(".pagesContainer");
-        //console.log(pagesContainer.clientWidth)
-        console.log(pagesContainer.scrollLeft)
+        const thePdfViewer = document.querySelector(".thePdfViewer");
+        const anchoVisor = (thePdfViewer.getBoundingClientRect().width)
+        thePdfViewer.scrollBy({
+            left: (-anchoVisor),
+            behavior: 'smooth'
+        });
+    }
+
+    const nextF = () => {
+        const thePdfViewer = document.querySelector(".thePdfViewer");
+        const anchoVisor = thePdfViewer.getBoundingClientRect().width
+        thePdfViewer.scrollBy({
+            left: (anchoVisor),
+            behavior: 'smooth'
+        });
     }
 
     const resize_ob = new ResizeObserver(function() {
@@ -39,26 +71,32 @@ export function PdfViewer2() {
 
     useEffect(()=>{        
         const thePdfViewer = document.querySelector(".thePdfViewer");
-        const pagesContainer = document.querySelector(".pagesContainer");
         resize_ob.observe(document.querySelector(".catalogo"));
         //* se configura este Timeout a 0 ms para que calcule el tamaño adecuadamente antes de asignarlo
         setTimeout(() => {
-            setPageWidth((thePdfViewer.getBoundingClientRect().width-2) / 2);
-            pagesContainer.scrollLeft = 1063;
+            setPageWidth((visorWidth / 2)-6);
+            console.log("posición inicial: "+visorWidth)
+            if(num!==0){
+                thePdfViewer.scrollTo({
+                    left: visorWidth,
+                    behavior: "auto"
+                });
+            }
         }, 0);
         // eslint-disable-next-line
     },[])
 
     useEffect(()=>{
-        const thePdfViewer = document.querySelector(".thePdfViewer");
-        
-        console.log("ancho de nav: " + window.innerWidth)
-        if(window.innerWidth > 502){
-            setPageWidth((thePdfViewer.getBoundingClientRect().width-2)/2)
-        }else{
-            setPageWidth((thePdfViewer.getBoundingClientRect().width-2))
-        }
+        setVisorWidth(Math.floor(window.innerWidth*82/100))
+        console.log("ancho de nav: " + window.innerWidth)        
     },[screenWidth])
+    useEffect(() => {        
+        if(window.innerWidth > 502){
+            setPageWidth((visorWidth / 2)-6)
+        }else{
+            setPageWidth((visorWidth - 6))
+        }
+    }, [visorWidth])
 
     useEffect(() => {
         last_node()
@@ -69,16 +107,13 @@ export function PdfViewer2() {
         entries.forEach(entry=>{
             if (entry.isIntersecting){
                 observer.unobserve(entry.target)
-                console.log(pages.length+1)
-                console.log(pages.length+2)
                 try {
                     const newPages = [
                         ...pages,
-                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${pages.length+1}.jpg`)},
-                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${pages.length+2}.jpg`)},
+                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+pages.length}.jpg`)},
+                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+pages.length+1}.jpg`)},
                     ];
                     setPages(newPages)
-                    console.log("interectajsjs")
                     last_node()
                 } catch (error) {
                     console.log("no hay más imágenes jsjs")
@@ -90,8 +125,8 @@ export function PdfViewer2() {
 
     return (
         <>
-            <div className="thePdfViewer">
-                <div className="pagesContainer" style={{ minWidth: "6000px"}}>
+            <div className="thePdfViewer" style={{ width: visorWidth}}>
+                <div className="pagesContainer" style={{ minWidth: "80000px"}}>
                     {
                         pages.map((page, index) =>(
                             <div className="page" key={index}>
@@ -107,7 +142,7 @@ export function PdfViewer2() {
                 <button onClick={prevF} className="prev">
                         <i className="bi bi-arrow-left-circle-fill"></i>
                 </button>
-                <button /*onClick={nextPage}*/ className="next">
+                <button onClick={nextF} className="next">
                         <i className="bi bi-arrow-right-circle-fill"></i>
                 </button>
             </div>
