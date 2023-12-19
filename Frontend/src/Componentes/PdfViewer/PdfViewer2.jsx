@@ -4,23 +4,24 @@ import { ThePage } from "../PdfViewer/ThePage"
 import { useObserver } from "../UseObs";
 //import "../../Assets/jpg/imgsCatalogo/Pagina 1.jpg"
 
-export function PdfViewer2() {
+export function PdfViewer2({ prop }) {
 
     //const numRandom = Math.floor(Math.random() * 91) + 1
     //numero de pagina que lleva, hacer condicional para que    
-    const jsjs = "Tornilleria"
+    //const jsjs = "Tornilleria"
+    const jsjs = prop
     let num = null
-    if (jsjs==="Ebanisteria"){
+    if (jsjs==="ebanisteria"){
         num = 94
-    }else if(jsjs==="Estudiantil"){
+    }else if(jsjs==="estudiantil"){
         num = 136
-    }else if(jsjs==="Gas"){
+    }else if(jsjs==="gas"){
         num = 52
-    }else if(jsjs==="Griferia"){
+    }else if(jsjs==="griferia"){
         num = 64
-    }else if(jsjs==="Electricos"){
+    }else if(jsjs==="electricos"){
         num = 6
-    }else if(jsjs==="Tornilleria"){
+    }else if(jsjs==="tornilleria"||jsjs==="inicio"){
         num = 0
     }
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -41,6 +42,7 @@ export function PdfViewer2() {
     ]);
 
     const last_node = () => {
+        //*Obtiene el ultimo nodo o ultima pagina de catalogo
         const pagesContainer = document.querySelector(".pagesContainer");
         const nodes = pagesContainer.childNodes.length
         console.log("Nodos: "+nodes)
@@ -50,17 +52,17 @@ export function PdfViewer2() {
     const prevF = () => {
         const thePdfViewer = document.querySelector(".thePdfViewer");
         const anchoVisor = (thePdfViewer.getBoundingClientRect().width)
-        thePdfViewer.scrollBy({
-            left: (-anchoVisor),
+        thePdfViewer.scrollTo({
+            left: (thePdfViewer.scrollLeft - anchoVisor),
             behavior: 'smooth'
         });
     }
 
     const nextF = () => {
         const thePdfViewer = document.querySelector(".thePdfViewer");
-        const anchoVisor = thePdfViewer.getBoundingClientRect().width
-        thePdfViewer.scrollBy({
-            left: (anchoVisor),
+        const anchoVisor = thePdfViewer.getBoundingClientRect().width        
+        thePdfViewer.scrollTo({
+            left: (thePdfViewer.scrollLeft + anchoVisor),
             behavior: 'smooth'
         });
     }
@@ -72,20 +74,39 @@ export function PdfViewer2() {
     useEffect(()=>{        
         const thePdfViewer = document.querySelector(".thePdfViewer");
         resize_ob.observe(document.querySelector(".catalogo"));
-        //* se configura este Timeout a 0 ms para que calcule el tamaño adecuadamente antes de asignarlo
+        //let movejsjs = 0
+        //* se configura este Timeout a 0 ms para que calcule el tamaño adecuadamente antes de asignarlo        
         setTimeout(() => {
-            if(window.innerWidth > 502){
+            if(window.innerWidth > 502){//*Pc
                 setPageWidth((visorWidth / 2)-6)
-            }else{
+                if(num!==0){
+                    thePdfViewer.scrollTo({
+                        left: visorWidth,
+                        behavior: "auto"
+                    });
+                }
+            }else{//*Celular
                 setPageWidth((visorWidth - 6))
+                if(num===0){
+                    thePdfViewer.scrollTo({
+                        left: visorWidth,
+                        behavior: "auto"
+                    });
+                }else if(num%2===0){
+                    thePdfViewer.scrollTo({
+                        left: visorWidth*2,
+                        behavior: "auto"
+                    });
+                    alert("es par")
+                }else{
+                    thePdfViewer.scrollTo({
+                        left: visorWidth*4,
+                        behavior: "auto"
+                    });
+                    alert("es impar")
+                }
             }
-            console.log("posición inicial: "+visorWidth)
-            if(num!==0){
-                thePdfViewer.scrollTo({
-                    left: visorWidth,
-                    behavior: "auto"
-                });
-            }
+            console.log("posición inicial: "+visorWidth)            
         }, 0);
         // eslint-disable-next-line
     },[])

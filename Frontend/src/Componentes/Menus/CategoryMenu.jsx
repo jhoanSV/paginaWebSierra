@@ -15,7 +15,7 @@ export function CategoryMenu() {
           {
             items.map((item, index) => (
                 <li key={index} className={`${item.color}`}>
-                    <Link to={"catalogo"} state={{ bookM: `${item.descripcion.toUpperCase()}` }}>
+                    <Link to={`catalogo/${item.descripcion}`}>
                         <picture>
                             <source 
                                 type="image/avif"

@@ -44,7 +44,7 @@ export function Header() {
 
                         <ul className="dropdown-menu">
                             <li><Link to="/" type="button" className="dropdown-item">Inicio</Link></li>
-                            <li><Link to={'catalogo'} type="button" className="dropdown-item" state={{ bookM: `INICIO`}}>
+                            <li><Link to={'catalogo/inicio'} type="button" className="dropdown-item" state={{ bookM: `INICIO`}}>
                                     Productos
                                 </Link>
                             </li>
@@ -106,7 +106,7 @@ export function Header() {
                         <div className="grupoBotones">
                             <div className="btn-group g1 flex-wrap">
                                 <Link to="/" type="button" className="btn btn-navBar btn-lg">Inicio</Link>
-                                <Link to="catalogo" type="button" className="btn btn-navBar btn-lg" state={{ bookM: `INICIO`}}>
+                                <Link to="catalogo/inicio" type="button" className="btn btn-navBar btn-lg" state={{ bookM: `INICIO`}}>
                                     Productos
                                 </Link>
                                 <Link to="/about" type="button" className="btn btn-navBar btn-lg">Quienes somos</Link>

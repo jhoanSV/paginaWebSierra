@@ -23,7 +23,7 @@ export function Home() {
             <>
                 <div className="c-categ">
 
-                    <Link to={"catalogo"} state={{ bookM: `${item.descripcion.toUpperCase()}` }}>
+                    <Link to={`catalogo/${item.descripcion}`}>
                         <picture>
                             <source
                                 className="el_lazy2"

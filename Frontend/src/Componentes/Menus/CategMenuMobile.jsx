@@ -13,7 +13,7 @@ export function CategMenuMobile() {
           {
             items.map((item, index) => (
                 <li key={index} className='lstStylN items-menu-mob'>
-                    <Link to={'catalogo'} state={{ bookM: `${item.descripcion.toUpperCase()}` }}>
+                    <Link to={`catalogo/${item.descripcion}`}>
                         <picture>
                             <source 
                                 type="image/avif"
