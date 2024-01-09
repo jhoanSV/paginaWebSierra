@@ -43,6 +43,7 @@ export function Catalogo() {
                         <PdfViewer2
                             key={refreshKey}
                             prop={Categoria}
+                            dir={0}                            
                         />
                     </div>
                 </div>

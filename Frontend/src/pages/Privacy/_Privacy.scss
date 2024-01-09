@@ -1,16 +1,24 @@
-@import "../../scss/index.scss";
+@import "../../scss/_colors.scss";
 
 .pol-datos{
-    padding: 1.12vw 1.69vw;
+    display: flex;
+    align-items: center;
     min-height: 30rem;
+    justify-content: center;
+    padding: 10px;
     h1{
         color: $azulPrincipal;
         position: relative;
         text-align: center;
         margin-top: 1.1875rem;
     }
-    iframe{        
-        width: 100%;
-        height: 60vh;
+    ul{
+        list-style: none;
+        padding: 0;
+        width: min-content;
     }
+}
+
+.contenido{
+    width: 80%;
 }

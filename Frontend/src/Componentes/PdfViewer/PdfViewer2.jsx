@@ -4,25 +4,32 @@ import { ThePage } from "../PdfViewer/ThePage"
 import { useObserver } from "../UseObs";
 //import "../../Assets/jpg/imgsCatalogo/Pagina 1.jpg"
 
-export function PdfViewer2({ prop }) {
+export function PdfViewer2({ prop, dir, show='yes' }) {
 
     //const numRandom = Math.floor(Math.random() * 91) + 1
     //numero de pagina que lleva, hacer condicional para que    
     //const jsjs = "Tornilleria"
+    let claseDir = null
     const jsjs = prop
-    let num = null
+    let numPag = null
+    if (dir === 0){
+        claseDir = 'dirRow'
+    }else if(dir === 1){
+        claseDir = 'dirColumn'
+    }
+
     if (jsjs==="ebanisteria"){
-        num = 94
+        numPag = 94
     }else if(jsjs==="estudiantil"){
-        num = 136
+        numPag = 136
     }else if(jsjs==="gas"){
-        num = 52
+        numPag = 52
     }else if(jsjs==="griferia"){
-        num = 64
+        numPag = 64
     }else if(jsjs==="electricos"){
-        num = 6
+        numPag = 6
     }else if(jsjs==="tornilleria"||jsjs==="inicio"){
-        num = 0
+        numPag = 0
     }
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [visorWidth, setVisorWidth] = useState(Math.floor(window.innerWidth*82/100));
@@ -33,12 +40,12 @@ export function PdfViewer2({ prop }) {
         root: null
     });
     const [pages, setPages] = useState([
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num}.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+1}.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+2}.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+3}.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+4}.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+5}.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag}.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+1}.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+2}.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+3}.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+4}.jpg`)},
+        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+5}.jpg`)},
     ]);
 
     const last_node = () => {
@@ -75,11 +82,20 @@ export function PdfViewer2({ prop }) {
         const thePdfViewer = document.querySelector(".thePdfViewer");
         resize_ob.observe(document.querySelector(".catalogo"));
         //let movejsjs = 0
-        //* se configura este Timeout a 0 ms para que calcule el tamaño adecuadamente antes de asignarlo        
+        //* se configura este Timeout a 0 ms para que calcule el tamaño adecuadamente antes de asignarlo
+        //*Notes: there are "-6" on setPageWidth, this is because the pages has a border width=3
+
+        /*document.getElementById('idPagesContainer').addEventListener('wheel', function(e) {
+            if (e.deltaY === 0) { // Verifica que el desplazamiento sea horizontal
+              e.preventDefault(); // Evita el scroll vertical por defecto
+              this.scrollLeft += e.deltaX; // Aplica el desplazamiento horizontal
+            }
+          });*/
+
         setTimeout(() => {
             if(window.innerWidth > 502){//*Pc
                 setPageWidth((visorWidth / 2)-6)
-                if(num!==0){
+                if(numPag!==0){
                     thePdfViewer.scrollTo({
                         left: visorWidth,
                         behavior: "auto"
@@ -87,27 +103,30 @@ export function PdfViewer2({ prop }) {
                 }
             }else{//*Celular
                 setPageWidth((visorWidth - 6))
-                if(num===0){
+                if(numPag===0){
                     thePdfViewer.scrollTo({
                         left: visorWidth,
                         behavior: "auto"
                     });
-                }else if(num%2===0){
+                }else if(numPag===52 || numPag===6){
+                    thePdfViewer.scrollTo({
+                        left: visorWidth*3,
+                        behavior: "auto"
+                    });
+                }else{
                     thePdfViewer.scrollTo({
                         left: visorWidth*2,
                         behavior: "auto"
                     });
-                    alert("es par")
-                }else{
-                    thePdfViewer.scrollTo({
-                        left: visorWidth*4,
-                        behavior: "auto"
-                    });
-                    alert("es impar")
                 }
             }
             console.log("posición inicial: "+visorWidth)            
         }, 0);
+
+        /*return () => {
+            document.getElementById('idPagesContainer').removeEventListener('wheel')
+        };*/
+
         // eslint-disable-next-line
     },[])
 
@@ -135,8 +154,8 @@ export function PdfViewer2({ prop }) {
                 try {
                     const newPages = [
                         ...pages,
-                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+pages.length}.jpg`)},
-                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${num+pages.length+1}.jpg`)},
+                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+pages.length}.jpg`)},
+                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+pages.length+1}.jpg`)},
                     ];
                     setPages(newPages)
                     last_node()
@@ -151,7 +170,7 @@ export function PdfViewer2({ prop }) {
     return (
         <>
             <div className="thePdfViewer" style={{ width: visorWidth}}>
-                <div className="pagesContainer" style={{ minWidth: "80000px"}}>
+                <div id='idPagesContainer' className={"pagesContainer "+ claseDir} /*style={{ minWidth: "80000px"}}*/>
                     {
                         pages.map((page, index) =>(
                             <div className="page" key={index}>
@@ -164,10 +183,10 @@ export function PdfViewer2({ prop }) {
                         ))
                     }
                 </div>
-                <button onClick={prevF} className="prev">
+                <button onClick={prevF} className={'prev '+ show}>
                         <i className="bi bi-arrow-left-circle-fill"></i>
                 </button>
-                <button onClick={nextF} className="next">
+                <button onClick={nextF} className={'next ' + show}>
                         <i className="bi bi-arrow-right-circle-fill"></i>
                 </button>
             </div>
