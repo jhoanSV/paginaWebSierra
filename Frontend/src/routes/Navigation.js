@@ -1,12 +1,21 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { Home, Products, About, Privacy, Catalogo, ContactUs} from "../pages";
 
-export function LoggedNavigation() {
+
+
+export function /*LoggedNavigation*/Navigation() {
     return (
-      <BrowserRouter>
+      <>
           <Routes>
-              <Route path='/' element={<h2></h2>} />
+              <Route path='/' element={ <Home /> } />
+              <Route path='products' element={ <Products /> } />
+              <Route path='about' element={ <About /> } />
+              <Route path='privacy' element={ <Privacy /> } />
+              <Route path='contactUs' element={ <ContactUs /> } />
+              {/*<Route path='catalogo' element={ <Catalogo /> } />*/}
+              <Route path='catalogo/:cat' element={ <Catalogo /> } />
           </Routes>
-      </BrowserRouter>
+      </>
     );
-  }
+}

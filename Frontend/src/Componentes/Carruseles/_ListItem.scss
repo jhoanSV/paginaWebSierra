@@ -1,0 +1,103 @@
+@import "../../scss/_colors.scss";
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  margin: 0;
+  border-style: none;
+}
+
+.descFont{
+    font-size: 1.1875rem;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.codigo {
+    font: -webkit-control;
+}
+
+.codFont{
+    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.col-6 .subTit{
+    color: black;
+    padding: 10px 0px
+}
+
+.description{
+    height: 50%;
+    background-color: #efefef;
+}
+
+.imgModal {
+    display: flex;
+    justify-content: center;
+    picture{
+        width: 90%;
+    }
+    img{
+        width: 100%;
+    }
+}
+
+.btnDescBox, .btnQuantity{//borrar
+    background-color: $amarilloPrincipal;
+    font-weight: bold;
+    width: 60%;
+    height: 50px;
+}
+.btnQuantity{
+    width: auto;
+    height: auto;
+}
+.quantity{
+    text-align: center;
+    width: 1.875rem;    
+    border-style: none;
+}
+
+.caja{
+    height: 100%;
+    width: 14%;
+    min-width: 14%;
+    cursor: pointer;
+    margin: 0 3% 0 3%;
+    padding: 2%;
+    background-color: $blancoPrincipal;
+    border-style: solid;
+    border-color: gray;
+    border-width: 0.0625rem;
+    box-shadow: 0.1875rem 0.1875rem 0.1875rem gray;
+    transition: 200ms;
+    .col{
+        height: auto;
+    }
+}
+
+.imgProducto img{
+    width: 100%;
+    height: auto;
+}
+
+.caja:hover{
+    //width: 14rem;
+    transform: scale(1.05, 1.05);
+    box-shadow: 0.2rem 0.2rem 0.2rem $azulPrincipal;
+    transition: 200ms;
+}
+
+@media (max-width: 636px){
+    .caja{
+        min-width: 44%;
+        margin: 0 28% 0 28%;
+        padding: 4%;
+
+    }
+}
