@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./_ListItem.scss";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
-export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
+export const ListItem=({llave, codigo, descripcion, descripcionComp, unitPrice=5800})=>{
+
+    const [totalPrice, setTotalPrice] = useState()    
 
     let imgjpg = 0
     let imgAvif = 0
@@ -22,6 +24,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
         const elSrcValue = elemento.getAttribute('elsrc') 
         elemento.srcset = elSrcValue
         elemento.removeAttribute("id")
+        setTotalPrice(777)
     }
 
     return(
@@ -67,40 +70,72 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp})=>{
             </div>
 
             <div className="modal fade" id={`producto${llave}`} tabIndex="-1" aria-labelledby="productoLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5 d-block" id="productolLabel">
-                                {descripcion}<br/>
-                                <span className="codigo">Cod: {codigo}</span>
-                            </h1>                            
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="imgModal">
-                                <picture>
-                                    <source
-                                        id={`lazy_modal${llave}`}
-                                        type="image/avif"
-                                        elsrc={imgAvif}
-                                    />
-                                    <img
-                                        elsrc={imgjpg}
-                                        alt="categoria"
-                                        decoding="async"
-                                    />
-                                </picture>
-                            </div>
-                            <div className="genFont">
-                                <strong>Descripcion:</strong><br/>
-                                {descripcionComp}.
-                                <br/>
-                                <div className="modal-footer" data-bs-dismiss="modal">
-                                    <Link to={'catalogo'} state={{ bookM: `INICIO`}}>
-                                        Mas productos
-                                    </Link>
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content p-3">
+                        <div className="modal-body p-0">
+                            <div className="descBox">
+                                <div className="row">
+                                    <div className="col-6">
+                                        <h1 className="modal-title fs-5 d-block" id="productolLabel">
+                                            {descripcion}<br/>
+                                            <span className="codigo">Cod: {codigo}</span>
+                                        </h1>
+                                        <div className="imgModal">
+                                            <picture>
+                                                <source
+                                                    id={`lazy_modal${llave}`}
+                                                    type="image/avif"
+                                                    elsrc={imgAvif}
+                                                />
+                                                <img
+                                                    //className="w-100"
+                                                    elsrc={imgjpg}
+                                                    alt="categoria"
+                                                    decoding="async"
+                                                />
+                                            </picture>
+                                        </div>                                
+                                    </div>
+                                    <div className="col-6">
+                                        <div className="subTit fw-bold">
+                                            Cantidad:<br/>
+                                        </div>
+                                        <div className="quantityBox">
+                                            <button className="btnQuantity">
+                                                -
+                                            </button>
+                                            <input className='quantity' type="number" min={1} step={1} value={1}/>
+                                            <button className="btnQuantity">
+                                                +
+                                            </button>
+                                        </div>
+                                        <strong>Descripcion:</strong><br/><br/>
+                                        <div className="description scrollableY genFont">
+                                            {descripcionComp}.<br/> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt explicabo expedita ratione libero. Nostrum illo sint, optio ut nemo quas, quo deleniti vel ipsum impedit distinctio magni, laborum cumque similique?
+                                        </div>
+                                        <div className="genFont fst-italic">
+                                            Paquete de nosecuantas unidades<br/>
+                                        </div>                                        
+                                    </div>
                                 </div>
-                            </div>                            
+                                <div className="row">
+                                    <div className="col-6">
+                                        Valor unitario:<br/>
+                                        {/*$5.800*/}
+                                        ${unitPrice}
+                                    </div>
+                                    <div className="col-6">
+                                        Valor total:<br/>
+                                        {/*$11.600*/}
+                                        {totalPrice}
+                                    </div>
+                                    <div className="col-12 d-flex justify-content-center py-2">
+                                        <button className="btnDescBox">
+                                            Agregar al carrazo prro
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,14 @@
     font-family: "Norwester";
     src: url("../Assets/fonts/norwester.otf") format("truetype");
 }
+@font-face {
+    font-family: "Kollektif";
+    src: url("../Assets/fonts/Kollektif.ttf") format("truetype");
+}
+@font-face {
+    font-family: "KollektifItalic";
+    src: url("../Assets/fonts/Kollektif-Italic.ttf") format("truetype");
+}
 
 h1{
     font-family: "Norwester", sans-serif;
@@ -19,5 +27,14 @@ h1{
 
 .genFont{
     font-family: "Montserrat", sans-serif;
+}
+
+.subTit{
+    font-family: "KollektifItalic", sans-serif;
+    font-size: 1.75rem;
+}
+
+.scrollableY{
+    overflow-y: scroll;
 }
 

@@ -5,7 +5,7 @@ import { ThePage } from "../../Componentes/PdfViewer/ThePage";
 export function Privacy() {
 
   // eslint-disable-next-line
-  const [pageWidth, setPageWidth] = useState(Math.floor(window.innerWidth*60/100))
+  const [pageWidth, setPageWidth] = useState(Math.floor(window.innerWidth*85/100))
 
   const pages = [];
 
