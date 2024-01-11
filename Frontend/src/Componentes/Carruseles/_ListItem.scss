@@ -32,11 +32,15 @@ input[type=number]::-webkit-outer-spin-button
 }
 
 .description{
-    height: 50%;
-    background-color: #efefef;
+    height: 100px;
+    background-color: #d9d9d9;
 }
 
-.imgModal {
+.pruebamodal{
+    height: min-content;
+}
+
+.imgModal, .theLogo{
     display: flex;
     justify-content: center;
     picture{
@@ -46,7 +50,12 @@ input[type=number]::-webkit-outer-spin-button
         width: 100%;
     }
 }
-
+.theLogo{
+    justify-content: left;
+    picture{
+        width: 20%;
+    }
+}
 .btnDescBox, .btnQuantity{//borrar
     background-color: $amarilloPrincipal;
     font-weight: bold;
