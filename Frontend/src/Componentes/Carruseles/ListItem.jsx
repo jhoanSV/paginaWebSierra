@@ -2,22 +2,32 @@ import React, { useState } from "react";
 import "./_ListItem.scss";
 //import { Link } from "react-router-dom";
 
-export const ListItem=({llave, codigo, descripcion, descripcionComp, unitPrice=5800})=>{
+export const ListItem=({llave, codigo, descripcion, descripcionComp,
+    unitPrice=5800, category='electricos', unitPaq=2 })=>{
 
-    const [totalPrice, setTotalPrice] = useState()    
+    const [cant, setCant] = useState(unitPaq)
+    const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
 
-    let imgpng = 0, logopng = 0
-    let imgAvif = 0, logoAvif = 0
+    let imgpng = 0, logopng = 0, quantity = null
+    let imgAvif = 0, logoAvif = 0    
     try {//intenta buscar la imagen png
         imgpng = require(`../../Assets/png/Productos/${codigo}.png`)
-        imgpng = require(`../../Assets/png/Productos/${codigo}.png`)
+        logopng = require(`../../Assets/png/Logos/${category}.png`)
     } catch (error) {
         imgpng = 0
+        logopng = 0
     }
     try {//intenta buscar la imagen AVIF
         imgAvif = require(`../../Assets/avif/Productos/${codigo}.avif`)
+        logoAvif = require(`../../Assets/avif/Logos/${category}.avif`)
     } catch (error) {
         imgAvif = 0
+        logoAvif = 0
+    }
+    if( unitPaq > 1 ){
+        quantity = 'Paquete de ' + unitPaq + ' unidades'
+    }else{
+        quantity = 'Unidad'
     }
     const click_caja = () => {
         var el_id = "#lazy_modal" + (llave)
@@ -30,11 +40,13 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp, unitPrice=5
         elemento2.srcset = elSrcValue2
         elemento.removeAttribute("id")
         elemento2.removeAttribute("id")
-        setTotalPrice(777)
     }
 
+    function Formater(number){
+        return new Intl.NumberFormat().format(number);
+    };
+
     return(
-        //src={require(`../../Assets/jpg/Promociones/${data[0].cod}.jpg`)}
         <>
             <div className="caja" data-bs-toggle="modal" data-bs-target={`#producto${llave}`} onClick={click_caja}>
                 
@@ -77,10 +89,13 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp, unitPrice=5
 
             <div className="modal fade" id={`producto${llave}`} tabIndex="-1" aria-labelledby="productoLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg">
-                    <div className="modal-content p-3">
+                    <div className="modal-content productBox">
+                        <button className="xButton" data-bs-dismiss="modal" aria-label="Close">
+                            <i className="bi bi-x-circle-fill"></i>
+                        </button>
                         <div className="modal-body p-0">
                             <div className="row row-cols-2">
-                                <div className="col">
+                                <div className="col d-flex flex-column">
                                     <div className="imgModal">
                                         <picture>
                                             <source
@@ -95,77 +110,86 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp, unitPrice=5
                                             />
                                         </picture>
                                     </div>
-                                    <p className="subTit"><strong>Descripcion:</strong></p>
-                                    <div className="description scrollableY genFont">
-                                        {descripcionComp}.<br/> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt explicabo expedita ratione libero. Nostrum illo sint, optio ut nemo quas, quo deleniti vel ipsum impedit distinctio magni, laborum cumque similique?
+                                    <div className="commingsoon">
+                                        <img
+                                            src={require("../../Assets/png/Proximamente.png")}
+                                            alt="commingsoon"
+                                            decoding="async"
+                                        />
+                                    </div>
+                                    <div className="mt-auto">                                        
+                                        <p className="subTit"><strong>Descripcion:</strong></p>
+                                        <div className="description scrollableY genFont">
+                                            {descripcionComp}.<br/>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="col">
-                                    <div className="theLogo">
-                                        <picture>
-                                            <source
-                                                id={`lazy2_modal${llave}`}
-                                                type="image/avif"
-                                                elsrc={imgAvif}
-                                            />
-                                            <img
-                                                elsrc={imgpng}
-                                                alt="imgProducto"
-                                                decoding="async"
-                                            />
-                                        </picture>
+                                <div className="col d-flex flex-column">
+                                    <div className="mainFeatures">
+                                        <div className="theLogo">
+                                            <picture>
+                                                <source
+                                                    id={`lazy2_modal${llave}`}
+                                                    type="image/avif"
+                                                    elsrc={logoAvif}
+                                                />
+                                                <img
+                                                    title='xDxD'
+                                                    elsrc={logopng}
+                                                    alt="imgProducto"
+                                                    decoding="async"
+                                                />
+                                            </picture>
+                                        </div>
+                                        <h1 id="productolLabel">
+                                            {descripcion}<br/>
+                                            <span className="smolText">Cod: {codigo}</span>
+                                        </h1>                                        
                                     </div>
-                                    <h1 id="productolLabel">
-                                        {descripcion}<br/>
-                                        <span className="codigo">Cod: {codigo}</span>
-                                    </h1>
-
+                                    <div className='mt-auto'>
+                                        <span className="smolText quantityText">{quantity}</span>
+                                        <div className="subTit fw-bold mainBlue">
+                                            Cantidad:<br/>
+                                        </div>
+                                        <div className="quantityBox">
+                                            <button className="btnQuantity" onClick={() => {
+                                                if((cant-unitPaq)>0){
+                                                    setCant(cant-unitPaq)
+                                                    setTotalPrice(unitPrice*(cant-unitPaq))
+                                                }
+                                            }}>
+                                                -
+                                            </button>
+                                            <input className='quantity' type="number" min={1} step={unitPaq} value={cant} readOnly/>
+                                            <button className="btnQuantity" onClick={() => {
+                                                setCant(cant+unitPaq)
+                                                setTotalPrice(unitPrice*(cant+unitPaq))
+                                            }}>
+                                                +
+                                            </button>
+                                        </div>
+                                        <div className="unitPrice genFont">
+                                            <span className='mainBlue fw-bold'>
+                                                Valor:&nbsp;
+                                            </span>
+                                            <span className="fw-bold">                                            
+                                                ${Formater(unitPrice)}
+                                            </span>
+                                        </div>
+                                        <h1>
+                                            <div className="totalPrice genFont mainBlue d-flex">
+                                                Total:&nbsp;
+                                                <span className='mainBlue fw-bold'>
+                                                    ${Formater(totalPrice)}
+                                                </span>
+                                            </div>
+                                        </h1>
+                                        <button className="btnDescBox">
+                                            Agregar al carrito
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            {/*<div className="row">
-                                <div className="col-6">
-                                    <h1 className="modal-title fs-5 d-block" id="productolLabel">
-                                        {descripcion}<br/>
-                                        <span className="codigo">Cod: {codigo}</span>
-                                    </h1>
-                                </div>
-                                <div className="col-6">
-                                    <div className="subTit fw-bold">
-                                        Cantidad:<br/>
-                                    </div>
-                                    <div className="quantityBox">
-                                        <button className="btnQuantity">
-                                            -
-                                        </button>
-                                        <input className='quantity' type="number" min={1} step={1} value={1}/>
-                                        <button className="btnQuantity">
-                                            +
-                                        </button>
-                                    </div>
-                                    <strong>Descripcion:</strong><br/><br/>
-                                    <div className="description scrollableY genFont">
-                                        {descripcionComp}.<br/> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt explicabo expedita ratione libero. Nostrum illo sint, optio ut nemo quas, quo deleniti vel ipsum impedit distinctio magni, laborum cumque similique?
-                                    </div>
-                                    <div className="genFont fst-italic">
-                                        Paquete de nosecuantas unidades<br/>
-                                    </div>                                        
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-6">
-                                    Valor unitario:<br/>
-                                    ${unitPrice}
-                                </div>
-                                <div className="col-6">
-                                    Valor total:<br/>
-                                    {totalPrice}
-                                </div>
-                                <div className="col-12 d-flex justify-content-center py-2">
-                                    <button className="btnDescBox">
-                                        Agregar al carrazo prro
-                                    </button>
-                                </div>
-                            </div>*/}
                         </div>
                     </div>
                 </div>

@@ -8,16 +8,16 @@ input[type=number]::-webkit-outer-spin-button
   border-style: none;
 }
 
+.modal-content.productBox{
+    padding: 40px !important;
+}
+
 .descFont{
     font-size: 1.1875rem;
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.codigo {
-    font: -webkit-control;
 }
 
 .codFont{
@@ -32,17 +32,25 @@ input[type=number]::-webkit-outer-spin-button
 }
 
 .description{
-    height: 100px;
+    height: 120px;
     background-color: #d9d9d9;
 }
 
-.pruebamodal{
-    height: min-content;
+.mainFeatures{
+    max-height: 300px;
+    overflow-y: auto;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.quantityText{
+    color: $azulPrincipal;
+    font-weight: bold;
 }
 
 .imgModal, .theLogo{
     display: flex;
-    justify-content: center;
+    padding: 10px;
     picture{
         width: 90%;
     }
@@ -52,24 +60,56 @@ input[type=number]::-webkit-outer-spin-button
 }
 .theLogo{
     justify-content: left;
+    padding: 0;
     picture{
-        width: 20%;
+        //width: 20%;
+        width: 3.625rem;
     }
+}
+
+.commingsoon{
+    opacity: 0;
+}
+
+.xButton{
+    position: absolute;
+    font-size: 35px;
+    z-index: 2;
+    right: -4px;
+    top: -7px;
+    border-style: none;
+    color: $grisPrincipal;
+    background-color: transparent;
+    transition: 300ms;
 }
 .btnDescBox, .btnQuantity{//borrar
     background-color: $amarilloPrincipal;
+    color: $azulPrincipal;
     font-weight: bold;
-    width: 60%;
     height: 50px;
 }
 .btnQuantity{
-    width: auto;
+    background-color: $azulPrincipal;
+    color: white;
     height: auto;
 }
+.btnQuantity:active{
+    background-color: $amarilloPrincipal;
+    color: $azulPrincipal;
+}
 .quantity{
+    font-size: 1.5rem;
     text-align: center;
-    width: 1.875rem;    
-    border-style: none;
+    width: 6rem;
+    border-style: none;    
+}
+
+.unitPrice{
+    padding-top: 8px;
+}
+.totalPrice{
+    flex-wrap: wrap;
+    padding: 8px 0;
 }
 
 .caja{
@@ -103,10 +143,21 @@ input[type=number]::-webkit-outer-spin-button
 }
 
 @media (max-width: 636px){
+    h1{
+        font-size: 1.8rem !important;
+    }
+    .xButton{
+        font-size: 25px;
+    }
+    .mainFeatures{
+        max-height: 167px;
+    }
     .caja{
         min-width: 44%;
         margin: 0 28% 0 28%;
         padding: 4%;
-
+    }
+    .modal-content.productBox{
+        padding: 25px !important;
     }
 }
