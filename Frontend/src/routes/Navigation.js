@@ -9,10 +9,10 @@ export function /*LoggedNavigation*/Navigation() {
       <>
           <Routes>
               <Route path='/' element={ <Home /> } />
-              <Route path='products' element={ <Products /> } />
-              <Route path='about' element={ <About /> } />
-              <Route path='privacy' element={ <Privacy /> } />
-              <Route path='contactUs' element={ <ContactUs /> } />
+              <Route path='productos' element={ <Products /> } />
+              <Route path='nosotros' element={ <About /> } />
+              <Route path='politicas_privacidad' element={ <Privacy /> } />
+              <Route path='contactanos' element={ <ContactUs /> } />
               {/*<Route path='catalogo' element={ <Catalogo /> } />*/}
               <Route path='catalogo/:cat' element={ <Catalogo /> } />
           </Routes>

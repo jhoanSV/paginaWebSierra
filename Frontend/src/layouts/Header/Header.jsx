@@ -44,12 +44,12 @@ export function Header() {
 
                         <ul className="dropdown-menu">
                             <li><Link to="/" type="button" className="dropdown-item">Inicio</Link></li>
-                            <li><Link to={'catalogo/inicio'} type="button" className="dropdown-item" state={{ bookM: `INICIO`}}>
+                            <li><Link to={'productos'} type="button" className="dropdown-item" state={{ bookM: `INICIO`}}>
                                     Productos
                                 </Link>
                             </li>
-                            <li><Link to="/about" type="button" className="dropdown-item">Quienes somos</Link></li>
-                            <li><Link to="/contactUs" type="button" className="dropdown-item">Contactanos</Link></li>
+                            <li><Link to="/nosotros" type="button" className="dropdown-item">Quienes somos</Link></li>
+                            <li><Link to="/contactanos" type="button" className="dropdown-item">Contactanos</Link></li>
                         </ul>
                     </div>
 
@@ -83,7 +83,7 @@ export function Header() {
                     </div>
 
                     <div className="col user">
-                        <a href="index.html" style={{textDecoration: "none" }}>
+                        <a href="/" style={{textDecoration: "none" }}>
                             <picture>
                                 <source 
                                     type="image/avif"
@@ -106,11 +106,11 @@ export function Header() {
                         <div className="grupoBotones">
                             <div className="btn-group g1 flex-wrap">
                                 <Link to="/" type="button" className="btn btn-navBar btn-lg">Inicio</Link>
-                                <Link to="catalogo/inicio" type="button" className="btn btn-navBar btn-lg" state={{ bookM: `INICIO`}}>
+                                <Link to="productos" type="button" className="btn btn-navBar btn-lg" state={{ bookM: `INICIO`}}>
                                     Productos
                                 </Link>
-                                <Link to="/about" type="button" className="btn btn-navBar btn-lg">Quienes somos</Link>
-                                <Link to="/contactUs" type="button" className="btn btn-navBar btn-lg">Contactanos</Link>
+                                <Link to="/nosotros" type="button" className="btn btn-navBar btn-lg">Quienes somos</Link>
+                                <Link to="/contactanos" type="button" className="btn btn-navBar btn-lg">Contactanos</Link>
                             </div>
                         </div>
                     </div>

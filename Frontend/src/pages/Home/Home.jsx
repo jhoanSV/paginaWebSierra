@@ -14,7 +14,7 @@ export function Home() {
         root: null
     });
 
-    //Funcion para mostrar las categorias en categorias.json
+    //*Funcion para mostrar las categorias en categorias.json
     const itItems = categ.map( item => {
 
         const imgAvif = require(`../../Assets/avif/categorias/${item.descripcion}.avif`)
@@ -69,7 +69,7 @@ export function Home() {
                     <div className="row g-0 avi fs-2">
                         <div className="col ">
                             <div className="d-flex justify-content-center gx-1">
-                                <p>Eres <span> Ferretero? </span> tenemos precios especiales para ti... <span>contactanos</span></p>
+                                <p>Eres <span> Ferretero? </span> tenemos precios especiales para ti... <Link to="/contactanos"><span>contactanos</span></Link></p>
                             </div>
                         </div>
                     </div>
