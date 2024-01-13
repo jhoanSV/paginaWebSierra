@@ -1,13 +1,5 @@
 @import "../../scss/_colors.scss";
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button
-{
-  -webkit-appearance: none;
-  margin: 0;
-  border-style: none;
-}
-
 .descFont{
     font-size: 1.1875rem;
     font-weight: bold;
@@ -26,52 +18,6 @@ input[type=number]::-webkit-outer-spin-button
     text-overflow: ellipsis;
 }
 
-.col-6 .subTit{
-    color: black;
-    padding: 10px 0px
-}
-
-.description{
-    height: 100px;
-    background-color: #d9d9d9;
-}
-
-.pruebamodal{
-    height: min-content;
-}
-
-.imgModal, .theLogo{
-    display: flex;
-    justify-content: center;
-    picture{
-        width: 90%;
-    }
-    img{
-        width: 100%;
-    }
-}
-.theLogo{
-    justify-content: left;
-    picture{
-        width: 20%;
-    }
-}
-.btnDescBox, .btnQuantity{//borrar
-    background-color: $amarilloPrincipal;
-    font-weight: bold;
-    width: 60%;
-    height: 50px;
-}
-.btnQuantity{
-    width: auto;
-    height: auto;
-}
-.quantity{
-    text-align: center;
-    width: 1.875rem;    
-    border-style: none;
-}
-
 .caja{
     height: 100%;
     width: 14%;
@@ -88,6 +34,11 @@ input[type=number]::-webkit-outer-spin-button
     .col{
         height: auto;
     }
+}
+
+.imgModal {
+    display: flex;
+    justify-content: center;
 }
 
 .imgProducto img{
