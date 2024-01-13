@@ -3,10 +3,10 @@ import "./_ListItem.scss";
 //import { Link } from "react-router-dom";
 
 export const ListItem=({llave, codigo, descripcion, descripcionComp,
-    unitPrice=5800, category='electricos', unitPaq=2 })=>{
+    unitPrice=5800, category='electricos', unitPaq=2, logged=false })=>{
 
     const [cant, setCant] = useState(unitPaq)
-    const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
+    const [totalPrice, setTotalPrice] = useState(unitPrice*cant)    
 
     let imgpng = 0, logopng = 0, quantity = null
     let imgAvif = 0, logoAvif = 0    
@@ -172,19 +172,27 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                                             <span className='mainBlue fw-bold'>
                                                 Valor:&nbsp;
                                             </span>
-                                            <span className="fw-bold">                                            
+                                            { logged &&
+                                            <span className="fw-bold">
                                                 ${Formater(unitPrice)}
                                             </span>
+                                            }
                                         </div>
                                         <h1>
-                                            <div className="totalPrice genFont mainBlue d-flex">
-                                                Total:&nbsp;
-                                                <span className='mainBlue fw-bold'>
-                                                    ${Formater(totalPrice)}
-                                                </span>
-                                            </div>
+                                            { logged ?
+                                                <div className="totalPrice genFont mainBlue d-flex">
+                                                    Total:&nbsp;
+                                                    <span className='fw-bold text-black'>
+                                                        ${Formater(totalPrice)}                                                        
+                                                    </span>
+                                                </div>
+                                                :
+                                                <div className="totalPrice genFont d-flex fw-bold">
+                                                   Suscribete para más
+                                                </div>
+                                            }
                                         </h1>
-                                        <button className="btnDescBox">
+                                        <button className="btnDescBox" onClick={() => {alert("PROXIMAMENTE")}}>
                                             Agregar al carrito
                                         </button>
                                     </div>
