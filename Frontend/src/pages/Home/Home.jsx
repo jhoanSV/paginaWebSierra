@@ -69,7 +69,7 @@ export function Home() {
                     <div className="row g-0 avi fs-2">
                         <div className="col ">
                             <div className="d-flex justify-content-center gx-1">
-                                <p>Eres <span> Ferretero? </span> tenemos precios especiales para ti... <span>contactanos</span></p>
+                            <p>Eres <span> Ferretero? </span> tenemos precios especiales para ti... <Link to="/contactUs"><span>contactanos</span></Link></p>
                             </div>
                         </div>
                     </div>
@@ -206,7 +206,7 @@ export function Home() {
 
                                 <div className="col">
                                     <div className="btn-catalogo1">
-                                        <a href={require("../../Assets/docs/Catalogo.pdf")} download>
+                                        <a href={require("../../Assets/docs/Catalogo2024.pdf")} download>
                                             <div className='d-flex align-items-center'>
                                                 <img
                                                     src={require("../../Assets/png/DescargaCatalogo2.png")}
