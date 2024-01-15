@@ -192,7 +192,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                                                 </div>
                                             }
                                         </h1>
-                                        <button className="btnDescBox" onClick={() => {alert("PROXIMAMENTE")}}>
+                                        <button className="btnAdd" onClick={() => {alert("PROXIMAMENTE")}}>
                                             Agregar al carrito
                                         </button>
                                     </div>

@@ -82,9 +82,10 @@ input[type=number]::-webkit-outer-spin-button
     background-color: transparent;
     transition: 300ms;
 }
-.btnDescBox, .btnQuantity{//borrar
+.btnAdd, .btnQuantity{//borrar
     background-color: $amarilloPrincipal;
     color: $azulPrincipal;
+    border-radius: 10px;
     font-weight: bold;
     height: 50px;
 }
@@ -92,6 +93,9 @@ input[type=number]::-webkit-outer-spin-button
     background-color: $azulPrincipal;
     color: white;
     height: auto;
+}
+.btnAdd{
+    border-radius: 12px;
 }
 .btnQuantity:active{
     background-color: $amarilloPrincipal;
