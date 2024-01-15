@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Home, Products, About, Privacy, Catalogo, ContactUs} from "../pages";
+import { Home, Products, About, Privacy, Catalogo, ContactUs, Login,
+    //NoPage,
+} from "../pages";
 
 
 
@@ -15,6 +17,8 @@ export function /*LoggedNavigation*/Navigation() {
               <Route path='contactanos' element={ <ContactUs /> } />
               {/*<Route path='catalogo' element={ <Catalogo /> } />*/}
               <Route path='catalogo/:cat' element={ <Catalogo /> } />
+              <Route path='inicio_sesion' element={ <Login/> }/>
+              {/*<Route path='*' element={ <NoPage/> }/>*/}
           </Routes>
       </>
     );

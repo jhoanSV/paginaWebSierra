@@ -1,0 +1,122 @@
+@import "../../scss/_colors.scss";
+@import '../../scss/mediaQueries';
+
+.loginContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 517px;
+    margin-top: 5%;
+    padding: 123px 41px 73px;
+    background-color: #d9d9d9;
+    border-radius: 66px;
+    span{
+        color: #8b8b8b;
+        font-weight: bold;
+    }
+}
+.tuercaLoginContainer{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: min-content;
+    img{
+        display: block;
+        margin: 0 auto;
+        transform: rotate(90deg);
+    }
+}
+
+.userEmail, .userPass{
+    width: 397px;
+    border-bottom: solid 1px #8b8b8b;
+    .theInput{
+        border-style: none;
+        background-color: transparent;
+        margin-left: 30px;
+        font-size: 24px;
+    }
+    i{
+        font-size: 36px;
+    }
+}
+.theInput:focus-visible{
+    outline: none;
+    font-weight: normal;
+}
+
+.btnLogin{
+    display: block;
+    width: 90%;
+    height: 70px;
+    border-radius: 30px;
+    background-color: $azulPrincipal;
+    color: $amarilloPrincipal;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 25px auto 0;    
+}
+.btnLogin:active{
+    background-color: $amarilloPrincipal;
+    color: white;
+}
+
+input.theCheck{
+    width: 14px !important;
+    height: 14px !important;
+    margin: 5px;
+    -ms-transform: scale(1.5); /* IE */
+    -moz-transform: scale(1.5); /* FF */
+    -webkit-transform: scale(1.5); /* Safari and Chrome */
+    -o-transform: scale(1.5); /* Opera */
+    transform: scale(1.5);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    outline: none;
+    box-shadow: none;
+    font-size: 0.8em;
+    text-align: center;
+    line-height: 1em;
+    background: $azulPrincipal;
+}  
+input.theCheck:checked:after {    
+    position: absolute;
+    left: 15%;
+    content: "✔";
+    color: white;
+}
+
+@include tablet{
+    .loginContainer{
+        margin-top: 8%;
+    }
+    .tuercaLoginContainer{
+        img{
+            width: 35%;
+            height: auto;
+        }
+    }
+}
+
+@media screen and (max-width: 570px){
+    .loginContainer{
+        margin-top: 8%;
+        width: 80%;
+    }
+
+    .userEmail, .userPass{
+        width: 100%;
+        .theInput{
+            width: 70%;
+        }
+    }
+    .toDirCol{
+        display: flex;
+        flex-direction: column;
+    }
+}
