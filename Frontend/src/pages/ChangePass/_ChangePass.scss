@@ -1,0 +1,27 @@
+@import "../../scss/_colors.scss";
+
+.passLvlBarContainer{
+    display: flex;
+    width: 100%;
+}
+
+.passLvlBar{
+    width: 37px;
+    height: 10px;
+    margin-right: 4px;
+    background-color: white;
+    border: solid 1px black;
+}
+.passLvl1{
+    background-color: #ed4e50;
+}
+.passLvl2{
+    background-color: $amarilloPrincipal;
+}
+.passLvl3{
+    background-color: #24ff00;
+}
+
+i.keyIcon{
+    transform: rotate(45deg);
+}

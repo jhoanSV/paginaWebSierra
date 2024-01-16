@@ -4,8 +4,8 @@ import "./_Login.scss";
 export const Login = () => {
     return (
         <section className='py-5 d-flex justify-content-center'>
-            <div className="loginContainer">
-                <div className='tuercaLoginContainer'>
+            <div className="grayContainer">
+                <div className='tuercaContainer'>
                     <picture>
                         <source
                             type="image/avif"

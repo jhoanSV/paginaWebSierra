@@ -1,12 +1,10 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Home, Products, About, Privacy, Catalogo, ContactUs, Login,
-    //NoPage,
+    ChangePass
 } from "../pages";
 
-
-
-export function /*LoggedNavigation*/Navigation() {
+export function Navigation() {
     return (
       <>
           <Routes>
@@ -18,7 +16,7 @@ export function /*LoggedNavigation*/Navigation() {
               {/*<Route path='catalogo' element={ <Catalogo /> } />*/}
               <Route path='catalogo/:cat' element={ <Catalogo /> } />
               <Route path='inicio_sesion' element={ <Login/> }/>
-              {/*<Route path='*' element={ <NoPage/> }/>*/}
+              <Route path='/configuracion/seguridad' element={ <ChangePass />}/>
           </Routes>
       </>
     );

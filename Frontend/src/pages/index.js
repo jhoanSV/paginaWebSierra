@@ -5,4 +5,4 @@ export * from './Privacy';
 export * from './Catalogo';
 export * from './ContactUs';
 export * from './Login';
-//export * from './NoPage';
+export * from './ChangePass';
