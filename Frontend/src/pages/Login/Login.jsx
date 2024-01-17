@@ -20,7 +20,7 @@ export const Login = () => {
                         />
                     </picture>
                 </div>
-                <div className="sec1">
+                <div>
                     <div className="userEmail">
                         <i className="bi bi-envelope-fill"></i>
                         <input type="text" className="theInput fw-bold" placeholder="Correo" 
@@ -46,17 +46,17 @@ export const Login = () => {
                         />
                     </div>
                     <div className="mt-2">
-                        <span className='fw-bold'>Registrarme</span>
+                        <span className='fw-bold'>Olvidé mi contraseña</span>
                     </div>                        
                 </div>
-                <div className="sec2 mt-5 w-100">
+                <div className="mt-5 w-100">
                     <div className='d-flex justify-content-between toDirCol'>
                         <div>
                             <input type='checkbox' className='theCheck'
                             />
                             <span className='ms-3'>Recordar datos</span>
                         </div>
-                        <span>Olvidé mi contraseña</span>
+                        <span>Registrarme</span>
                     </div>
                     <button className='btnStlGen btnLogin'>
                         Iniciar sesion
