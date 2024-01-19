@@ -82,5 +82,11 @@
         "cod" : "HER07",
         "descripcion" : "Plomada escalonada",
         "descripcionCompleta" : "Plomada"
+    },
+    {
+        "id" : "15",
+        "cod" : "RG062D",
+        "descripcion" : "Boquilla Gas",
+        "descripcionCompleta" : "Boquilla para gas butano, funciona para gas butano, colocar en gas butano. Salu2"        
     }
 ]
