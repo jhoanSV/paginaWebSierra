@@ -21,7 +21,7 @@ export function Home() {
         const imgjpg = require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)
         return(                        
             <>
-                <div className="c-categ">
+                <div className="ImgBtnContainer">
 
                     <Link to={`catalogo/${item.descripcion}`}>
                         <picture>
@@ -31,7 +31,7 @@ export function Home() {
                                 elsrc={imgAvif}
                             />
                             <img
-                                className={`${item.color} el_lazy`}                                
+                                className={`${item.color} el_lazy`}
                                 elsrc={imgjpg}
                                 alt="categoria"
                                 decoding="async"
@@ -83,13 +83,32 @@ export function Home() {
 
                                 <div className="col ">
                                     <div id='carrusel1' className="carousel slide" data-bs-ride="carousel">
-                                        <div className="carousel-indicators">                                            
-                                            <button type="button" data-bs-target="carrusel1" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                                            <button type="button" data-bs-target="carrusel1" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        <div className="carousel-indicators">
+                                            <button id="color-indicator" type="button" data-bs-target="#carrusel1" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button id="color-indicator" type="button" data-bs-target="#carrusel1" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button id="color-indicator" type="button" data-bs-target="#carrusel1" data-bs-slide-to="2" aria-label="Slide 3"></button>
                                         </div>
                                         <div className="carousel-inner h-100 c-inner">
                                             <div className="carousel-item active">
-                                                <div className="test h-100">                                                    
+                                                <div className="test h-100">
+                                                    <Link to={'/productos/especiales'}>
+                                                        <picture>
+                                                            <source
+                                                                type="image/avif"
+                                                                srcSet={require("../../Assets/avif/imgCarrusel3.avif")}
+                                                                />
+                                                            <img
+                                                                className="d-block w-100 h-100"
+                                                                src={require(`../../Assets/jpg/imgCarrusel3.jpg`)}
+                                                                alt="..."
+                                                                decoding="async"
+                                                                />
+                                                        </picture>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                            <div className="carousel-item">
+                                                <div className="test h-100">
                                                     <picture>
                                                         <source
                                                             type="image/avif"
@@ -122,18 +141,18 @@ export function Home() {
                                             </div>
                                         </div>
                                         <button className="carousel-control-prev" type="button" data-bs-target={`#carrusel1`} data-bs-slide="prev">
-                                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span id="color-indicator" className="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span className="visually-hidden">Previous</span>
                                         </button>
                                         <button className="carousel-control-next" type="button" data-bs-target={`#carrusel1`} data-bs-slide="next">
-                                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span id="color-indicator" className="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span className="visually-hidden">Next</span>
                                         </button>
                                     </div>
                                 </div>
 
                                 <div className="col">
-                                    <div id='carrusel2' className="carousel slide" data-bs-ride="carousel">
+                                    <div id='carrusel2' className="carousel slide" data-bs-ride="carrusel2">
                                         <div className="carousel-indicators">
                                             <button id="color-indicator" type="button" data-bs-target={`#carrusel2`} data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
                                             <button id="color-indicator" type="button" data-bs-target={`#carrusel2`} data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -173,11 +192,11 @@ export function Home() {
                                             </div>
                                         </div>
                                         <button className="carousel-control-prev" type="button" data-bs-target={`#carrusel2`} data-bs-slide="prev">
-                                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span id="color-indicator" className="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span className="visually-hidden">Previous</span>
                                         </button>
                                         <button className="carousel-control-next" type="button" data-bs-target={`#carrusel2`} data-bs-slide="next">
-                                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span id="color-indicator" className="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span className="visually-hidden">Next</span>
                                         </button>
                                     </div>

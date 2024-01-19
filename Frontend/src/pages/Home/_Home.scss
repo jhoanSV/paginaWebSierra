@@ -51,7 +51,7 @@
     }
 }
 
-.c-categ{
+.ImgBtnContainer{
     width: 30%;
     height: auto;
     padding-top: 0.8rem;
@@ -64,7 +64,7 @@
     }
 }
 
-.c-categ img:hover{
+.ImgBtnContainer img:hover{
     transform: scale(1.01, 1.01);
     transition: 200ms;
     box-shadow: 0.01rem 0.01rem 1.5rem 0.3rem currentColor;
@@ -117,7 +117,7 @@
         width: 100%;
     }
 
-    .c-categ{
+    .ImgBtnContainer{
         width: 100%;
     }
 }
