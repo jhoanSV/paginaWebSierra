@@ -7,7 +7,7 @@ export const SpecialCat = () => {
     let SpcCatalogue = null
 
     if (UrlId === 'llaves_agua'){
-        SpcCatalogue = 'heyzine.com/flip-book/e6238d237d.html'
+        SpcCatalogue = 'heyzine.com/flip-book/701167f540.html'
     }
 
     return (
