@@ -6,23 +6,19 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
     unitPrice=5800, category='electricos', unitPaq=2, logged=false })=>{
 
     const [cant, setCant] = useState(unitPaq)
-    const [totalPrice, setTotalPrice] = useState(unitPrice*cant)    
+    const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
 
-    let imgpng = 0, logopng = 0, quantity = null
-    let imgAvif = 0, logoAvif = 0    
+    let imgpng = 0, quantity = null
+    let imgAvif = 0 
     try {//intenta buscar la imagen png
         imgpng = require(`../../Assets/png/Productos/${codigo}.png`)
-        logopng = require(`../../Assets/png/Logos/${category}.png`)
     } catch (error) {
         imgpng = 0
-        logopng = 0
     }
     try {//intenta buscar la imagen AVIF
         imgAvif = require(`../../Assets/avif/Productos/${codigo}.avif`)
-        logoAvif = require(`../../Assets/avif/Logos/${category}.avif`)
     } catch (error) {
         imgAvif = 0
-        logoAvif = 0
     }
     if( unitPaq > 1 ){
         quantity = 'Paquete de ' + unitPaq + ' unidades'
@@ -67,9 +63,15 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                                             decoding="async"
                                         />
                                     </picture>
-                                    :
+                                    : imgpng ?                                    
                                     <img
                                         src={imgpng}
+                                        alt="categoria"
+                                        decoding="async"
+                                    />
+                                    :
+                                    <img
+                                        src={require('../../Assets/png/placeHolderProduct.png')}
                                         alt="categoria"
                                         decoding="async"
                                     />
@@ -80,7 +82,6 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                                 <div className="descFont titleFont">{descripcion}</div>
                                 <div className="codFont">{codigo}</div>
                             </div>
-
                         </div>                        
                     </div>
                 </div>
@@ -98,16 +99,32 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                                 <div className="col d-flex flex-column">
                                     <div className="imgModal">
                                         <picture>
-                                            <source
-                                                id={`lazy_modal${llave}`}
-                                                type="image/avif"
-                                                elsrc={imgAvif}
-                                            />
-                                            <img
-                                                elsrc={imgpng}
-                                                alt="imgProducto"
-                                                decoding="async"
-                                            />
+                                            {imgAvif ?
+                                                <>
+                                                    <source
+                                                        id={`lazy_modal${llave}`}
+                                                        type="image/avif"
+                                                        elsrc={imgAvif}
+                                                    />
+                                                    <img
+                                                        elsrc={imgpng}
+                                                        alt="imgProducto"
+                                                        decoding="async"
+                                                    />
+                                                </>
+                                            : imgpng ?
+                                                <img
+                                                    src={imgpng}
+                                                    alt="categoria"
+                                                    decoding="async"
+                                                />
+                                            :
+                                                <img
+                                                    src={require('../../Assets/png/placeHolderProduct.png')}
+                                                    alt="categoria"
+                                                    decoding="async"
+                                                />
+                                            }
                                         </picture>
                                     </div>
                                     <div className="commingsoon">
@@ -128,17 +145,28 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                                     <div className="mainFeatures">
                                         <div className="theLogo">
                                             <picture>
-                                                <source
-                                                    id={`lazy2_modal${llave}`}
-                                                    type="image/avif"
-                                                    elsrc={logoAvif}
-                                                />
-                                                <img
-                                                    title='xDxD'
-                                                    elsrc={logopng}
-                                                    alt="imgProducto"
-                                                    decoding="async"
-                                                />
+                                                {imgAvif ?
+                                                    <>
+                                                    <source
+                                                        id={`lazy2_modal${llave}`}
+                                                        type="image/avif"
+                                                        elsrc={require(`../../Assets/avif/Logos/${category}.avif`)}
+                                                    />
+                                                    <img
+                                                        title={category}//Here comes the category logo when received
+                                                        elsrc={require(`../../Assets/png/Logos/${category}.png`)}
+                                                        alt="imgProducto"
+                                                        decoding="async"
+                                                    />
+                                                    </>
+                                                    :
+                                                    <img
+                                                        title={category}//Here comes the category logo when received
+                                                        src={require(`../../Assets/png/Logos/${category}.png`)}
+                                                        alt="imgProducto"
+                                                        decoding="async"
+                                                    />
+                                                }
                                             </picture>
                                         </div>
                                         <h1 id="productolLabel">

@@ -1,11 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./_CarruselInf.scss";
 import { ListItem } from "./index";
-//import FlatList from "flatlist-react/lib";
-
-//import data from "../../Assets/jpg/Promociones/promociones.json";
-
-//`../Assets/productosJpg/${data.cod}.jpg`
 
 export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de productos.json
     const [screenWidth, setScreenWidth] = useState(window.innerWidth); 

@@ -1,1 +1,29 @@
 //@import "../../scss/index.scss";
+.productsContainer{
+    flex-wrap: wrap;
+    display: flex;
+    padding: 0.9044rem 7rem;
+    overflow-y: auto;
+    .caja{
+        margin: 0% 3% 3% 3%;
+    }
+}
+
+@media (max-width: 768px){
+    .productsContainer{
+        .caja{
+            margin: 0% 6% 6% 6%;
+            width: 20%;
+        }
+    }
+}
+
+@media (max-width: 600px){
+    .productsContainer{
+        .caja{
+            margin: 0% 6% 6% 6%;
+            width: 100%;
+            padding: 7%;
+        }
+    }
+}

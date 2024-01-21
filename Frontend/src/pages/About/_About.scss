@@ -28,8 +28,14 @@
     transform: translateY(100px);
 }
 
-/*@include tablet{
-    .about{
-        min-height: 51.9rem;
+@include tablet{
+    .log-anima{
+        width: 40%;
     }
-}*/
+}
+
+@include mobile{
+    .log-anima{
+        width: 90%;
+    }
+}

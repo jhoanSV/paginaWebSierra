@@ -37,30 +37,31 @@ export function Header() {
                     </div>
 
 
-                    <div className="g2">
+                    <div className="col g2">
                         <button className="menuNav" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <i className="bi bi-list"></i>
                         </button>
 
                         <ul className="dropdown-menu">
                             <li><Link to="/" type="button" className="dropdown-item">Inicio</Link></li>
-                            <li><Link to={'catalogo/inicio'} type="button" className="dropdown-item" state={{ bookM: `INICIO`}}>
+                            <li><Link to={'productos'} type="button" className="dropdown-item" state={{ bookM: `INICIO`}}>
                                     Productos
                                 </Link>
                             </li>
-                            <li><Link to="/about" type="button" className="dropdown-item">Quienes somos</Link></li>
-                            <li><Link to="/contactUs" type="button" className="dropdown-item">Contactanos</Link></li>
+                            <li><Link to="/nosotros" type="button" className="dropdown-item">Quienes somos</Link></li>
+                            <li><Link to="/contactanos" type="button" className="dropdown-item">Contactanos</Link></li>
                         </ul>
                     </div>
 
                     <div className="col logo">
-                        <a href="/" style={{textDecoration: "none" }}>
+                        <Link to="/" type="button">
                             <picture>
                                 <source
                                     type="image/avif"
                                     srcSet={require("../../Assets/avif/LogoSivar.avif")}
                                 />
                                 <img
+                                    id='headLogoComp'
                                     src={require("../../Assets/png/LogoSivar.png")}
                                     width="2207px"
                                     height="839px"
@@ -68,7 +69,21 @@ export function Header() {
                                     decoding="async"
                                 />
                             </picture>
-                        </a>                      
+                            <picture>
+                                <source
+                                    type="image/avif"
+                                    srcSet={require("../../Assets/avif/LlaveSivar.avif")}
+                                />
+                                <img
+                                    id='headLogoMobile'
+                                    src={require("../../Assets/png/LlaveSivar.png")}
+                                    width="1854px"
+                                    height="1950px"
+                                    alt="LogoSierra"
+                                    decoding="async"
+                                />
+                            </picture>
+                        </Link>
                     </div>
 
                     <div className="col buscar">
@@ -83,20 +98,14 @@ export function Header() {
                     </div>
 
                     <div className="col user">
-                        <a href="index.html" style={{textDecoration: "none" }}>
-                            <picture>
-                                <source 
-                                    type="image/avif"
-                                    //srcSet={require("../../Assets/avif/LogoSierra.avif")}despues
-                                />
-                                <img
-                                    src={require("../../Assets/png/tuercaUsuario.png")}
-                                    width="2965px"
-                                    height="2965px"
-                                    alt="User"
-                                />
-                            </picture>
-                        </a>                        
+                        <Link to="/inicio_sesion" type="button">
+                            <div className='btnSignIn'>
+                                <i class="bi bi-person-circle"></i>
+                                <div>
+                                    <span>Iniciar sesion</span>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
 
                 </div>
@@ -104,13 +113,13 @@ export function Header() {
                 <div className="row">
                     <div className="col">
                         <div className="grupoBotones">
-                            <div className="btn-group g1 flex-wrap">
+                            <div className="btn-group g1 flex-wrap">{/*Buttons group of the main view (computer)*/}
                                 <Link to="/" type="button" className="btn btn-navBar btn-lg">Inicio</Link>
-                                <Link to="catalogo/inicio" type="button" className="btn btn-navBar btn-lg" state={{ bookM: `INICIO`}}>
+                                <Link to="productos" type="button" className="btn btn-navBar btn-lg" state={{ bookM: `INICIO`}}>
                                     Productos
                                 </Link>
-                                <Link to="/about" type="button" className="btn btn-navBar btn-lg">Quienes somos</Link>
-                                <Link to="/contactUs" type="button" className="btn btn-navBar btn-lg">Contactanos</Link>
+                                <Link to="/nosotros" type="button" className="btn btn-navBar btn-lg">Quienes somos</Link>
+                                <Link to="/contactanos" type="button" className="btn btn-navBar btn-lg">Contactanos</Link>
                             </div>
                         </div>
                     </div>
