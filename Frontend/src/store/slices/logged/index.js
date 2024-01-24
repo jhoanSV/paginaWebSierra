@@ -13,6 +13,7 @@ export const loggedSlice = createSlice({
     }
 });
 
+//* here it exports the setters to change the state
 export const { setIsLogged } = loggedSlice.actions;
 
 export default loggedSlice.reducer;

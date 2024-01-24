@@ -17,7 +17,7 @@ export function Products() {
                     codigo = {item.cod}
                     descripcion = {item.descripcion}
                     descripcionComp={item.descripcionCompleta}
-                    logged={false}
+                    logged={true}
                 />
               </>
             )

@@ -3,7 +3,7 @@ import "./_ListItem.scss";
 //import { Link } from "react-router-dom";
 
 export const ListItem=({llave, codigo, descripcion, descripcionComp,
-    unitPrice=5800, category='electricos', unitPaq=2, logged=false })=>{
+    unitPrice=5800, category='electricos', unitPaq=2, logged=true })=>{
 
     const [cant, setCant] = useState(unitPaq)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
