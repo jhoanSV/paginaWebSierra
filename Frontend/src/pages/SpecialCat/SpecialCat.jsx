@@ -1,24 +1,21 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { PdfViewer2 } from '../../Componentes/PdfViewer/PdfViewer2';
 
 export const SpecialCat = () => {
 
-    const UrlId = useParams().espId
-    let SpcCatalogue = null
-
-    if (UrlId === 'llaves_agua'){
-        SpcCatalogue = 'heyzine.com/flip-book/701167f540.html'
-    }
-
     return (
-        <section className='spcCatalogue'>
-            <iframe
-                title='Catalogo Especial'
-                allowfullscreen="allowfullscreen"
-                className="fp-iframe"
-                style={{border: '1px solid lightgray', width: '100%', height: '800px'}}
-                src={`https://${SpcCatalogue}`}
-            />
+        <section className='catalogo'>
+            
+            <div className="row">
+                <div className="pdfViewer">
+                    <PdfViewer2
+                        route={'Assets/imgsCatalogo/spc1/'}
+                        prop={'inicio'}
+                        dir={0}
+                    />
+                </div>
+            </div>
+
         </section>
     );
 }

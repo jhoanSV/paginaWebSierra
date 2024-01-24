@@ -4,10 +4,10 @@ import { ThePage } from "../PdfViewer/ThePage"
 import { useObserver } from "../UseObs";
 //import "../../Assets/jpg/imgsCatalogo/Pagina 1.jpg"
 
-export function PdfViewer2({ prop, dir, show='yes' }) {
+export function PdfViewer2({ route, prop, dir, show='yes' }) {
 
     //const numRandom = Math.floor(Math.random() * 91) + 1
-    //numero de pagina que lleva, hacer condicional para que    
+    //numero de pagina que lleva, hacer condicional para que
     //const jsjs = "Tornilleria"
     let claseDir = null
     const jsjs = prop
@@ -40,19 +40,19 @@ export function PdfViewer2({ prop, dir, show='yes' }) {
         root: null
     });
     const [pages, setPages] = useState([
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag}.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+1}.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+2}.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+3}.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+4}.jpg`)},
-        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+5}.jpg`)},
+        //this stupid shit needs to be more standard
+        { src: require(`../../${route}Pagina ${numPag}.jpg`)},
+        { src: require(`../../${route}Pagina ${numPag+1}.jpg`)},
+        { src: require(`../../${route}Pagina ${numPag+2}.jpg`)},
+        { src: require(`../../${route}Pagina ${numPag+3}.jpg`)},
+        { src: require(`../../${route}Pagina ${numPag+4}.jpg`)},
+        { src: require(`../../${route}Pagina ${numPag+5}.jpg`)},
     ]);
 
     const last_node = () => {
         //*Obtiene el ultimo nodo o ultima pagina de catalogo
         const pagesContainer = document.querySelector(".pagesContainer");
         const nodes = pagesContainer.childNodes.length
-        console.log("Nodos: "+nodes)
         setElements([pagesContainer.childNodes[nodes-1]])
     }
 
@@ -120,7 +120,6 @@ export function PdfViewer2({ prop, dir, show='yes' }) {
                     });
                 }
             }
-            console.log("posición inicial: "+visorWidth)            
         }, 0);
 
         /*return () => {
@@ -132,7 +131,6 @@ export function PdfViewer2({ prop, dir, show='yes' }) {
 
     useEffect(()=>{
         setVisorWidth(Math.floor(window.innerWidth*82/100))
-        console.log("ancho de nav: " + window.innerWidth)        
     },[screenWidth])
     useEffect(() => {        
         if(window.innerWidth > 502){
@@ -154,8 +152,8 @@ export function PdfViewer2({ prop, dir, show='yes' }) {
                 try {
                     const newPages = [
                         ...pages,
-                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+pages.length}.jpg`)},
-                        { src: require(`../../Assets/imgsCatalogo/main/Pagina ${numPag+pages.length+1}.jpg`)},
+                        { src: require(`../../${route}Pagina ${numPag+pages.length}.jpg`)},
+                        { src: require(`../../${route}Pagina ${numPag+pages.length+1}.jpg`)},
                     ];
                     setPages(newPages)
                     last_node()

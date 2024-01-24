@@ -35,15 +35,12 @@ export function Catalogo() {
             <div className="catalogo">
 
                 <div className="row">
-                    <div className="pdfViewer">{/*las clase antes era "col pdfViewer"*/}
-                        {/*<PdfViewer
-                            key={refreshKey}
-                            prop={bookMark}
-                        />*/console.log("nombre de categoria jsjs: " + Categoria)}
+                    <div className="pdfViewer">
                         <PdfViewer2
                             key={refreshKey}
+                            route={'Assets/imgsCatalogo/main/'}
                             prop={Categoria}
-                            dir={0}                            
+                            dir={0}
                         />
                     </div>
                 </div>

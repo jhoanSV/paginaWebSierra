@@ -13,6 +13,7 @@ node_modules
 
 # some resources
 /src/Assets/imgsCatalogo/main
+/src/Assets/imgsCatalogo/spc1
  
 # misc
 .DS_Store
