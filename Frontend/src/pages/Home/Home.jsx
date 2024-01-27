@@ -15,33 +15,30 @@ export function Home() {
     });
 
     //*Funcion para mostrar las categorias en categorias.json
-    const itItems = categ.map( item => {
+    const itItems = categ.map( (item, index) => {
 
         const imgAvif = require(`../../Assets/avif/categorias/${item.descripcion}.avif`)
         const imgjpg = require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)
-        return(                        
-            <>
-                <div className="c-categ">
+        return(
+            <div key={index} className="c-categ">
 
-                    <Link to={`catalogo/${item.descripcion}`}>
-                        <picture>
-                            <source
-                                className="el_lazy2"
-                                type="image/avif"
-                                elsrc={imgAvif}
-                            />
-                            <img
-                                className={`${item.color} el_lazy`}                                
-                                elsrc={imgjpg}
-                                alt="categoria"
-                                decoding="async"
-                            />
-                        </picture>
-                    </Link>
+                <Link to={`catalogo/${item.descripcion}`}>
+                    <picture>
+                        <source
+                            className="el_lazy2"
+                            type="image/avif"
+                            elsrc={imgAvif}
+                        />
+                        <img
+                            className={`${item.color} el_lazy`}                                
+                            elsrc={imgjpg}
+                            alt="categoria"
+                            decoding="async"
+                        />
+                    </picture>
+                </Link>
 
-                </div>
-
-            </>
+            </div>
         );
     });
 
@@ -254,7 +251,7 @@ export function Home() {
 
                     <div className="row g-0">
                         <div className="col">
-                            <CarruselInf 
+                            <CarruselInf
                                 lista1={arJason}
                             />
                         </div>                            

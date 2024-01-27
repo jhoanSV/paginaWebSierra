@@ -1,0 +1,119 @@
+@import "../../scss/_colors.scss";
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  margin: 0;
+  border-style: none;
+}
+
+.modal-content.productBox{
+    padding: 40px !important;
+}
+
+.imgModal, .theLogo{
+    display: flex;
+    padding: 10px;
+    picture{
+        width: 90%;
+    }
+    img{
+        width: 100%;
+    }
+}
+.theLogo{
+    justify-content: left;
+    padding: 0;
+    picture{
+        //width: 20%;
+        width: 3.625rem;
+    }
+}
+
+.commingsoon{
+    opacity: 0;
+}
+
+.description{
+    height: 120px;
+    background-color: #d9d9d9;
+}
+
+.mainFeatures{
+    max-height: 300px;
+    overflow-y: auto;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.quantityText{
+    color: $azulPrincipal;
+    font-weight: bold;
+}
+
+.quantity{
+    font-size: 1.5rem;
+    text-align: center;
+    border-style: none;    
+}
+
+.unitPrice{
+    padding-top: 8px;
+}
+.totalPrice{
+    flex-wrap: wrap;
+    padding: 8px 0;
+}
+
+//Buttons
+.xButton{
+    position: absolute;
+    font-size: 35px;
+    z-index: 2;
+    right: -4px;
+    top: -7px;
+    border-style: none;
+    color: $grisPrincipal;
+    background-color: transparent;
+    transition: 300ms;
+}
+.btnAddCart, .btnQuantity{
+    background-color: $amarilloPrincipal;
+    color: $azulPrincipal;
+    border-radius: 10px;
+    font-weight: bold;
+    height: 50px;
+}
+.btnQuantity{
+    background-color: $azulPrincipal;
+    color: white;
+    height: auto;
+}
+.btnAddCart{
+    border-radius: 12px;
+}
+.btnQuantity:active{
+    background-color: $amarilloPrincipal;
+    color: $azulPrincipal;
+}
+
+@media (max-width: 636px){
+    h1{
+        font-size: 1rem !important;
+    }
+    .xButton{
+        font-size: 25px;
+    }
+    .mainFeatures{
+        max-height: 167px;
+    }
+    .caja{
+        min-width: 44%;
+        margin: 0 28% 0 28%;
+        padding: 4%;
+    }
+    .modal-content.productBox{
+        padding: 25px !important;
+    }
+}
