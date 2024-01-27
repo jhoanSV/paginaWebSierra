@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./_CarruselInf.scss";
-import { ListItem } from "./index";
+import { ListItem } from "../Others";
 
 export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de productos.json
     const [screenWidth, setScreenWidth] = useState(window.innerWidth); 
@@ -68,16 +68,15 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
 
     const listItems = () => {
         return(
-            props.lista1.slice(0,charge).map((item, index) =>
-                <>  
-                    <ListItem
-                        key={index}
-                        llave = {item.id}//Para apuntar a cada modal
-                        codigo = {item.cod}
-                        descripcion = {item.descripcion}
-                        descripcionComp={item.descripcionCompleta}
-                    />
-                </>
+            props.lista1.slice(0,charge).map((item, index) =>                
+                <ListItem
+                    key={index}
+                    llave = {item.id}//Para apuntar a cada modal
+                    codigo = {item.cod}
+                    descripcion = {item.descripcion}
+                    descripcionComp={item.descripcionCompleta}
+                >
+                </ListItem>
             )
         );
     }

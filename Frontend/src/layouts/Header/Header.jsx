@@ -100,7 +100,7 @@ export function Header() {
                     <div className="col user">
                         <Link to="/inicio_sesion" type="button">
                             <div className='btnSignIn'>
-                                <i class="bi bi-person-circle"></i>
+                                <i className="bi bi-person-circle"></i>
                                 <div>
                                     <span>Iniciar sesion</span>
                                 </div>
