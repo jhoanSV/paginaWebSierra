@@ -3,7 +3,7 @@ import "./_CarruselInf.scss";
 import { ListItem } from "../Others";
 
 export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de productos.json
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth); 
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [charge, setCharge] = useState(5);//variable "SeVe"
     const [bef, setBef] = useState(0);
     const [move, setMove] = useState(0);

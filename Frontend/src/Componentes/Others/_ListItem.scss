@@ -21,7 +21,6 @@
 
 .caja{
     height: 100%;
-    min-height: 213px;
     width: 14%;
     min-width: 14%;
     cursor: pointer;
@@ -37,6 +36,9 @@
         height: auto;
     }
 }
+.resizeModal{
+    --bs-modal-width: 800px;
+}
 
 .imgProducto img{
     width: 100%;
@@ -50,3 +52,16 @@
     transition: 200ms;
 }
 
+@media (max-width: 950px){
+    .resizeModal{
+        --bs-modal-width: 80%;
+    }
+}
+
+@media (max-width: 576px){
+    .resizeModal{
+        max-width: var(--bs-modal-width);
+        margin-right: auto !important;
+        margin-left: auto !important;
+    }
+}

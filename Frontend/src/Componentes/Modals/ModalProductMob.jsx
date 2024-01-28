@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, codigo, category,
-    unitPaq, unitPrice, logged=false}) => {
+    unitPaq, unitPrice, logged=true}) => {
 
     const [cant, setCant] = useState(unitPaq)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
@@ -26,6 +26,37 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
             <div className="modal-body p-0">
                 <div className="row row-cols-1">
                     <div className="col d-flex flex-column">
+                        <div className="mainFeatures">
+                            <div className="theLogo">
+                                <picture>
+                                    {imgAvif ?
+                                        <>
+                                        <source
+                                            type="image/avif"
+                                            srcSet={require(`../../Assets/avif/Logos/${category}.avif`)}
+                                        />
+                                        <img
+                                            title={category}//Here comes the category logo when received
+                                            src={require(`../../Assets/png/Logos/${category}.png`)}
+                                            alt="imgProducto"
+                                            decoding="async"
+                                        />
+                                        </>
+                                        :
+                                        <img
+                                            title={category}//Here comes the category logo when received
+                                            src={require(`../../Assets/png/Logos/${category}.png`)}
+                                            alt="imgProducto"
+                                            decoding="async"
+                                        />
+                                    }
+                                </picture>
+                            </div>
+                            <h1 id="productolLabel">
+                                {descripcion}<br/>
+                                <span className="smolText">Cod: {codigo}</span>
+                            </h1>                                        
+                        </div>
                         <div className="imgModal">
                             <picture>
                                 {imgAvif ?
@@ -70,37 +101,7 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
                         </div>
                     </div>
                     <div className="col d-flex flex-column">
-                        <div className="mainFeatures">
-                            <div className="theLogo">
-                                <picture>
-                                    {imgAvif ?
-                                        <>
-                                        <source
-                                            type="image/avif"
-                                            srcSet={require(`../../Assets/avif/Logos/${category}.avif`)}
-                                        />
-                                        <img
-                                            title={category}//Here comes the category logo when received
-                                            src={require(`../../Assets/png/Logos/${category}.png`)}
-                                            alt="imgProducto"
-                                            decoding="async"
-                                        />
-                                        </>
-                                        :
-                                        <img
-                                            title={category}//Here comes the category logo when received
-                                            src={require(`../../Assets/png/Logos/${category}.png`)}
-                                            alt="imgProducto"
-                                            decoding="async"
-                                        />
-                                    }
-                                </picture>
-                            </div>
-                            <h1 id="productolLabel">
-                                {descripcion}<br/>
-                                <span className="smolText">Cod: {codigo}</span>
-                            </h1>                                        
-                        </div>
+                        
                         <div className='mt-auto'>
                             <span className="smolText quantityText">{quantity}</span>
                             <div className="subTit fw-bold mainBlue">

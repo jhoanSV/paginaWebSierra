@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./_ListItem.scss";
-import { /*ModalProductDesk,*/ ModalProductMob } from "../Modals";
+import { ModalProductDesk, ModalProductMob } from "../Modals";
 
 export const ListItem=({llave, codigo, descripcion, descripcionComp,
     unitPrice=5800, category='electricos', unitPaq=2})=>{
 
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [isMobile, setIsMobile] = useState();
+
     let imgpng = 0
-    let imgAvif = 0 
+    let imgAvif = 0
+    
+    const resize_ob = new ResizeObserver(function() {
+        setScreenWidth(window.innerWidth);
+    });
+    
     try {//intenta buscar la imagen png
         imgpng = require(`../../Assets/png/Productos/${codigo}.png`)
     } catch (error) {
@@ -17,6 +25,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
     } catch (error) {
         imgAvif = 0
     }
+
     const click_caja = () => {
         var el_id = "#lazy_modal" + (llave)
         const elemento = document.querySelector(el_id)
@@ -25,9 +34,23 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         elemento.removeAttribute("id")
     }
 
+    useEffect(() => {
+        resize_ob.observe(document.querySelector('#box'+llave));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if(screenWidth < 700 ){
+            setIsMobile(true)
+        }else{
+            setIsMobile(false)
+        }            
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [screenWidth])
+
     return(
         <>
-            <div className='caja' data-bs-toggle="modal" data-bs-target={`#producto${llave}`} onClick={click_caja}>
+            <div id={`box${llave}`} className='caja' data-bs-toggle="modal" data-bs-target={`#producto${llave}`} onClick={click_caja}>
                 
                 <div className="row">
                     <div className="col h-100">
@@ -72,17 +95,31 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
             </div>
 
             <div className="modal fade" id={`producto${llave}`} tabIndex="-1" aria-labelledby="productoLabel" aria-hidden="true">
-                <div className="modal-dialog modal-lg">
-                    <ModalProductMob
-                        imgAvif={imgAvif}
-                        imgpng={imgpng}
-                        descripcion={descripcion}
-                        descripcionComp={descripcionComp}
-                        codigo={codigo}
-                        category={category}
-                        unitPaq={unitPaq}
-                        unitPrice={unitPrice}
-                    />
+                {/*<div className="modal-dialog modal-lg">*/}
+                <div className="modal-dialog resizeModal">
+                    { isMobile ? 
+                        <ModalProductMob
+                            imgAvif={imgAvif}
+                            imgpng={imgpng}
+                            descripcion={descripcion}
+                            descripcionComp={descripcionComp}
+                            codigo={codigo}
+                            category={category}
+                            unitPaq={unitPaq}
+                            unitPrice={unitPrice}
+                        />
+                        :
+                        <ModalProductDesk
+                            imgAvif={imgAvif}
+                            imgpng={imgpng}
+                            descripcion={descripcion}
+                            descripcionComp={descripcionComp}
+                            codigo={codigo}
+                            category={category}
+                            unitPaq={unitPaq}
+                            unitPrice={unitPrice}
+                        />
+                    }
                 </div>
             </div>
 

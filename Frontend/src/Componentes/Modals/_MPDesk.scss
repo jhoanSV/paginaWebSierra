@@ -92,13 +92,14 @@ input[type=number]::-webkit-outer-spin-button
 }
 .btnAddCart{
     border-radius: 12px;
+    width: 100%;
 }
 .btnQuantity:active{
     background-color: $amarilloPrincipal;
     color: $azulPrincipal;
 }
 
-@media (max-width: 636px){
+@media (max-width: 700px){
     h1{
         font-size: 1rem !important;
     }
