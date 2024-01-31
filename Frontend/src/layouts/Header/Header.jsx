@@ -8,40 +8,32 @@ export function Header() {
     /*Funciones para mostrar o esconder caja de texto
       cuando se hace click o se pierde el focus de la caja
     */
-    function showGhost() {        
-        const item = document.querySelector(".ghost-buscador");
-        const item2 = document.querySelector(".caja-buscar");
-        item.style.display = "flex";
-        item2.focus();
-    }
-    function hideGhost() {
-        const item = document.querySelector(".ghost-buscador");
-        item.style.display = "none";
-    }
     
     return(
         <header>
             <div className="container-fluid px-4 g-0 cabecera">
                 <div className="row position-relative">
-
-                    <button className="btn-buscar p-1" onClick={() => showGhost()}>
-                        <i className="bi bi-search"></i>
-                    </button>
-
-                    <div className="ghost-buscador">
-
-                        <input type="text" className="caja-buscar" placeholder="Buscar Producto" 
-                        aria-label="campo de texto para busqueda"  onBlur={() => hideGhost()}                        
-                        />
-
-                    </div>
-
-
-                    <div className="col g2">
+                    <div className="col g2">{/*Buttons group of the mobile*/}
                         <button className="menuNav" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <i className="bi bi-list"></i>
                         </button>
-
+                        <div className="logo mob">                            
+                            <Link to="/" type="button">
+                                <picture>
+                                    <source
+                                        type="image/avif"
+                                        srcSet={require("../../Assets/avif/LogoSivar.avif")}
+                                        />
+                                    <img
+                                        src={require("../../Assets/png/LogoSivar.png")}
+                                        width="2207px"
+                                        height="839px"
+                                        alt="LogoSierra"
+                                        decoding="async"
+                                        />
+                                </picture>
+                            </Link>
+                        </div>
                         <ul className="dropdown-menu">
                             <li><Link to="/" type="button" className="dropdown-item">Inicio</Link></li>
                             <li><Link to={'productos'} type="button" className="dropdown-item" state={{ bookM: `INICIO`}}>
@@ -61,24 +53,9 @@ export function Header() {
                                     srcSet={require("../../Assets/avif/LogoSivar.avif")}
                                 />
                                 <img
-                                    id='headLogoComp'
                                     src={require("../../Assets/png/LogoSivar.png")}
                                     width="2207px"
                                     height="839px"
-                                    alt="LogoSierra"
-                                    decoding="async"
-                                />
-                            </picture>
-                            <picture>
-                                <source
-                                    type="image/avif"
-                                    srcSet={require("../../Assets/avif/LlaveSivar.avif")}
-                                />
-                                <img
-                                    id='headLogoMobile'
-                                    src={require("../../Assets/png/LlaveSivar.png")}
-                                    width="1854px"
-                                    height="1950px"
                                     alt="LogoSierra"
                                     decoding="async"
                                 />
@@ -87,17 +64,17 @@ export function Header() {
                     </div>
 
                     <div className="col buscar">
-                        <div className="input-group mb-3">
-                            <input type="text" className="form-control" placeholder="Buscar Producto" aria-label="Example text with button addon" aria-describedby="button-addon1"/>
-                            <span className="input-group-text" id="basic-addon1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                </svg>
-                            </span>
+                        <div style={{height: 'min-content', position: 'relative'}}>
+                            <input type='text' placeholder='Buscar producto'
+                            />
+                            <i class="bi bi-search"></i>
                         </div>
                     </div>
 
                     <div className="col user">
+                        <Link to="/inicio_sesion" type="button">
+                            <i className="bi bi-cart4"></i>
+                        </Link>
                         <Link to="/inicio_sesion" type="button">
                             <div className='btnSignIn'>
                                 <i className="bi bi-person-circle"></i>
@@ -112,16 +89,22 @@ export function Header() {
 
                 <div className="row">
                     <div className="col">
+                        <div className="buscar mob" style={{height: 'min-content', position: 'relative'}}>
+                            <input type='text' placeholder='Buscar producto'
+                            />
+                            <i class="bi bi-search"></i>
+                        </div>
                         <div className="grupoBotones">
                             <div className="btn-group g1 flex-wrap">{/*Buttons group of the main view (computer)*/}
                                 <Link to="/" type="button" className="btn btn-navBar btn-lg">Inicio</Link>
                                 <Link to="productos" type="button" className="btn btn-navBar btn-lg" state={{ bookM: `INICIO`}}>
                                     Productos
                                 </Link>
+                                <Link to="/catalogo/inicio" type="button" className="btn btn-navBar btn-lg">Catalogo</Link>
                                 <Link to="/nosotros" type="button" className="btn btn-navBar btn-lg">Quienes somos</Link>
                                 <Link to="/contactanos" type="button" className="btn btn-navBar btn-lg">Contactanos</Link>
                             </div>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
 
     const [cant, setCant] = useState(unitPaq)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
+    const [showDesc, setShowDesc] = useState(false)
 
     let quantity = null
 
@@ -52,10 +53,10 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
                                     }
                                 </picture>
                             </div>
-                            <h1 id="productolLabel">
-                                {descripcion}<br/>
-                                <span className="smolText">Cod: {codigo}</span>
-                            </h1>                                        
+                            <div className='subTit' id='productoLabel'>
+                                {descripcion}
+                                <div className='smolText'>Cod: {codigo}</div>
+                            </div>
                         </div>
                         <div className="imgModal">
                             <picture>
@@ -93,72 +94,81 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
                                 decoding="async"
                             />
                         </div>
-                        <div className="mt-auto">                                        
-                            <p className="subTit"><strong>Descripcion:</strong></p>
-                            <div className="description scrollableY genFont">
-                                {descripcionComp}.<br/>
+                        <span className="smolText quantityText">{quantity}</span>
+                        <div className="unitPrice genFont">
+                            <span className='mainBlue fw-bold'>
+                                Valor:&nbsp;
+                            </span>
+                            { logged &&
+                            <span className="fw-bold">
+                                ${Formater(unitPrice)}
+                            </span>
+                            }
+                        </div>                        
+                        <div className='row'>
+                            <div className='col'>
+                                <div className="subTit fw-bold mainBlue">
+                                    Cantidad
+                                </div>
+                                <div className="quantityBox" style={{marginLeft: '10px'}}>
+                                    <button className="btnQuantity" onClick={() => {
+                                        if((cant-unitPaq)>0){
+                                            setCant(cant-unitPaq)
+                                            setTotalPrice(unitPrice*(cant-unitPaq))
+                                        }
+                                    }}>
+                                        -
+                                    </button>
+                                    <input
+                                        className='quantity' type="number"
+                                        min={1}
+                                        value={cant}
+                                        style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding
+                                        readOnly
+                                    />
+                                    <button className="btnQuantity" onClick={() => {
+                                        setCant(cant+unitPaq)
+                                        setTotalPrice(unitPrice*(cant+unitPaq))
+                                    }}>
+                                        +
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="col d-flex flex-column">
-                        
-                        <div className='mt-auto'>
-                            <span className="smolText quantityText">{quantity}</span>
-                            <div className="subTit fw-bold mainBlue">
-                                Cantidad:<br/>
-                            </div>
-                            <div className="quantityBox">
-                                <button className="btnQuantity" onClick={() => {
-                                    if((cant-unitPaq)>0){
-                                        setCant(cant-unitPaq)
-                                        setTotalPrice(unitPrice*(cant-unitPaq))
-                                    }
-                                }}>
-                                    -
-                                </button>
-                                <input
-                                    className='quantity' type="number"
-                                    min={1}
-                                    value={cant}
-                                    style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding
-                                    readOnly
-                                />
-                                <button className="btnQuantity" onClick={() => {
-                                    setCant(cant+unitPaq)
-                                    setTotalPrice(unitPrice*(cant+unitPaq))
-                                }}>
-                                    +
-                                </button>
-                            </div>
-                            <div className="unitPrice genFont">
-                                <span className='mainBlue fw-bold'>
-                                    Valor:&nbsp;
-                                </span>
-                                { logged &&
-                                <span className="fw-bold">
-                                    ${Formater(unitPrice)}
-                                </span>
-                                }
-                            </div>
-                            <h1>
+                            <div className="col">
                                 { logged ?
-                                    <div className="totalPrice genFont mainBlue d-flex">
-                                        Total:&nbsp;
-                                        <span className='fw-bold text-black'>
-                                            ${Formater(totalPrice)}                                                        
-                                        </span>
+                                    <div className="totalPrice mainBlue">
+                                        <div className='subTit fw-bold'>Total:</div>
+                                        <h1>
+                                            <span className='text-black Tit'>
+                                                ${Formater(totalPrice)}
+                                            </span>
+                                        </h1>
                                     </div>
                                     :
                                     <div className="totalPrice genFont d-flex fw-bold">
                                         Suscribete para más
                                     </div>
                                 }
-                            </h1>
+                            </div>
+                        </div>
+                        <div className='mt-auto'>
                             <button className="btnAddCart" onClick={() => {alert("PROXIMAMENTE")}}>
                                 Agregar al carrito
                             </button>
                         </div>
-                    </div>
+                        <div className="mt-auto">
+                            <p className="subTit" onClick={() => {
+                                setShowDesc(!showDesc)
+                            }}>
+                                <strong><u className='mainBlue'>Descripcion:</u></strong>
+                            </p>
+                            { showDesc &&
+                                <div className="description scrollableY genFont">
+                                    {descripcionComp}.<br/>
+                                </div>
+                            }
+                        </div>
+                    </div>                    
                 </div>
             </div>
         </div>

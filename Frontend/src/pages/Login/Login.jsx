@@ -6,19 +6,8 @@ export const Login = () => {
         <section className='py-5 d-flex justify-content-center'>
             <div className="grayContainer">
                 <div className='tuercaContainer'>
-                    <picture>
-                        <source
-                            type="image/avif"
-                            srcSet={require("../../Assets/avif/tuercaUsuario2.avif")}
-                        />
-                        <img
-                            src={require("../../Assets/png/tuercaUsuario2.png")}
-                            width="180px"
-                            height="206px"
-                            alt="tuerca"
-                            decoding="async"
-                        />
-                    </picture>
+                    <i className="bi bi-hexagon-fill hexagon"></i>
+                    <i className="bi bi-person-circle userLogo"></i>
                 </div>
                 <div>
                     <div className="userEmail">
