@@ -67,7 +67,7 @@ export function Header() {
                         <div style={{height: 'min-content', position: 'relative'}}>
                             <input type='text' placeholder='Buscar producto'
                             />
-                            <i class="bi bi-search"></i>
+                            <i className="bi bi-search"></i>
                         </div>
                     </div>
 
@@ -92,7 +92,7 @@ export function Header() {
                         <div className="buscar mob" style={{height: 'min-content', position: 'relative'}}>
                             <input type='text' placeholder='Buscar producto'
                             />
-                            <i class="bi bi-search"></i>
+                            <i className="bi bi-search"></i>
                         </div>
                         <div className="grupoBotones">
                             <div className="btn-group g1 flex-wrap">{/*Buttons group of the main view (computer)*/}

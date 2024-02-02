@@ -56,7 +56,7 @@ export function CategoryMenu() {
     /*--------------------return----------------------*/
 
     return (
-        <div className="container-menu">
+        <div className="container-menu" style={{display: 'none'}}>
             <div className="menu-category" ref={menuCategory}>
                 <div className="menu-button" role="button" ref={menuButton} onClick={move}>
                     <i className="bi bi-chevron-right" ref={anima}></i>

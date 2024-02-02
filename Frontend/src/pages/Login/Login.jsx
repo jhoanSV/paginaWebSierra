@@ -47,7 +47,9 @@ export const Login = () => {
                         </div>
                         <span>Registrarme</span>
                     </div>
-                    <button className='btnStlGen btnLogin'>
+                    <button className='btnStlGen btnLogin' onClick={()=>{
+                        localStorage.NoSeXD = 'alguien ayudemeeee duh'
+                    }}>
                         Iniciar sesion
                     </button>
                 </div>

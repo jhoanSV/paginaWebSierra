@@ -2,16 +2,14 @@ import { Header } from "./layouts";
 import { Footer } from "./layouts";
 //import { Home, Products, About, Privacy } from "./pages";
 import { Navigation } from "./routes";
-import { Provider } from 'react-redux'
-import store from './store';
 
 import './_App.scss';
 import { CategMenuMobile, CategoryMenu } from "./Componentes/Menus";
 
 export default function App() {
 
-  return (//This is wraped with a provider to allow acces to the states for all components
-      <Provider store={store}>
+  return (
+      <>
         <a href="https://api.whatsapp.com/send/?phone=573134237538&text&type=phone_number&app_absent=0" className="btn-wapp" 
           target="_blank" rel="noreferrer">
             <picture>
@@ -39,7 +37,7 @@ export default function App() {
         <Navigation></Navigation>
 
         <Footer></Footer>
-      </Provider>
+      </>
       
   );
 }
