@@ -6,6 +6,7 @@ import arJason from "../../Assets/png/Productos/productos.json";
 import categ from "../../Assets/jpg/categorias/categorias.json";
 import { Link } from "react-router-dom";
 import { useObserver } from "../../Componentes/UseObs";
+import { BottonCarousel } from '../../api';
 
 export function Home() {
     const [observer, setElements, entries] = useObserver({
@@ -13,6 +14,49 @@ export function Home() {
         rootMargin: 1,
         root: null
     });
+
+    //Todo: Create the function that alternate the cathegories
+    function alternateCategoria(jsonArray) {
+        // Use Set to store unique values
+        const uniqueCategories = new Set();
+
+        // Iterate through the array and add each "Categoria" value to the Set
+        jsonArray.forEach(item => {
+            uniqueCategories.add(item.Categoria);
+        });
+
+        // Convert the Set to an array and return
+        const categories = Array.from(uniqueCategories)
+        console.log(categories)
+        //Create an eplty array for the new order and an index for the list of categorie
+        const reorderedArray = [];
+        
+        while (jsonArray.length > 0) {
+            for (let i = 0; i < categories.length; i++) {
+                for (let j = 0; j < jsonArray.length; j++) {
+                    if (jsonArray[j].Categoria === categories[i]) {
+                        reorderedArray.push(jsonArray[j]);
+                        jsonArray.splice(j, 1); // Remove the matched element from jsonArray
+                        break;
+                    } 
+                }
+            }
+        }
+        return reorderedArray;
+      }
+
+    const tobuttonCarousel = async() =>{
+        //return the list of products of the button carousel
+        console.log('si entro a la funcion')
+        const bCaroucel = await BottonCarousel(
+            {
+                "logged": false,
+                "CodUser": "494"
+            }
+        )
+        const NButtoncaroucel = alternateCategoria(bCaroucel)
+        console.log(NButtoncaroucel)
+    }
 
     //*Funcion para mostrar las categorias en categorias.json
     const itItems = categ.map( (item, index) => {
@@ -60,6 +104,8 @@ export function Home() {
 
     return (
         <div className="inicio">
+            <button onClick={()=>{tobuttonCarousel()}}>prueba carousel</button>
+            
             <section id="sierra">
                 <div className="container-fluid p-0">
                     

@@ -1,7 +1,28 @@
-import React from 'react';
+import {useState, React} from 'react';
 import "./_Login.scss";
+import { validateUser } from '../../api';
 
 export const Login = () => {
+    const [userEmail, setUserEmail] = useState('')
+    const [password, setPassword] = useState('')
+    
+    const LogIn = async () =>{
+        /* validate if the userEmail and the ppassword matches with the information in the database*/
+        const userData = await validateUser({
+            "EmailUser": userEmail,
+            "Password": password
+        })
+        console.log(userData)
+        if (userData.hasOwnProperty('Cod')){
+            //autorizado
+            console.log('authorized', userData)
+        } else if (userData.hasOwnProperty('error')){
+            // no autorizado
+            console.log('unauthorized')
+            console.log(userData)
+        }
+    }
+    
     return (
         <section className='py-5 d-flex justify-content-center'>
             <div className="grayContainer">
@@ -14,7 +35,11 @@ export const Login = () => {
                         <i className="bi bi-envelope-fill"></i>
                         <input type="text" className="theInput fw-bold" placeholder="Correo" 
                             aria-label="Campo para correo"
-                            onChange={(e) => {e.target.classList.remove('fw-bold')}}
+                            onChange={(e) => {
+                                e.target.classList.remove('fw-bold')
+                                setUserEmail(e.target.value)
+                                console.log(e)
+                            }}
                             onBlur={(e) => {
                                 if ((e.target.value) === ''){
                                     e.target.classList.add('fw-bold')
@@ -26,7 +51,10 @@ export const Login = () => {
                         <i className="bi bi-lock-fill"></i>
                         <input type="password" className="theInput fw-bold" placeholder="Contraseña" 
                             aria-label="Campo para contraseña"
-                            onChange={(e) => {e.target.classList.remove('fw-bold')}}
+                            onChange={(e) => {
+                                e.target.classList.remove('fw-bold')
+                                setPassword(e.target.value)
+                            }}
                             onBlur={(e) => {
                                 if ((e.target.value) === ''){
                                     e.target.classList.add('fw-bold')
