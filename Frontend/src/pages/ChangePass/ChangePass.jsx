@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import "./_ChangePass.scss";
+import { Changepassword } from '../../api';
 
 export const ChangePass = () => {
 
     const [validateText, setValidateText] = useState('');
     const [variableText, setVariableText] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
     const [allOk, setAllOk] = useState([false, false, false]);
 
     //* function to check if all values are true
@@ -22,7 +25,24 @@ export const ChangePass = () => {
         // eslint-disable-next-line
     }, [allOk]);
 
-    
+    const toChangePassword = async() =>{
+        /*Funtion to check if the user is alowed to change the password*/
+        const dataChangePassword = await Changepassword({
+            "CodUser": "493",
+            "Password": currentPassword,
+            "NewPassword": newPassword
+        })
+        if (dataChangePassword.hasOwnProperty('authorization') & dataChangePassword.authorization === 'Authorized'){
+            //password changed
+            console.log('authorized', dataChangePassword)
+        } else if (dataChangePassword.hasOwnProperty('error') & dataChangePassword.error === 'Unauthorized'){
+            //password not changed
+            console.log('unauthorized', dataChangePassword)
+        }
+
+    }
+
+
     const thePattern = (classRev1, classRev2, classAdd) =>{//*function with repeated pattern
         let c = document.querySelector('#plbContainer')
         c.childNodes[0].classList.remove(classRev1, classRev2)
@@ -108,6 +128,7 @@ export const ChangePass = () => {
                             onChange={(e)=>{
                                 if(e.target.value !== ''){
                                     setAllOk(prevState => [prevState[0], prevState[1], true]);
+                                    setCurrentPassword(e.target.value);
                                 }else{
                                     setAllOk(prevState => [prevState[0], prevState[1], false]);
                                 }
@@ -118,7 +139,7 @@ export const ChangePass = () => {
                         <i className="bi bi-key-fill keyIcon"></i>
                         <input type="password" className="chPassInput theInput fw-bold" placeholder="Contraseña nueva" 
                             aria-label="Campo para contraseña"
-                            onChange={(e) => {                                
+                            onChange={(e) => {
                                 handlePassInput(e.target.value)
                                 if (document.querySelector('#pass2').value!==''){
                                     handlePassMatch()
@@ -137,6 +158,7 @@ export const ChangePass = () => {
                         <input id='pass2' type="password" className="chPassInput theInput fw-bold" placeholder="Confirmar" 
                             aria-label="Confirmar contraseña"
                             onChange={(e) => {
+                                setNewPassword(e.target.value);
                                 if (e.target.value===''){
                                     setVariableText('')
                                 }else{
@@ -151,7 +173,7 @@ export const ChangePass = () => {
                     <button className='btnChPass'>
                         Cancelar
                     </button>
-                    <button className='btnChPass2' disabled>
+                    <button className='btnChPass2' disabled onClick={()=>{toChangePassword()}}>
                         Cambiar Contraseña
                     </button>
                 </div>
