@@ -16,21 +16,6 @@
     padding: 1.25rem 0px 0px;
 }
 
-.btn-buscar{
-    display: none;
-    position: absolute;
-    right: 3%;
-    //top: 45%;
-    border-radius: 1.5rem;
-    z-index: 1;
-}
-
-.ghost-buscador{
-    display: none;
-    position: absolute;
-    top: 100%;
-}
-
 .grupoBotones{
     display: flex;
     justify-content: center;
@@ -45,6 +30,8 @@
 
 .col.logo{
     max-width: calc((100 / 3)*1%);
+}
+.logo{
     z-index: 1;
     a{
         img{
@@ -55,8 +42,31 @@
     
 }
 
+.buscar.mob{
+    display: none;
+}
 .col.buscar{
     max-width: calc((100 / 3)*1%);
+}
+.buscar{    
+    input{
+        width: 100%;
+        border-radius: 10px 0px 0px 10px;
+        border: solid 1px;
+        padding: 10px;
+    }
+    i{
+        display: flex;
+        position: absolute;
+        top: 0px;
+        right: -10px;
+        background-color: #e9eced;
+        border-radius: 0px 10px 10px 0px;
+        border: solid 1px;
+        padding: 0px 10px;
+        height: 100%;
+        align-items: center;
+    }
 }
 
 .col.user{
@@ -110,28 +120,12 @@
 }
 
 @include tablet{
-    #headLogoComp{
-        display: none;
-    }
-    #headLogoMobile{
-        display: block;
-        margin: 0 auto;
-    }
     .cabecera{
         padding: 0.4rem 0px 0px;
         .row.position-relative{
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        
-        .btn-buscar{
-            //display: flex; perejsjs
-            width: max-content;
-            .bi{
-                font-size: 2.5vw;
-                margin: 0 0.8vw 0 0.8vw;
-            }      
         }
     }
 
@@ -155,16 +149,23 @@
     }
 
     .col.logo{//redimensiona el logo sierra
+        display: none;
+    }
+    .logo.mob{
         a{
             img{
                 //height: 5rem;
-                width: 45%;
+                width: 70%;
             }
         }
     }
     
     .col.buscar{//oculta la barra de buscar
         display: none;
+    }
+    .buscar.mob{
+        display: flex;
+        width: 100%;
     }
 
     .col.user{

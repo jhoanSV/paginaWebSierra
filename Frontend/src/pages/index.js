@@ -6,3 +6,4 @@ export * from './Catalogo';
 export * from './ContactUs';
 export * from './Login';
 export * from './ChangePass';
+export * from './TheProfile';

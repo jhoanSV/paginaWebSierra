@@ -16,18 +16,36 @@
         font-weight: bold;
     }
 }
+
 .tuercaContainer{
+    display: flex;
     position: absolute;
     top: 0;
     left: 50%;
     transform: translate(-50%, -50%);
+    justify-content: center;
     width: 100%;
     height: min-content;
-    img{
-        display: block;
-        margin: 0 auto;
+    .hexagon{
         transform: rotate(90deg);
     }
+}
+.hexagon::before{
+    display: flex;
+    color: $azulPrincipal;
+    font-size: 163px;
+}
+.userLogo{
+    display: flex;
+    background: white;
+    border: solid #F2CB05;
+    border-radius: 50px;
+    position: absolute;
+    top: 50%;
+    transform: translate(0px, -50%);
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;//50% de size hexagon
 }
 
 .userEmail, .userPass{
@@ -55,13 +73,8 @@
 .btnLogin{
     display: block;
     width: 90%;
-    height: 70px;
-    border-radius: 30px;
-    background-color: $azulPrincipal;
-    color: $amarilloPrincipal;
-    font-size: 24px;
-    font-weight: bold;
-    margin: 25px auto 0;    
+    height: 70px;    
+    margin: 25px auto 0;
 }
 .btnLogin:active{
     background-color: $amarilloPrincipal;

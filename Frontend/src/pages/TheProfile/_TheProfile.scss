@@ -1,0 +1,49 @@
+@import '../../scss/mediaQueries';
+
+.grayContainer.profile{
+    align-items: baseline;
+    width: 80%;
+}
+
+.tuercaContainer.profile{
+    top: 15%;
+    left: 15%;
+}
+
+.hexagon.profile{
+    font-size: 100vw;
+}
+.hexagon.profile::before {
+    font-size: 34.772727272%
+}
+
+.userLogo.profile{
+    //font-size: 229.5px;
+    font-size: 100vw;
+    border-radius: 200px;
+}
+.userLogo.profile::before{
+    font-size: 17.386363636363%;
+}
+
+.userData{
+    margin-left: 42%;
+}
+
+.btn-container1{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+}
+.btnStlGen.profile{
+    font-weight: normal;
+    width: 215px;
+    margin-bottom: 20px;
+}
+
+@include tablet{
+    .btn-container1{
+        position: unset;
+    }
+}

@@ -8,7 +8,7 @@ import { CategMenuMobile, CategoryMenu } from "./Componentes/Menus";
 
 export default function App() {
 
-  return (//This is wraped with a provider to allow acces to the states for all components
+  return (
       <>
         <a href="https://api.whatsapp.com/send/?phone=573134237538&text&type=phone_number&app_absent=0" className="btn-wapp" 
           target="_blank" rel="noreferrer">

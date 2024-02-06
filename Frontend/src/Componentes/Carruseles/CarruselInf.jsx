@@ -25,7 +25,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     }, []);
 
     useEffect(() => {
-        if(screenWidth < 636 ){
+        if(screenWidth < 701 ){
             pConte.current.style.left = "0%";
             setBef(1);//show = 1;
             setMove(-100);
@@ -40,7 +40,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     }, [screenWidth]);
 
     const check = () =>{
-        if(screenWidth < 636 ){
+        if(screenWidth < 701 ){
             setBef(1);//show = 1;
             setMove(-100);
             setBack(-100);
@@ -57,7 +57,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
         if(bef === charge && bef === lProductos){
             setMove(0);
         }else{
-            if(screenWidth < 636 ){
+            if(screenWidth < 701 ){
                 setMove(-100);
             }else{
                 setMove(-20);
