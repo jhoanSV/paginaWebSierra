@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, codigo, category,
+export const ModalProductMob = ({llave, imgAvif, imgpng, descripcion, descripcionComp, codigo, category,
     unitPaq, unitPrice, logged=true}) => {
 
     const [cant, setCant] = useState(unitPaq)
@@ -17,6 +17,19 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
         quantity = 'Paquete de ' + unitPaq + ' unidades'
     }else{
         quantity = 'Unidad'
+    }
+
+    const btnCart = () => {
+        const theCart = localStorage.getItem('cart')
+        const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
+        if(theCart){
+            const addToCart = JSON.parse(theCart)
+            addToCart.push(productJson)
+            localStorage.setItem("cart", JSON.stringify(addToCart))
+        }else{
+            productJson.Cant = cant
+            localStorage.setItem("cart", JSON.stringify([productJson]))
+        }
     }
 
     return (
@@ -58,7 +71,7 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
                                 <div className='smolText'>Cod: {codigo}</div>
                             </div>
                         </div>
-                        <div className="imgModal">
+                        <div className={`imgModal C${category}`}>
                             <picture>
                                 {imgAvif ?
                                     <>
@@ -152,7 +165,7 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
                             </div>
                         </div>
                         <div className='mt-auto'>
-                            <button className="btnAddCart" onClick={() => {alert("PROXIMAMENTE")}}>
+                            <button className="btnAddCart boton" onClick={() => {btnCart()}} data-bs-dismiss="modal">
                                 Agregar al carrito
                             </button>
                         </div>

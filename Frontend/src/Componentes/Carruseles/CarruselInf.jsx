@@ -68,15 +68,18 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
 
     const listItems = () => {
         return(
-            props.lista1.slice(0,charge).map((item, index) =>                
+            props.lista1.slice(0,charge).map((item, index) =>
                 <ListItem
                     key={index}
-                    llave = {item.id}//Para apuntar a cada modal
-                    codigo = {item.cod}
-                    descripcion = {item.descripcion}
-                    descripcionComp={item.descripcionCompleta}
-                >
-                </ListItem>
+                    llave = {index}//Para apuntar a cada modal
+                    codigo = {item.Cod}
+                    descripcion = {item.Descripcion}
+                    descripcionComp={item.Detalle}
+                    unitPrice={item.PVenta}
+                    unitPaq={item.EsUnidadOpaquete}
+                    category={(item.Categoria).toLowerCase()}
+                    agotado={item.Agotado}
+                />
             )
         );
     }

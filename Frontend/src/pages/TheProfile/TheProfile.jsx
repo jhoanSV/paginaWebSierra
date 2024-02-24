@@ -1,7 +1,9 @@
 import React from 'react';
 import './_TheProfile.scss'
+import { useNavigate } from 'react-router-dom';
 
 export const TheProfile = () => {
+    const navigate = useNavigate()
     return (
         <section className='py-5 d-flex justify-content-center'>
             <div className="grayContainer profile">
@@ -35,7 +37,7 @@ export const TheProfile = () => {
                     </div>
                 </div>
                 <div className='btn-container1'>
-                    <button className='btnStlGen profile'>
+                    <button className='btnStlGen profile' onClick={() => navigate('/configuracion/seguridad')}>
                         Cambiar Contraseña
                     </button>
                     <button className='btnStlGen profile'>

@@ -1,6 +1,8 @@
 import React from "react";
 import "./_header.scss";
 import { Link } from "react-router-dom";
+import { getGlobal } from "../../globals/globals";
+import secureLocalStorage from "react-secure-storage";
 
 
 export function Header() {
@@ -8,6 +10,9 @@ export function Header() {
     /*Funciones para mostrar o esconder caja de texto
       cuando se hace click o se pierde el focus de la caja
     */
+    let userName = null
+   
+    if(getGlobal('isLogged')) userName = JSON.parse(secureLocalStorage.getItem('userData'))['Contacto']
     
     return(
         <header>
@@ -72,17 +77,34 @@ export function Header() {
                     </div>
 
                     <div className="col user">
-                        <Link to="/inicio_sesion" type="button">
-                            <i className="bi bi-cart4"></i>
-                        </Link>
-                        <Link to="/inicio_sesion" type="button">
-                            <div className='btnSignIn'>
-                                <i className="bi bi-person-circle"></i>
-                                <div>
-                                    <span>Iniciar sesion</span>
+                        { getGlobal('isLogged') ?
+                            <>
+                                <div className="Tit userNameHead">
+                                    Bienvenido {userName}
                                 </div>
-                            </div>
-                        </Link>
+                                <Link to="/carrito" type="button" className='btnCart'>
+                                    <i className="bi bi-cart4"></i>
+                                </Link>
+                                <Link to="/perfil" type="button" className='userIcon'>
+                                    <i className="bi bi-hexagon-fill userHex"></i>
+                                    <div className="userText">
+                                        <span>{userName[0].toUpperCase()}</span>
+                                    </div>
+                                </Link>
+                            </>
+                            :
+                            <>
+                                <Link type="button" className='btnCart' onClick={()=>{alert('Pailañero');}}>
+                                    <i className="bi bi-cart4"></i>
+                                </Link>
+                                <Link to="/inicio_sesion" type="button" className='btnSignIn'>
+                                    <i className="bi bi-person-circle"></i>
+                                    <div>
+                                        <span>Iniciar sesion</span>
+                                    </div>
+                                </Link>
+                            </>
+                        }
                     </div>
 
                 </div>

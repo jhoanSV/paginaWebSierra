@@ -11,12 +11,15 @@ export function Products() {
           {
             arJason.slice(0,arJason.length).map((item, index) =>
               <ListItem
-                  key={index}
-                  llave = {item.id}//Para apuntar a cada modal
-                  codigo = {item.cod}
-                  descripcion = {item.descripcion}
-                  descripcionComp={item.descripcionCompleta}
-                  logged={true}
+                key={index}
+                llave = {index}//Para apuntar a cada modal
+                codigo = {item.Cod}
+                descripcion = {item.Descripcion}
+                descripcionComp={item.Detalle}
+                unitPrice={item.Pventa}
+                unitPaq={item.EsUnidadOpaquete}
+                category={(item.Categoria).toLowerCase()}
+                agotado={item.Agotado}
               />
             )
           }

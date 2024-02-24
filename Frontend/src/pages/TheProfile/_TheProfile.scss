@@ -42,8 +42,30 @@
     margin-bottom: 20px;
 }
 
-@include tablet{
+@media screen  and (max-width: 852px){
+    .tuercaContainer.profile{
+        top: 7%;
+    }    
+}
+
+@media screen  and (max-width: 820px){
     .btn-container1{
         position: unset;
+    }
+    .tuercaContainer.profile{
+        top: 5%;
+    }
+}
+
+@media screen  and (max-width: 610px){
+    .userData{
+        margin-left: 0;
+    }
+    .tuercaContainer.profile{
+        top: 0%;
+        left: 50%;
+    }
+    .btn-container1{
+        align-self: center;
     }
 }

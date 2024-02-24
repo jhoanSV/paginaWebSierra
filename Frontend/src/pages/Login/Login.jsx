@@ -1,10 +1,14 @@
 import {useState, React} from 'react';
 import "./_Login.scss";
 import { validateUser } from '../../api';
+import { useNavigate } from 'react-router';
+import secureLocalStorage from 'react-secure-storage';
 
 export const Login = () => {
     const [userEmail, setUserEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const navigate = useNavigate()
     
     const LogIn = async () =>{
         /* validate if the userEmail and the ppassword matches with the information in the database*/
@@ -12,14 +16,25 @@ export const Login = () => {
             "EmailUser": userEmail,
             "Password": password
         })
-        console.log(userData)
+        /*
+        Cel : "123456789"
+        Cod : 493
+        Contacto : "don prueba"
+        Direccion : "123456789"
+        Email : "pruebausuario1@gmail.com"
+        Ferreteria : "prueba contraseña 2"
+        Telefono : "123456789"
+        */
         if (userData.hasOwnProperty('Cod')){
             //autorizado
-            console.log('authorized', userData)
+            console.log('authorized')
+            secureLocalStorage.setItem('userData', JSON.stringify(userData))
+            navigate('/');
+            //this sh1t here reloads the page
+            window.location.reload();
         } else if (userData.hasOwnProperty('error')){
             // no autorizado
             console.log('unauthorized')
-            console.log(userData)
         }
     }
     
@@ -38,7 +53,6 @@ export const Login = () => {
                             onChange={(e) => {
                                 e.target.classList.remove('fw-bold')
                                 setUserEmail(e.target.value)
-                                console.log(e)
                             }}
                             onBlur={(e) => {
                                 if ((e.target.value) === ''){
@@ -69,14 +83,14 @@ export const Login = () => {
                 <div className="mt-5 w-100">
                     <div className='d-flex justify-content-between toDirCol'>
                         <div>
-                            <input type='checkbox' className='theCheck'
+                            <input type='checkbox' className='theCheck' onChange={()=>{console.log('Muestra contra')}}
                             />
                             <span className='ms-3'>Recordar datos</span>
                         </div>
                         <span>Registrarme</span>
                     </div>
                     <button className='btnStlGen btnLogin' onClick={()=>{
-                        localStorage.NoSeXD = 'alguien ayudemeeee duh'
+                        LogIn()
                     }}>
                         Iniciar sesion
                     </button>

@@ -7,3 +7,4 @@ export * from './ContactUs';
 export * from './Login';
 export * from './ChangePass';
 export * from './TheProfile';
+export * from './Cart';
