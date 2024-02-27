@@ -36,11 +36,11 @@ export const ModalProductDesk = ({llave, imgAvif, imgpng, descripcion, descripci
         const theCart = localStorage.getItem('cart')
         const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
         if(theCart){
+            productJson.Cant = cant
             const addToCart = JSON.parse(theCart)
-            addToCart.Cant = cant
             addToCart.push(productJson)
             localStorage.setItem("cart", JSON.stringify(addToCart))
-        }else{
+        }else{            
             productJson.Cant = cant
             localStorage.setItem("cart", JSON.stringify([productJson]))
         }
@@ -147,12 +147,20 @@ export const ModalProductDesk = ({llave, imgAvif, imgpng, descripcion, descripci
                                     className='quantity' type="number"
                                     min={1}
                                     value={cant}
-                                    style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding
-                                    readOnly
+                                    style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
+                                    onChange={(e)=>{setCant(e.target.value);}}
+                                    onBlur={(e)=>{
+                                        let theCant = parseInt(e.target.value)
+                                        if(e.target.value%unitPaq !== 0){
+                                            theCant = parseInt(Math.ceil(e.target.value / unitPaq) * unitPaq)
+                                            setCant(theCant);
+                                        }
+                                        setTotalPrice(unitPrice*theCant)
+                                    }}
                                 />
                                 <button className="btnQuantity" onClick={() => {
-                                    setCant(cant+unitPaq)
-                                    setTotalPrice(unitPrice*(cant+unitPaq))
+                                    setCant(parseInt(cant)+unitPaq)
+                                    setTotalPrice(unitPrice*(parseInt(cant)+unitPaq))
                                 }}>
                                     +
                                 </button>

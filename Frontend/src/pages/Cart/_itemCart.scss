@@ -1,5 +1,6 @@
 .itemCartStyle{
     display: flex;
+    position: relative;
     background-color: white;
     width: 100%;
     border-radius: 20px;
@@ -9,13 +10,31 @@
 }
 
 .itemCartImgContainer{
+    display: flex;
     width: min-content;
     padding-right: 18px;
 }
 
 .imgProducto.itemCartImg {
+    align-self: center;
     padding: 0;
     img{
         width: 114px;
     }
+}
+
+.totalPrice.inItemCart{
+    position: absolute;
+    text-align: center;
+    top: 35%;
+    left: 63%;
+}
+
+@media screen and (max-width: 900px) {
+    .imgProducto.itemCartImg {
+        img{
+            width: 90px;
+        }
+    }
+    
 }

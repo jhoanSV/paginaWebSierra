@@ -8,3 +8,26 @@
     border-radius: 20px;
     padding: 18px;
 }
+.dtlCart.grayContainer{
+    width: 45%;
+    margin-top: 0;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+@media screen and (max-width: 900px) {    
+    .itemsCart.grayContainer{
+        width: 100%;        
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .theCart{
+        padding: 10px;
+    }
+    .itemsCart.grayContainer{
+        background-color: white;
+        padding: 0;
+    }
+    
+}

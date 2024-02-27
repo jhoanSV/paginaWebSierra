@@ -86,7 +86,7 @@ export function Header() {
                                     <i className="bi bi-cart4"></i>
                                 </Link>
                                 <Link to="/perfil" type="button" className='userIcon'>
-                                    <i className="bi bi-hexagon-fill userHex"></i>
+                                    {/*<i className="bi bi-hexagon-fill userHex"></i>*/}
                                     <div className="userText">
                                         <span>{userName[0].toUpperCase()}</span>
                                     </div>
