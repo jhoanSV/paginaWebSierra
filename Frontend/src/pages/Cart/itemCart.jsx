@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './_itemCart.scss';
 
-export const ItemCart = ({nombre, cod, unitPrice, unitPaq, category, cantidad}) => {
+export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantidad, onDelete}) => {
     let imgpng = 0
     let imgAvif = 0
 
-    const [cant, setCant] = useState(cantidad)
+    const productJson = JSON.parse(localStorage.getItem('cart'))
+    const [cant, setCant] = useState(parseInt(cantidad))
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     
     try {//intenta buscar la imagen png
@@ -19,8 +20,17 @@ export const ItemCart = ({nombre, cod, unitPrice, unitPaq, category, cantidad}) 
         imgAvif = 0
     }
 
+    function Formater(number){
+        return new Intl.NumberFormat().format(number);
+    };
+
+    //alert('cant: '+cantidad)
+
     return (
         <div className='itemCartStyle'>
+            <div className='delContainer' role='button' onClick={()=>{onDelete(cod)}}>
+                <i className="bi bi-trash3"></i>
+            </div>
             <div className='itemCartImgContainer'>
                 <div className={`imgProducto itemCartImg C${category}`}>
                     { imgAvif ? 
@@ -60,6 +70,8 @@ export const ItemCart = ({nombre, cod, unitPrice, unitPaq, category, cantidad}) 
                 <div className="quantityBox">
                     <button className="btnQuantity" onClick={() => {
                         if((cant-unitPaq)>0){
+                            productJson[id].Cant = parseInt(cant)-unitPaq
+                            localStorage.setItem('cart',JSON.stringify(productJson))
                             setCant(cant-unitPaq)
                             setTotalPrice(unitPrice*(cant-unitPaq))
                         }
@@ -70,18 +82,34 @@ export const ItemCart = ({nombre, cod, unitPrice, unitPaq, category, cantidad}) 
                         className='quantity' type="number"
                         min={1}
                         value={cant}
-                        style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding
-                        readOnly
+                        style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
+                        onChange={(e)=>{setCant(e.target.value);}}
+                        onBlur={(e)=>{
+                            let theCant = parseInt(e.target.value)
+                            if(e.target.value%unitPaq !== 0){
+                                theCant = parseInt(Math.ceil(e.target.value / unitPaq) * unitPaq)
+                                setCant(theCant);
+                            }
+                            setTotalPrice(unitPrice*theCant)
+                        }}
                     />
-                    <button className="btnQuantity" onClick={() => {
-                        setCant(cant+unitPaq)
-                        setTotalPrice(unitPrice*(cant+unitPaq))
+                    <button className="btnQuantity" onClick={() => {                        
+                        //console.log(productJson[id].Cant);
+                        productJson[id].Cant = parseInt(cant)+unitPaq
+                        localStorage.setItem('cart',JSON.stringify(productJson))
+                        setCant(parseInt(cant)+unitPaq)
+                        setTotalPrice(unitPrice*(parseInt(cant)+unitPaq))                        
                     }}>
                         +
                     </button>
                 </div>
-                <div>
-                    {totalPrice}
+                <div className="totalPrice inItemCart mainBlue">
+                    <div className='subTit fw-bold'>Total:</div>
+                    <h1>
+                        <span className='text-black Tit'>
+                            ${Formater(totalPrice)}
+                        </span>
+                    </h1>
                 </div>
             </div>
         </div>

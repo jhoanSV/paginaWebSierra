@@ -6,9 +6,12 @@ import './_App.scss';
 import { CategMenuMobile, CategoryMenu } from "./Componentes/Menus";
 import { setGlobal } from "./globals/globals";
 import secureLocalStorage from "react-secure-storage";
+import { useState } from "react";
 
 export default function App() {
   let ud = secureLocalStorage.getItem('userData')
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
   //Here defines how to show the page, if is logged or not
   if(ud){
     setGlobal({ isLogged:true })
@@ -18,6 +21,10 @@ export default function App() {
 
   return (
       <>
+        {/*Borrar el siguiente div*/}
+        <div style={{position: 'absolute', color: 'black', backgroundColor: 'white'}} onResize={(e)=>{setScreenWidth(e.target.innerWidth)}}>
+          {screenWidth}
+        </div>
         <a href="https://api.whatsapp.com/send/?phone=573134237538&text&type=phone_number&app_absent=0" className="btn-wapp" 
           target="_blank" rel="noreferrer">
             <picture>
