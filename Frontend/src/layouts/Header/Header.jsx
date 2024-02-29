@@ -7,9 +7,7 @@ export function Header() {
     const [ pro , setpro ] = useState('');
     const [ alias , setAlias ] = useState('');
     const [ filteredProducts , setFilteredProducts ] = useState('');
-    const [ category, setCategory] = useState('');
-    const [ pCategory, setPCategory ] = useState('');
-    const [ alCategory, setAlCategory ] = useState('');
+    const [ category, setCategory] = useState('ELECTRICOS');
     /*Funciones para mostrar o esconder caja de texto
       cuando se hace click o se pierde el focus de la caja
     */
@@ -29,20 +27,15 @@ export function Header() {
         setAlias(aliasList)
     }
 
-
-    const productByCategory = (category) => {
-        const proData = pro;
-        const aliasData = alias;
-        //const proCategory = proData.Categoria.toLowerCase().
-        //const aliasCategory = aliasData.Categoria.
-        setPCategory(proCategory)
-
-    }
-
     const filterProduct = async (text) => {
         /*Searh the list of products that includes the text, either because it is in the "products" table or in the "alias" table */
-        const proData = pCategory; //The whole table "products".
-        const aliasData = alias; //The whole table "alias".
+        let proData = pro; //The whole table "products".
+        let aliasData = alias; //The whole table "alias".
+        /*If Category is different to empty then select only the productos with that category */
+        if (category !== '') {
+            proData = pro.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
+            aliasData = alias.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
+        }
         // Define a case-insensitive text filter function
         const filterByText = (item) =>
           item.cod.toLowerCase().includes(text) ||
@@ -52,20 +45,17 @@ export function Header() {
         // Filter aliases based on the text
         const TFiltro2 = aliasData.filter((item) => item.Alias.toLowerCase().includes(text));
         // Extract unique cod values from aliasData
-        const CodAlias = [...new Set(TFiltro2.map((item) => item.cod))];
+        const CodAlias = [...new Set(TFiltro2.map((item) => item.Cod))];
         // Filter products based on unique cod values
         const aliasProducts = proData.filter((item) => CodAlias.includes(item.cod));
         // Extract unique cod values from aliasProducts
-        const uniqueAliasProducts = [...new Set(aliasProducts.map((item) => item.cod))];
+        //const uniqueAliasProducts = [...new Set(aliasProducts.map((item) => item.cod))];
         // Combine the unique cod values from TFiltro1 and aliasProducts
-        const filtro = [...new Set([...TFiltro1, ...uniqueAliasProducts])];
-    
+        const filtro = [...new Set([...TFiltro1, ...aliasProducts])];
         // Convert the json into an array of objects to reorder by score
         const dataArray = filtro.map((value, key) => ({ key, ...value }));
-    
         // Order the array deppending on the score
         dataArray.sort((a, b) => b.Score - a.Scote);
-    
         // Convert the array into a json object
         const sortedJson = JSON.stringify(dataArray);
         setFilteredProducts(sortedJson);
@@ -75,6 +65,7 @@ export function Header() {
     const searchProduct = (text) => {
         if (text === ''){
             uploadProducts()
+            console.log()
         } else {
             filterProduct(text)
             console.log(filteredProducts)

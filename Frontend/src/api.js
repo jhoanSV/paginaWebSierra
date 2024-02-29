@@ -89,4 +89,27 @@ export const Alias = async() => {
     }
 }
 
-
+export const EnviarVenta = async(Order) => {
+    /*Send the Order to the database.
+    you have to send a json of the form:
+    {
+        "CodCliente": "493",
+        "FechaFactura": "2024-02-20 00:00:00",
+        "FechaDeEstado": "2024-02-20 00:00:00",
+        "FechaDeEntrega": "2024-02-23",
+        "FechaVencimiento" : "2024-02-23",
+        "NotaVenta": "",
+        "VECommerce": "1",
+        "TIngresados": "12(cantidad),CIT05(codigo),950(PVenta);6,SP136,3500"
+    }*/
+    try {
+        const res = await fetch(`${API}/SendSale`,{
+            method: 'POST',
+            headers: { Accept: 'application/json','Content-Type': 'application/json'},
+            body: JSON.stringify(Order)
+        })
+        return await res.json()
+    }catch(error) {
+        console.log(error)
+    }
+}
