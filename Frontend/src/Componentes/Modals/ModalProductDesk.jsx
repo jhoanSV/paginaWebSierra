@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
 import "./_MPDesk.scss"
+import { getGlobal } from '../../globals/globals';
 
-export const ModalProductDesk = ({imgAvif, imgpng, descripcion, descripcionComp, codigo, category,
-    unitPaq, unitPrice, logged=false}) => {
+export const ModalProductDesk = ({llave, imgAvif, imgpng, descripcion, descripcionComp, codigo, category,
+    unitPaq, unitPrice}) => {
 
     const [cant, setCant] = useState(unitPaq)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
 
     let quantity = null
+    let logged = getGlobal('isLogged')
+    /*const productJson ={        
+        "Cod": codigo,
+        "Descripcion": descripcion,
+        "Categoria": category,
+        "PVenta": unitPrice,
+        "EsUnidadOpaquete": unitPaq,
+        "Iva": 19,
+        "Agotado": 0,
+        "Detalle": "",
+        "Score": 2.10383333333          
+    }*/
 
     function Formater(number){
         return new Intl.NumberFormat().format(number);
@@ -19,6 +32,20 @@ export const ModalProductDesk = ({imgAvif, imgpng, descripcion, descripcionComp,
         quantity = 'Unidad'
     }
 
+    const btnCart = () => {
+        const theCart = localStorage.getItem('cart')
+        const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
+        if(theCart){
+            productJson.Cant = cant
+            const addToCart = JSON.parse(theCart)
+            addToCart.push(productJson)
+            localStorage.setItem("cart", JSON.stringify(addToCart))
+        }else{            
+            productJson.Cant = cant
+            localStorage.setItem("cart", JSON.stringify([productJson]))
+        }
+    }
+
     return (
         <div className="modal-content productBox">
             <button className="xButton" data-bs-dismiss="modal" aria-label="Close">
@@ -27,7 +54,7 @@ export const ModalProductDesk = ({imgAvif, imgpng, descripcion, descripcionComp,
             <div className="modal-body p-0">
                 <div className="row row-cols-2">
                     <div className="col d-flex flex-column">
-                        <div className="imgModal">
+                        <div className={`imgModal C${category}`}>
                             <picture>
                                 {imgAvif ?
                                     <>
@@ -120,12 +147,20 @@ export const ModalProductDesk = ({imgAvif, imgpng, descripcion, descripcionComp,
                                     className='quantity' type="number"
                                     min={1}
                                     value={cant}
-                                    style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding
-                                    readOnly
+                                    style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
+                                    onChange={(e)=>{setCant(parseInt(e.target.value));}}
+                                    onBlur={(e)=>{
+                                        let theCant = parseInt(e.target.value)
+                                        if(e.target.value%unitPaq !== 0){
+                                            theCant = parseInt(Math.ceil(e.target.value / unitPaq) * unitPaq)
+                                            setCant(theCant);
+                                        }
+                                        setTotalPrice(unitPrice*theCant)
+                                    }}
                                 />
                                 <button className="btnQuantity" onClick={() => {
-                                    setCant(cant+unitPaq)
-                                    setTotalPrice(unitPrice*(cant+unitPaq))
+                                    setCant(parseInt(cant)+unitPaq)
+                                    setTotalPrice(unitPrice*(parseInt(cant)+unitPaq))
                                 }}>
                                     +
                                 </button>
@@ -142,11 +177,13 @@ export const ModalProductDesk = ({imgAvif, imgpng, descripcion, descripcionComp,
                             </div>
                             <h1>
                                 { logged ?
-                                    <div className="totalPrice genFont mainBlue d-flex">
-                                        Total:&nbsp;
-                                        <span className='fw-bold text-black'>
-                                            ${Formater(totalPrice)}                                                        
-                                        </span>
+                                    <div className="totalPrice mainBlue">
+                                        <div className='subTit fw-bold'>Total:</div>
+                                        <h1>
+                                            <span className='text-black Tit'>
+                                                ${Formater(totalPrice)}
+                                            </span>
+                                        </h1>
                                     </div>
                                     :
                                     <div className="totalPrice genFont d-flex fw-bold">
@@ -154,7 +191,7 @@ export const ModalProductDesk = ({imgAvif, imgpng, descripcion, descripcionComp,
                                     </div>
                                 }
                             </h1>
-                            <button className="btnAddCart" onClick={() => {alert("PROXIMAMENTE")}}>
+                            <button className="btnAddCart boton" onClick={() => {btnCart()}} data-bs-dismiss="modal">
                                 Agregar al carrito
                             </button>
                         </div>

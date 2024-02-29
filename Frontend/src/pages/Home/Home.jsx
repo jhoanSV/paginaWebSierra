@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./_Home.scss";
-//import { Carrusel } from "../../Componentes/Carruseles/Carrusel";
 import { CarruselInf } from "../../Componentes/Carruseles";
-import arJason from "../../Assets/png/Productos/productos.json";
 import categ from "../../Assets/jpg/categorias/categorias.json";
 import { Link } from "react-router-dom";
 import { useObserver } from "../../Componentes/UseObs";
 import { BottonCarousel } from '../../api';
+import { getGlobal } from "../../globals/globals";
+import secureLocalStorage from "react-secure-storage";
 
 export function Home() {
+
+    const [bottomC, setBottomC] = useState(null);
+
     const [observer, setElements, entries] = useObserver({
         treshhold: 0.25,
         rootMargin: 1,
@@ -27,7 +30,7 @@ export function Home() {
 
         // Convert the Set to an array and return
         const categories = Array.from(uniqueCategories)
-        console.log(categories)
+        console.log('categories', categories)
         //Create an eplty array for the new order and an index for the list of categorie
         const reorderedArray = [];
         
@@ -46,17 +49,24 @@ export function Home() {
       }
 
     const tobuttonCarousel = async() =>{
-        //return the list of products of the button carousel
+        let theCodeUser = 0
+        let isLogged = false
+        if(getGlobal('isLogged')){
+            isLogged = true
+            theCodeUser = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
+        }
+        //*return the list of products of the button carousel, if is not logged, use the default user code
         console.log('si entro a la funcion')
         const bCaroucel = await BottonCarousel(
             {
-                "logged": false,
-                "CodUser": "494"
+                "logged": isLogged,
+                "CodUser": theCodeUser
             }
         )
-        const NButtoncaroucel = alternateCategoria(bCaroucel)
-        console.log(NButtoncaroucel)
-    }
+        const ReorderedList = alternateCategoria(bCaroucel) 
+        console.log('ReorderedList', ReorderedList)
+        return ReorderedList
+    }    
 
     //*Funcion para mostrar las categorias en categorias.json
     const itItems = categ.map( (item, index) => {
@@ -101,11 +111,20 @@ export function Home() {
             }
         });
     }, [entries, observer])
+    
+    useEffect(() => {
+        async function fetchData() {
+            const jsjs = await tobuttonCarousel()
+            console.log('Setea nuevo json');
+            localStorage.setItem('productsBottomCarousel', JSON.stringify(jsjs))
+            setBottomC(jsjs)
+        }        
+        fetchData()
+        // eslint-disable-next-line
+    }, []);
 
     return (
-        <div className="inicio">
-            <button onClick={()=>{tobuttonCarousel()}}>prueba carousel</button>
-            
+        <div className="inicio">            
             <section id="sierra">
                 <div className="container-fluid p-0">
                     
@@ -297,10 +316,12 @@ export function Home() {
 
                     <div className="row g-0">
                         <div className="col">
+                            { bottomC &&
                             <CarruselInf
-                                lista1={arJason}
-                            />
-                        </div>                            
+                                //lista1={arJason}
+                                lista1={bottomC}
+                            />}
+                        </div>
                     </div>
                 </div>
             </section>

@@ -2,7 +2,8 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Home, Products, About, Privacy, Catalogo, ContactUs, Login,
     ChangePass,
-    TheProfile
+    TheProfile,
+    TheCart
 } from "../pages";
 
 export function Navigation() {
@@ -18,7 +19,7 @@ export function Navigation() {
               <Route path='inicio_sesion' element={ <Login/> }/>
               <Route path='perfil' element={ <TheProfile/> }/>
               <Route path='/configuracion/seguridad' element={ <ChangePass />}/>
-
+              <Route path='carrito' element={ <TheCart/>}/>
           </Routes>
       </>
     );

@@ -3,7 +3,7 @@ import "./_ListItem.scss";
 import { ModalProductDesk, ModalProductMob } from "../Modals";
 
 export const ListItem=({llave, codigo, descripcion, descripcionComp,
-    unitPrice=5800, category='electricos', unitPaq=2})=>{
+    unitPrice, category, unitPaq})=>{
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [isMobile, setIsMobile] = useState();
@@ -27,11 +27,12 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
     }
 
     const click_caja = () => {
-        var el_id = "#lazy_modal" + (llave)
+        /*var el_id = "#lazy_modal" + (llave)
         const elemento = document.querySelector(el_id)
         const elSrcValue = elemento.getAttribute('elsrc') 
         elemento.srcset = elSrcValue
-        elemento.removeAttribute("id")
+        elemento.removeAttribute("id")*/
+        console.log("")
     }
 
     useEffect(() => {
@@ -56,7 +57,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                     <div className="col h-100">
                         <div className="row row-cols-1 g-0">
 
-                            <div className="col imgProducto">                               
+                            <div className={`col imgProducto C${category}`}>
                                 { imgAvif ? 
                                     <picture>
                                         <source                                            
@@ -99,6 +100,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                 <div className="modal-dialog resizeModal">
                     { isMobile ? 
                         <ModalProductMob
+                            llave={llave}
                             imgAvif={imgAvif}
                             imgpng={imgpng}
                             descripcion={descripcion}
@@ -110,6 +112,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                         />
                         :
                         <ModalProductDesk
+                            llave={llave}
                             imgAvif={imgAvif}
                             imgpng={imgpng}
                             descripcion={descripcion}
@@ -121,9 +124,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                         />
                     }
                 </div>
-            </div>
-
-                        
+            </div>                        
         </>        
     );
 }

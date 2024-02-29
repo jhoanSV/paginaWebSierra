@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, codigo, category,
+export const ModalProductMob = ({llave, imgAvif, imgpng, descripcion, descripcionComp, codigo, category,
     unitPaq, unitPrice, logged=true}) => {
 
     const [cant, setCant] = useState(unitPaq)
@@ -17,6 +17,20 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
         quantity = 'Paquete de ' + unitPaq + ' unidades'
     }else{
         quantity = 'Unidad'
+    }
+
+    const btnCart = () => {
+        const theCart = localStorage.getItem('cart')
+        const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
+        if(theCart){
+            productJson.Cant = cant
+            const addToCart = JSON.parse(theCart)
+            addToCart.push(productJson)
+            localStorage.setItem("cart", JSON.stringify(addToCart))
+        }else{            
+            productJson.Cant = cant
+            localStorage.setItem("cart", JSON.stringify([productJson]))
+        }
     }
 
     return (
@@ -58,7 +72,7 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
                                 <div className='smolText'>Cod: {codigo}</div>
                             </div>
                         </div>
-                        <div className="imgModal">
+                        <div className={`imgModal C${category}`}>
                             <picture>
                                 {imgAvif ?
                                     <>
@@ -110,7 +124,7 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
                                 <div className="subTit fw-bold mainBlue">
                                     Cantidad
                                 </div>
-                                <div className="quantityBox" style={{marginLeft: '10px'}}>
+                                <div className="quantityBox">
                                     <button className="btnQuantity" onClick={() => {
                                         if((cant-unitPaq)>0){
                                             setCant(cant-unitPaq)
@@ -123,12 +137,20 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
                                         className='quantity' type="number"
                                         min={1}
                                         value={cant}
-                                        style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding
-                                        readOnly
+                                        style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
+                                        onChange={(e)=>{setCant(parseInt(e.target.value));}}
+                                        onBlur={(e)=>{
+                                            let theCant = parseInt(e.target.value)
+                                            if(e.target.value%unitPaq !== 0){
+                                                theCant = parseInt(Math.ceil(e.target.value / unitPaq) * unitPaq)
+                                                setCant(theCant);
+                                            }
+                                            setTotalPrice(unitPrice*theCant)
+                                        }}
                                     />
                                     <button className="btnQuantity" onClick={() => {
-                                        setCant(cant+unitPaq)
-                                        setTotalPrice(unitPrice*(cant+unitPaq))
+                                        setCant(parseInt(cant)+unitPaq)
+                                        setTotalPrice(unitPrice*(parseInt(cant)+unitPaq))
                                     }}>
                                         +
                                     </button>
@@ -152,7 +174,7 @@ export const ModalProductMob = ({imgAvif, imgpng, descripcion, descripcionComp, 
                             </div>
                         </div>
                         <div className='mt-auto'>
-                            <button className="btnAddCart" onClick={() => {alert("PROXIMAMENTE")}}>
+                            <button className="btnAddCart boton" onClick={() => {btnCart()}} data-bs-dismiss="modal">
                                 Agregar al carrito
                             </button>
                         </div>

@@ -16,6 +16,37 @@
     padding: 1.25rem 0px 0px;
 }
 
+.Tit.userNameHead{
+    color: white;
+}
+
+.userIcon{
+    width: 36px;
+    height: 36px;
+    color: white;
+    position: relative;
+    display: flex;
+    text-decoration: none;
+    .userHex{
+        font-size: 50px;
+        position: absolute;
+        transform: translate(0px, -25%);
+    }
+    .userText{
+        position: absolute;
+        transform: translate(-2px, 25%);
+        left: 50%;
+        top: -25%;
+        z-index: 2;
+        color: black;
+        font-size: 25px;
+    }
+}
+
+.userHex:hover, .userIcon:hover{
+    color: $amarilloPrincipal;
+}
+
 .grupoBotones{
     display: flex;
     justify-content: center;
@@ -74,7 +105,8 @@
     max-width: calc((100 / 3)*1%);
     justify-content: flex-end;
     align-items: center;
-    a{
+    .btnCart, .btnSignIn{
+        display: flex;
         color: black;
         font-weight: bold;
         text-decoration: none;
@@ -82,16 +114,25 @@
         background-color: white;
         border-radius: 14px;
         border: 1px $azulClaro solid;
-        .btnSignIn{
-            display: flex;
-            i{
-                align-self: center;
-                margin-right: 4px;
-            }
+        margin-right: 5px;
+    }
+    .btnCart{
+        border-radius: 17px;
+        i{
+            margin: 0px 3px;
         }
     }
 }
-.col.user a:hover{
+.btnSignIn{
+    margin-right: 0px;
+    i{
+        margin-right: 4px;
+    }
+}
+.col.user .btnSignIn:hover{
+    background-color: $amarilloPrincipal;
+}
+.col.user .btnCart:hover{
     background-color: $amarilloPrincipal;
 }
 
@@ -175,13 +216,18 @@
             height: 30px;
             span{
                 display: none;
+            }            
+        }
+        .btnCart{
+            i{
+                margin: 0px 0px;
             }
-            .btnSignIn{
-                i{
-                    margin-right: 0;
-                    transform: translate(0px, -3px);
-                }
-            }
+        }
+    }
+    .btnSignIn, .btnCart{
+        i{
+            margin-right: 0;
+            transform: translate(0px, -3px);
         }
     }
 }

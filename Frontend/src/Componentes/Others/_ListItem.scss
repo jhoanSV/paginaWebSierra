@@ -41,8 +41,11 @@
 }
 
 .imgProducto img{
+    border: solid;
+    border-radius: 25%;
     width: 100%;
-    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
 }
 
 .caja:hover{

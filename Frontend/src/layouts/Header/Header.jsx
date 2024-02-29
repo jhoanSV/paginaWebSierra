@@ -2,12 +2,17 @@ import {React, useEffect ,useState } from "react";
 import "./_header.scss";
 import { Link } from "react-router-dom";
 import { products, Alias } from '../../api';
+import { getGlobal } from "../../globals/globals";
+import secureLocalStorage from "react-secure-storage";
+
 
 export function Header() {
     const [ pro , setpro ] = useState('');
     const [ alias , setAlias ] = useState('');
     const [ filteredProducts , setFilteredProducts ] = useState('');
     const [ category, setCategory] = useState('ELECTRICOS');
+    let userName = null
+
     /*Funciones para mostrar o esconder caja de texto
       cuando se hace click o se pierde el focus de la caja
     */
@@ -61,6 +66,8 @@ export function Header() {
         setFilteredProducts(sortedJson);
         console.log(sortedJson)
       };
+   
+    if(getGlobal('isLogged')) userName = JSON.parse(secureLocalStorage.getItem('userData'))['Contacto']
     
     const searchProduct = (text) => {
         if (text === ''){
@@ -139,17 +146,34 @@ export function Header() {
                     </div>
 
                     <div className="col user">
-                        <Link to="/inicio_sesion" type="button">
-                            <i className="bi bi-cart4"></i>
-                        </Link>
-                        <Link to="/inicio_sesion" type="button">
-                            <div className='btnSignIn'>
-                                <i className="bi bi-person-circle"></i>
-                                <div>
-                                    <span>Iniciar sesion</span>
+                        { getGlobal('isLogged') ?
+                            <>
+                                <div className="Tit userNameHead">
+                                    Bienvenido {userName}
                                 </div>
-                            </div>
-                        </Link>
+                                <Link to="/carrito" type="button" className='btnCart'>
+                                    <i className="bi bi-cart4"></i>
+                                </Link>
+                                <Link to="/perfil" type="button" className='userIcon'>
+                                    {/*<i className="bi bi-hexagon-fill userHex"></i>*/}
+                                    <div className="userText">
+                                        <span>{userName[0].toUpperCase()}</span>
+                                    </div>
+                                </Link>
+                            </>
+                            :
+                            <>
+                                <Link type="button" className='btnCart' onClick={()=>{alert('Pailañero');}}>
+                                    <i className="bi bi-cart4"></i>
+                                </Link>
+                                <Link to="/inicio_sesion" type="button" className='btnSignIn'>
+                                    <i className="bi bi-person-circle"></i>
+                                    <div>
+                                        <span>Iniciar sesion</span>
+                                    </div>
+                                </Link>
+                            </>
+                        }
                     </div>
 
                 </div>

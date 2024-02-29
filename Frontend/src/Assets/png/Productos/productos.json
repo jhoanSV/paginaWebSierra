@@ -1,92 +1,90 @@
 [
     {
-        "id" : "1",
-        "cod" : "BIS11",
-        "descripcion" : "Bisagra parche",
-        "descripcionCompleta" : "Bisagra ideal para muebles de baños, cocinas, clósets, entre otras"
+      "Cod": "AP001",
+      "Descripcion": "acople rapido",
+      "Categoria": "EBANISTERIA",
+      "PVenta": 4000,
+      "Iva": 19,
+      "Agotado": 0,
+      "Detalle": "",
+      "Score": 2.10383333333,
+      "Cant" : 0
     },
     {
-        "id" : "2",
-        "cod" : "BIS12",
-        "descripcion" : "Bisagra Semiparche",
-        "descripcionCompleta" : "Bisagra ideal para muebles de baños, cocinas, clósets, entre otras"
+      "Cod": "AM002",
+      "Descripcion": "amarre 20 cm x 3,6 mm Blanco",
+      "Categoria": "EBANISTERIA",
+      "PVenta": 3900,
+      "Iva": 19,
+      "Agotado": 0,
+      "Detalle": "",
+      "Score": 0.30123717949,
+      "Cant" : 0
     },
     {
-        "id" : "3",
-        "cod" : "PDA11",
-        "descripcion" : "Pie de amigo reforzado",
-        "descripcionCompleta" : "Pie de amigo 10 x 10 reforzado color blanco"
+      "Cod": "ROD01",
+      "Descripcion": "Rodillo Felpa Acrilica 9\"",
+      "Categoria": "EBANISTERIA",
+      "PVenta": 3900,
+      "Iva": 19,
+      "Agotado": 0,
+      "Detalle": "",
+      "Score": 0.14546794872,
+      "Cant" : 0
     },
     {
-        "id" : "4",
-        "cod" : "TNC25",
-        "descripcion" : "Motoreductor",
-        "descripcionCompleta" : "Motoreductor doble eje"
+      "Cod": "36001",
+      "Descripcion": "Fotocelda 12mm",
+      "Categoria": "ESTUDIANTIL",
+      "PVenta": 2200,
+      "Iva": 19,
+      "Agotado": 0,
+      "Detalle": "",
+      "Score": 0.64746969697,
+      "Cant" : 0      
     },
     {
-        "id" : "5",
-        "cod" : "44067",
-        "descripcion" : "LED surtidos",
-        "descripcionCompleta" : "LED difuso surtido, para unidad mirar catálogo"
+      "Cod": "RG062DA",
+      "Descripcion": "Boquilla gas Hand Torch",
+      "Categoria": "GAS",
+      "PVenta": 109000,
+      "Iva": 19,
+      "Agotado": 0,
+      "Detalle": "",
+      "Score": 40.8094411315,
+      "Cant" : 0
     },
     {
-        "id" : "6",
-        "cod" : "RG065",
-        "descripcion" : "Gas Butano",
-        "descripcionCompleta" : "descripcion completa"
+      "Cod": "RG065",
+      "Descripcion": "Gas butano",
+      "Categoria": "GAS",
+      "PVenta": 32250,
+      "Iva": 19,
+      "Agotado": 0,
+      "Detalle": "",
+      "Score": 7.50589728682,
+      "Cant" : 0
     },
     {
-        "id" : "7",
-        "cod" : "RG022",
-        "descripcion" : "Union Pe al Pe",
-        "descripcionCompleta" : "descripcion completa"
+      "Cod": "14-106",
+      "Descripcion": "Niple 1/2\" x 6 cm",
+      "Categoria": "GRIFERIA",
+      "PVenta": 1900,
+      "Iva": 19,
+      "Agotado": 0,
+      "Detalle": "",
+      "Score": 0.11466596491,
+      "Cant" : 0
     },
     {
-        "id" : "8",
-        "cod" : "14-345",
-        "descripcion" : "Union macho hembra",
-        "descripcionCompleta" : "Union marca Dicol con su material característico llamado polipropileno"
-    },
-    {
-        "id" : "9",
-        "cod" : "66301",
-        "descripcion" : "Valvula MAX",
-        "descripcionCompleta" : "Valvula para llenado de tanque elevado marca MAX"
-    },
-    {
-        "id" : "10",
-        "cod" : "CIT17",
-        "descripcion" : "Caja camara",
-        "descripcionCompleta" : "descripcion completa"
-    },
-    {
-        "id" : "11",
-        "cod" : "CIT18",
-        "descripcion" : "Caja canaleta",
-        "descripcionCompleta" : "descripcion completa"
-    },
-    {
-        "id" : "12",
-        "cod" : "PR001",
-        "descripcion" : "Perro de amarre",
-        "descripcionCompleta" : "Perro de amarre de 1/8"
-    },
-    {
-        "id" : "13",
-        "cod" : "HER04",
-        "descripcion" : "Plomada de punta",
-        "descripcionCompleta" : "Plomada"
-    },
-    {
-        "id" : "14",
-        "cod" : "HER07",
-        "descripcion" : "Plomada escalonada",
-        "descripcionCompleta" : "Plomada"
-    },
-    {
-        "id" : "15",
-        "cod" : "RG062D",
-        "descripcion" : "Boquilla Gas",
-        "descripcionCompleta" : "Boquilla para gas butano, funciona para gas butano, colocar en gas butano. Salu2"        
+      "Cod": "14-301",
+      "Descripcion": "Codo 45° H-H 1/2\"",
+      "Categoria": "GRIFERIA",
+      "PVenta": 1400,
+      "Iva": 19,
+      "Agotado": 0,
+      "Detalle": "",
+      "Score": 0.07271190476,
+      "Cant" : 0
     }
-]
+  ]
