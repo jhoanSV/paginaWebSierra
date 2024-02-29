@@ -1,18 +1,42 @@
+@import "../../scss/_colors.scss";
+
 .theCart{
+    display: flex;
     padding: 30px;
 }
 
 .itemsCart.grayContainer{
     width: 55%;
+    min-height: 545.95px;
     margin-top: 0;
     border-radius: 20px;
     padding: 18px;
 }
 .dtlCart.grayContainer{
-    width: 45%;
+    display: flex;
+    flex-direction: column;
+    width: 36%;
     margin-top: 0;
+    margin-left: auto;
     border-radius: 20px;
-    padding: 10px;
+    padding: 18px;
+    align-self: flex-start;
+    align-items: flex-start;
+    font-weight: 600;
+}
+
+.btnSendOrd.boton {
+    background-color: $amarilloPrincipal;
+    color: $azulPrincipal;
+    max-width: none;
+    width: 100%;
+    font-size: 20px;
+    letter-spacing: 0;
+    border-radius: 20px;
+}
+
+.dtlCart .subTit{
+    color: $azulPrincipal;
 }
 
 @media screen and (max-width: 900px) {    

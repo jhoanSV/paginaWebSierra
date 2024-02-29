@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './_itemCart.scss';
+import { Formater } from '../../globals/otherFunctions';
 
-export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantidad, onDelete}) => {
+export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantidad, onDelete, updtC}) => {
     let imgpng = 0
     let imgAvif = 0
-
-    const productJson = JSON.parse(localStorage.getItem('cart'))
+    
     const [cant, setCant] = useState(parseInt(cantidad))
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     
@@ -20,15 +20,22 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
         imgAvif = 0
     }
 
-    function Formater(number){
+    /*function Formater(number){
         return new Intl.NumberFormat().format(number);
-    };
+    };*/
+
+    const handleDelete = () =>{        
+        onDelete(id)
+    }
 
     //alert('cant: '+cantidad)
 
     return (
         <div className='itemCartStyle'>
-            <div className='delContainer' role='button' onClick={()=>{onDelete(cod)}}>
+            <div className='delContainer' role='button' 
+                data-bs-toggle="modal"
+                data-bs-target={`#verifyDel${id}`}
+            >
                 <i className="bi bi-trash3"></i>
             </div>
             <div className='itemCartImgContainer'>
@@ -70,8 +77,7 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
                 <div className="quantityBox">
                     <button className="btnQuantity" onClick={() => {
                         if((cant-unitPaq)>0){
-                            productJson[id].Cant = parseInt(cant)-unitPaq
-                            localStorage.setItem('cart',JSON.stringify(productJson))
+                            updtC(id, parseInt(cant)-unitPaq)
                             setCant(cant-unitPaq)
                             setTotalPrice(unitPrice*(cant-unitPaq))
                         }
@@ -83,20 +89,19 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
                         min={1}
                         value={cant}
                         style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
-                        onChange={(e)=>{setCant(e.target.value);}}
+                        onChange={(e)=>{setCant(parseInt(e.target.value));}}
                         onBlur={(e)=>{
-                            let theCant = parseInt(e.target.value)
+                            let theCant = parseInt(e.target.value)                            
                             if(e.target.value%unitPaq !== 0){
                                 theCant = parseInt(Math.ceil(e.target.value / unitPaq) * unitPaq)
                                 setCant(theCant);
                             }
                             setTotalPrice(unitPrice*theCant)
+                            updtC(id, theCant)
                         }}
                     />
-                    <button className="btnQuantity" onClick={() => {                        
-                        //console.log(productJson[id].Cant);
-                        productJson[id].Cant = parseInt(cant)+unitPaq
-                        localStorage.setItem('cart',JSON.stringify(productJson))
+                    <button className="btnQuantity" onClick={() => {
+                        updtC(id, parseInt(cant)+unitPaq)
                         setCant(parseInt(cant)+unitPaq)
                         setTotalPrice(unitPrice*(parseInt(cant)+unitPaq))                        
                     }}>
@@ -110,6 +115,23 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
                             ${Formater(totalPrice)}
                         </span>
                     </h1>
+                </div>
+            </div>
+            <div className="modal fade" id={`verifyDel${id}`} tabIndex="-1" aria-labelledby="VerifyDel" aria-hidden="true">
+                <div className="modal-dialog modal-sm">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">Desea eliminar este producto?</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-primary"
+                                data-bs-dismiss="modal"
+                                onClick={handleDelete}
+                            >Aceptar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

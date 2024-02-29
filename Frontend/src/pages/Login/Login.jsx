@@ -77,7 +77,7 @@ export const Login = () => {
                         />
                     </div>
                     <div className="mt-2">
-                        <span className='fw-bold'>Olvidé mi contraseña</span>
+                        <span className='fw-bold logText'>Olvidé mi contraseña</span>
                     </div>                        
                 </div>
                 <div className="mt-5 w-100">
@@ -85,9 +85,9 @@ export const Login = () => {
                         <div>
                             <input type='checkbox' className='theCheck' onChange={()=>{console.log('Muestra contra')}}
                             />
-                            <span className='ms-3'>Recordar datos</span>
+                            <span className='ms-3 logText'>Recordar datos</span>
                         </div>
-                        <span>Registrarme</span>
+                        <span className='logText'>Registrarme</span>
                     </div>
                     <button className='btnStlGen btnLogin' onClick={()=>{
                         LogIn()

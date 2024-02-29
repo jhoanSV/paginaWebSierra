@@ -148,7 +148,7 @@ export const ModalProductDesk = ({llave, imgAvif, imgpng, descripcion, descripci
                                     min={1}
                                     value={cant}
                                     style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
-                                    onChange={(e)=>{setCant(e.target.value);}}
+                                    onChange={(e)=>{setCant(parseInt(e.target.value));}}
                                     onBlur={(e)=>{
                                         let theCant = parseInt(e.target.value)
                                         if(e.target.value%unitPaq !== 0){
