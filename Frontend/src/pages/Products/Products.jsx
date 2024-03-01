@@ -16,10 +16,11 @@ export function Products() {
                 codigo = {item.Cod}
                 descripcion = {item.Descripcion}
                 descripcionComp={item.Detalle}
-                unitPrice={item.Pventa}
+                unitPrice={item.PVenta}
                 unitPaq={item.EsUnidadOpaquete}
                 category={(item.Categoria).toLowerCase()}
                 agotado={item.Agotado}
+                lista={arJason}
               />
             )
           }

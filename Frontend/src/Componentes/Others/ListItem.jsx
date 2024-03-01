@@ -3,7 +3,7 @@ import "./_ListItem.scss";
 import { ModalProductDesk, ModalProductMob } from "../Modals";
 
 export const ListItem=({llave, codigo, descripcion, descripcionComp,
-    unitPrice, category, unitPaq})=>{
+    unitPrice, category, unitPaq, lista})=>{
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [isMobile, setIsMobile] = useState();
@@ -109,6 +109,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                             category={category}
                             unitPaq={unitPaq}
                             unitPrice={unitPrice}
+                            lista={lista}
                         />
                         :
                         <ModalProductDesk
@@ -121,6 +122,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                             category={category}
                             unitPaq={unitPaq}
                             unitPrice={unitPrice}
+                            lista={lista}
                         />
                     }
                 </div>

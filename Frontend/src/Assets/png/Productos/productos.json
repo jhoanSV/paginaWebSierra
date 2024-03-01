@@ -6,6 +6,7 @@
       "PVenta": 4000,
       "Iva": 19,
       "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
       "Detalle": "",
       "Score": 2.10383333333,
       "Cant" : 0
@@ -17,6 +18,7 @@
       "PVenta": 3900,
       "Iva": 19,
       "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
       "Detalle": "",
       "Score": 0.30123717949,
       "Cant" : 0
@@ -28,6 +30,7 @@
       "PVenta": 3900,
       "Iva": 19,
       "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
       "Detalle": "",
       "Score": 0.14546794872,
       "Cant" : 0
@@ -39,6 +42,7 @@
       "PVenta": 2200,
       "Iva": 19,
       "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
       "Detalle": "",
       "Score": 0.64746969697,
       "Cant" : 0      
@@ -50,6 +54,7 @@
       "PVenta": 109000,
       "Iva": 19,
       "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
       "Detalle": "",
       "Score": 40.8094411315,
       "Cant" : 0
@@ -61,6 +66,7 @@
       "PVenta": 32250,
       "Iva": 19,
       "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
       "Detalle": "",
       "Score": 7.50589728682,
       "Cant" : 0
@@ -72,6 +78,7 @@
       "PVenta": 1900,
       "Iva": 19,
       "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
       "Detalle": "",
       "Score": 0.11466596491,
       "Cant" : 0
@@ -83,6 +90,7 @@
       "PVenta": 1400,
       "Iva": 19,
       "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
       "Detalle": "",
       "Score": 0.07271190476,
       "Cant" : 0

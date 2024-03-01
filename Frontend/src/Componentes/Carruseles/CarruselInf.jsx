@@ -79,6 +79,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
                     unitPaq={item.EsUnidadOpaquete}
                     category={(item.Categoria).toLowerCase()}
                     agotado={item.Agotado}
+                    lista={props.lista1}
                 />
             )
         );

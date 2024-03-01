@@ -3,7 +3,7 @@ import "./_MPDesk.scss"
 import { getGlobal } from '../../globals/globals';
 
 export const ModalProductDesk = ({llave, imgAvif, imgpng, descripcion, descripcionComp, codigo, category,
-    unitPaq, unitPrice}) => {
+    unitPaq, unitPrice, lista}) => {
 
     const [cant, setCant] = useState(unitPaq)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
@@ -33,14 +33,25 @@ export const ModalProductDesk = ({llave, imgAvif, imgpng, descripcion, descripci
     }
 
     const btnCart = () => {
-        const theCart = localStorage.getItem('cart')
-        const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
+        //*First search in Localstorage for 'cart'. If true, theCart contains the json cart
+        //*if false, theCart is undefined. productJson is the current product json.
+        const theCart = localStorage.getItem('cart')        
+        //const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
+        const productJson = lista[llave]
         if(theCart){
-            productJson.Cant = cant
             const addToCart = JSON.parse(theCart)
+            const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
+            if (productIndex !== -1) {
+                addToCart[productIndex].Cant += cant
+                localStorage.setItem("cart", JSON.stringify(addToCart))
+                return
+            }
+            //*Add the cant assigned
+            productJson.Cant = cant            
             addToCart.push(productJson)
             localStorage.setItem("cart", JSON.stringify(addToCart))
-        }else{            
+        }else{   
+            //*Add the cant assigned
             productJson.Cant = cant
             localStorage.setItem("cart", JSON.stringify([productJson]))
         }
