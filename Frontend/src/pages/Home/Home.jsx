@@ -316,7 +316,7 @@ export function Home() {
 
                     <div className="row g-0">
                         <div className="col">
-                            { bottomC &&
+                            { bottomC &&                            
                             <CarruselInf
                                 //lista1={arJason}
                                 lista1={bottomC}

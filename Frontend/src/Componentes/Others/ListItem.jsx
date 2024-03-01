@@ -7,6 +7,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [isMobile, setIsMobile] = useState();
+    const [Show1, setShow1] = useState(false);
 
     let imgpng = 0
     let imgAvif = 0
@@ -32,7 +33,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         const elSrcValue = elemento.getAttribute('elsrc') 
         elemento.srcset = elSrcValue
         elemento.removeAttribute("id")*/
-        console.log("")
+        setShow1(true)
     }
 
     useEffect(() => {
@@ -94,11 +95,12 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                 </div>
                 
             </div>
-
+            
             <div className="modal fade" id={`producto${llave}`} tabIndex="-1" aria-labelledby="productoLabel" aria-hidden="true">
-                {/*<div className="modal-dialog modal-lg">*/}
+                
                 <div className="modal-dialog resizeModal">
                     { isMobile ? 
+                        Show1 ? 
                         <ModalProductMob
                             llave={llave}
                             imgAvif={imgAvif}
@@ -110,8 +112,9 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                             unitPaq={unitPaq}
                             unitPrice={unitPrice}
                             lista={lista}
-                        />
+                        />:<></>
                         :
+                        Show1 ?
                         <ModalProductDesk
                             llave={llave}
                             imgAvif={imgAvif}
@@ -124,9 +127,11 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                             unitPrice={unitPrice}
                             lista={lista}
                         />
+                        :
+                        <></>
                     }
                 </div>
-            </div>                        
+            </div>
         </>        
     );
 }

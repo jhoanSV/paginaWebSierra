@@ -72,7 +72,7 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
                     <div className='smolText' style={{color: '#747474'}}>{cod}</div>
                 </div>
                 <div style={{marginTop: '10px'}}>
-                    COP {unitPrice}
+                    V.U: $ {Formater(unitPrice)}
                 </div>
                 <div className="quantityBox">
                     <button className="btnQuantity" onClick={() => {
