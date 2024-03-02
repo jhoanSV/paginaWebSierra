@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './_itemCart.scss';
 import { Formater } from '../../globals/otherFunctions';
 
 export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantidad, onDelete, updtC}) => {
     let imgpng = 0
-    let imgAvif = 0
+    let imgAvif = 0    
     
     const [cant, setCant] = useState(parseInt(cantidad))
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [fontResize, setFontResize] = useState('');
     
     try {//intenta buscar la imagen png
         imgpng = require(`../../Assets/png/Productos/${cod}.png`)
@@ -20,18 +22,32 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
         imgAvif = 0
     }
 
-    /*function Formater(number){
-        return new Intl.NumberFormat().format(number);
-    };*/
-
     const handleDelete = () =>{        
         onDelete(id)
     }
+    
+    const resize_ob = new ResizeObserver(()=>{
+        setScreenWidth(window.innerWidth);
+    });
 
-    //alert('cant: '+cantidad)
+    useEffect(() => {
+        const theId = 'a' + id
+        resize_ob.observe(document.querySelector('#'+theId));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {        
+        if(screenWidth<431){
+            console.log(screenWidth);
+            setFontResize('1.7rem')
+        }else{
+            setFontResize('')
+        }
+        // eslint-disable-next-line
+    }, [screenWidth]);
 
     return (
-        <div className='itemCartStyle'>
+        <div className='itemCartStyle' id={`a${id}`} >
             <div className='delContainer' role='button' 
                 data-bs-toggle="modal"
                 data-bs-target={`#verifyDel${id}`}
@@ -111,7 +127,7 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
                 <div className="totalPrice inItemCart mainBlue">
                     <div className='subTit fw-bold'>Total:</div>
                     <h1>
-                        <span className='text-black Tit'>
+                        <span className='text-black Tit' style={{fontSize: `${fontResize}`}}>
                             ${Formater(totalPrice)}
                         </span>
                     </h1>

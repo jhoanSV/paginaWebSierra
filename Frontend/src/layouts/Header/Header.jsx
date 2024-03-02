@@ -1,6 +1,6 @@
 import {React, useEffect ,useState } from "react";
 import "./_header.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { products, Alias } from '../../api';
 import { getGlobal } from "../../globals/globals";
 import secureLocalStorage from "react-secure-storage";
@@ -10,18 +10,24 @@ export function Header() {
     const [ pro , setpro ] = useState('');
     const [ alias , setAlias ] = useState('');
     const [ filteredProducts , setFilteredProducts ] = useState('');
-    const [ category, setCategory] = useState('ELECTRICOS');
+    const [ category, setCategory] = useState('');//useState('ELECTRICOS');
+    const [consultaTerminada, setConsultaTerminada] = useState(false);
+    const navigate = useNavigate()
     let userName = null
 
     /*Funciones para mostrar o esconder caja de texto
       cuando se hace click o se pierde el focus de la caja
     */
 
-    useEffect(() => {
+    useEffect(() => {        
         uploadProducts({
             "logged": false
         })
     }, [])
+
+    useEffect(()=>{
+                
+    },[consultaTerminada])
 
     const uploadProducts = async()=>{
         const productsList = await products({
@@ -33,7 +39,7 @@ export function Header() {
     }
 
     const filterProduct = async (text) => {
-        /*Searh the list of products that includes the text, either because it is in the "products" table or in the "alias" table */
+        /*Searh the list of products that includes the text, either because it is in the "products" table or in the "alias" table */        
         let proData = pro; //The whole table "products".
         let aliasData = alias; //The whole table "alias".
         /*If Category is different to empty then select only the productos with that category */
@@ -73,9 +79,12 @@ export function Header() {
         if (text === ''){
             uploadProducts()
             console.log()
-        } else {
+        }else if (text.length > 2) {
+            navigate('/productos',{state:{products: filteredProducts}});
             filterProduct(text)
             console.log(filteredProducts)
+        }else{
+            navigate('/productos',{state:{products: false}});
         }
     }
 

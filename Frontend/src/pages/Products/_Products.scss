@@ -1,4 +1,8 @@
 //@import "../../scss/index.scss";
+.products{
+    min-height: 450px;
+}
+
 .productsContainer{
     flex-wrap: wrap;
     display: flex;

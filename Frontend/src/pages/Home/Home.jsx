@@ -62,7 +62,7 @@ export function Home() {
                 "logged": isLogged,
                 "CodUser": theCodeUser
             }
-        )
+        )        
         const ReorderedList = alternateCategoria(bCaroucel) 
         console.log('ReorderedList', ReorderedList)
         return ReorderedList
@@ -115,7 +115,7 @@ export function Home() {
     useEffect(() => {
         async function fetchData() {
             const jsjs = await tobuttonCarousel()
-            console.log('Setea nuevo json');
+            console.log('Setea nuevo json', jsjs);
             localStorage.setItem('productsBottomCarousel', JSON.stringify(jsjs))
             setBottomC(jsjs)
         }        

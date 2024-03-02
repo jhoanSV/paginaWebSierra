@@ -10,7 +10,8 @@
     width: 55%;
     min-height: 545.95px;
     max-height: 550px;
-    overflow: overlay;
+    overflow-x: hidden;
+    overflow-y: scroll;
     margin-top: 0;
     border-radius: 20px;
     padding: 18px;
@@ -31,8 +32,7 @@
 }
 
 .itemsCart.grayContainer::-webkit-scrollbar {
-    width: 1vw;
-    height: 250px;
+    width: 1vw;    
 }
   
 .itemsCart.grayContainer::-webkit-scrollbar-track {    

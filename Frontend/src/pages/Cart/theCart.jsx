@@ -57,7 +57,7 @@ export const TheCart = () => {
                 }                
             </div>
             <div className='dtlCart grayContainer'>
-                <div>SubTotal: $ {subTotalC}</div>
+                <div>SubTotal: $ {Formater(subTotalC)}</div>
                 <div>Envio: $ {Formater(sendCost)}</div>
                 <div className='subTit' style={{marginTop: '10px'}}>
                     Total: $
