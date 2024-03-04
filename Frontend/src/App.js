@@ -18,6 +18,8 @@ export default function App() {
   }else if(localStorage.getItem('@secure.s.userData')){
     alert('aparentemente si está loggeado pero hubo un error, intente de nuevo');
   }
+  secureLocalStorage.removeItem('EveryPro')
+  secureLocalStorage.removeItem('alias')
 
   return (
       <>

@@ -10,8 +10,8 @@ export function Header() {
     const [ pro , setpro ] = useState('');
     const [ alias , setAlias ] = useState('');
     const [ filteredProducts , setFilteredProducts ] = useState('');
+    // eslint-disable-next-line
     const [ category, setCategory] = useState('');//useState('ELECTRICOS');
-    const [consultaTerminada, setConsultaTerminada] = useState(false);
     const navigate = useNavigate()
     let userName = null
 
@@ -25,24 +25,27 @@ export function Header() {
         })
     }, [])
 
-    useEffect(()=>{
-                
-    },[consultaTerminada])
-
     const uploadProducts = async()=>{
-        const productsList = await products({
+        /*const productsList = await products({
             "logged": false
         })
         const aliasList = await Alias()
+        secureLocalStorage.setItem('EveryPro', JSON.stringify(productsList))
+        secureLocalStorage.setItem('alias', JSON.stringify(aliasList))
+        console.log('seteados en localStorage')
         setpro(productsList)
-        setAlias(aliasList)
+        setAlias(aliasList)*/
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        secureLocalStorage.setItem('EveryPro', 'EveryProDataaaaa')
+        secureLocalStorage.setItem('alias', 'Aliaaaaaaaaas')
+        console.log('seteados en localStorage')
     }
 
-    const filterProduct = async (text) => {
-        /*Searh the list of products that includes the text, either because it is in the "products" table or in the "alias" table */        
+    /*const filterProduct = async (text) => {
+        //Searh the list of products that includes the text, either because it is in the "products" table or in the "alias" table        
         let proData = pro; //The whole table "products".
         let aliasData = alias; //The whole table "alias".
-        /*If Category is different to empty then select only the productos with that category */
+        //If Category is different to empty then select only the productos with that category
         if (category !== '') {
             proData = pro.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
             aliasData = alias.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
@@ -71,20 +74,23 @@ export function Header() {
         const sortedJson = JSON.stringify(dataArray);
         setFilteredProducts(sortedJson);
         console.log(sortedJson)
-      };
+    }*/
    
     if(getGlobal('isLogged')) userName = JSON.parse(secureLocalStorage.getItem('userData'))['Contacto']
     
     const searchProduct = (text) => {
-        if (text === ''){
+        /*if (text === ''){
             uploadProducts()
             console.log()
-        }else if (text.length > 2) {
-            navigate('/productos',{state:{products: filteredProducts}});
+        }else if (text.length > 2) {            
             filterProduct(text)
+            navigate('/productos',{state:{products: filteredProducts}});
             console.log(filteredProducts)
         }else{
             navigate('/productos',{state:{products: false}});
+        }*/
+        if (text.length > 2) {            
+            navigate('/productos',{state:{theText: text}});
         }
     }
 
