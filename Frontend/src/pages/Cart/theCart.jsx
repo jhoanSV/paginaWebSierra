@@ -63,9 +63,22 @@ export const TheCart = () => {
                     Total: $
                     <span className='cBlack'>{Formater(subTotalC+sendCost)}</span>
                 </div>
-                <button className="btnSendOrd boton" onClick={() => {console.log('upalalupa');}}>
+                <button className="btnSendOrd boton" data-bs-toggle="modal" data-bs-target={`#sendOrderMod`} onClick={() => {console.log('upalalupa');}}>
                     Enviar pedido
                 </button>
+            </div>
+
+            <div className="modal fade" id='sendOrderMod' tabIndex="-1" aria-labelledby="idkLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <button className="xButton" data-bs-dismiss="modal" aria-label="Close">
+                            <i className="bi bi-x-circle-fill"></i>
+                        </button>
+                        <div className="modal-body p-0">
+                            jksjs                            
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     );

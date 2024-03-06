@@ -13,7 +13,9 @@ node_modules
 
 # some resources
 /src/Assets/imgsCatalogo/main
+# specials 1
 /src/Assets/imgsCatalogo/spc1
+/src/Assets/png/Productos
  
 # misc
 .DS_Store

@@ -21,6 +21,20 @@ export default function App() {
   secureLocalStorage.removeItem('EveryPro')
   secureLocalStorage.removeItem('alias')
 
+  const img = new Image();
+    img.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A='
+    img.onload = () => {
+        //setAvifSupported(true);
+        console.log('AVIF supported');        
+        setGlobal({ AVIF:true })
+    };
+    img.onerror = () => {
+        //setAvifSupported(false);
+        setGlobal({ AVIF:false })
+        console.log('AVIF not supported');
+    };
+  
+
   return (
       <>
         {/*Borrar el siguiente div*/}

@@ -1,22 +1,49 @@
 import React, { useEffect, useState } from "react";
 import "./_ListItem.scss";
 import { ModalProductDesk, ModalProductMob } from "../Modals";
+import { getGlobal } from "../../globals/globals";
+
+import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
+import { getStorageUrl } from "../../firebase/config";
 
 export const ListItem=({llave, codigo, descripcion, descripcionComp,
     unitPrice, category, unitPaq, lista})=>{
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [isMobile, setIsMobile] = useState();
-    const [Show1, setShow1] = useState(false);
+    const [Theimg, setTheimg] = useState(imgPlaceHolder);
+    const [Show1, setShow1] = useState(false);    
 
-    let imgpng = 0
-    let imgAvif = 0
+    /*let imgpng = 0
+    let imgAvif = 0*/
+    let urlImg
+    
+    const searchImg = async(avif) =>{
+        if(avif){//Este try deberia ir en firebase/config.js
+            try {
+                urlImg = await getStorageUrl(`productsAVIF/${codigo}.avif`)
+                setTheimg(urlImg)
+            } catch (error) {
+                console.log("Aparentemente no existe esta imgAVIF en la red: " +codigo, error);
+                setTheimg(imgPlaceHolder)
+            }
+        }else{
+            try {
+                urlImg = await getStorageUrl('productsPNG/'+codigo+'.png')
+                setTheimg(urlImg)
+            } catch (error) {
+                console.log("Aparentemente no existe esta imgPNG en la red: " +codigo, error);
+                setTheimg(imgPlaceHolder)
+            }
+        }
+    }
+    searchImg(getGlobal('AVIF'));
     
     const resize_ob = new ResizeObserver(function() {
         setScreenWidth(window.innerWidth);
     });
     
-    try {//intenta buscar la imagen png
+    /*try {//intenta buscar la imagen png
         imgpng = require(`../../Assets/png/Productos/${codigo}.png`)
     } catch (error) {
         imgpng = 0
@@ -25,14 +52,10 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         imgAvif = require(`../../Assets/avif/Productos/${codigo}.avif`)
     } catch (error) {
         imgAvif = 0
-    }
+    }*/
 
     const click_caja = () => {
-        /*var el_id = "#lazy_modal" + (llave)
-        const elemento = document.querySelector(el_id)
-        const elSrcValue = elemento.getAttribute('elsrc') 
-        elemento.srcset = elSrcValue
-        elemento.removeAttribute("id")*/
+        //this allow to lazy charge the modal content
         setShow1(true)
     }
 
@@ -59,27 +82,21 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                         <div className="row row-cols-1 g-0">
 
                             <div className={`col imgProducto C${category}`}>
-                                { imgAvif ? 
+                                { getGlobal('AVIF') ?
                                     <picture>
-                                        <source                                            
+                                        <source
                                             type="image/avif"
-                                            srcSet={imgAvif}                                            
+                                            srcSet={Theimg}
                                         />
-                                        <img                                            
-                                            src={imgpng}
+                                        <img
+                                            src={Theimg}
                                             alt="categoria"
                                             decoding="async"
                                         />
                                     </picture>
-                                    : imgpng ?                                    
-                                    <img
-                                        src={imgpng}
-                                        alt="categoria"
-                                        decoding="async"
-                                    />
                                     :
                                     <img
-                                        src={require('../../Assets/png/placeHolderProduct.png')}
+                                        src={Theimg}
                                         alt="categoria"
                                         decoding="async"
                                     />
@@ -103,8 +120,8 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                         Show1 ? 
                         <ModalProductMob
                             llave={llave}
-                            imgAvif={imgAvif}
-                            imgpng={imgpng}
+                            /*imgAvif={imgAvif}
+                            imgpng={imgpng}*/
                             descripcion={descripcion}
                             descripcionComp={descripcionComp}
                             codigo={codigo}
@@ -117,8 +134,8 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                         Show1 ?
                         <ModalProductDesk
                             llave={llave}
-                            imgAvif={imgAvif}
-                            imgpng={imgpng}
+                            /*imgAvif={imgAvif}
+                            imgpng={imgpng}*/
                             descripcion={descripcion}
                             descripcionComp={descripcionComp}
                             codigo={codigo}

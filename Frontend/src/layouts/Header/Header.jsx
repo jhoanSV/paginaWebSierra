@@ -9,11 +9,13 @@ import secureLocalStorage from "react-secure-storage";
 export function Header() {
     const [ pro , setpro ] = useState('');
     const [ alias , setAlias ] = useState('');
-    const [ filteredProducts , setFilteredProducts ] = useState('');
     // eslint-disable-next-line
     const [ category, setCategory] = useState('');//useState('ELECTRICOS');
+    const [queryEnded, setQueryEnded] = useState(false);
+    const [theText, setTheText] = useState('');
     const navigate = useNavigate()
     let userName = null
+    let sortedJson2
 
     /*Funciones para mostrar o esconder caja de texto
       cuando se hace click o se pierde el focus de la caja
@@ -25,25 +27,28 @@ export function Header() {
         })
     }, [])
 
-    const uploadProducts = async()=>{
-        /*const productsList = await products({
-            "logged": false
+    useEffect(() => {        
+        if (queryEnded && theText) {
+            filterProduct(theText)
+            navigate('/productos',{state:{products: sortedJson2}});
+        }
+        // eslint-disable-next-line
+    }, [queryEnded]);
+
+    const uploadProducts = async()=>{        
+        const productsList = await products({
+            "logged": false//getGlobal('isLogged')
         })
         const aliasList = await Alias()
-        secureLocalStorage.setItem('EveryPro', JSON.stringify(productsList))
-        secureLocalStorage.setItem('alias', JSON.stringify(aliasList))
-        console.log('seteados en localStorage')
         setpro(productsList)
-        setAlias(aliasList)*/
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        secureLocalStorage.setItem('EveryPro', 'EveryProDataaaaa')
-        secureLocalStorage.setItem('alias', 'Aliaaaaaaaaas')
-        console.log('seteados en localStorage')
+        secureLocalStorage.setItem('productsList', JSON.stringify(productsList))
+        setAlias(aliasList)
+        setQueryEnded(true)
     }
 
-    /*const filterProduct = async (text) => {
+    const filterProduct = async (text) => {
         //Searh the list of products that includes the text, either because it is in the "products" table or in the "alias" table        
-        let proData = pro; //The whole table "products".
+        let proData = pro; //The whole table "products".        
         let aliasData = alias; //The whole table "alias".
         //If Category is different to empty then select only the productos with that category
         if (category !== '') {
@@ -52,9 +57,9 @@ export function Header() {
         }
         // Define a case-insensitive text filter function
         const filterByText = (item) =>
-          item.cod.toLowerCase().includes(text) ||
+          item.Cod.toLowerCase().includes(text) ||
           item.Descripcion.toLowerCase().includes(text);
-        // Filter products based on the text
+        // Filter products based on the text        
         const TFiltro1 = proData.filter(filterByText);
         // Filter aliases based on the text
         const TFiltro2 = aliasData.filter((item) => item.Alias.toLowerCase().includes(text));
@@ -72,37 +77,63 @@ export function Header() {
         dataArray.sort((a, b) => b.Score - a.Scote);
         // Convert the array into a json object
         const sortedJson = JSON.stringify(dataArray);
-        setFilteredProducts(sortedJson);
-        console.log(sortedJson)
-    }*/
+        sortedJson2 = sortedJson
+        //setFilteredProducts(sortedJson);
+    }
    
     if(getGlobal('isLogged')) userName = JSON.parse(secureLocalStorage.getItem('userData'))['Contacto']
     
     const searchProduct = (text) => {
-        /*if (text === ''){
+        console.log(text);
+        setTheText(text)
+        if (text === ''){
             uploadProducts()
-            console.log()
-        }else if (text.length > 2) {            
-            filterProduct(text)
-            navigate('/productos',{state:{products: filteredProducts}});
-            console.log(filteredProducts)
-        }else{
             navigate('/productos',{state:{products: false}});
-        }*/
-        if (text.length > 2) {            
-            navigate('/productos',{state:{theText: text}});
+        }else if (text.length > 2 && queryEnded) {
+            filterProduct(text)            
+            navigate('/productos',{state:{products: sortedJson2}});
         }
     }
 
     return(
-        <header>
+        <header style={{position: 'relative'}}>
+            { queryEnded ?
+            <div style={{position: 'absolute', right: '0', top: '0', color: "white", backgroundColor: 'black'}}>
+                Terminado
+            </div>
+            :
+            <div style={{position: 'absolute', right: '0', top: '0', color: "white", backgroundColor: 'black'}}>
+                Cargando                                
+            </div>
+            }
             <div className="container-fluid px-4 g-0 cabecera">
+                { getGlobal('AVIF') ?
+                <picture>
+                    <source
+                        type="image/avif"
+                        srcSet={require("../../Assets/avif/HeaderPrincipal.avif")}
+                        />
+                    <img
+                        src={require("../../Assets/png/HeaderPrincipal.png")}
+                        alt="header"
+                        decoding="async"
+                        className='backImg'
+                        />
+                </picture>
+                :
+                <img
+                    src={require("../../Assets/png/HeaderPrincipal.png")}
+                    alt="header"
+                    decoding="async"
+                    className='backImg'
+                />
+                }
                 <div className="row position-relative">
                     <div className="col g2">{/*Buttons group of the mobile*/}
                         <button className="menuNav" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <i className="bi bi-list"></i>
                         </button>
-                        <div className="logo mob">                            
+                        <div className="logo mob">
                             <Link to="/" type="button">
                                 <picture>
                                     <source
@@ -153,7 +184,7 @@ export function Header() {
                             <input type='text' 
                                 placeholder='Buscar producto'
                                 onChange={(e) => {
-                                    searchProduct(e.target.value)
+                                    searchProduct((e.target.value).toLowerCase())
                                 }}
                             />
                             <i className="bi bi-search"></i>
@@ -197,6 +228,9 @@ export function Header() {
                     <div className="col">
                         <div className="buscar mob" style={{height: 'min-content', position: 'relative'}}>
                             <input type='text' placeholder='Buscar producto'
+                                onChange={(e) => {
+                                    searchProduct((e.target.value).toLowerCase())
+                                }}
                             />
                             <i className="bi bi-search"></i>
                         </div>

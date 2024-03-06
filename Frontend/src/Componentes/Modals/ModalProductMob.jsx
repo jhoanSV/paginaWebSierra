@@ -24,8 +24,7 @@ export const ModalProductMob = ({llave, imgAvif, imgpng, descripcion, descripcio
     const btnCart = () => {
         //*First search in Localstorage for 'cart'. If true, theCart contains the json cart
         //*if false, theCart is undefined. productJson is the current product json.
-        const theCart = localStorage.getItem('cart')        
-        //const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
+        const theCart = localStorage.getItem('cart')
         const productJson = lista[llave]
         if(theCart){
             const addToCart = JSON.parse(theCart)
@@ -36,10 +35,10 @@ export const ModalProductMob = ({llave, imgAvif, imgpng, descripcion, descripcio
                 return
             }
             //*Add the cant assigned
-            productJson.Cant = cant            
+            productJson.Cant = cant
             addToCart.push(productJson)
             localStorage.setItem("cart", JSON.stringify(addToCart))
-        }else{   
+        }else{
             //*Add the cant assigned
             productJson.Cant = cant
             localStorage.setItem("cart", JSON.stringify([productJson]))
