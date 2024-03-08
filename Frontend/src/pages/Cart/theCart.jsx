@@ -71,15 +71,17 @@ export const TheCart = () => {
             <div className="modal fade" id='sendOrderMod' tabIndex="-1" aria-labelledby="idkLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
-                        <button className="xButton" data-bs-dismiss="modal" aria-label="Close">
-                            <i className="bi bi-x-circle-fill"></i>
-                        </button>
-                        <div className="modal-body p-0">
-                            jksjs                            
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5">Fecha de entrega de pedido</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className='modal-body'>
+                            <button type="button" className="btnModal boton">Cancelar</button>
+                            <button type="button" className="btnModal boton">Aceptar</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>                
         </section>
     );
 }

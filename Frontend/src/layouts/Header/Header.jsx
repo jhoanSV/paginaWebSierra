@@ -5,7 +5,6 @@ import { products, Alias } from '../../api';
 import { getGlobal } from "../../globals/globals";
 import secureLocalStorage from "react-secure-storage";
 
-
 export function Header() {
     const [ pro , setpro ] = useState('');
     const [ alias , setAlias ] = useState('');
@@ -13,6 +12,7 @@ export function Header() {
     const [ category, setCategory] = useState('');//useState('ELECTRICOS');
     const [queryEnded, setQueryEnded] = useState(false);
     const [theText, setTheText] = useState('');
+    const [toProducts, setToProducts] = useState();    
     const navigate = useNavigate()
     let userName = null
     let sortedJson2
@@ -28,7 +28,7 @@ export function Header() {
     }, [])
 
     useEffect(() => {        
-        if (queryEnded && theText) {
+        if (queryEnded && toProducts) {
             filterProduct(theText)
             navigate('/productos',{state:{products: sortedJson2}});
         }
@@ -37,7 +37,8 @@ export function Header() {
 
     const uploadProducts = async()=>{        
         const productsList = await products({
-            "logged": false//getGlobal('isLogged')
+            //"logged": false//getGlobal('isLogged')
+            "CodUser": '493'
         })
         const aliasList = await Alias()
         setpro(productsList)
@@ -51,34 +52,38 @@ export function Header() {
         let proData = pro; //The whole table "products".        
         let aliasData = alias; //The whole table "alias".
         //If Category is different to empty then select only the productos with that category
-        if (category !== '') {
-            proData = pro.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
-            aliasData = alias.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
+        try {
+            if (category !== '') {
+                proData = pro.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
+                aliasData = alias.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
+            }
+            // Define a case-insensitive text filter function
+            const filterByText = (item) =>
+            item.Cod.toLowerCase().includes(text) ||
+            item.Descripcion.toLowerCase().includes(text);
+            // Filter products based on the text
+            const TFiltro1 = proData.filter(filterByText);
+            // Filter aliases based on the text
+            const TFiltro2 = aliasData.filter((item) => item.Alias.toLowerCase().includes(text));
+            // Extract unique cod values from aliasData
+            const CodAlias = [...new Set(TFiltro2.map((item) => item.Cod))];
+            // Filter products based on unique cod values
+            const aliasProducts = proData.filter((item) => CodAlias.includes(item.cod));
+            // Extract unique cod values from aliasProducts
+            //const uniqueAliasProducts = [...new Set(aliasProducts.map((item) => item.cod))];
+            // Combine the unique cod values from TFiltro1 and aliasProducts
+            const filtro = [...new Set([...TFiltro1, ...aliasProducts])];
+            // Convert the json into an array of objects to reorder by score
+            const dataArray = filtro.map((value, key) => ({ key, ...value }));
+            // Order the array deppending on the score
+            dataArray.sort((a, b) => b.Score - a.Scote);
+            // Convert the array into a json object
+            const sortedJson = JSON.stringify(dataArray);
+            sortedJson2 = sortedJson
+            //setFilteredProducts(sortedJson);
+        } catch (error) {
+            sortedJson2 = false                        
         }
-        // Define a case-insensitive text filter function
-        const filterByText = (item) =>
-          item.Cod.toLowerCase().includes(text) ||
-          item.Descripcion.toLowerCase().includes(text);
-        // Filter products based on the text        
-        const TFiltro1 = proData.filter(filterByText);
-        // Filter aliases based on the text
-        const TFiltro2 = aliasData.filter((item) => item.Alias.toLowerCase().includes(text));
-        // Extract unique cod values from aliasData
-        const CodAlias = [...new Set(TFiltro2.map((item) => item.Cod))];
-        // Filter products based on unique cod values
-        const aliasProducts = proData.filter((item) => CodAlias.includes(item.cod));
-        // Extract unique cod values from aliasProducts
-        //const uniqueAliasProducts = [...new Set(aliasProducts.map((item) => item.cod))];
-        // Combine the unique cod values from TFiltro1 and aliasProducts
-        const filtro = [...new Set([...TFiltro1, ...aliasProducts])];
-        // Convert the json into an array of objects to reorder by score
-        const dataArray = filtro.map((value, key) => ({ key, ...value }));
-        // Order the array deppending on the score
-        dataArray.sort((a, b) => b.Score - a.Scote);
-        // Convert the array into a json object
-        const sortedJson = JSON.stringify(dataArray);
-        sortedJson2 = sortedJson
-        //setFilteredProducts(sortedJson);
     }
    
     if(getGlobal('isLogged')) userName = JSON.parse(secureLocalStorage.getItem('userData'))['Contacto']
@@ -92,22 +97,20 @@ export function Header() {
         }else if (text.length > 2 && queryEnded) {
             filterProduct(text)            
             navigate('/productos',{state:{products: sortedJson2}});
+            setToProducts(true)
         }
     }
 
     return(
         <header style={{position: 'relative'}}>
-            { queryEnded ?
-            <div style={{position: 'absolute', right: '0', top: '0', color: "white", backgroundColor: 'black'}}>
-                Terminado
+            { (toProducts&&(queryEnded===false)) ?
+            <div style={{position: 'absolute', right: '0', top: '0', color: "white", backgroundColor: 'black', zIndex: '1'}}>
+                cargando
             </div>
-            :
-            <div style={{position: 'absolute', right: '0', top: '0', color: "white", backgroundColor: 'black'}}>
-                Cargando                                
-            </div>
-            }
-            <div className="container-fluid px-4 g-0 cabecera">
-                { getGlobal('AVIF') ?
+            : 
+            <></>
+            }            
+            <div className="container-fluid px-4 g-0 cabecera">                
                 <picture>
                     <source
                         type="image/avif"
@@ -120,14 +123,6 @@ export function Header() {
                         className='backImg'
                         />
                 </picture>
-                :
-                <img
-                    src={require("../../Assets/png/HeaderPrincipal.png")}
-                    alt="header"
-                    decoding="async"
-                    className='backImg'
-                />
-                }
                 <div className="row position-relative">
                     <div className="col g2">{/*Buttons group of the mobile*/}
                         <button className="menuNav" href="#" data-bs-toggle="dropdown" aria-expanded="false">
@@ -152,7 +147,7 @@ export function Header() {
                         </div>
                         <ul className="dropdown-menu">
                             <li><Link to="/" type="button" className="dropdown-item">Inicio</Link></li>
-                            <li><Link to={'productos'} type="button" className="dropdown-item" state={{ bookM: `INICIO`}}>
+                            <li><Link to={'productos'} type="button" className="dropdown-item" onClick={()=>setToProducts(true)}>                            
                                     Productos
                                 </Link>
                             </li>
@@ -237,7 +232,7 @@ export function Header() {
                         <div className="grupoBotones">
                             <div className="btn-group g1 flex-wrap">{/*Buttons group of the main view (computer)*/}
                                 <Link to="/" type="button" className="btn btn-navBar btn-lg">Inicio</Link>
-                                <Link to="productos" type="button" className="btn btn-navBar btn-lg" state={{ bookM: `INICIO`}}>
+                                <Link to="productos" type="button" className="btn btn-navBar btn-lg" onClick={()=>setToProducts(true)}>
                                     Productos
                                 </Link>
                                 <Link to="/catalogo/inicio" type="button" className="btn btn-navBar btn-lg">Catalogo</Link>

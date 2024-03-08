@@ -59,6 +59,10 @@
     color: $azulPrincipal;
 }
 
+.btnModal.boton{
+    width: min-content;
+}
+
 @media screen and (max-width: 900px) {    
     .itemsCart.grayContainer{
         width: 100%;        

@@ -11,7 +11,7 @@ export function Navigation() {
       <>
           <Routes>
               <Route path='/' element={ <Home /> } />
-              <Route path='productos' element={ <Products /> } />
+              <Route path='productos' element={ <Products state={{}}/> } />
               <Route path='nosotros' element={ <About /> } />
               <Route path='politicas_privacidad' element={ <Privacy /> } />
               <Route path='contactanos' element={ <ContactUs /> } />

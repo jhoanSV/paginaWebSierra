@@ -46,7 +46,7 @@ export const products = async(validateLogIn) => {
     /*return the list of products deppending on if the user is logged in or not
     you have to send a json of the form:
     {
-        "logged": false
+        "CodUser": ''
     }*/
     try {
         const res = await fetch(`${API}/productsdataweb`,{

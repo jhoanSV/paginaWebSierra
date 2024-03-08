@@ -11,24 +11,24 @@ export function Products() {
   let theProducts
   let limit//mientras
 
-  if(location.state.products){
+  if(location.state && location.state.products){
     theProducts = JSON.parse(location.state.products)
-    limit = theProducts.length
+    limit = theProducts.length    
   }else{
     theProducts = JSON.parse(secureLocalStorage.getItem('productsList'))
-    limit = 10
+    limit = 10    
   }
   let lista = theProducts;
-  console.log(limit);
-  if (Object.keys(lista).length === 0){
-    console.log("aaaaa");
+
+  if(lista && Object.keys(lista).length === 0){
+    console.log("Algo está vacío");
   }
 
   return (
     <>
       <section className='products'>
         <div className="productsContainer">
-          { 
+          { lista!==null ?
             lista.slice(0,limit).map((item, index) =>
               <ListItem
                 key={index}
@@ -40,11 +40,12 @@ export function Products() {
                 unitPaq={item.EsUnidadOpaquete}
                 category={(item.Categoria).toLowerCase()}
                 agotado={item.Agotado}
-                lista={lista}
-              />
+                lista={lista}/>
             )
+          :
+          <></>
           }
-        </div>        
+        </div>
       </section>
     </>
   );

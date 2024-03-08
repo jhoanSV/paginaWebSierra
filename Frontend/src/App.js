@@ -22,17 +22,17 @@ export default function App() {
   secureLocalStorage.removeItem('alias')
 
   const img = new Image();
-    img.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A='
-    img.onload = () => {
-        //setAvifSupported(true);
-        console.log('AVIF supported');        
-        setGlobal({ AVIF:true })
-    };
-    img.onerror = () => {
-        //setAvifSupported(false);
-        setGlobal({ AVIF:false })
-        console.log('AVIF not supported');
-    };
+  img.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A='
+  img.onload = () => {
+      //setAvifSupported(true);
+      console.log('AVIF supported');        
+      setGlobal({ AVIF:true })
+  };
+  img.onerror = () => {
+      //setAvifSupported(false);
+      setGlobal({ AVIF:false })
+      console.log('AVIF not supported');
+  };
   
 
   return (
@@ -52,7 +52,7 @@ export default function App() {
                   src={require("./Assets/png/WappIcon.png")}
                   width="479px"
                   height="480"
-                  alt="iconWapp"              
+                  alt="iconWapp"
               />
             </picture>
         </a>

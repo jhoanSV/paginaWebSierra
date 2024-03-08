@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { getGlobal } from '../../globals/globals';
+import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
-export const ModalProductMob = ({llave, imgAvif, imgpng, descripcion, descripcionComp, codigo, category,
+export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codigo, category,
     unitPaq, unitPrice, lista}) => {
 
     const [cant, setCant] = useState(unitPaq)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     const [showDesc, setShowDesc] = useState(false)
+    const [imgSrc, setImgSrc] = useState(img);    
 
-    let logged = getGlobal('isLogged')    
+    let logged = getGlobal('isLogged')
     let quantity = null
+    let catSource
+    try {        
+        catSource = require(`../../Assets/avif/Logos/${category}.avif`)
+    } catch (error) {
+        catSource = require(`../../Assets/png/LlaveSierra2.png`)
+    }
 
     function Formater(number){
         return new Intl.NumberFormat().format(number);
@@ -45,6 +53,10 @@ export const ModalProductMob = ({llave, imgAvif, imgpng, descripcion, descripcio
         }
     }
 
+    const handleError = () =>{
+        setImgSrc(imgPlaceHolder)
+    }
+
     return (
         <div className="modal-content productBox">
             <button className="xButton" data-bs-dismiss="modal" aria-label="Close">
@@ -56,27 +68,15 @@ export const ModalProductMob = ({llave, imgAvif, imgpng, descripcion, descripcio
                         <div className="mainFeatures">
                             <div className="theLogo">
                                 <picture>
-                                    {imgAvif ?
-                                        <>
-                                        <source
-                                            type="image/avif"
-                                            srcSet={require(`../../Assets/avif/Logos/${category}.avif`)}
-                                        />
-                                        <img
-                                            title={category}//Here comes the category logo when received
-                                            src={require(`../../Assets/png/Logos/${category}.png`)}
-                                            alt="imgProducto"
-                                            decoding="async"
-                                        />
-                                        </>
-                                        :
-                                        <img
-                                            title={category}//Here comes the category logo when received
-                                            src={require(`../../Assets/png/Logos/${category}.png`)}
-                                            alt="imgProducto"
-                                            decoding="async"
-                                        />
-                                    }
+                                    <source
+                                        type="image/avif"
+                                        srcSet={catSource}
+                                    />
+                                    <img
+                                        src={catSource}                                        
+                                        alt="logo"
+                                        decoding="async"
+                                    />
                                 </picture>
                             </div>
                             <div className='subTit' id='productoLabel'>
@@ -86,31 +86,16 @@ export const ModalProductMob = ({llave, imgAvif, imgpng, descripcion, descripcio
                         </div>
                         <div className={`imgModal C${category}`}>
                             <picture>
-                                {imgAvif ?
-                                    <>
-                                        <source
-                                            type="image/avif"
-                                            srcSet={imgAvif}
-                                        />
-                                        <img
-                                            elsrc={imgpng}
-                                            alt="imgProducto"
-                                            decoding="async"
-                                        />
-                                    </>
-                                : imgpng ?
-                                    <img
-                                        src={imgpng}
-                                        alt="categoria"
-                                        decoding="async"
-                                    />
-                                :
-                                    <img
-                                        src={require('../../Assets/png/placeHolderProduct.png')}
-                                        alt="categoria"
-                                        decoding="async"
-                                    />
-                                }
+                                <source
+                                    type="image/avif"
+                                    srcSet={imgSrc}
+                                />
+                                <img
+                                    src={imgSrc}
+                                    onError={handleError}
+                                    alt="productImg"
+                                    decoding="async"
+                                />
                             </picture>
                         </div>
                         <div className="commingsoon">
