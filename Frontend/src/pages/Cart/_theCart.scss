@@ -59,8 +59,19 @@
     color: $azulPrincipal;
 }
 
-.btnModal.boton{
-    width: min-content;
+.sendOrd{
+    display: flex;    
+    height: 239px;
+}
+
+.btnModal{
+    width: auto;
+    height: auto;
+    border: none;
+    border-radius: 10px;
+    background-color: #F2CB05;
+    margin: auto;
+    padding: 8px;
 }
 
 @media screen and (max-width: 900px) {    

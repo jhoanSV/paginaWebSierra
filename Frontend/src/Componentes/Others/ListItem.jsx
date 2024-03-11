@@ -9,8 +9,9 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [isMobile, setIsMobile] = useState();
     //const [Theimg, setTheimg] = useState(imgPlaceHolder);
-    const [imgSrc, setImgSrc] = useState(imgPlaceHolder)
+    const [imgSrc, setImgSrc] = useState(`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
     const [Show1, setShow1] = useState(false);
+    const [refreshKey, setRefreshKey] = useState(0);
     
     const resize_ob = new ResizeObserver(function() {
         setScreenWidth(window.innerWidth);
@@ -23,17 +24,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
 
     useEffect(() => {
         resize_ob.observe(document.querySelector('#box'+llave));
-        console.log('again');        
-        const img = new Image();
-        img.src = (`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
-        /*img.onerror = () => {
-            setImgSrc(imgPlaceHolder)
-            console.log('onerror');
-        };*/
-        img.onload = () => {
-            setImgSrc(`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
-            console.log('marik yaaa');
-        }
+        setRefreshKey(prevKey => prevKey + 1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -46,18 +37,10 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [screenWidth])
 
-    useEffect(() => {
-        const img = new Image();
-        img.src = (`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
-        /*img.onerror = () => {
-            setImgSrc(imgPlaceHolder)
-            console.log('onerror');
-        };*/
-        img.onload = () => {
-            setImgSrc(`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
-            console.log('marik yaaa');
-        }
-    }, [imgSrc, codigo]);
+    const handleError = () =>{
+        console.log('handleError in listItem');
+        setImgSrc(imgPlaceHolder)
+    }
 
     return(
         <>
@@ -74,8 +57,9 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                                         srcSet={imgSrc}
                                     />
                                     <img
+                                        key={refreshKey}
                                         src={imgSrc}
-                                        //onError={handleError}
+                                        onError={handleError}
                                         alt="categoria"
                                         decoding="async"
                                     />

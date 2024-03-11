@@ -9,14 +9,14 @@ export function Products() {
   
   const location = useLocation()
   let theProducts
-  let limit//mientras
+  let limit//mientras  
 
   if(location.state && location.state.products){
     theProducts = JSON.parse(location.state.products)
-    limit = theProducts.length    
+    limit = theProducts.length
   }else{
     theProducts = JSON.parse(secureLocalStorage.getItem('productsList'))
-    limit = 10    
+    limit = 10
   }
   let lista = theProducts;
 

@@ -24,6 +24,8 @@ export const TheCart = () => {
         localStorage.setItem('cart',JSON.stringify(newCart))        
     }
 
+
+
     useEffect(() => {
         let jsjs = 0;
     
@@ -71,13 +73,25 @@ export const TheCart = () => {
             <div className="modal fade" id='sendOrderMod' tabIndex="-1" aria-labelledby="idkLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5">Fecha de entrega de pedido</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
                         <div className='modal-body'>
-                            <button type="button" className="btnModal boton">Cancelar</button>
-                            <button type="button" className="btnModal boton">Aceptar</button>
+                            {  currentDiv === '1' &&
+                            <div className='sendOrd'>
+                                <button type="button" className="btnModal">Enviar con ruta</button>
+                                <button type="button" className="btnModal">Escoger fecha de envío</button>
+                            </div>
+                            }
+                            {  currentDiv === '2' &&
+                            <div className='sendOrd'>
+                                <button type="button" className="btnModal">Enviar con ruta</button>
+                                <button type="button" className="btnModal">Escoger fecha de envío</button>
+                            </div>
+                            }
+                            {  currentDiv === '3' &&
+                            <div className='sendOrd'>
+                                <button type="button" className="btnModal">Enviar con ruta</button>
+                                <button type="button" className="btnModal">Escoger fecha de envío</button>
+                            </div>
+                            }
                         </div>
                     </div>
                 </div>
