@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './_theCart.scss'
 import { ItemCart } from './itemCart';
 import { Formater } from '../../globals/otherFunctions';
@@ -7,14 +7,19 @@ import secureLocalStorage from 'react-secure-storage';
 
 export const TheCart = () => {
       
+    const closeRef = useRef();
+    const dateChosen = useRef();
+    const theTextArea = useRef();
+
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));    
     const [sendCost, setSendCost] = useState(5000);
     const [subTotalC, setSubTotalC] = useState(0);
     const [currentDiv, setCurrentDiv] = useState(0);
-    let theUserCod = secureLocalStorage.getItem('userData')['Cod']
-    console.log('the user cod --> '+theUserCod);
-    const fecha = new Date();
-    console.log(fecha+', '+fecha.getDate()+', '+fecha.getDay());
+    const [route, setRoute] = useState(false);
+    const [btnDis, setBtnDis] = useState(true);
+    const LaFecha = new Date()
+    let theUserCod = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
+    //console.log(JSON.parse(secureLocalStorage.getItem('userData')));
 
     const deleteItemCart = (id) =>{
         const newCart = [...cart]
@@ -31,17 +36,32 @@ export const TheCart = () => {
         localStorage.setItem('cart',JSON.stringify(newCart))        
     }
 
-    const handleSendOrder = async() =>{
-        const jsjs  = await EnviarVenta({
+    const handleSendOrder = async() =>{        
+        const fecha = new Date()        
+        const today = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate() + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds()        
+        let TIngresados = [], sendDate = '', notes = theTextArea.current.value
+        cart.forEach((element) => {
+            TIngresados.push(`${element['Cant']},${element['Cod']},${element['PVenta']}`)
+        });
+        TIngresados = TIngresados.join(';');
+        if(route){
+            sendDate = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate())
+            notes = notes + ' ...Cuadrar fecha de entrega'
+        }else{
+            sendDate = dateChosen.current.value
+        }
+        console.log(notes);
+        const orderReq  = await EnviarVenta({
             "CodCliente": theUserCod,
-            "FechaFactura": "2024-02-20 00:00:00",
-            "FechaDeEstado": "2024-02-20 00:00:00",
-            "FechaDeEntrega": "2024-02-23",
-            "FechaVencimiento" : "2024-02-23",
-            "NotaVenta": "",
+            "FechaFactura": today,
+            "FechaDeEstado": today,
+            "FechaDeEntrega": sendDate,
+            "FechaVencimiento" : sendDate,
+            "NotaVenta": notes,
             "VECommerce": "1",
-            "TIngresados": "12(cantidad),CIT05(codigo),950(PVenta);6,SP136,3500"
+            "TIngresados": TIngresados
         })
+        console.log(orderReq);
     }
 
     useEffect(() => {
@@ -89,15 +109,18 @@ export const TheCart = () => {
                 </button>
             </div>
 
-            <div className="modal fade" id='sendOrderMod' tabIndex="-1" aria-labelledby="idkLabel" aria-hidden="true">
+            <div className="modal fade" id='sendOrderMod' data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="idkLabel" aria-hidden="true">
                 <div className="modal-dialog" style={{marginTop: '25vh'}}>
                     <div className="modal-content">
+                        <button className="xButton" data-bs-dismiss="modal" aria-label="Close" onClick={()=>{setCurrentDiv(0);setBtnDis(true)}} ref={closeRef}>
+                            <i className="bi bi-x-circle-fill"></i>
+                        </button>
                         <div className='modal-body'>
                             <div className='sendOrd genFont'>
                                 {  currentDiv === 0 &&
                                 <>
-                                    <button type="button" className="btnModal" onClick={()=>setCurrentDiv(a=>a+1)}>Enviar con ruta</button>
-                                    <button type="button" className="btnModal" onClick={()=>setCurrentDiv(a=>a+2)} >Escoger fecha de envío</button>
+                                    <button type="button" className="btnModal" onClick={()=>{setCurrentDiv(a=>a+1);setRoute(true);setBtnDis(false)}}>Enviar con ruta</button>
+                                    <button type="button" className="btnModal" onClick={()=>{setCurrentDiv(a=>a+2);setRoute(false)}} >Escoger fecha de envío</button>
                                 </>
                                 }
                                 {  currentDiv === 1 &&
@@ -111,28 +134,43 @@ export const TheCart = () => {
                                     </div>
                                 </div>
                                 }
-                                {  currentDiv === 2 &&
+                                {  currentDiv === 2 &&                                
                                 <div style={{flexDirection: 'column', width: '100%', padding: '15px'}}>
-                                    <div>
-                                        Nota:
+                                    <div className='d-flex justify-content-between'>
+                                        <div>
+                                            Nota:
+                                        </div>
+                                        { !route &&
+                                        <div>
+                                            fecha:{' '}
+                                            <input type="date" id="deadline" name="deadline" ref={dateChosen}
+                                                min={`${LaFecha.getFullYear()}-${(LaFecha.getMonth()+1).toString().padStart(2, '0').slice(-2)}-${(LaFecha.getDate()+1)}`}
+                                                style={{borderRadius: '10px'}}
+                                                onChange={()=>setBtnDis(false)}
+                                            />
+                                        </div>
+                                        }
                                     </div>
                                     <div>
-                                        <textarea type='textbox' style={{minHeight: '162px', width: '100%', resize: 'none'}}
-                                        placeholder='Recomendaciones/Sugerencias'>
-                                        </textarea>
-
+                                        <textarea type='textbox' className='textAreaModal' ref={theTextArea}
+                                            placeholder='Recomendaciones/Sugerencias'                                            
+                                        />
                                     </div>
                                     <div>SubTotal: $ {Formater(subTotalC)}</div>
                                     <div>Env&iacute;o: $ {Formater(sendCost)}</div>
-                                    <div className='subTit fw-bold'>
-                                        Total:{' '}
-                                            <span className='text-black Tit'>
-                                                {Formater(subTotalC+sendCost)}
-                                            </span>
+                                    <div className='Tit fw-bold' style={{color: '#193773'}}>
+                                        Total: {' '}
+                                        <span className='cBlack'>${Formater(subTotalC+sendCost)}</span>
                                     </div>
-                                    <div>
-                                        <button type="button" className="btnModal btnBack" onClick={()=>setCurrentDiv(a=>a-2)}>Volver</button>
-                                        <button type="button" className="btnModal" onClick={handleSendOrder}>Confirmar</button>
+                                    <div style={{display: 'flex', marginTop: '15px'}}>
+                                        <button type="button" className="btnModal btnBack"
+                                            onClick={()=>setCurrentDiv(a=>a-2)}>
+                                            Volver
+                                        </button>
+                                        <button type="button" className="btnModal btnConfirm" disabled={btnDis}
+                                            onClick={handleSendOrder}>
+                                            Confirmar
+                                        </button>
                                     </div>
                                 </div>
                                 }

@@ -76,6 +76,7 @@
     background-color: $amarilloPrincipal;
     color: $azulPrincipal;
     font-size: 20px;
+    font-weight: bold;
     margin: auto;
     padding: 8px;
 }
@@ -83,7 +84,18 @@
     background-color: #d9d9d9;
 }
 
-@media screen and (max-width: 900px) {    
+.btnConfirm:disabled{
+    opacity: 0.5;
+}
+
+.textAreaModal{
+    min-height: 162px;
+    width: 100%;
+    resize: none;
+    background-color: #d9d9d9;
+}
+
+@media screen and (max-width: 900px) {
     .btnModal{
         font-size: 16px;
     }

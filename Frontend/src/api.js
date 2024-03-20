@@ -9,7 +9,10 @@ export const validateUser = async(validateValueUser) => {
     {
         "EmailUser": "Pruebausuario1@gmail.com",
         "Password": "123456789"
-    }*/
+    }
+    Dikyanid
+    06032023
+    */
     try {
         const res = await fetch(`${API}/login`,{
             method: 'POST',
