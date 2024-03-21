@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import "./_MPDesk.scss"
 import { getGlobal } from '../../globals/globals';
-import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
+//import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codigo, category,
     unitPaq, unitPrice, lista}) => {
 
     const [cant, setCant] = useState(unitPaq)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
-    const [imgSrc, setImgSrc] = useState(img);
 
     let quantity = null
     let logged = getGlobal('isLogged')
@@ -65,10 +64,6 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
         }
     }
 
-    const handleError = () =>{
-        setImgSrc(imgPlaceHolder)
-    }
-
     return (
         <div className="modal-content productBox">
             <button className="xButton" data-bs-dismiss="modal" aria-label="Close">
@@ -81,11 +76,10 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                             <picture>
                                 <source
                                     type="image/avif"
-                                    srcSet={imgSrc}
+                                    srcSet={img}
                                 />
                                 <img
-                                    src={imgSrc}
-                                    onError={handleError}
+                                    src={img}
                                     alt="productImg"
                                     decoding="async"
                                 />

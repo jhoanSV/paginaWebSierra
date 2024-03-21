@@ -11,7 +11,6 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
     //const [Theimg, setTheimg] = useState(imgPlaceHolder);
     const [imgSrc, setImgSrc] = useState(`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
     const [Show1, setShow1] = useState(false);
-    const [refreshKey, setRefreshKey] = useState(0);
     
     const resize_ob = new ResizeObserver(function() {
         setScreenWidth(window.innerWidth);
@@ -24,7 +23,6 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
 
     useEffect(() => {
         resize_ob.observe(document.querySelector('#box'+llave));
-        setRefreshKey(prevKey => prevKey + 1);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -36,6 +34,11 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         }            
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [screenWidth])
+
+    useEffect(() => {
+        console.log('cambia código');
+        setImgSrc(`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
+    }, [codigo]);
 
     const handleError = () =>{
         console.log('handleError in listItem');
@@ -57,7 +60,6 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                                         srcSet={imgSrc}
                                     />
                                     <img
-                                        key={refreshKey}
                                         src={imgSrc}
                                         onError={handleError}
                                         alt="categoria"
@@ -70,7 +72,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                                 <div className="descFont titleFont">{descripcion}</div>
                                 <div className="codFont">{codigo}</div>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,7 +86,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                             llave={llave}
                             /*imgAvif={imgAvif}
                             imgpng={imgpng}*/
-                            img={`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`}
+                            img={imgSrc}
                             descripcion={descripcion}
                             descripcionComp={descripcionComp}
                             codigo={codigo}
@@ -99,7 +101,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                             llave={llave}
                             /*imgAvif={imgAvif}
                             imgpng={imgpng}*/
-                            img={`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`}
+                            img={imgSrc}
                             descripcion={descripcion}
                             descripcionComp={descripcionComp}
                             codigo={codigo}

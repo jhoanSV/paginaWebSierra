@@ -30,7 +30,6 @@ export function Home() {
 
         // Convert the Set to an array and return
         const categories = Array.from(uniqueCategories)
-        console.log('categories', categories)
         //Create an eplty array for the new order and an index for the list of categorie
         const reorderedArray = [];
         
@@ -56,15 +55,13 @@ export function Home() {
             theCodeUser = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
         }
         //*return the list of products of the button carousel, if is not logged, use the default user code
-        console.log('si entro a la funcion')
         const bCaroucel = await BottonCarousel(
             {
                 "logged": isLogged,
                 "CodUser": theCodeUser
             }
         )        
-        const ReorderedList = alternateCategoria(bCaroucel) 
-        console.log('ReorderedList', ReorderedList)
+        const ReorderedList = alternateCategoria(bCaroucel)
         return ReorderedList
     }    
 
@@ -115,7 +112,6 @@ export function Home() {
     useEffect(() => {
         async function fetchData() {
             const jsjs = await tobuttonCarousel()
-            console.log('Setea nuevo json', jsjs);
             localStorage.setItem('productsBottomCarousel', JSON.stringify(jsjs))
             setBottomC(jsjs)
         }        

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getGlobal } from '../../globals/globals';
-import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
+//import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codigo, category,
     unitPaq, unitPrice, lista}) => {
@@ -8,7 +8,6 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
     const [cant, setCant] = useState(unitPaq)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     const [showDesc, setShowDesc] = useState(false)
-    const [imgSrc, setImgSrc] = useState(img);    
 
     let logged = getGlobal('isLogged')
     let quantity = null
@@ -53,10 +52,6 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
         }
     }
 
-    const handleError = () =>{
-        setImgSrc(imgPlaceHolder)
-    }
-
     return (
         <div className="modal-content productBox">
             <button className="xButton" data-bs-dismiss="modal" aria-label="Close">
@@ -88,11 +83,10 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                             <picture>
                                 <source
                                     type="image/avif"
-                                    srcSet={imgSrc}
+                                    srcSet={img}
                                 />
                                 <img
-                                    src={imgSrc}
-                                    onError={handleError}
+                                    src={img}
                                     alt="productImg"
                                     decoding="async"
                                 />

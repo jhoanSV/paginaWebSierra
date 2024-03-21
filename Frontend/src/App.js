@@ -1,12 +1,12 @@
-import { Header } from "./layouts";
-import { Footer } from "./layouts";
-//import { Home, Products, About, Privacy } from "./pages";
-import { Navigation } from "./routes";
-import './_App.scss';
-import { CategMenuMobile, CategoryMenu } from "./Componentes/Menus";
-import { setGlobal } from "./globals/globals";
 import secureLocalStorage from "react-secure-storage";
 import { useState } from "react";
+import { Header, Footer } from "./layouts";
+import { Navigation } from "./routes";
+import { CategMenuMobile, CategoryMenu } from "./Componentes/Menus";
+import { setGlobal } from "./globals/globals";
+import './_App.scss';
+import { TextProvider } from "./TextContext";
+import { QueryStateProvider } from "./QStateContext";
 
 export default function App() {
   let ud = secureLocalStorage.getItem('userData')
@@ -16,7 +16,8 @@ export default function App() {
   if(ud){
     setGlobal({ isLogged:true })
   }else if(localStorage.getItem('@secure.s.userData')){
-    alert('aparentemente si está loggeado pero hubo un error, intente de nuevo');
+    alert('Su sesion ha expirado, por favor vuelva a ingresar');
+    localStorage.removeItem('@secure.s.userData')
   }
   secureLocalStorage.removeItem('EveryPro')
   secureLocalStorage.removeItem('alias')
@@ -36,39 +37,40 @@ export default function App() {
   
 
   return (
-      <>
-        {/*Borrar el siguiente div*/}
-        <div style={{position: 'absolute', color: 'black', backgroundColor: 'white'}} onResize={(e)=>{setScreenWidth(e.target.innerWidth)}}>
-          {screenWidth}
-        </div>
-        <a href="https://api.whatsapp.com/send/?phone=573134237538&text&type=phone_number&app_absent=0" className="btn-wapp" 
-          target="_blank" rel="noreferrer">
-            <picture>
-              <source
-                type="image/avif"
-                srcSet={require("./Assets/avif/wappicon.avif")}
-              />              
-              <img
-                  src={require("./Assets/png/WappIcon.png")}
-                  width="479px"
-                  height="480"
-                  alt="iconWapp"
-              />
-            </picture>
-        </a>
+      <TextProvider>
+        <QueryStateProvider>
+          {/*Borrar el siguiente div*/}
+          <div style={{position: 'absolute', color: 'black', backgroundColor: 'white'}} onResize={(e)=>{setScreenWidth(e.target.innerWidth)}}>
+            {screenWidth}
+          </div>
+          <a href="https://api.whatsapp.com/send/?phone=573134237538&text&type=phone_number&app_absent=0" className="btn-wapp" 
+            target="_blank" rel="noreferrer">
+              <picture>
+                <source
+                  type="image/avif"
+                  srcSet={require("./Assets/avif/wappicon.avif")}
+                />              
+                <img
+                    src={require("./Assets/png/WappIcon.png")}
+                    width="479px"
+                    height="480"
+                    alt="iconWapp"
+                    />
+              </picture>
+          </a>
 
-        <CategMenuMobile/>
+          <CategMenuMobile/>
 
-        <div>
-          <CategoryMenu/>
-        </div>
+          <div>
+            <CategoryMenu/>
+          </div>
 
-        <Header></Header>
+          <Header></Header>
 
-        <Navigation></Navigation>
+          <Navigation></Navigation>
 
-        <Footer></Footer>
-      </>
-      
+          <Footer></Footer>
+        </QueryStateProvider>
+      </TextProvider>      
   );
 }

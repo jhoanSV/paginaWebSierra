@@ -1,21 +1,25 @@
 import {React, useEffect ,useState } from "react";
 import "./_header.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { products, Alias } from '../../api';
 import { getGlobal } from "../../globals/globals";
 import secureLocalStorage from "react-secure-storage";
+import { useTextUpdate } from "../../TextContext";
+import { useQState, useQStateUpdt } from "../../QStateContext";
 
 export function Header() {
-    const [ pro , setpro ] = useState('');
-    const [ alias , setAlias ] = useState('');
-    // eslint-disable-next-line
-    const [ category, setCategory] = useState('');//useState('ELECTRICOS');
-    const [queryEnded, setQueryEnded] = useState(false);
-    const [theText, setTheText] = useState('');
-    const [toProducts, setToProducts] = useState();    
+
+    const location = useLocation()
+    // const [ pro , setpro ] = useState('');//products
+    // const [ alias , setAlias ] = useState('');    
+    //const [queryEnded, setQueryEnded] = useState(false);
+    const [toProducts, setToProducts] = useState(location.pathname==='/productos' ? true : false);
     const navigate = useNavigate()
+    const updateText = useTextUpdate()
+    const queryEnded = useQState()
+    const updtQState = useQStateUpdt()
     let userName = null
-    let sortedJson2
+    //let sortedJson2
 
     /*Funciones para mostrar o esconder caja de texto
       cuando se hace click o se pierde el focus de la caja
@@ -25,29 +29,36 @@ export function Header() {
         uploadProducts({
             "logged": false
         })
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {        
         if (queryEnded && toProducts) {
-            filterProduct(theText)
-            navigate('/productos',{state:{products: sortedJson2}});
+            /*filterProduct(theText)
+            navigate('/productos',{state:{products: sortedJson2}});*/
+            navigate('/productos');
+            console.log('query endedjsjs');
+            setToProducts(false)
         }
         // eslint-disable-next-line
     }, [queryEnded]);
 
-    const uploadProducts = async()=>{        
+    const uploadProducts = async()=>{
+        updtQState(false)
         const productsList = await products({
             //"logged": false//getGlobal('isLogged')
             "CodUser": '493'
         })
         const aliasList = await Alias()
-        setpro(productsList)
+        //setpro(productsList)
         secureLocalStorage.setItem('productsList', JSON.stringify(productsList))
-        setAlias(aliasList)
-        setQueryEnded(true)
+        secureLocalStorage.setItem('aliasList', JSON.stringify(aliasList))
+        //setAlias(aliasList)
+        updateText('pruebajsjs1')
+        updtQState(true)
     }
 
-    const filterProduct = async (text) => {
+    /*const filterProduct = async (text) => {
         //Searh the list of products that includes the text, either because it is in the "products" table or in the "alias" table        
         let proData = pro; //The whole table "products".        
         let aliasData = alias; //The whole table "alias".
@@ -84,26 +95,27 @@ export function Header() {
         } catch (error) {
             sortedJson2 = false                        
         }
-    }
+    }*/
    
     if(getGlobal('isLogged')) userName = JSON.parse(secureLocalStorage.getItem('userData'))['Contacto']
     
     const searchProduct = (text) => {
         console.log(text);
-        setTheText(text)
+        updateText(text)
         if (text === ''){
             uploadProducts()
-            navigate('/productos',{state:{products: false}});
+            // navigate('/productos',{state:{products: false}});
         }else if (text.length > 2 && queryEnded) {
-            filterProduct(text)            
-            navigate('/productos',{state:{products: sortedJson2}});
+            //filterProduct(text)
+            //navigate('/productos',{state:{products: sortedJson2}});
+            navigate('/productos');
             setToProducts(true)
         }
     }
 
     return(
         <header style={{position: 'relative'}}>
-            { (toProducts&&(queryEnded===false)) ?
+            { (toProducts && (queryEnded === false)) ?
             <div style={{position: 'absolute', right: '0', top: '0', color: "white", backgroundColor: 'black', zIndex: '1'}}>
                 cargando
             </div>
