@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./_ChangePass.scss";
 import { Changepassword } from '../../api';
+import { getGlobal } from '../../globals/globals';
 
 export const ChangePass = () => {
 
@@ -13,17 +14,7 @@ export const ChangePass = () => {
     //* function to check if all values are true
     const checkAllTrue = () => {
         return allOk.every(value => value === true);
-    };
-
-    //* this effect execute when allOk changes
-    useEffect(() => {        
-        if (checkAllTrue()) {
-            document.querySelector('.btnChPass2').removeAttribute('disabled');
-        }else{
-            document.querySelector('.btnChPass2').setAttribute('disabled', true);
-        }
-        // eslint-disable-next-line
-    }, [allOk]);
+    };    
 
     const toChangePassword = async() =>{
         /*Funtion to check if the user is alowed to change the password*/
@@ -103,81 +94,95 @@ export const ChangePass = () => {
         setVariableText(text)
     }
 
+    //* this effect execute when allOk changes
+    useEffect(() => {        
+        if (checkAllTrue()) {
+            document.querySelector('.btnChPass2').removeAttribute('disabled');
+        }else if (getGlobal('isLogged')){
+            document.querySelector('.btnChPass2').setAttribute('disabled', true);
+        }
+        // eslint-disable-next-line
+    }, [allOk]);
+
     return (
         <section className='py-5 d-flex justify-content-center'>
-            <div className='grayContainer'>
-                <div className='tuercaContainer'>
-                    <picture>
-                        <source
-                            type="image/avif"
-                            srcSet={require("../../Assets/avif/tuercaUsuario2.avif")}
-                        />
-                        <img
-                            src={require("../../Assets/png/tuercaUsuario2.png")}
-                            width="180px"
-                            height="206px"
-                            alt="tuerca"
-                            decoding="async"
-                        />
-                    </picture>
+            { getGlobal('isLogged') ?
+                <div className='grayContainer'>
+                    <div className='tuercaContainer'>
+                        <picture>
+                            <source
+                                type="image/avif"
+                                srcSet={require("../../Assets/avif/tuercaUsuario2.avif")}
+                            />
+                            <img
+                                src={require("../../Assets/png/tuercaUsuario2.png")}
+                                width="180px"
+                                height="206px"
+                                alt="tuerca"
+                                decoding="async"
+                            />
+                        </picture>
+                    </div>
+                    <div>
+                        <div className="userPass">
+                            <input type="passWord" className="theInput fw-bold" placeholder="Contraseña actual" 
+                                aria-label="Campo para correo"
+                                onChange={(e)=>{
+                                    if(e.target.value !== ''){
+                                        setAllOk(prevState => [prevState[0], prevState[1], true]);
+                                        setCurrentPassword(e.target.value);
+                                    }else{
+                                        setAllOk(prevState => [prevState[0], prevState[1], false]);
+                                    }
+                                }}
+                            />
+                        </div>
+                        <div className="userPass">
+                            <i className="bi bi-key-fill keyIcon"></i>
+                            <input type="password" className="chPassInput theInput fw-bold" placeholder="Contraseña nueva" 
+                                aria-label="Campo para contraseña"
+                                onChange={(e) => {
+                                    handlePassInput(e.target.value)
+                                    if (document.querySelector('#pass2').value!==''){
+                                        handlePassMatch()
+                                    }
+                                }}
+                            />
+                        </div>
+                        <span>{validateText}</span>
+                        <div id='plbContainer' className='d-none'>
+                            <span className='passLvlBar'/>
+                            <span className='passLvlBar'/>
+                            <span className='passLvlBar'/>
+                        </div>
+                        <div className="userPass">
+                            <i className="bi bi-key-fill keyIcon"></i>
+                            <input id='pass2' type="password" className="chPassInput theInput fw-bold" placeholder="Confirmar" 
+                                aria-label="Confirmar contraseña"
+                                onChange={(e) => {
+                                    setNewPassword(e.target.value);
+                                    if (e.target.value===''){
+                                        setVariableText('')
+                                    }else{
+                                        handlePassMatch()
+                                    }
+                                }}
+                            />
+                        </div>
+                        <span className='noMatch'>{variableText}</span>
+                    </div>
+                    <div className="sec2 mt-5 w-100">
+                        <button className='btnChPass'>
+                            Cancelar
+                        </button>
+                        <button className='btnChPass2' disabled onClick={()=>{toChangePassword()}}>
+                            Cambiar Contraseña
+                        </button>
+                    </div>
                 </div>
-                <div>
-                    <div className="userPass">
-                        <input type="passWord" className="theInput fw-bold" placeholder="Contraseña actual" 
-                            aria-label="Campo para correo"
-                            onChange={(e)=>{
-                                if(e.target.value !== ''){
-                                    setAllOk(prevState => [prevState[0], prevState[1], true]);
-                                    setCurrentPassword(e.target.value);
-                                }else{
-                                    setAllOk(prevState => [prevState[0], prevState[1], false]);
-                                }
-                            }}
-                        />
-                    </div>
-                    <div className="userPass">
-                        <i className="bi bi-key-fill keyIcon"></i>
-                        <input type="password" className="chPassInput theInput fw-bold" placeholder="Contraseña nueva" 
-                            aria-label="Campo para contraseña"
-                            onChange={(e) => {
-                                handlePassInput(e.target.value)
-                                if (document.querySelector('#pass2').value!==''){
-                                    handlePassMatch()
-                                }
-                            }}
-                        />
-                    </div>
-                    <span>{validateText}</span>
-                    <div id='plbContainer' className='d-none'>
-                        <span className='passLvlBar'/>
-                        <span className='passLvlBar'/>
-                        <span className='passLvlBar'/>
-                    </div>
-                    <div className="userPass">
-                        <i className="bi bi-key-fill keyIcon"></i>
-                        <input id='pass2' type="password" className="chPassInput theInput fw-bold" placeholder="Confirmar" 
-                            aria-label="Confirmar contraseña"
-                            onChange={(e) => {
-                                setNewPassword(e.target.value);
-                                if (e.target.value===''){
-                                    setVariableText('')
-                                }else{
-                                    handlePassMatch()
-                                }
-                            }}
-                        />
-                    </div>
-                    <span className='noMatch'>{variableText}</span>
-                </div>
-                <div className="sec2 mt-5 w-100">
-                    <button className='btnChPass'>
-                        Cancelar
-                    </button>
-                    <button className='btnChPass2' disabled onClick={()=>{toChangePassword()}}>
-                        Cambiar Contraseña
-                    </button>
-                </div>
-            </div>
+            :
+                <>Esta no es la página que estas buscando</>
+            }
         </section>
     );
 }

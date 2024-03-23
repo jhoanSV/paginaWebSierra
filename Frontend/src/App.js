@@ -7,16 +7,19 @@ import { setGlobal } from "./globals/globals";
 import './_App.scss';
 import { TextProvider } from "./TextContext";
 import { QueryStateProvider } from "./QStateContext";
+import { useNavigate } from "react-router-dom";
 
 export default function App() {
   let ud = secureLocalStorage.getItem('userData')
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const navigate = useNavigate()
 
   //Here defines how to show the page, if is logged or not
   if(ud){
     setGlobal({ isLogged:true })
   }else if(localStorage.getItem('@secure.s.userData')){
     alert('Su sesion ha expirado, por favor vuelva a ingresar');
+    navigate('/')
     localStorage.removeItem('@secure.s.userData')
   }
   secureLocalStorage.removeItem('EveryPro')

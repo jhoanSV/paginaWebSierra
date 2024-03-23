@@ -10,6 +10,7 @@ import secureLocalStorage from "react-secure-storage";
 
 export function Home() {
 
+    window.scrollTo(0,0)
     const [bottomC, setBottomC] = useState(null);
 
     const [observer, setElements, entries] = useObserver({

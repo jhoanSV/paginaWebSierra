@@ -18,7 +18,7 @@ export function Navigation() {
               <Route path='catalogo/:cat' element={ <Catalogo /> } />
               <Route path='inicio_sesion' element={ <Login/> }/>
               <Route path='perfil' element={ <TheProfile/> }/>
-              <Route path='/configuracion/seguridad' element={ <ChangePass />}/>
+              <Route path='/perfil/seguridad' element={ <ChangePass />}/>
               <Route path='carrito' element={ <TheCart/>}/>
           </Routes>
       </>

@@ -1,4 +1,4 @@
-import {React, useEffect ,useState } from "react";
+import {React, useEffect, useState } from "react";
 import "./_header.scss";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { products, Alias } from '../../api';
@@ -9,7 +9,7 @@ import { useQState, useQStateUpdt } from "../../QStateContext";
 
 export function Header() {
 
-    const location = useLocation()
+    const location = useLocation()    
     // const [ pro , setpro ] = useState('');//products
     // const [ alias , setAlias ] = useState('');    
     //const [queryEnded, setQueryEnded] = useState(false);
@@ -113,6 +113,11 @@ export function Header() {
         }
     }
 
+    const handleLogOut = () =>{
+        secureLocalStorage.removeItem('userData');
+        window.location.href = '/'
+    }
+
     return(
         <header style={{position: 'relative'}}>
             { (toProducts && (queryEnded === false)) ?
@@ -207,12 +212,16 @@ export function Header() {
                                 <Link to="/carrito" type="button" className='btnCart'>
                                     <i className="bi bi-cart4"></i>
                                 </Link>
-                                <Link to="/perfil" type="button" className='userIcon'>
-                                    {/*<i className="bi bi-hexagon-fill userHex"></i>*/}
+                                <div type="button" className='userIcon' data-bs-toggle="dropdown">
+                                    <i className="bi bi-hexagon-fill userHex"></i>
                                     <div className="userText">
                                         <span>{userName[0].toUpperCase()}</span>
                                     </div>
-                                </Link>
+                                </div>
+                                <ul className="dropdown-menu">
+                                    <li><Link to="/perfil" type="button" className="dropdown-item">Perfil</Link></li>
+                                    <li><div type="button" className="dropdown-item" data-bs-toggle="modal" data-bs-target='#VerifyLogOut'>Cerrar sesion</div></li>
+                                </ul>
                             </>
                             :
                             <>
@@ -252,6 +261,23 @@ export function Header() {
                                 <Link to="/contactanos" type="button" className="btn btn-navBar btn-lg">Contactanos</Link>
                             </div>
                         </div>                        
+                    </div>
+                </div>
+            </div>
+            <div className="modal fade" id='VerifyLogOut' tabIndex="-1" aria-labelledby="veriLogout" aria-hidden="true">
+                <div className="modal-dialog modal-sm">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">¿Desea cerrar sesi&oacute;n?</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-primary"
+                                data-bs-dismiss="modal"
+                                onClick={handleLogOut}
+                            >Aceptar</button>
+                        </div>
                     </div>
                 </div>
             </div>

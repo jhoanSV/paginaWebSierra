@@ -1,21 +1,23 @@
-import {useState, React} from 'react';
+import {useState, useRef, React} from 'react';
 import "./_Login.scss";
 import { validateUser } from '../../api';
 import { useNavigate } from 'react-router';
 import secureLocalStorage from 'react-secure-storage';
+import { resolve } from 'path-browserify';
 
 export const Login = () => {
     const [userEmail, setUserEmail] = useState('')
     const [password, setPassword] = useState('')
+    const passInput = useRef()
 
     const navigate = useNavigate()
     
     const LogIn = async () =>{
         /* validate if the userEmail and the ppassword matches with the information in the database*/
-        const userData = await validateUser({
-            "EmailUser": userEmail,
-            "Password": password
-        })
+        // const userData = await validateUser({
+        //     "EmailUser": userEmail,
+        //     "Password": password
+        // })
         /*
         Cel : "123456789"
         Cod : 493
@@ -25,16 +27,30 @@ export const Login = () => {
         Ferreteria : "prueba contraseña 2"
         Telefono : "123456789"
         */
-        if (userData.hasOwnProperty('Cod')){
-            //autorizado
-            console.log('authorized')
-            secureLocalStorage.setItem('userData', JSON.stringify(userData))
-            navigate('/');
-            //this sh1t here reloads the page
-            window.location.reload();
-        } else if (userData.hasOwnProperty('error')){
-            // no autorizado
-            console.log('unauthorized')
+       await new Promise(resolve => setTimeout(resolve, 5000))       
+       const userData = JSON.parse('{"Cel" : "123456789", "Cod" : 493, "Contacto" : "don prueba", "Direccion" : "123456789", "Email" : "pruebausuario1@gmail.com", "Ferreteria" : "prueba contraseña 2", "Telefono" : "123456789"}')
+       console.log((userData));
+        try {
+            if (userData.hasOwnProperty('Cod')){
+                //autorizado
+                console.log('authorized')
+                secureLocalStorage.setItem('userData', JSON.stringify(userData))
+                window.location.href = '/'
+            } else if (userData.hasOwnProperty('error')){
+                // no autorizado
+                console.log('unauthorized')
+                alert('unauthorized')
+            }
+        } catch (error) {
+            alert('Se ha superado el tiempo de espera')
+        }
+    }
+
+    const togglePass = () =>{
+        if (passInput.current.type === "password") {
+            passInput.current.type = "text";
+        } else {
+            passInput.current.type = "password";
         }
     }
     
@@ -63,7 +79,7 @@ export const Login = () => {
                     </div>
                     <div className="userPass">
                         <i className="bi bi-lock-fill"></i>
-                        <input type="password" className="theInput fw-bold" placeholder="Contraseña" 
+                        <input type="password" className="theInput fw-bold" placeholder="Contraseña" ref={passInput}
                             aria-label="Campo para contraseña"
                             onChange={(e) => {
                                 e.target.classList.remove('fw-bold')
@@ -77,17 +93,24 @@ export const Login = () => {
                         />
                     </div>
                     <div className="mt-2">
-                        <span className='fw-bold logText'>Olvidé mi contraseña</span>
+                        <span className='fw-bold logText' role='button'
+                            onClick={()=>alert('Si has olvidado la contraseña comunicate con administracion con el icono de whatsapp ubicado en la parte inferior derecha')}>
+                            Olvid&eacute; mi contraseña
+                        </span>
                     </div>                        
                 </div>
                 <div className="mt-5 w-100">
                     <div className='d-flex justify-content-between toDirCol'>
                         <div>
-                            <input type='checkbox' className='theCheck' onChange={()=>{console.log('Muestra contra')}}
-                            />
-                            <span className='ms-3 logText'>Recordar datos</span>
+                            <input type='checkbox' className='theCheck' onChange={()=>{togglePass()}}/>
+                            <span className='ms-3 logText'>Mostrar contraseña</span>
                         </div>
-                        <span className='logText'>Registrarme</span>
+                        <a href='https://wa.me/573134237538?text=Cordial%20saludo%2C%20tengo%20interes%20en%20registrarme%20en%20sivar.com.co'
+                            style={{textDecoration: 'none'}} target="_blank" rel="noreferrer">
+                            <span className='logText'>
+                                Registrarme
+                            </span>
+                        </a>
                     </div>
                     <button className='btnStlGen btnLogin' onClick={()=>{
                         LogIn()
