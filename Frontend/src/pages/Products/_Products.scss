@@ -13,6 +13,45 @@
     }
 }
 
+.nFound{
+    display: flex;
+    background-color: #d9d9d9;
+    color: #727272;
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 20px 0px;
+    justify-content: center;
+}
+
+.loadingStls{
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+.dots {
+    overflow: hidden;
+    animation: dotsAnimation 1.5s linear infinite alternate;
+}
+
+@keyframes dotsAnimation {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 10%;
+    }
+}  
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: rgb(217, 217, 217)
+    }
+
+    100%{
+        background-color: hsl(0, 0%, 100%);
+    }
+}
+
 @media (max-width: 900px){
     .productsContainer{
         padding: 0.9044rem 4rem;

@@ -10,7 +10,7 @@ export function Products() {
   // const SBText = useText() //searchBarText
   // const queryEnded = useQState()
   const { sBText, queryEnded, categSelect } = useTheContext()
-  const [lista, setLista] = useState(null);
+  const [lista, setLista] = useState(false);
   const [limit, setLimit] = useState();
 
   const filterProduct = async (text) => {
@@ -21,6 +21,7 @@ export function Products() {
     let aliasData = alias//The whole table "alias".
     //If categSelect is different to empty then select only the productos with that category
     try {
+      console.log('-->'+categSelect);
         if (categSelect !== '') {
             proData = pro.filter(item => item.Categoria.toLowerCase() === categSelect.toLowerCase());
             aliasData = alias.filter(item => item.Categoria.toLowerCase() === categSelect.toLowerCase());
@@ -49,6 +50,7 @@ export function Products() {
         //!const sortedJson = JSON.stringify(dataArray);
         //sortedJson2 = sortedJson
         setLista(dataArray)
+        console.log(dataArray);
         //setFilteredProducts(sortedJson);
     } catch (error) {
         //sortedJson2 = false
@@ -63,11 +65,13 @@ export function Products() {
       filterProduct(sBText)
     }
     // eslint-disable-next-line
-  }, [sBText]);
+  }, [sBText, categSelect]);
 
-  useEffect(() => {
-    setLista(JSON.parse(secureLocalStorage.getItem('productsList')))
-    setLimit(10)
+  useEffect(() => {        
+    if(JSON.parse(secureLocalStorage.getItem('productsList'))){
+      setLista(JSON.parse(secureLocalStorage.getItem('productsList')))
+      setLimit(60)
+    }    
   }, [queryEnded]);
 
   useEffect(() => {
@@ -78,11 +82,10 @@ export function Products() {
     <>
       <section className='products'>
         <div className="productsContainer">
-          { (lista!==null && lista!==false) ?
+          { (lista && lista.length!==0) ?
             lista.slice(0,limit).map((item, index) =>
               <ListItem
                 key={index}
-                img={`https://sivar.com.co/Imgs/ProductsAVIF/${item.Cod}.avif`}
                 llave = {index}//Para apuntar a cada modal
                 codigo = {item.Cod}
                 descripcion = {item.Descripcion}
@@ -93,23 +96,26 @@ export function Products() {
                 agotado={item.Agotado}
                 lista={lista}/>
             )
-          : (lista===null)?//* here is in the case when everything is ok but there is no products
-            arJason.slice(0,limit).map((item, index) =>
-              <ListItem
-                key={index}
-                img={`https://sivar.com.co/Imgs/ProductsAVIF/${item.Cod}.avif`}
-                llave = {index}//Para apuntar a cada modal
-                codigo = {item.Cod}
-                descripcion = {item.Descripcion}
-                descripcionComp={item.Detalle}
-                unitPrice={item.PVenta}
-                unitPaq={item.EsUnidadOpaquete}
-                category={(item.Categoria).toLowerCase()}
-                agotado={item.Agotado}
-                lista={arJason}/>
+          : (lista.length===0)?//* here is in the case when everything is ok but there is no products
+            <div className='nFound'>
+              No se encontr&oacute; ninguna coincidencia
+            </div>
+          : ((!queryEnded) || lista===false) &&
+            [1, 2, 3, 4, 5].map(() =>
+              <div className='caja'>
+                <div
+                  className='loadingStls'
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    background: '#d9d9d9',
+                    aspectRatio: '1 / 1'
+                  }}
+                />
+                <div className='dots'>...</div>
+                <div className='dots'>...</div>
+              </div>
             )
-          :
-            <></>
           }
         </div>
       </section>

@@ -12,8 +12,10 @@ export default function App() {
   let ud = secureLocalStorage.getItem('userData')
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const navigate = useNavigate()
-
   
+  secureLocalStorage.removeItem('EveryPro')
+  secureLocalStorage.removeItem('alias')
+  if(!localStorage.getItem('cart')) localStorage.setItem('cart', JSON.stringify([]))
   useEffect(() => {
     //Here defines how to show the page, if is logged or not
     if(ud){
@@ -23,10 +25,7 @@ export default function App() {
       alert('Su sesion ha expirado, por favor vuelva a ingresar');
       navigate('/')
       localStorage.removeItem('@secure.s.userData')
-    }
-    secureLocalStorage.removeItem('EveryPro')
-    secureLocalStorage.removeItem('alias')
-    if(!localStorage.getItem('cart')) localStorage.setItem('cart', JSON.stringify([]))
+    }    
   
     const img = new Image();
     img.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A='
