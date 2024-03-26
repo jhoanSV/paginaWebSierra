@@ -13,8 +13,9 @@
     }
 }
 
-@media (max-width: 768px){
+@media (max-width: 900px){
     .productsContainer{
+        padding: 0.9044rem 4rem;
         .caja{
             margin: 0% 6% 6% 6%;
             width: 20%;
@@ -24,10 +25,11 @@
 
 @media (max-width: 600px){
     .productsContainer{
+        padding: 0.9044rem 1rem;
         .caja{
-            margin: 0% 6% 6% 6%;
-            width: 100%;
-            padding: 7%;
+            margin: 0% 2% 6% 3%;
+            width: 44%;
+            padding: 5%;
         }
     }
 }

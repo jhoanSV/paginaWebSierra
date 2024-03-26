@@ -84,7 +84,7 @@
     background-color: #d9d9d9;
 }
 
-.btnConfirm:disabled{
+.btnConfirm:disabled, .btnSendOrd:disabled{
     opacity: 0.5;
 }
 

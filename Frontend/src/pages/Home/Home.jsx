@@ -9,8 +9,7 @@ import { getGlobal } from "../../globals/globals";
 import secureLocalStorage from "react-secure-storage";
 
 export function Home() {
-
-    window.scrollTo(0,0)
+    
     const [bottomC, setBottomC] = useState(null);
 
     const [observer, setElements, entries] = useObserver({
@@ -111,6 +110,7 @@ export function Home() {
     }, [entries, observer])
     
     useEffect(() => {
+        window.scrollTo(0,0)
         async function fetchData() {
             const jsjs = await tobuttonCarousel()
             localStorage.setItem('productsBottomCarousel', JSON.stringify(jsjs))

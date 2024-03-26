@@ -20,6 +20,7 @@
 }
 
 .caja{
+    position: relative;
     height: 100%;
     width: 14%;
     min-width: 14%;
@@ -32,12 +33,24 @@
     border-width: 0.0625rem;
     box-shadow: 0.1875rem 0.1875rem 0.1875rem gray;
     transition: 200ms;
+    overflow: hidden;
     .col{
         height: auto;
     }
 }
 .resizeModal{
     --bs-modal-width: 800px;
+}
+
+.soldOutLI{
+    position: absolute;
+    padding: 0px 111px;
+    color: #FF4A4A;
+    font-weight: 700;
+    background-color: rgba(255, 0, 0, 0.34);
+    transform: translate(-50%, -50%) rotate(-45deg);
+    top: 20%;
+    left: 26%;
 }
 
 .imgProducto img{

@@ -17,6 +17,7 @@ export const TheCart = () => {
     const [currentDiv, setCurrentDiv] = useState(0);
     const [route, setRoute] = useState(false);
     const [btnDis, setBtnDis] = useState(true);
+    const [btnDis2, setBtnDis2] = useState(true);
     const LaFecha = new Date()
     let theUserCod = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
     //console.log(JSON.parse(secureLocalStorage.getItem('userData')));
@@ -62,6 +63,7 @@ export const TheCart = () => {
             "TIngresados": TIngresados
         })
         console.log(orderReq);
+        alert(orderReq)
     }
 
     useEffect(() => {
@@ -73,6 +75,10 @@ export const TheCart = () => {
         
         setSubTotalC(jsjs);
         if (jsjs > 300000) setSendCost(0)
+
+        if(jsjs===0){setBtnDis(true)}
+        else{setBtnDis(false)}
+
     }, [cart]);
 
     return (
@@ -101,10 +107,10 @@ export const TheCart = () => {
                 <div>SubTotal: $ {Formater(subTotalC)}</div>
                 <div>Envio: $ {Formater(sendCost)}</div>
                 <div className='subTit' style={{marginTop: '10px'}}>
-                    Total: $
-                    <span className='cBlack'>{Formater(subTotalC+sendCost)}</span>
+                    Total: {' '}
+                    <span className='cBlack'>${Formater(subTotalC+sendCost)}</span>
                 </div>
-                <button className="btnSendOrd boton" data-bs-toggle="modal" data-bs-target={`#sendOrderMod`} onClick={() => {console.log('upalalupa');}}>
+                <button className="btnSendOrd boton" data-bs-toggle="modal" data-bs-target={`#sendOrderMod`} disabled={btnDis}>
                     Enviar pedido
                 </button>
             </div>
@@ -112,14 +118,14 @@ export const TheCart = () => {
             <div className="modal fade" id='sendOrderMod' data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="idkLabel" aria-hidden="true">
                 <div className="modal-dialog" style={{marginTop: '25vh'}}>
                     <div className="modal-content">
-                        <button className="xButton" data-bs-dismiss="modal" aria-label="Close" onClick={()=>{setCurrentDiv(0);setBtnDis(true)}} ref={closeRef}>
+                        <button className="xButton" data-bs-dismiss="modal" aria-label="Close" onClick={()=>{setCurrentDiv(0);setBtnDis2(true)}} ref={closeRef}>
                             <i className="bi bi-x-circle-fill"></i>
                         </button>
                         <div className='modal-body'>
                             <div className='sendOrd genFont'>
                                 {  currentDiv === 0 &&
                                 <>
-                                    <button type="button" className="btnModal" onClick={()=>{setCurrentDiv(a=>a+1);setRoute(true);setBtnDis(false)}}>Enviar con ruta</button>
+                                    <button type="button" className="btnModal" onClick={()=>{setCurrentDiv(a=>a+1);setRoute(true);setBtnDis2(false)}}>Enviar con ruta</button>
                                     <button type="button" className="btnModal" onClick={()=>{setCurrentDiv(a=>a+2);setRoute(false)}} >Escoger fecha de envío</button>
                                 </>
                                 }
@@ -146,7 +152,7 @@ export const TheCart = () => {
                                             <input type="date" id="deadline" name="deadline" ref={dateChosen}
                                                 min={`${LaFecha.getFullYear()}-${(LaFecha.getMonth()+1).toString().padStart(2, '0').slice(-2)}-${(LaFecha.getDate()+1)}`}
                                                 style={{borderRadius: '10px'}}
-                                                onChange={()=>setBtnDis(false)}
+                                                onChange={()=>setBtnDis2(false)}
                                             />
                                         </div>
                                         }
@@ -167,7 +173,7 @@ export const TheCart = () => {
                                             onClick={()=>setCurrentDiv(a=>a-2)}>
                                             Volver
                                         </button>
-                                        <button type="button" className="btnModal btnConfirm" disabled={btnDis}
+                                        <button type="button" className="btnModal btnConfirm" disabled={btnDis2}
                                             onClick={handleSendOrder}>
                                             Confirmar
                                         </button>

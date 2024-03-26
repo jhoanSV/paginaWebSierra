@@ -1,0 +1,98 @@
+[
+    {
+      "Cod": "AP001",
+      "Descripcion": "acople rapido",
+      "Categoria": "EBANISTERIA",
+      "PVenta": 4000,
+      "Iva": 19,
+      "Agotado": 1,
+      "EsUnidadOpaquete" : 1,
+      "Detalle": "",
+      "Score": 2.10383333333,
+      "Cant" : 0
+    },
+    {
+      "Cod": "AM002",
+      "Descripcion": "amarre 20 cm x 3,6 mm Blanco",
+      "Categoria": "EBANISTERIA",
+      "PVenta": 3900,
+      "Iva": 19,
+      "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
+      "Detalle": "",
+      "Score": 0.30123717949,
+      "Cant" : 0
+    },
+    {
+      "Cod": "ROD01",
+      "Descripcion": "Rodillo Felpa Acrilica 9\"",
+      "Categoria": "EBANISTERIA",
+      "PVenta": 3900,
+      "Iva": 19,
+      "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
+      "Detalle": "",
+      "Score": 0.14546794872,
+      "Cant" : 0
+    },
+    {
+      "Cod": "36001",
+      "Descripcion": "Fotocelda 12mm",
+      "Categoria": "ESTUDIANTIL",
+      "PVenta": 2200,
+      "Iva": 19,
+      "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
+      "Detalle": "",
+      "Score": 0.64746969697,
+      "Cant" : 0      
+    },
+    {
+      "Cod": "RG062DA",
+      "Descripcion": "Boquilla gas Hand Torch",
+      "Categoria": "GAS",
+      "PVenta": 109000,
+      "Iva": 19,
+      "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
+      "Detalle": "",
+      "Score": 40.8094411315,
+      "Cant" : 0
+    },
+    {
+      "Cod": "RG065",
+      "Descripcion": "Gas butano",
+      "Categoria": "GAS",
+      "PVenta": 32250,
+      "Iva": 19,
+      "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
+      "Detalle": "",
+      "Score": 7.50589728682,
+      "Cant" : 0
+    },
+    {
+      "Cod": "14-106",
+      "Descripcion": "Niple 1/2\" x 6 cm",
+      "Categoria": "GRIFERIA",
+      "PVenta": 1900,
+      "Iva": 19,
+      "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
+      "Detalle": "",
+      "Score": 0.11466596491,
+      "Cant" : 0
+    },
+    {
+      "Cod": "14-301",
+      "Descripcion": "Codo 45° H-H 1/2\"",
+      "Categoria": "GRIFERIA",
+      "PVenta": 1400,
+      "Iva": 19,
+      "Agotado": 0,
+      "EsUnidadOpaquete" : 1,
+      "Detalle": "",
+      "Score": 0.07271190476,
+      "Cant" : 0
+    }
+  ]

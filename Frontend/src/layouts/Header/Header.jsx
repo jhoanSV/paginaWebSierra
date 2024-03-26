@@ -4,20 +4,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { products, Alias } from '../../api';
 import { getGlobal } from "../../globals/globals";
 import secureLocalStorage from "react-secure-storage";
-import { useTextUpdate } from "../../TextContext";
-import { useQState, useQStateUpdt } from "../../QStateContext";
+import { useTheContext } from "../../TheProvider";
 
 export function Header() {
 
     const location = useLocation()    
     // const [ pro , setpro ] = useState('');//products
-    // const [ alias , setAlias ] = useState('');    
-    //const [queryEnded, setQueryEnded] = useState(false);
+    // const [ alias , setAlias ] = useState('');
     const [toProducts, setToProducts] = useState(location.pathname==='/productos' ? true : false);
     const navigate = useNavigate()
-    const updateText = useTextUpdate()
-    const queryEnded = useQState()
-    const updtQState = useQStateUpdt()
+    const { queryEnded, setQueryEnded, setSBText } = useTheContext()
     let userName = null
     //let sortedJson2
 
@@ -44,7 +40,7 @@ export function Header() {
     }, [queryEnded]);
 
     const uploadProducts = async()=>{
-        updtQState(false)
+        setQueryEnded(false)
         const productsList = await products({
             //"logged": false//getGlobal('isLogged')
             "CodUser": '493'
@@ -54,8 +50,8 @@ export function Header() {
         secureLocalStorage.setItem('productsList', JSON.stringify(productsList))
         secureLocalStorage.setItem('aliasList', JSON.stringify(aliasList))
         //setAlias(aliasList)
-        updateText('pruebajsjs1')
-        updtQState(true)
+        setSBText('pruebajsjs1')
+        setQueryEnded(true)
     }
 
     /*const filterProduct = async (text) => {
@@ -101,7 +97,7 @@ export function Header() {
     
     const searchProduct = (text) => {
         console.log(text);
-        updateText(text)
+        setSBText(text)
         if (text === ''){
             uploadProducts()
             // navigate('/productos',{state:{products: false}});

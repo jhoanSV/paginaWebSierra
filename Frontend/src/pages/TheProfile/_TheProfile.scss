@@ -27,7 +27,13 @@
 }
 
 .userData{
+    width: 100%;
     margin-left: 42%;
+}
+
+.userData > *{
+    margin-bottom: 20px;
+    overflow-x: auto;
 }
 
 .btn-container1{

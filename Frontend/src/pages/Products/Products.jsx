@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./_Products.scss";
 import { ListItem } from "../../Componentes/Others";
-//import arJason from "../../Assets/png/Productos/productos.json";//prueba jsjs
-//import { useLocation } from "react-router-dom";
+import arJason from "../../Assets/productos.json";//prueba jsjs
 import secureLocalStorage from "react-secure-storage";
-import { useText } from "../../TextContext";
-import { useQState } from "../../QStateContext";
+import { useTheContext } from "../../TheProvider";
 
 export function Products() {
   
-  const SBText = useText() //searchBarText
-  const queryEnded = useQState()
+  // const SBText = useText() //searchBarText
+  // const queryEnded = useQState()
+  const { sBText, queryEnded, categSelect } = useTheContext()
   const [lista, setLista] = useState(null);
   const [limit, setLimit] = useState();
-  // eslint-disable-next-line
-  const [ category, setCategory] = useState('');//useState('ELECTRICOS');
 
   const filterProduct = async (text) => {
     //Searh the list of products that includes the text, either because it is in the "products" table or in the "alias" table  
@@ -22,11 +19,11 @@ export function Products() {
     const alias = JSON.parse(secureLocalStorage.getItem('aliasList'));
     let proData = pro//The whole table "products".
     let aliasData = alias//The whole table "alias".
-    //If Category is different to empty then select only the productos with that category
+    //If categSelect is different to empty then select only the productos with that category
     try {
-        if (category !== '') {
-            proData = pro.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
-            aliasData = alias.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
+        if (categSelect !== '') {
+            proData = pro.filter(item => item.Categoria.toLowerCase() === categSelect.toLowerCase());
+            aliasData = alias.filter(item => item.Categoria.toLowerCase() === categSelect.toLowerCase());
         }
         // Define a case-insensitive text filter function
         const filterByText = (item) =>
@@ -61,23 +58,27 @@ export function Products() {
   }
 
   useEffect(() => {
-    console.log(SBText);
-    if(SBText!=='' && SBText.length > 2){
-      filterProduct(SBText)
+    console.log(sBText);
+    if(sBText!=='' && sBText.length > 2){
+      filterProduct(sBText)
     }
     // eslint-disable-next-line
-  }, [SBText]);
+  }, [sBText]);
 
   useEffect(() => {
     setLista(JSON.parse(secureLocalStorage.getItem('productsList')))
     setLimit(10)
   }, [queryEnded]);
 
+  useEffect(() => {
+    window.scrollTo(0,0)
+  }, []);
+
   return (
     <>
       <section className='products'>
         <div className="productsContainer">
-          { lista!==null ?
+          { (lista!==null && lista!==false) ?
             lista.slice(0,limit).map((item, index) =>
               <ListItem
                 key={index}
@@ -92,9 +93,23 @@ export function Products() {
                 agotado={item.Agotado}
                 lista={lista}/>
             )
+          : (lista===null)?//* here is in the case when everything is ok but there is no products
+            arJason.slice(0,limit).map((item, index) =>
+              <ListItem
+                key={index}
+                img={`https://sivar.com.co/Imgs/ProductsAVIF/${item.Cod}.avif`}
+                llave = {index}//Para apuntar a cada modal
+                codigo = {item.Cod}
+                descripcion = {item.Descripcion}
+                descripcionComp={item.Detalle}
+                unitPrice={item.PVenta}
+                unitPaq={item.EsUnidadOpaquete}
+                category={(item.Categoria).toLowerCase()}
+                agotado={item.Agotado}
+                lista={arJason}/>
+            )
           :
-            <>
-            </>
+            <></>
           }
         </div>
       </section>

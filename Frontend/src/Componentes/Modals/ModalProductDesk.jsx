@@ -4,7 +4,7 @@ import { getGlobal } from '../../globals/globals';
 //import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codigo, category,
-    unitPaq, unitPrice, lista}) => {
+    unitPaq, unitPrice, lista, agotado}) => {
 
     const [cant, setCant] = useState(unitPaq)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
@@ -45,23 +45,23 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
         const theCart = localStorage.getItem('cart')        
         //const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
         const productJson = lista[llave]
-        if(theCart){
-            const addToCart = JSON.parse(theCart)
-            const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
-            if (productIndex !== -1) {
-                addToCart[productIndex].Cant += cant
-                localStorage.setItem("cart", JSON.stringify(addToCart))
-                return
-            }
-            //*Add the cant assigned
-            productJson.Cant = cant            
-            addToCart.push(productJson)
+        // if(theCart){
+        const addToCart = JSON.parse(theCart)
+        const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
+        if (productIndex !== -1) {//* if the is already the same product just increase the cant
+            addToCart[productIndex].Cant += cant
             localStorage.setItem("cart", JSON.stringify(addToCart))
-        }else{   
-            //*Add the cant assigned
-            productJson.Cant = cant
-            localStorage.setItem("cart", JSON.stringify([productJson]))
+            return
         }
+        //*Add the cant assigned
+        productJson.Cant = cant            
+        addToCart.push(productJson)
+        localStorage.setItem("cart", JSON.stringify(addToCart))
+        // }else{   
+        //     //*Add the cant assigned
+        //     productJson.Cant = cant
+        //     localStorage.setItem("cart", JSON.stringify([productJson]))
+        // }
     }
 
     return (
@@ -72,8 +72,15 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
             <div className="modal-body p-0">
                 <div className="row row-cols-2">
                     <div className="col d-flex flex-column">
-                        <div className={`imgModal C${category}`}>                            
-                            <picture>
+                        <div className={`imgModal C${category}`}>
+                            <picture style={{position: 'relative', overflow: 'hidden'}}>
+                                { agotado ?
+                                    <div className='soldOutMod'>
+                                        AGOTADO
+                                    </div>
+                                :
+                                    <></>
+                                }
                                 <source
                                     type="image/avif"
                                     srcSet={img}
@@ -181,7 +188,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     </div>
                                 }
                             </h1>
-                            <button className="btnAddCart boton" onClick={() => {btnCart()}} data-bs-dismiss="modal">
+                            <button className="btnAddCart boton" disabled={agotado} onClick={() => {btnCart()}} data-bs-dismiss="modal">
                                 Agregar al carrito
                             </button>
                         </div>

@@ -3,7 +3,7 @@ import { getGlobal } from '../../globals/globals';
 //import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codigo, category,
-    unitPaq, unitPrice, lista}) => {
+    unitPaq, unitPrice, lista, agotado}) => {
 
     const [cant, setCant] = useState(unitPaq)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
@@ -33,23 +33,23 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
         //*if false, theCart is undefined. productJson is the current product json.
         const theCart = localStorage.getItem('cart')
         const productJson = lista[llave]
-        if(theCart){
-            const addToCart = JSON.parse(theCart)
-            const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
-            if (productIndex !== -1) {
-                addToCart[productIndex].Cant += cant
-                localStorage.setItem("cart", JSON.stringify(addToCart))
-                return
-            }
-            //*Add the cant assigned
-            productJson.Cant = cant
-            addToCart.push(productJson)
+        // if(theCart){
+        const addToCart = JSON.parse(theCart)
+        const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
+        if (productIndex !== -1) {//* if the is already the same product just increase the cant
+            addToCart[productIndex].Cant += cant
             localStorage.setItem("cart", JSON.stringify(addToCart))
-        }else{
-            //*Add the cant assigned
-            productJson.Cant = cant
-            localStorage.setItem("cart", JSON.stringify([productJson]))
+            return
         }
+        //*Add the cant assigned
+        productJson.Cant = cant
+        addToCart.push(productJson)
+        localStorage.setItem("cart", JSON.stringify(addToCart))
+        // }else{
+        //     //*Add the cant assigned
+        //     productJson.Cant = cant
+        //     localStorage.setItem("cart", JSON.stringify([productJson]))
+        // }
     }
 
     return (
@@ -80,7 +80,14 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                             </div>
                         </div>
                         <div className={`imgModal C${category}`}>
-                            <picture>
+                            <picture style={{position: 'relative', overflow: 'hidden'}}>
+                                { agotado ?
+                                    <div className='soldOutMod'>
+                                        AGOTADO
+                                    </div>
+                                :
+                                    <></>
+                                }
                                 <source
                                     type="image/avif"
                                     srcSet={img}
@@ -165,7 +172,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                             </div>
                         </div>
                         <div className='mt-auto'>
-                            <button className="btnAddCart boton" onClick={() => {btnCart()}} data-bs-dismiss="modal">
+                            <button className="btnAddCart boton" disabled={agotado} onClick={() => {btnCart()}} data-bs-dismiss="modal">
                                 Agregar al carrito
                             </button>
                         </div>

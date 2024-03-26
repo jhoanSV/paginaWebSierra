@@ -1,26 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './_itemCart.scss';
 import { Formater } from '../../globals/otherFunctions';
+import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantidad, onDelete, updtC}) => {
-    let imgpng = 0
-    let imgAvif = 0    
     
     const [cant, setCant] = useState(parseInt(cantidad))
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [fontResize, setFontResize] = useState('');
-    
-    try {//intenta buscar la imagen png
-        imgpng = require(`../../Assets/png/Productos/${cod}.png`)
-    } catch (error) {
-        imgpng = 0
-    }
-    try {//intenta buscar la imagen AVIF
-        imgAvif = require(`../../Assets/avif/Productos/${cod}.avif`)
-    } catch (error) {
-        imgAvif = 0
-    }
+    const [imgSrc, setImgSrc] = useState(`https://sivar.com.co/Imgs/ProductsAVIF/${cod}.avif`);
 
     const handleDelete = () =>{        
         onDelete(id)
@@ -46,6 +35,11 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
         // eslint-disable-next-line
     }, [screenWidth]);
 
+    const handleError = () =>{
+        console.log(`img ${cod} not found`);
+        setImgSrc(imgPlaceHolder)
+    }
+
     return (
         <div className='itemCartStyle' id={`a${id}`} >
             <div className='delContainer' role='button' 
@@ -56,31 +50,18 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
             </div>
             <div className='itemCartImgContainer'>
                 <div className={`imgProducto itemCartImg C${category}`}>
-                    { imgAvif ? 
-                        <picture>
-                            <source                                            
-                                type="image/avif"
-                                srcSet={imgAvif}                                            
-                                />
-                            <img                                            
-                                src={imgpng}
-                                alt="categoria"
-                                decoding="async"
-                                />
-                        </picture>
-                        : imgpng ?                                    
+                    <picture>
+                        <source
+                            type="image/avif"
+                            srcSet={imgSrc}
+                        />
                         <img
-                            src={imgpng}
+                            src={imgSrc}
+                            onError={handleError}
                             alt="categoria"
                             decoding="async"
                         />
-                        :
-                        <img
-                        src={require('../../Assets/png/placeHolderProduct.png')}
-                        alt="categoria"
-                        decoding="async"
-                        />
-                    }
+                    </picture>                    
                 </div>
             </div>
             <div className='detailsItem'>

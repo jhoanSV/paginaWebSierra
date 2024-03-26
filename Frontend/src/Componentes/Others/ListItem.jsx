@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./_ListItem.scss";
 import { ModalProductDesk, ModalProductMob } from "../Modals";
 import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ListItem=({llave, codigo, descripcion, descripcionComp,
-    unitPrice, category, unitPaq, lista})=>{
+    unitPrice, category, unitPaq, lista, agotado})=>{
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [isMobile, setIsMobile] = useState();
-    //const [Theimg, setTheimg] = useState(imgPlaceHolder);
     const [imgSrc, setImgSrc] = useState(`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
     const [Show1, setShow1] = useState(false);
+    const theCaja = useRef()
     
     const resize_ob = new ResizeObserver(function() {
         setScreenWidth(window.innerWidth);
@@ -35,20 +35,25 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [screenWidth])
 
-    useEffect(() => {
-        console.log('cambia código');
+    useEffect(() => {        
         setImgSrc(`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
     }, [codigo]);
 
     const handleError = () =>{
-        console.log('handleError in listItem');
+        console.log(`img ${codigo} not found`);
         setImgSrc(imgPlaceHolder)
     }
 
     return(
         <>
-            <div id={`box${llave}`} className='caja' data-bs-toggle="modal" data-bs-target={`#producto${llave}`} onClick={click_caja}>
-                
+            <div id={`box${llave}`} ref={theCaja} className='caja' data-bs-toggle="modal" data-bs-target={`#producto${llave}`} onClick={click_caja}>                
+                { agotado ?                    
+                    <div className='soldOutLI' style={{fontSize: (theCaja.current ? theCaja.current.clientWidth - 30 : 0)+'%'}}>
+                        AGOTADO
+                    </div>
+                :
+                    <></>
+                }
                 <div className="row">
                     <div className="col h-100">
                         <div className="row row-cols-1 g-0">
@@ -62,7 +67,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                                     <img
                                         src={imgSrc}
                                         onError={handleError}
-                                        alt="categoria"
+                                        alt="ImagenProducto"
                                         decoding="async"
                                     />
                                 </picture>
@@ -84,8 +89,6 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                         Show1 ? 
                         <ModalProductMob
                             llave={llave}
-                            /*imgAvif={imgAvif}
-                            imgpng={imgpng}*/
                             img={imgSrc}
                             descripcion={descripcion}
                             descripcionComp={descripcionComp}
@@ -93,14 +96,13 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                             category={category}
                             unitPaq={unitPaq}
                             unitPrice={unitPrice}
+                            agotado={agotado}
                             lista={lista}
                         />:<></>
                         :
                         Show1 ?
                         <ModalProductDesk
                             llave={llave}
-                            /*imgAvif={imgAvif}
-                            imgpng={imgpng}*/
                             img={imgSrc}
                             descripcion={descripcion}
                             descripcionComp={descripcionComp}
@@ -108,6 +110,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                             category={category}
                             unitPaq={unitPaq}
                             unitPrice={unitPrice}
+                            agotado={agotado}
                             lista={lista}
                         />
                         :
