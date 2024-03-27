@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getGlobal } from '../../globals/globals';
 //import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codigo, category,
     unitPaq, unitPrice, lista, agotado}) => {
 
-    const [cant, setCant] = useState(unitPaq)
+    const [cant, setCant] = useState(0)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     const [showDesc, setShowDesc] = useState(false)
 
@@ -51,6 +51,10 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
         //     localStorage.setItem("cart", JSON.stringify([productJson]))
         // }
     }
+    
+    useEffect(() => {
+        setCant(0)
+    }, []);
 
     return (
         <div className="modal-content productBox">
@@ -124,7 +128,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                 </div>
                                 <div className="quantityBox">
                                     <button className="btnQuantity" onClick={() => {
-                                        if((cant-unitPaq)>0){
+                                        if((cant-unitPaq)>=0){
                                             setCant(cant-unitPaq)
                                             setTotalPrice(unitPrice*(cant-unitPaq))
                                         }
@@ -172,7 +176,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                             </div>
                         </div>
                         <div className='mt-auto'>
-                            <button className="btnAddCart boton" disabled={agotado} onClick={() => {btnCart()}} data-bs-dismiss="modal">
+                            <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart()}} data-bs-dismiss="modal">
                                 Agregar al carrito
                             </button>
                         </div>

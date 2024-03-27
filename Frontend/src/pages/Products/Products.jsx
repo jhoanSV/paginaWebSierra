@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./_Products.scss";
 import { ListItem } from "../../Componentes/Others";
-import arJason from "../../Assets/productos.json";//prueba jsjs
+//import arJason from "../../Assets/productos.json";//prueba jsjs
 import secureLocalStorage from "react-secure-storage";
 import { useTheContext } from "../../TheProvider";
 
@@ -37,7 +37,7 @@ export function Products() {
         // Extract unique cod values from aliasData
         const CodAlias = [...new Set(TFiltro2.map((item) => item.Cod))];
         // Filter products based on unique cod values
-        const aliasProducts = proData.filter((item) => CodAlias.includes(item.cod));
+        const aliasProducts = proData.filter((item) => CodAlias.includes(item.Cod));
         // Extract unique cod values from aliasProducts
         //const uniqueAliasProducts = [...new Set(aliasProducts.map((item) => item.cod))];
         // Combine the unique cod values from TFiltro1 and aliasProducts
@@ -50,7 +50,6 @@ export function Products() {
         //!const sortedJson = JSON.stringify(dataArray);
         //sortedJson2 = sortedJson
         setLista(dataArray)
-        console.log(dataArray);
         //setFilteredProducts(sortedJson);
     } catch (error) {
         //sortedJson2 = false
@@ -71,7 +70,7 @@ export function Products() {
     if(JSON.parse(secureLocalStorage.getItem('productsList'))){
       setLista(JSON.parse(secureLocalStorage.getItem('productsList')))
       setLimit(60)
-    }    
+    }
   }, [queryEnded]);
 
   useEffect(() => {

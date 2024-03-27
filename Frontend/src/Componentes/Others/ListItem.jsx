@@ -6,6 +6,7 @@ import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 export const ListItem=({llave, codigo, descripcion, descripcionComp,
     unitPrice, category, unitPaq, lista, agotado})=>{
 
+    const [key, setKey] = useState(0);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [isMobile, setIsMobile] = useState();
     const [imgSrc, setImgSrc] = useState(`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
@@ -33,16 +34,17 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
             setIsMobile(false)
         }            
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [screenWidth])
-
-    useEffect(() => {        
-        setImgSrc(`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
-    }, [codigo]);
+    }, [screenWidth])    
 
     const handleError = () =>{
-        console.log(`img ${codigo} not found`);
+        //console.log(`img ${codigo} not found`);
         setImgSrc(imgPlaceHolder)
     }
+
+    useEffect(() => {
+        setKey(prevKey => prevKey + 1);
+        setImgSrc(`https://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
+    }, [codigo]);
 
     return(
         <>
@@ -88,6 +90,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                     { isMobile ? 
                         Show1 ? 
                         <ModalProductMob
+                            key={key}
                             llave={llave}
                             img={imgSrc}
                             descripcion={descripcion}
@@ -102,6 +105,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                         :
                         Show1 ?
                         <ModalProductDesk
+                            key={key}
                             llave={llave}
                             img={imgSrc}
                             descripcion={descripcion}

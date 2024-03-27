@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./_MPDesk.scss"
 import { getGlobal } from '../../globals/globals';
 //import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
@@ -6,7 +6,7 @@ import { getGlobal } from '../../globals/globals';
 export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codigo, category,
     unitPaq, unitPrice, lista, agotado}) => {
 
-    const [cant, setCant] = useState(unitPaq)
+    const [cant, setCant] = useState(0)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
 
     let quantity = null
@@ -63,6 +63,10 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
         //     localStorage.setItem("cart", JSON.stringify([productJson]))
         // }
     }
+
+    useEffect(() => {
+        setCant(0)
+    }, []);
 
     return (
         <div className="modal-content productBox">
@@ -133,7 +137,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                             </div>
                             <div className="quantityBox">
                                 <button className="btnQuantity" onClick={() => {
-                                    if((cant-unitPaq)>0){
+                                    if((cant-unitPaq)>=0){
                                         setCant(cant-unitPaq)
                                         setTotalPrice(unitPrice*(cant-unitPaq))
                                     }
@@ -149,6 +153,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     onBlur={(e)=>{
                                         let theCant = parseInt(e.target.value)
                                         if(e.target.value%unitPaq !== 0){
+                                            // Math.ceil(e.target.value / unitPaq) * unitPaq --> this calculates the min cant depends on unitPaq
                                             theCant = parseInt(Math.ceil(e.target.value / unitPaq) * unitPaq)
                                             setCant(theCant);
                                         }
@@ -188,7 +193,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     </div>
                                 }
                             </h1>
-                            <button className="btnAddCart boton" disabled={agotado} onClick={() => {btnCart()}} data-bs-dismiss="modal">
+                            <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart()}} data-bs-dismiss="modal">
                                 Agregar al carrito
                             </button>
                         </div>

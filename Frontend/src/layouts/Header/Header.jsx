@@ -42,14 +42,13 @@ export function Header() {
     const uploadProducts = async()=>{
         setQueryEnded(false)
         const productsList = await products({
-            //"logged": false//getGlobal('isLogged')
-            "CodUser": '493'
+            //"logged": false//getGlobal('isLogged') //! Ojo que acá no recuerdo cómo era
+            //"CodUser": '493'
+            "CodUser": '2'
         })
         const aliasList = await Alias()
-        //setpro(productsList)
         secureLocalStorage.setItem('productsList', JSON.stringify(productsList))
-        secureLocalStorage.setItem('aliasList', JSON.stringify(aliasList))
-        //setAlias(aliasList)
+        secureLocalStorage.setItem('aliasList', JSON.stringify(aliasList))        
         setSBText('pruebajsjs1')
         setQueryEnded(true)
     }
@@ -164,6 +163,7 @@ export function Header() {
                                     Productos
                                 </Link>
                             </li>
+                            <li><Link to="/catalogo/inicio" type="button" className="dropdown-item">Catalogo</Link></li>
                             <li><Link to="/nosotros" type="button" className="dropdown-item">Quienes somos</Link></li>
                             <li><Link to="/contactanos" type="button" className="dropdown-item">Contactanos</Link></li>
                         </ul>
