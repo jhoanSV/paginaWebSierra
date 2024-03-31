@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import "./_MPDesk.scss"
-import { getGlobal } from '../../globals/globals';
+//import { getGlobal } from '../../globals/globals'; remove later
+import { useTheContext } from '../../TheProvider';
+import { useNavigate } from 'react-router-dom';
 //import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codigo, category,
@@ -8,9 +10,11 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
 
     const [cant, setCant] = useState(0)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
+    const { logged } = useTheContext()
+    const navigate = useNavigate()
 
     let quantity = null
-    let logged = getGlobal('isLogged')
+    //let logged = getGlobal('isLogged')
     let catSource
     try {        
         catSource = require(`../../Assets/avif/Logos/${category}.avif`)
@@ -193,9 +197,15 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     </div>
                                 }
                             </h1>
-                            <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart()}} data-bs-dismiss="modal">
-                                Agregar al carrito
-                            </button>
+                            { logged ? 
+                                <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart()}} data-bs-dismiss="modal">
+                                    Agregar al carrito
+                                </button>
+                                :
+                                <button className="modalBtnLogin boton" onClick={() => {navigate('/inicio_sesion')}} data-bs-dismiss="modal">
+                                    Iniciar Sesion
+                                </button>
+                            }
                         </div>
                     </div>
                 </div>

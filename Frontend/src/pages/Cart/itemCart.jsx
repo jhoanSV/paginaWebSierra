@@ -40,6 +40,13 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
         setImgSrc(imgPlaceHolder)
     }
 
+    useEffect(() => {        
+        setImgSrc(`https://sivar.com.co/Imgs/ProductsAVIF/${cod}.avif`)
+        setCant(parseInt(cantidad))
+        setTotalPrice(unitPrice*(parseInt(cantidad)))
+        // eslint-disable-next-line
+    }, [cod]);
+
     return (
         <div className='itemCartStyle' id={`a${id}`} >
             <div className='delContainer' role='button' 

@@ -5,12 +5,13 @@ import categ from "../../Assets/jpg/categorias/categorias.json";
 import { Link } from "react-router-dom";
 import { useObserver } from "../../Componentes/UseObs";
 import { BottonCarousel } from '../../api';
-import { getGlobal } from "../../globals/globals";
+import { useTheContext } from "../../TheProvider";
 import secureLocalStorage from "react-secure-storage";
 
 export function Home() {
     
     const [bottomC, setBottomC] = useState(null);
+    const { logged } = useTheContext()
 
     const [observer, setElements, entries] = useObserver({
         treshhold: 0.25,
@@ -50,14 +51,14 @@ export function Home() {
     const tobuttonCarousel = async() =>{
         let theCodeUser = 0
         let isLogged = false
-        if(getGlobal('isLogged')){
+        if(logged){
             isLogged = true
             theCodeUser = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
         }
         //*return the list of products of the button carousel, if is not logged, use the default user code
         const bCaroucel = await BottonCarousel(
             {
-                "logged": isLogged,
+                "logged": isLogged,//! ojo que no me acuerdo acá tampoco
                 "CodUser": theCodeUser
             }
         )        

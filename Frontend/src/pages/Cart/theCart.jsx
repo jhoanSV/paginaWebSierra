@@ -4,7 +4,8 @@ import { ItemCart } from './itemCart';
 import { Formater } from '../../globals/otherFunctions';
 import { EnviarVenta } from '../../api';
 import secureLocalStorage from 'react-secure-storage';
-import { getGlobal } from '../../globals/globals';
+import { useTheContext } from '../../TheProvider';
+import { useNavigate } from 'react-router-dom';
 
 export const TheCart = () => {
       
@@ -19,9 +20,11 @@ export const TheCart = () => {
     const [route, setRoute] = useState(false);
     const [btnDis, setBtnDis] = useState(true);
     const [btnDis2, setBtnDis2] = useState(true);
+    const { logged } = useTheContext()
+    const navigate = useNavigate()
     const LaFecha = new Date()
     let theUserCod = 0
-    if(getGlobal('isLogged')) theUserCod = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
+    if(logged) theUserCod = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
     //console.log(JSON.parse(secureLocalStorage.getItem('userData')));
 
     const deleteItemCart = (id) =>{
@@ -29,7 +32,6 @@ export const TheCart = () => {
         newCart.splice(id, 1);
         localStorage.setItem('cart', JSON.stringify(newCart))
         setCart(newCart);
-        //setSubTotalC(sumVal)
     }
 
     const updateCant = (id, val) =>{
@@ -39,7 +41,8 @@ export const TheCart = () => {
         localStorage.setItem('cart',JSON.stringify(newCart))        
     }
 
-    const handleSendOrder = async() =>{        
+    const handleSendOrder = async() =>{
+        if(!btnDis2){alert('dam')}
         const fecha = new Date()        
         const today = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate() + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds()        
         let TIngresados = [], sendDate = '', notes = theTextArea.current.value
@@ -73,7 +76,7 @@ export const TheCart = () => {
     
         cart.forEach((item) => {
             totalCost += item.PVenta * item.Cant;
-        });    
+        });
         
         setSubTotalC(totalCost);
         if (totalCost > 300000) setSendCost(0)
@@ -86,8 +89,13 @@ export const TheCart = () => {
 
     return (
         <section className='theCart'>
-            { getGlobal('isLogged') ?
+            { logged ?
                 <>
+                    <div className='banner1'>
+                        <div className='textBanner1Container'>
+                            Por compras superiores a $300,000 el env&iacute;o es gratis
+                        </div>
+                    </div>
                     <div className='itemsCart grayContainer'>
                         {
                             cart.map( (item, index) => {                                                
@@ -175,9 +183,9 @@ export const TheCart = () => {
                                             </div>
                                             <div style={{display: 'flex', marginTop: '15px'}}>
                                                 <button type="button" className="btnModal btnBack"
-                                                    onClick={()=>setCurrentDiv(a=>a-2)}>
+                                                    onClick={()=>{setCurrentDiv(a=>a-2);setBtnDis2(true)}}>
                                                     Volver
-                                                </button>
+                                                </button>                                                
                                                 <button type="button" className="btnModal btnConfirm" disabled={btnDis2}
                                                     onClick={handleSendOrder}>
                                                     Confirmar
@@ -192,8 +200,17 @@ export const TheCart = () => {
                     </div>
                 </>
             :   
-                <div style={{display: 'flex'}}>
-                    Debes iniciar sesión
+                <div className='goLogin'>
+                    <div style={{fontSize: '2rem', fontWeight: '600', textAlign: 'center'}}>
+                        Inicia sesi&oacute;n para usar esta carater&iacute;stica
+                    </div>
+                    <div className='hexContainer'>
+                        <i className="bi bi-hexagon-fill hexagon"></i>
+                        <i className="bi bi-question-circle userLogo"></i>
+                    </div>
+                    <button className="goLoginBtn boton" onClick={() => {navigate('/inicio_sesion')}}>
+                        Iniciar sesion
+                    </button>
                 </div>
             }
         </section>

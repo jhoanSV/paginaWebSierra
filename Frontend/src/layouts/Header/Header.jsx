@@ -1,19 +1,16 @@
-import {React, useEffect, useState } from "react";
+import {React, useEffect } from "react";
 import "./_header.scss";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { products, Alias } from '../../api';
-import { getGlobal } from "../../globals/globals";
 import secureLocalStorage from "react-secure-storage";
 import { useTheContext } from "../../TheProvider";
 
 export function Header() {
-
-    const location = useLocation()    
+    
     // const [ pro , setpro ] = useState('');//products
     // const [ alias , setAlias ] = useState('');
-    const [toProducts, setToProducts] = useState(location.pathname==='/productos' ? true : false);
     const navigate = useNavigate()
-    const { queryEnded, setQueryEnded, setSBText } = useTheContext()
+    const { queryEnded, setQueryEnded, setSBText, logged } = useTheContext()
     let userName = null
     //let sortedJson2
 
@@ -22,34 +19,30 @@ export function Header() {
     */
 
     useEffect(() => {        
-        uploadProducts({
-            "logged": false
-        })
+        uploadProducts()
         // eslint-disable-next-line
     }, [])
 
-    useEffect(() => {        
+    /*useEffect(() => {        
         if (queryEnded && toProducts) {
-            /*filterProduct(theText)
-            navigate('/productos',{state:{products: sortedJson2}});*/
+            filterProduct(theText)
+            navigate('/productos',{state:{products: sortedJson2}});
             navigate('/productos');
             console.log('query endedjsjs');
             setToProducts(false)
         }
         // eslint-disable-next-line
-    }, [queryEnded]);
+    }, [queryEnded]);*/
 
-    const uploadProducts = async()=>{
-        setQueryEnded(false)
+    const uploadProducts = async()=>{        
         const productsList = await products({
             //"logged": false//getGlobal('isLogged') //! Ojo que acá no recuerdo cómo era
             //"CodUser": '493'
             "CodUser": '2'
-        })
+        })        
         const aliasList = await Alias()
         secureLocalStorage.setItem('productsList', JSON.stringify(productsList))
-        secureLocalStorage.setItem('aliasList', JSON.stringify(aliasList))        
-        setSBText('pruebajsjs1')
+        secureLocalStorage.setItem('aliasList', JSON.stringify(aliasList))
         setQueryEnded(true)
     }
 
@@ -92,19 +85,20 @@ export function Header() {
         }
     }*/
    
-    if(getGlobal('isLogged')) userName = JSON.parse(secureLocalStorage.getItem('userData'))['Contacto']
+    if(logged) userName = JSON.parse(secureLocalStorage.getItem('userData'))['Ferreteria']
     
     const searchProduct = (text) => {
         console.log(text);
-        setSBText(text)
+        setSBText(text)        
         if (text === ''){
+            setQueryEnded(false)
             uploadProducts()
             // navigate('/productos',{state:{products: false}});
-        }else if (text.length > 2 && queryEnded) {
+        }else /*if (text.length > 2 && queryEnded) */{
             //filterProduct(text)
             //navigate('/productos',{state:{products: sortedJson2}});
             navigate('/productos');
-            setToProducts(true)
+            //setToProducts(true)
         }
     }
 
@@ -115,7 +109,7 @@ export function Header() {
 
     return(
         <header style={{position: 'relative'}}>
-            { (toProducts && (queryEnded === false)) ?
+            { (queryEnded === false) ?
             <div style={{position: 'absolute', right: '0', top: '0', color: "white", backgroundColor: 'black', zIndex: '1'}}>
                 cargando
             </div>
@@ -159,7 +153,7 @@ export function Header() {
                         </div>
                         <ul className="dropdown-menu">
                             <li><Link to="/" type="button" className="dropdown-item">Inicio</Link></li>
-                            <li><Link to={'productos'} type="button" className="dropdown-item" onClick={()=>setToProducts(true)}>                            
+                            <li><Link to={'productos'} type="button" className="dropdown-item">
                                     Productos
                                 </Link>
                             </li>
@@ -200,7 +194,7 @@ export function Header() {
                     </div>
 
                     <div className="col user">
-                        { getGlobal('isLogged') ?
+                        { logged ?
                             <>
                                 <div className="Tit userNameHead">
                                     Bienvenido {userName}
@@ -221,7 +215,7 @@ export function Header() {
                             </>
                             :
                             <>
-                                <Link type="button" className='btnCart' onClick={()=>{alert('Pailañero');}}>
+                                <Link to="/carrito" type="button" className='btnCart'>
                                     <i className="bi bi-cart4"></i>
                                 </Link>
                                 <Link to="/inicio_sesion" type="button" className='btnSignIn'>
@@ -249,7 +243,7 @@ export function Header() {
                         <div className="grupoBotones">
                             <div className="btn-group g1 flex-wrap">{/*Buttons group of the main view (computer)*/}
                                 <Link to="/" type="button" className="btn btn-navBar btn-lg">Inicio</Link>
-                                <Link to="productos" type="button" className="btn btn-navBar btn-lg" onClick={()=>setToProducts(true)}>
+                                <Link to="productos" type="button" className="btn btn-navBar btn-lg">
                                     Productos
                                 </Link>
                                 <Link to="/catalogo/inicio" type="button" className="btn btn-navBar btn-lg">Catalogo</Link>

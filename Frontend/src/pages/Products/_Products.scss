@@ -1,19 +1,20 @@
 //@import "../../scss/index.scss";
 .products{
     min-height: 450px;
+    padding: 0.9044rem 7rem;
 }
 
 .productsContainer{
     flex-wrap: wrap;
     display: flex;
-    padding: 0.9044rem 7rem;
+    max-height: 670px;
     overflow-y: auto;
     .caja{
         margin: 0% 3% 3% 3%;
     }
 }
 
-.nFound{
+.nFound{//banner products not found
     display: flex;
     background-color: #d9d9d9;
     color: #727272;
@@ -22,6 +23,12 @@
     font-weight: 600;
     padding: 20px 0px;
     justify-content: center;
+}
+
+.pcFoot{
+    background-color: black;
+    width: 100%;
+    height: 1px;
 }
 
 .loadingStls{
@@ -53,8 +60,11 @@
 }
 
 @media (max-width: 900px){
-    .productsContainer{
+    .products{
         padding: 0.9044rem 4rem;
+    }
+
+    .productsContainer{        
         .caja{
             margin: 0% 6% 6% 6%;
             width: 20%;
@@ -63,8 +73,10 @@
 }
 
 @media (max-width: 600px){
-    .productsContainer{
+    .products{
         padding: 0.9044rem 1rem;
+    }    
+    .productsContainer{        
         .caja{
             margin: 0% 2% 6% 3%;
             width: 44%;

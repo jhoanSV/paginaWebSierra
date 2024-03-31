@@ -7,12 +7,14 @@ export const useTheContext = () => {
 };
 
 export const TheProvider = ({ children }) => {
+    
+    const [logged, setLogged] = useState(false);
     const [queryEnded, setQueryEnded] = useState();
     const [sBText, setSBText] = useState('');
     const [categSelect, setCategSelect] = useState('');
   
     return (
-      <TheContext.Provider value={{ queryEnded, setQueryEnded, sBText, setSBText, categSelect, setCategSelect }}>
+      <TheContext.Provider value={{ queryEnded, setQueryEnded, sBText, setSBText, categSelect, setCategSelect, logged, setLogged }}>
         {children}
       </TheContext.Provider>
     );

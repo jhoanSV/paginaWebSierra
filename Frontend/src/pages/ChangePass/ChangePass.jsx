@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "./_ChangePass.scss";
 import { Changepassword } from '../../api';
-import { getGlobal } from '../../globals/globals';
+import { useTheContext } from '../../TheProvider';
+import { useNavigate } from 'react-router-dom';
 
 export const ChangePass = () => {
 
@@ -10,6 +11,8 @@ export const ChangePass = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [allOk, setAllOk] = useState([false, false, false]);
+    const { logged } = useTheContext()
+    const navigate = useNavigate()
 
     //* function to check if all values are true
     const checkAllTrue = () => {
@@ -95,10 +98,10 @@ export const ChangePass = () => {
     }
 
     //* this effect execute when allOk changes
-    useEffect(() => {        
+    useEffect(() => {
         if (checkAllTrue()) {
             document.querySelector('.btnChPass2').removeAttribute('disabled');
-        }else if (getGlobal('isLogged')){
+        }else if (logged){
             document.querySelector('.btnChPass2').setAttribute('disabled', true);
         }
         // eslint-disable-next-line
@@ -106,7 +109,7 @@ export const ChangePass = () => {
 
     return (
         <section className='py-5 d-flex justify-content-center'>
-            { getGlobal('isLogged') ?
+            { logged ?
                 <div className='grayContainer'>
                     <div className='tuercaContainer'>
                         <picture>
@@ -181,7 +184,18 @@ export const ChangePass = () => {
                     </div>
                 </div>
             :
-                <>Esta no es la página que estas buscando</>
+                <div className='goLogin'>
+                    <div style={{fontSize: '2rem', fontWeight: '600', textAlign: 'center'}}>
+                        Inicia sesi&oacute;n para usar esta carater&iacute;stica
+                    </div>
+                    <div className='hexContainer'>
+                        <i className="bi bi-hexagon-fill hexagon"></i>
+                        <i className="bi bi-question-circle userLogo"></i>
+                    </div>
+                    <button className="goLoginBtn boton" onClick={() => {navigate('/inicio_sesion')}}>
+                        Iniciar sesion
+                    </button>
+                </div>
             }
         </section>
     );

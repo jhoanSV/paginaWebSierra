@@ -6,11 +6,14 @@ import './index.scss';
 import "../node_modules/bootstrap/dist/js/bootstrap";
 //import { BrowserRouter } from "react-router-dom";
 import { HashRouter } from 'react-router-dom';
+import { TheProvider } from './TheProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <HashRouter>
-    <App />
+    <TheProvider>
+      <App />
+    </TheProvider>
   </HashRouter>
 );
 

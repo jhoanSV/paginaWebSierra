@@ -48,6 +48,45 @@
     margin-bottom: 20px;
 }
 
+// here is additional styles
+
+.goLogin{
+    width: 100%;
+    padding: 0px 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;    
+}
+.hexContainer{
+    display: flex;
+    width: 100%;
+    margin: 18px 0px;
+    position: relative;    
+    justify-content: center;
+    height: min-content;
+}
+.goLoginBtn.boton{
+    max-width: none;
+    width: 215px;
+    background-color: #0cc042;
+    letter-spacing: normal;
+}
+
+.hexContainer .hexagon{
+    animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+//end others styles
+
 @media screen  and (max-width: 852px){
     .tuercaContainer.profile{
         top: 7%;

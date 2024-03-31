@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getGlobal } from '../../globals/globals';
+//import { getGlobal } from '../../globals/globals'; remove later
+import { useTheContext } from '../../TheProvider';
+import { useNavigate } from 'react-router-dom';
 //import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codigo, category,
@@ -8,8 +10,10 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
     const [cant, setCant] = useState(0)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     const [showDesc, setShowDesc] = useState(false)
+    const { logged } = useTheContext()
+    const navigate = useNavigate()
 
-    let logged = getGlobal('isLogged')
+    //let logged = getGlobal('isLogged')
     let quantity = null
     let catSource
     try {        
@@ -176,9 +180,15 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                             </div>
                         </div>
                         <div className='mt-auto'>
-                            <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart()}} data-bs-dismiss="modal">
-                                Agregar al carrito
-                            </button>
+                            { logged ? 
+                                <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart()}} data-bs-dismiss="modal">
+                                    Agregar al carrito
+                                </button>
+                                :
+                                <button className="modalBtnLogin boton" onClick={() => {navigate('/inicio_sesion')}} data-bs-dismiss="modal">
+                                    Iniciar Sesion
+                                </button>
+                            }
                         </div>
                         <div className="mt-auto">
                             <p className="subTit" onClick={() => {

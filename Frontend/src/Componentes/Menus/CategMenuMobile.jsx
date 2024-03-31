@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './_CategMenuMobile.scss';
 import categs from "../../Assets/jpg/categorias/categorias.json";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTheContext } from '../../TheProvider';
 //import theIcon from '../../Assets/png/Logos/logoCatalogo.png'
 
@@ -10,7 +10,7 @@ export function CategMenuMobile() {
     const items = categs;
 
     const { setCategSelect } = useTheContext()
-    const [imgSel, setImgSel] = useState('logoCatalogo');    
+    const [imgSel, setImgSel] = useState('logoCatalogo');
     const isActive = useRef()
     isActive.current = false
     const targetRef = useRef(null);
@@ -32,21 +32,25 @@ export function CategMenuMobile() {
         }
     }
 
-    const handleCatSel = (a) =>{
-        setImgSel(a)
-        setCategSelect(`${a}`)
+    const handleCatSel = (a) =>{//* handle category selection
         navigate('/productos')
+        if(a===''){
+            setImgSel('logoCatalogo')
+        }else{
+            setImgSel(a)
+        }
+        setCategSelect(`${a}`)
+        console.log('??????');
     }
 
-    //Funcion para mostrar los logos en el menu desplegable
+    //* Funcion para mostrar los logos en el menu desplegable
     const Items = () => (        
         <ul className='m-0 p-0'>
           {
             items.map((item, index) => (
-                <li key={index} className='lstStylN items-menu-mob'>
-                    <div onClick={()=>{handleCatSel(item.descripcion)}}>
+                <li key={index} className='lstStylN items-menu-mob' onClick={()=>{handleCatSel(item.descripcion)}}>
                         <picture>
-                            <source 
+                            <source
                                 type="image/avif"
                                 srcSet={require(`../../Assets/avif/Logos/${item.descripcion}.avif`)}
                             />
@@ -56,23 +60,32 @@ export function CategMenuMobile() {
                                 alt="imgCategory"
                             />
                         </picture>
-                    </div>
                 </li>
             ))
           }
+            <li className='lstStylN items-menu-mob noContain1' onClick={()=>{handleCatSel('')}}>
+                <picture>
+                    <source 
+                        type="image/avif"
+                        srcSet={require(`../../Assets/avif/Logos/logocatalogo.avif`)}
+                    />
+                    <img                            
+                        src={require(`../../Assets/png/Logos/logoCatalogo.png`)}
+                        alt="imgCategory"
+                    />
+                </picture>
+            </li>
         </ul>
     );
 
     useEffect(() => {
-        console.log(targetRef.current);
         const handleClickOutside = (event) => {
-          if (targetRef.current && !targetRef.current.contains(event.target)) {            
+          if (targetRef.current && !targetRef.current.contains(event.target)) {
             isActive.current = false
             const items = document.querySelectorAll('.items-menu-mob')
             items.forEach(item =>{
                 item.classList.toggle('show', (false))
             })
-            console.log('ahre');
           }
         };
     
@@ -83,21 +96,20 @@ export function CategMenuMobile() {
         };
       }, [targetRef]);
 
-    return (
-        <>
-            <div ref={targetRef} className='menu-mob' onClick={showCats}>
+    return (        
+        <div ref={targetRef} className='menu-mob' onClick={showCats}>
 
-                <Items/>
-                
-                <label htmlFor='logoCat' className={ (imgSel==='logoCatalogo') ? ' ' : 'contain1'}>
-                    <img
-                        className='logoCatalogo'
-                        src={require(`../../Assets/png/Logos/${imgSel}.png`)}
-                        alt='LogoCatalogo'
-                    />
-                </label>
-            </div>
-        
-        </>
+            <Items/>
+            
+            <label htmlFor='logoCat' className={imgSel==='logoCatalogo' ? '' : 'contain1'}>
+                {<img
+                    className='logoCatalogo'
+                    src={require(`../../Assets/png/Logos/${imgSel}.png`)
+                    }
+                    alt='LogoCatalogo'
+                />}
+            </label>
+
+        </div>
     );
 }

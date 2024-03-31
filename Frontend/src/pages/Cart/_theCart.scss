@@ -2,8 +2,9 @@
 
 .theCart{
     display: flex;
+    position: relative;
     flex-wrap: wrap;
-    padding: 30px;
+    padding: 60px 30px;
     min-height: 455px;
 }
 
@@ -95,6 +96,33 @@
     resize: none;
     background-color: #d9d9d9;
 }
+.banner1{
+    width: 100%;
+    position: absolute;
+    background-color: #0cc042;
+    font-size: 1.5rem;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+.textBanner1Container{
+    animation: moveText 12s linear infinite;
+}
+
+@keyframes moveText {
+    0% {
+        opacity: 1;
+        transform: translateX(-45%);
+    }
+    99% {
+        opacity: 1;
+        transform: translateX(100%);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+  }
 
 @media screen and (max-width: 900px) {
     .btnModal{
