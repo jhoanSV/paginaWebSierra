@@ -193,7 +193,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     </div>
                                     :
                                     <div className="totalPrice genFont d-flex fw-bold">
-                                        Suscribete para más
+                                        Suscr&iacute;bete para más
                                     </div>
                                 }
                             </h1>

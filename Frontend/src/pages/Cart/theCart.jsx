@@ -6,6 +6,8 @@ import { EnviarVenta } from '../../api';
 import secureLocalStorage from 'react-secure-storage';
 import { useTheContext } from '../../TheProvider';
 import { useNavigate } from 'react-router-dom';
+import html2canvas from 'html2canvas';
+import { relative } from 'path-browserify';
 
 export const TheCart = () => {
       
@@ -20,12 +22,14 @@ export const TheCart = () => {
     const [route, setRoute] = useState(false);
     const [btnDis, setBtnDis] = useState(true);
     const [btnDis2, setBtnDis2] = useState(true);
+    const [consecutive, setConsecutive] = useState(0);
     const { logged } = useTheContext()
     const navigate = useNavigate()
     const LaFecha = new Date()
+    const tomorrow = new Date(LaFecha)
+    tomorrow.setDate(tomorrow.getDate() + 1);
     let theUserCod = 0
     if(logged) theUserCod = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
-    //console.log(JSON.parse(secureLocalStorage.getItem('userData')));
 
     const deleteItemCart = (id) =>{
         const newCart = [...cart]
@@ -38,37 +42,52 @@ export const TheCart = () => {
         const newCart = [...cart]
         newCart[id].Cant = val        
         setCart(newCart)
-        localStorage.setItem('cart',JSON.stringify(newCart))        
-    }
+        localStorage.setItem('cart',JSON.stringify(newCart))
+    }    
 
     const handleSendOrder = async() =>{
-        if(!btnDis2){alert('dam')}
-        const fecha = new Date()        
-        const today = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate() + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds()        
-        let TIngresados = [], sendDate = '', notes = theTextArea.current.value
-        cart.forEach((element) => {
-            TIngresados.push(`${element['Cant']},${element['Cod']},${element['PVenta']}`)
-        });
-        TIngresados = TIngresados.join(';');
-        if(route){
-            sendDate = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate())
-            notes = notes + ' ...Cuadrar fecha de entrega'
-        }else{
-            sendDate = dateChosen.current.value
-        }
-        console.log(notes);
-        const orderReq  = await EnviarVenta({
-            "CodCliente": theUserCod,
-            "FechaFactura": today,
-            "FechaDeEstado": today,
-            "FechaDeEntrega": sendDate,
-            "FechaVencimiento" : sendDate,
-            "NotaVenta": notes,
-            "VECommerce": "1",
-            "TIngresados": TIngresados
-        })
-        console.log(orderReq);
-        alert(orderReq)
+        // const fecha = new Date()        
+        // const today = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate() + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds()        
+        // let TIngresados = [], sendDate = '', notes = theTextArea.current.value
+        // cart.forEach((element) => {
+        //     TIngresados.push(`${element['Cant']},${element['Cod']},${element['PVenta']}`)
+        // });
+        // TIngresados = TIngresados.join(';');
+        // if(route){
+        //     sendDate = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate())
+        //     notes = notes + ' ...Cuadrar fecha de entrega'
+        // }else{
+        //     sendDate = dateChosen.current.value
+        // }
+        // const orderReq  = await EnviarVenta({
+        //     "CodCliente": theUserCod,
+        //     "FechaFactura": today,
+        //     "FechaDeEstado": today,
+        //     "FechaDeEntrega": sendDate,
+        //     "FechaVencimiento" : sendDate,
+        //     "NotaVenta": notes,
+        //     "VECommerce": "1",
+        //     "TIngresados": TIngresados
+        // })
+        // if(orderReq['success']===true){
+        //     consecutive = orderReq['NDePedido']
+        //     setShowReminder(true)
+        // }
+        setConsecutive(12)
+        setCurrentDiv(3)
+    }
+
+    const saveReminder = (divId, filename, width=550, height=550) => {
+        const divToExport = document.getElementById(divId);
+      
+        html2canvas(divToExport, {width, height})
+          .then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = imgData;
+            link.download = filename;
+            link.click();
+          });
     }
 
     useEffect(() => {
@@ -153,7 +172,7 @@ export const TheCart = () => {
                                             </div>
                                         </div>
                                         }
-                                        {  currentDiv === 2 &&                                
+                                        {  currentDiv === 2 &&
                                         <div style={{flexDirection: 'column', width: '100%', padding: '15px'}}>
                                             <div className='d-flex justify-content-between'>
                                                 <div>
@@ -163,7 +182,7 @@ export const TheCart = () => {
                                                 <div>
                                                     fecha:{' '}
                                                     <input type="date" id="deadline" name="deadline" ref={dateChosen}
-                                                        min={`${LaFecha.getFullYear()}-${(LaFecha.getMonth()+1).toString().padStart(2, '0').slice(-2)}-${(LaFecha.getDate()+1)}`}
+                                                        min={`${tomorrow.getFullYear()}-${(tomorrow.getMonth()+1).toString().padStart(2, '0').slice(-2)}-${(tomorrow.getDate()).toString().padStart(2, '0').slice(-2)}`}
                                                         style={{borderRadius: '10px'}}
                                                         onChange={()=>setBtnDis2(false)}
                                                     />
@@ -191,6 +210,39 @@ export const TheCart = () => {
                                                     Confirmar
                                                 </button>
                                             </div>
+                                        </div>
+                                        }
+                                        {currentDiv === 3 &&
+                                        <div className='reminderContainer'>
+                                            <div className='reminder' id='theReminder'>
+                                                <div style={{display: 'flex'}}>
+                                                    <picture>
+                                                        <source
+                                                            type="image/avif"
+                                                            srcSet={require('../../Assets/avif/LogoSivarAzul.avif')}
+                                                        />
+                                                        <img
+                                                            srcSet={require('../../Assets/png/LogoSivarAzul.png')}
+                                                            alt='LogoSivar'
+                                                            decoding="async"
+                                                        />
+                                                    </picture>
+                                                    <div style={{fontWeight: 'bold', color: 'green'}}>¡Enviado con Exito!</div>
+                                                </div>
+                                                <div style={{fontWeight: 'bold'}}>N° de pedido: {consecutive}</div>
+                                                <div style={{fontWeight: 'bold'}}>Empresa:</div>
+                                                <div>{JSON.parse(secureLocalStorage.getItem('userData'))['Ferreteria']}</div>
+                                                <div style={{fontWeight: 'bold'}}>Valor:</div>
+                                                <div>$ {Formater(subTotalC+sendCost)}</div>
+                                                <div style={{fontWeight: 'bold'}}>Fecha de entrega estimada:</div>
+                                                <div>lafechajsjs</div>
+                                                <div>nosebro</div>
+                                                <div style={{fontWeight: 'bold'}}>www.sivar.com.co</div>
+                                            </div>
+                                            <button className='btnModal' style={{margin:'5px auto'}}
+                                                onClick={()=>{saveReminder('theReminder', `S${consecutive}.png`)}}>
+                                                    Guardar
+                                            </button>
                                         </div>
                                         }
                                     </div>

@@ -174,7 +174,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                     </div>
                                     :
                                     <div className="totalPrice genFont d-flex fw-bold">
-                                        Suscribete para más
+                                        Suscr&iacute;bete para más
                                     </div>
                                 }
                             </div>

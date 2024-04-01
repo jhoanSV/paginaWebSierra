@@ -104,25 +104,57 @@
     top: 0;
     left: 0;
     overflow: hidden;
+    text-wrap: nowrap;
 }
 .textBanner1Container{
+    width: max-content;
     animation: moveText 12s linear infinite;
+}
+
+.reminderContainer{
+    display: flex;
+    flex-direction: column;    
+}
+.reminder{
+    width: 75%;
+    min-width: 344.5px;
+    padding: 10px;
+    display: flex;
+    aspect-ratio: 1 / 1;
+    border: 2px #193773 solid;
+    margin: auto;
+    flex-direction: column;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none;
+    picture{
+        width: 35%;
+        margin-right: 10px;
+        img{
+            width: 100%;
+        }
+    }
+}
+
+.reminder > div{
+    color: $azulPrincipal;
 }
 
 @keyframes moveText {
     0% {
         opacity: 1;
-        transform: translateX(-45%);
+        margin-left: 100%;
     }
     99% {
         opacity: 1;
-        transform: translateX(100%);
+        margin-left: -553.34px;
     }
+    
     100% {
         opacity: 0;
-        transform: translateX(100%);
+        margin-left: -553.34px;
     }
-  }
+}
 
 @media screen and (max-width: 900px) {
     .btnModal{
@@ -142,7 +174,7 @@
 
 @media screen and (max-width: 600px) {
     .theCart{
-        padding: 10px;
+        padding: 45px 10px;
     }
     .itemsCart.grayContainer{
         background-color: white;
