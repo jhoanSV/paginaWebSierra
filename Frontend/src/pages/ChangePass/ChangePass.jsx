@@ -3,6 +3,7 @@ import "./_ChangePass.scss";
 import { Changepassword } from '../../api';
 import { useTheContext } from '../../TheProvider';
 import { useNavigate } from 'react-router-dom';
+import secureLocalStorage from 'react-secure-storage';
 
 export const ChangePass = () => {
 
@@ -11,6 +12,7 @@ export const ChangePass = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [allOk, setAllOk] = useState([false, false, false]);
+    const [btnDis3, setBtnDis3] = useState(true);
     const { logged } = useTheContext()
     const navigate = useNavigate()
 
@@ -21,19 +23,24 @@ export const ChangePass = () => {
 
     const toChangePassword = async() =>{
         /*Funtion to check if the user is alowed to change the password*/
+        console.log('fuck');
         const dataChangePassword = await Changepassword({
             "CodUser": "493",
             "Password": currentPassword,
             "NewPassword": newPassword
         })
+        console.log(dataChangePassword);
         if (dataChangePassword.hasOwnProperty('authorization') & dataChangePassword.authorization === 'Authorized'){
             //password changed
             console.log('authorized', dataChangePassword)
+            alert('Contraseña modificada correctamente')
+            secureLocalStorage.removeItem('userData')
+            window.location.href = '/inicio_sesion'
         } else if (dataChangePassword.hasOwnProperty('error') & dataChangePassword.error === 'Unauthorized'){
             //password not changed
             console.log('unauthorized', dataChangePassword)
+            alert('Contraseña modificada correctamente')
         }
-
     }
 
 
@@ -91,7 +98,6 @@ export const ChangePass = () => {
             text = ''
             setAllOk(prevState => [prevState[0], true, prevState[2]]);
         }else{
-            console.log("aja")
             setAllOk(prevState => [prevState[0], false, prevState[2]]);
         }
         setVariableText(text)
@@ -100,9 +106,9 @@ export const ChangePass = () => {
     //* this effect execute when allOk changes
     useEffect(() => {
         if (checkAllTrue()) {
-            document.querySelector('.btnChPass2').removeAttribute('disabled');
+            setBtnDis3(false)
         }else if (logged){
-            document.querySelector('.btnChPass2').setAttribute('disabled', true);
+            setBtnDis3(true)
         }
         // eslint-disable-next-line
     }, [allOk]);
@@ -178,7 +184,7 @@ export const ChangePass = () => {
                         <button className='btnChPass'>
                             Cancelar
                         </button>
-                        <button className='btnChPass2' disabled onClick={()=>{toChangePassword()}}>
+                        <button className='btnChPass2' disabled={btnDis3} onClick={()=>{toChangePassword()}}>
                             Cambiar Contraseña
                         </button>
                     </div>

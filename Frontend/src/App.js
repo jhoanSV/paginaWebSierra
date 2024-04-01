@@ -21,7 +21,6 @@ export default function App() {
     if(ud){
       //setGlobal({ isLogged:true })
       setLogged(true)
-      console.log('a?');
     }else if(localStorage.getItem('@secure.s.userData')){
       alert('Su sesion ha expirado, por favor vuelva a ingresar');
       window.location.href = '/'

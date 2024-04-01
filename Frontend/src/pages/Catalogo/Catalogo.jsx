@@ -2,8 +2,9 @@ import { React, useEffect, useState } from "react";
 //import { useLocation } from "react-router-dom";
 //import { PdfViewer } from "../../Componentes/PdfViewer/PdfViewer";
 import { PdfViewer2 } from "../../Componentes/PdfViewer/PdfViewer2";
+import categs from '../../Assets/jpg/categorias/categorias.json';
 import "./_Catalogo.scss";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export function Catalogo() {
 
@@ -39,7 +40,20 @@ export function Catalogo() {
                         {/*<PdfViewer
                             key={refreshKey}
                             prop={bookMark}
-                        />*/console.log("nombre de categoria jsjs: " + Categoria)}
+                        />*/}
+                        <div className="catalogoMenu">
+                            {
+                            <ul className='m-0 p-0' style={{display: 'flex'}}>
+                                {categs.map((item, index) => (
+                                    <li key={index} className='lstStylN'>
+                                        <Link to={`/catalogo/${item.descripcion}`} className='btnMenuCatalogo'>
+                                            {item.descripcion}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                            }
+                        </div>
                         <PdfViewer2
                             key={refreshKey}
                             prop={Categoria}

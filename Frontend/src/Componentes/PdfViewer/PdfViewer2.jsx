@@ -52,7 +52,6 @@ export function PdfViewer2({ prop, dir, show='yes' }) {
         //*Obtiene el ultimo nodo o ultima pagina de catalogo
         const pagesContainer = document.querySelector(".pagesContainer");
         const nodes = pagesContainer.childNodes.length
-        console.log("Nodos: "+nodes)
         setElements([pagesContainer.childNodes[nodes-1]])
     }
 
@@ -120,7 +119,6 @@ export function PdfViewer2({ prop, dir, show='yes' }) {
                     });
                 }
             }
-            console.log("posición inicial: "+visorWidth)            
         }, 0);
 
         /*return () => {
@@ -132,7 +130,6 @@ export function PdfViewer2({ prop, dir, show='yes' }) {
 
     useEffect(()=>{
         setVisorWidth(Math.floor(window.innerWidth*82/100))
-        console.log("ancho de nav: " + window.innerWidth)        
     },[screenWidth])
     useEffect(() => {        
         if(window.innerWidth > 502){

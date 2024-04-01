@@ -99,8 +99,10 @@
 .banner1{
     width: 100%;
     position: absolute;
-    background-color: #0cc042;
+    background-color: $amarilloPrincipal;
+    color: $azulPrincipal;
     font-size: 1.5rem;
+    font-weight: bold;
     top: 0;
     left: 0;
     overflow: hidden;
@@ -147,12 +149,12 @@
     }
     99% {
         opacity: 1;
-        margin-left: -553.34px;
+        margin-left: -589.33px;
     }
     
     100% {
         opacity: 0;
-        margin-left: -553.34px;
+        margin-left: -589.33px;
     }
 }
 

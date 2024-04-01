@@ -7,7 +7,6 @@ import secureLocalStorage from 'react-secure-storage';
 import { useTheContext } from '../../TheProvider';
 import { useNavigate } from 'react-router-dom';
 import html2canvas from 'html2canvas';
-import { relative } from 'path-browserify';
 
 export const TheCart = () => {
       
@@ -23,6 +22,8 @@ export const TheCart = () => {
     const [btnDis, setBtnDis] = useState(true);
     const [btnDis2, setBtnDis2] = useState(true);
     const [consecutive, setConsecutive] = useState(0);
+    const [sendDate, setSendDate] = useState('');
+    const [theTotal, setTheTotal] = useState();
     const { logged } = useTheContext()
     const navigate = useNavigate()
     const LaFecha = new Date()
@@ -46,41 +47,45 @@ export const TheCart = () => {
     }    
 
     const handleSendOrder = async() =>{
-        // const fecha = new Date()        
-        // const today = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate() + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds()        
-        // let TIngresados = [], sendDate = '', notes = theTextArea.current.value
-        // cart.forEach((element) => {
-        //     TIngresados.push(`${element['Cant']},${element['Cod']},${element['PVenta']}`)
-        // });
-        // TIngresados = TIngresados.join(';');
-        // if(route){
-        //     sendDate = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate())
-        //     notes = notes + ' ...Cuadrar fecha de entrega'
-        // }else{
-        //     sendDate = dateChosen.current.value
-        // }
-        // const orderReq  = await EnviarVenta({
-        //     "CodCliente": theUserCod,
-        //     "FechaFactura": today,
-        //     "FechaDeEstado": today,
-        //     "FechaDeEntrega": sendDate,
-        //     "FechaVencimiento" : sendDate,
-        //     "NotaVenta": notes,
-        //     "VECommerce": "1",
-        //     "TIngresados": TIngresados
-        // })
-        // if(orderReq['success']===true){
-        //     consecutive = orderReq['NDePedido']
-        //     setShowReminder(true)
-        // }
-        setConsecutive(12)
-        setCurrentDiv(3)
+        const fecha = new Date()
+        const today = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate() + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds()        
+        let TIngresados = [], notes = theTextArea.current.value, total=0
+        cart.forEach((element) => {
+            TIngresados.push(`${element['Cant']},${element['Cod']},${element['PVenta']}`)
+            total = total + (element['PVenta']*element['Cant'])
+        });
+        TIngresados = TIngresados.join(';');
+        if(route){
+            setSendDate(fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate()))
+            notes = notes + ' ...Cuadrar fecha de entrega'
+        }else{
+            setSendDate(dateChosen.current.value)
+        }
+        setTheTotal(total+sendCost)
+        const orderReq  = await EnviarVenta({
+            "CodCliente": theUserCod,
+            "FechaFactura": today,
+            "FechaDeEstado": today,
+            "FechaDeEntrega": sendDate,
+            "FechaVencimiento" : sendDate,
+            "NotaVenta": notes,
+            "VECommerce": "1",
+            "TIngresados": TIngresados
+        })
+        if(orderReq['success']===true){
+            setConsecutive(orderReq['NDePedido'])            
+            setCurrentDiv(3)
+            setCart([])
+            localStorage.setItem('cart',JSON.stringify([]))
+        }else{
+            alert('Ocurrió un error, intente de nuevo más tarde')
+        }        
     }
 
-    const saveReminder = (divId, filename, width=550, height=550) => {
+    const saveReminder = (divId, filename, windowWidth=550, windowHeight=550) => {
         const divToExport = document.getElementById(divId);
       
-        html2canvas(divToExport, {width, height})
+        html2canvas(divToExport, {windowWidth, windowHeight})
           .then(canvas => {
             const imgData = canvas.toDataURL('image/png');
             const link = document.createElement('a');
@@ -88,6 +93,21 @@ export const TheCart = () => {
             link.download = filename;
             link.click();
           });
+    }
+
+    const dateFunct = () =>{
+        const theDate = new Date(sendDate)
+        theDate.setDate(theDate.getDate()+1);
+        const days = [
+            'Domingo',
+            'Lunes',
+            'Martes',
+            'Miércoles',
+            'Jueves',
+            'Viernes',
+            'Sábado'
+        ]
+        return(`${days[theDate.getDay()]}, ${theDate.getDate()}/${theDate.getMonth()+1}/${theDate.getFullYear()}`)
     }
 
     useEffect(() => {
@@ -116,7 +136,7 @@ export const TheCart = () => {
                         </div>
                     </div>
                     <div className='itemsCart grayContainer'>
-                        {
+                        {cart.length!==0 ?
                             cart.map( (item, index) => {                                                
                                 return(
                                     <ItemCart
@@ -132,7 +152,12 @@ export const TheCart = () => {
                                         updtC = {updateCant}
                                     />
                                 );                        
-                            })                    
+                            })
+                        :
+                        <>
+                            <i className="bi bi-cart-x" style={{fontSize: '62px'}}></i>
+                            <span style={{fontSize: '2rem'}}>Carrito de compra vac&iacute;o</span>
+                        </>
                         }                
                     </div>
                     <div className='dtlCart grayContainer'>
@@ -233,11 +258,15 @@ export const TheCart = () => {
                                                 <div style={{fontWeight: 'bold'}}>Empresa:</div>
                                                 <div>{JSON.parse(secureLocalStorage.getItem('userData'))['Ferreteria']}</div>
                                                 <div style={{fontWeight: 'bold'}}>Valor:</div>
-                                                <div>$ {Formater(subTotalC+sendCost)}</div>
+                                                <div>$ {Formater(theTotal)}</div>
                                                 <div style={{fontWeight: 'bold'}}>Fecha de entrega estimada:</div>
-                                                <div>lafechajsjs</div>
-                                                <div>nosebro</div>
+                                                {route?
+                                                <div>Fecha por confirmar</div>
+                                                :
+                                                <div>{dateFunct()} O a m&aacute;s tarde un d&iacute;a habil despu&eacute;s</div>
+                                                }
                                                 <div style={{fontWeight: 'bold'}}>www.sivar.com.co</div>
+                                                <div><strong>Asesor:</strong> {JSON.parse(secureLocalStorage.getItem('userData'))['Asesor']}</div>
                                             </div>
                                             <button className='btnModal' style={{margin:'5px auto'}}
                                                 onClick={()=>{saveReminder('theReminder', `S${consecutive}.png`)}}>
