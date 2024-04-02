@@ -10,7 +10,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
     const [cant, setCant] = useState(0)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     const [showDesc, setShowDesc] = useState(false)
-    const { logged } = useTheContext()
+    const { logged, setNItemsCart } = useTheContext()
     const navigate = useNavigate()
 
     //let logged = getGlobal('isLogged')
@@ -48,6 +48,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
         //*Add the cant assigned
         productJson.Cant = cant
         addToCart.push(productJson)
+        setNItemsCart(addToCart.length)
         localStorage.setItem("cart", JSON.stringify(addToCart))
         // }else{
         //     //*Add the cant assigned

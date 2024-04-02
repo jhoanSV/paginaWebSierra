@@ -1,4 +1,5 @@
 @import "../../scss/_colors.scss";
+@import "../../scss/mediaQueries";
 
 .cCarrusel{
     width: 100%;
@@ -47,3 +48,12 @@
     color: $amarilloPrincipal;
 }
 
+@media (max-width: 636px){
+    #pContainer{
+        .caja{
+            margin: 0 28%;
+            min-width: 44%;
+            padding: 4%;
+        }
+    }    
+}

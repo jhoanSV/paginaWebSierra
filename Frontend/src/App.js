@@ -10,7 +10,7 @@ import { useTheContext } from "./TheProvider";
 export default function App() {
   let ud = secureLocalStorage.getItem('userData')
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const { setLogged } = useTheContext()
+  const { setLogged, setNItemsCart } = useTheContext()
   
   secureLocalStorage.removeItem('EveryPro')
   secureLocalStorage.removeItem('alias')
@@ -18,6 +18,7 @@ export default function App() {
   useEffect(() => {
     //Here defines how to show the page, if is logged or not
 
+    if(localStorage.getItem('cart')) setNItemsCart(JSON.parse(localStorage.getItem('cart')).length)
     if(ud){
       //setGlobal({ isLogged:true })
       setLogged(true)
@@ -25,7 +26,7 @@ export default function App() {
       alert('Su sesion ha expirado, por favor vuelva a ingresar');
       window.location.href = '/'
       localStorage.removeItem('@secure.s.userData')
-    } 
+    }
   
     const img = new Image();
     img.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A='

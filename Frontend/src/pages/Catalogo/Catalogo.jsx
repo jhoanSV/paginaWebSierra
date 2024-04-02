@@ -43,11 +43,13 @@ export function Catalogo() {
                         />*/}
                         <div className="catalogoMenu">
                             {
-                            <ul className='m-0 p-0' style={{display: 'flex'}}>
+                            <ul className='m-0 catalogoMenuContainer'>
                                 {categs.map((item, index) => (
                                     <li key={index} className='lstStylN'>
-                                        <Link to={`/catalogo/${item.descripcion}`} className='btnMenuCatalogo'>
-                                            {item.descripcion}
+                                        <Link to={`/catalogo/${item.descripcion}`} className={`btnMenuCatalogo ${item.color}`}>
+                                            <span style={{color: 'black'}}>
+                                                {item.descripcion.charAt(0).toUpperCase() + item.descripcion.slice(1)}
+                                            </span>
                                         </Link>
                                     </li>
                                 ))}

@@ -10,7 +10,7 @@ export function Header() {
     // const [ pro , setpro ] = useState('');//products
     // const [ alias , setAlias ] = useState('');
     const navigate = useNavigate()
-    const { queryEnded, setQueryEnded, setSBText, logged } = useTheContext()
+    const { queryEnded, setQueryEnded, setSBText, logged, nItemsCart } = useTheContext()
     let userName = null
     //let sortedJson2
 
@@ -201,6 +201,10 @@ export function Header() {
                                 </div>
                                 <Link to="/carrito" type="button" className='btnCart'>
                                     <i className="bi bi-cart4"></i>
+                                    
+                                    { (nItemsCart!==0) &&
+                                        <span className='floatingNumber'>{nItemsCart}</span>
+                                    }
                                 </Link>
                                 <div type="button" className='userIcon' data-bs-toggle="dropdown">
                                     <i className="bi bi-hexagon-fill userHex"></i>

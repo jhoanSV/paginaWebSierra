@@ -12,9 +12,16 @@ export const TheProvider = ({ children }) => {
     const [queryEnded, setQueryEnded] = useState();
     const [sBText, setSBText] = useState('');
     const [categSelect, setCategSelect] = useState('');
+    const [nItemsCart, setNItemsCart] = useState(0);
   
     return (
-      <TheContext.Provider value={{ queryEnded, setQueryEnded, sBText, setSBText, categSelect, setCategSelect, logged, setLogged }}>
+      <TheContext.Provider value={{
+          queryEnded, setQueryEnded,
+          sBText, setSBText,
+          categSelect, setCategSelect,
+          logged, setLogged,
+          nItemsCart, setNItemsCart
+        }}>
         {children}
       </TheContext.Provider>
     );

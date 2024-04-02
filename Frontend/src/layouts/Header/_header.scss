@@ -112,6 +112,7 @@
     justify-content: flex-end;
     align-items: center;
     .btnCart, .btnSignIn{
+        position: relative;
         display: flex;
         color: black;
         font-weight: bold;
@@ -153,6 +154,18 @@
     border-width: 1px;
     --bs-btn-border-radius: 0.9rem;
     --bs-btn-active-bg: #F2CB05;//Cambiar después a uno más oscuro c: definir color en colors.scss
+}
+
+.floatingNumber {
+    position: absolute;
+    width: max-content;
+    aspect-ratio: 1 / 1;
+    background-color: $amarilloPrincipal;
+    line-height: 1;
+    padding: 2px;
+    border-radius: 25px;
+    top: -22%;
+    right: -10%;
 }
 
 .btn.btn-navBar:hover{
@@ -226,9 +239,6 @@
         a{
             width: min-content;
             height: 30px;
-            span{
-                display: none;
-            }            
         }
         .btnCart{
             i{

@@ -99,7 +99,31 @@ export function Products() {
     <>
       <section className='products'>
         <div className="productsContainer">
-          { (lista && lista.length!==0) ?
+          { lista === null ?
+            <div className='nFound'>
+              Ocurrió un problema con el servidor
+            </div>
+          : ((!queryEnded) || lista===false) ?
+            [1, 2, 3, 4, 5].map((index) =>
+              <div className='caja' key={index}>
+                <div
+                  className='loadingStls'
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    background: '#d9d9d9',
+                    aspectRatio: '1 / 1'
+                  }}
+                />
+                <div className='dots'>...</div>
+                <div className='dots'>...</div>
+              </div>
+            )
+          : (lista.length===0) ?//* here is in the case when everything is ok but there is no products
+            <div className='nFound'>
+              No se encontr&oacute; ninguna coincidencia
+            </div>
+          : /*(lista && lista.length!==0)*/
             <>
               {lista.slice(0,limit).map((item, index) =>
                 <ListItem
@@ -116,28 +140,7 @@ export function Products() {
               )}
               <div className="pcFoot"/>
             </>
-            
-          : (lista.length===0)?//* here is in the case when everything is ok but there is no products
-            <div className='nFound'>
-              No se encontr&oacute; ninguna coincidencia
-            </div>
-          : ((!queryEnded) || lista===false) &&
-            [1, 2, 3, 4, 5].map((index) =>
-              <div className='caja' key={index}>
-                <div
-                  className='loadingStls'
-                  style={{
-                    width: '100%',
-                    height: 'auto',
-                    background: '#d9d9d9',
-                    aspectRatio: '1 / 1'
-                  }}
-                />
-                <div className='dots'>...</div>
-                <div className='dots'>...</div>
-              </div>
-            )
-          }          
+          }
         </div>
       </section>
     </>

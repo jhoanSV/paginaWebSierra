@@ -24,7 +24,7 @@ export const TheCart = () => {
     const [consecutive, setConsecutive] = useState(0);
     const [sendDate, setSendDate] = useState('');
     const [theTotal, setTheTotal] = useState();
-    const { logged } = useTheContext()
+    const { logged, setNItemsCart } = useTheContext()
     const navigate = useNavigate()
     const LaFecha = new Date()
     const tomorrow = new Date(LaFecha)
@@ -36,6 +36,7 @@ export const TheCart = () => {
         const newCart = [...cart]
         newCart.splice(id, 1);
         localStorage.setItem('cart', JSON.stringify(newCart))
+        setNItemsCart(newCart.length)
         setCart(newCart);
     }
 
@@ -49,7 +50,7 @@ export const TheCart = () => {
     const handleSendOrder = async() =>{
         const fecha = new Date()
         const today = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate() + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds()        
-        let TIngresados = [], notes = theTextArea.current.value, total=0
+        let TIngresados = [], notes = theTextArea.current.value, total=0, thisSendDate
         cart.forEach((element) => {
             TIngresados.push(`${element['Cant']},${element['Cod']},${element['PVenta']}`)
             total = total + (element['PVenta']*element['Cant'])
@@ -57,8 +58,10 @@ export const TheCart = () => {
         TIngresados = TIngresados.join(';');
         if(route){
             setSendDate(fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate()))
+            thisSendDate = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate())
             notes = notes + ' ...Cuadrar fecha de entrega'
         }else{
+            thisSendDate = dateChosen.current.value
             setSendDate(dateChosen.current.value)
         }
         setTheTotal(total+sendCost)
@@ -66,8 +69,8 @@ export const TheCart = () => {
             "CodCliente": theUserCod,
             "FechaFactura": today,
             "FechaDeEstado": today,
-            "FechaDeEntrega": sendDate,
-            "FechaVencimiento" : sendDate,
+            "FechaDeEntrega": thisSendDate,
+            "FechaVencimiento" : thisSendDate,
             "NotaVenta": notes,
             "VECommerce": "1",
             "TIngresados": TIngresados
@@ -76,10 +79,11 @@ export const TheCart = () => {
             setConsecutive(orderReq['NDePedido'])            
             setCurrentDiv(3)
             setCart([])
+            setNItemsCart(0)
             localStorage.setItem('cart',JSON.stringify([]))
         }else{
             alert('Ocurrió un error, intente de nuevo más tarde')
-        }        
+        }
     }
 
     const saveReminder = (divId, filename, windowWidth=550, windowHeight=550) => {
@@ -111,6 +115,7 @@ export const TheCart = () => {
     }
 
     useEffect(() => {
+        setNItemsCart(cart.length)
         let totalCost = 0;
     
         cart.forEach((item) => {
@@ -123,7 +128,8 @@ export const TheCart = () => {
 
         if(totalCost===0){setBtnDis(true)}
         else{setBtnDis(false)}
-
+        
+        // eslint-disable-next-line
     }, [cart]);
 
     return (
