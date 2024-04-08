@@ -11,7 +11,7 @@ import secureLocalStorage from "react-secure-storage";
 export function Home() {
     
     const [bottomC, setBottomC] = useState(null);
-    const { logged } = useTheContext()
+    const { logged, queryEnded } = useTheContext()
 
     const [observer, setElements, entries] = useObserver({
         treshhold: 0.25,
@@ -49,19 +49,20 @@ export function Home() {
       }
 
     const tobuttonCarousel = async() =>{
-        let theCodeUser = 0
+        let theCodeUser = ''
         let isLogged = false
         if(logged){
             isLogged = true
             theCodeUser = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
         }
+        console.log('isLogged: '+ isLogged + ' CodUser: ' + theCodeUser);
         //*return the list of products of the button carousel, if is not logged, use the default user code
         const bCaroucel = await BottonCarousel(
             {
-                "logged": isLogged,//! ojo que no me acuerdo acá tampoco
+                "logged": isLogged,
                 "CodUser": theCodeUser
             }
-        )        
+        )
         const ReorderedList = alternateCategoria(bCaroucel)
         return ReorderedList
     }    
@@ -100,6 +101,17 @@ export function Home() {
     }, [setElements])
 
     useEffect(() => {
+        async function fetchData() {
+            const jsjs = await tobuttonCarousel()
+            localStorage.setItem('productsBottomCarousel', JSON.stringify(jsjs))
+            setBottomC(jsjs)
+        }
+        fetchData()
+
+        // eslint-disable-next-line
+    }, [ queryEnded ]);
+
+    useEffect(() => {
         entries.forEach(entry=>{
             if (entry.isIntersecting){                
                 const elmt = entry.target;
@@ -111,13 +123,7 @@ export function Home() {
     }, [entries, observer])
     
     useEffect(() => {
-        window.scrollTo(0,0)
-        async function fetchData() {
-            const jsjs = await tobuttonCarousel()
-            localStorage.setItem('productsBottomCarousel', JSON.stringify(jsjs))
-            setBottomC(jsjs)
-        }        
-        fetchData()
+        window.scrollTo(0,0)        
         // eslint-disable-next-line
     }, []);
 

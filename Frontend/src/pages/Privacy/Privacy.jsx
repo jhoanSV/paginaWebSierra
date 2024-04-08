@@ -14,6 +14,8 @@ export function Privacy() {
     pages.push({ src: require(`../../Assets/docs/ImgsPdf/PolDatos/Pagina ${i}.jpg`) });    
   }
 
+  window.scrollTo(0,0);
+
   return (
     <>
       <div className="pol-datos">

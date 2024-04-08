@@ -1,5 +1,5 @@
 import secureLocalStorage from "react-secure-storage";
-import { useEffect, useState } from "react";
+import { useEffect/*, useState*/ } from "react";
 import { Header, Footer } from "./layouts";
 import { Navigation } from "./routes";
 import { CategMenuMobile } from "./Componentes/Menus";
@@ -9,7 +9,7 @@ import { useTheContext } from "./TheProvider";
 
 export default function App() {
   let ud = secureLocalStorage.getItem('userData')
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  //const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const { setLogged, setNItemsCart } = useTheContext()
   
   secureLocalStorage.removeItem('EveryPro')
@@ -44,11 +44,10 @@ export default function App() {
   }, []);
 
   return (
-    <>   
-          {/*Borrar el siguiente div*/}
-          <div style={{position: 'absolute', color: 'black', backgroundColor: 'white', zIndex: '10'}} onResize={(e)=>{setScreenWidth(e.target.innerWidth)}}>
+    <>
+          {/*<div style={{position: 'absolute', color: 'black', backgroundColor: 'white', zIndex: '10'}} onResize={(e)=>{setScreenWidth(e.target.innerWidth)}}>
             {screenWidth}
-          </div>
+          </div>*/}
           <a href="https://api.whatsapp.com/send/?phone=573134237538&text&type=phone_number&app_absent=0" className="btn-wapp" 
             target="_blank" rel="noreferrer">
               <picture>

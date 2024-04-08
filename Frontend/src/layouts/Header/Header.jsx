@@ -6,13 +6,9 @@ import secureLocalStorage from "react-secure-storage";
 import { useTheContext } from "../../TheProvider";
 
 export function Header() {
-    
-    // const [ pro , setpro ] = useState('');//products
-    // const [ alias , setAlias ] = useState('');
     const navigate = useNavigate()
-    const { queryEnded, setQueryEnded, setSBText, logged, nItemsCart } = useTheContext()
+    const { setQueryEnded, setSBText, logged, nItemsCart } = useTheContext()
     let userName = null
-    //let sortedJson2
 
     /*Funciones para mostrar o esconder caja de texto
       cuando se hace click o se pierde el focus de la caja
@@ -23,67 +19,22 @@ export function Header() {
         // eslint-disable-next-line
     }, [])
 
-    /*useEffect(() => {        
-        if (queryEnded && toProducts) {
-            filterProduct(theText)
-            navigate('/productos',{state:{products: sortedJson2}});
-            navigate('/productos');
-            console.log('query endedjsjs');
-            setToProducts(false)
-        }
-        // eslint-disable-next-line
-    }, [queryEnded]);*/
+    const uploadProducts = async()=>{
 
-    const uploadProducts = async()=>{        
+        let theCodeUser = ''
+
+        if(secureLocalStorage.getItem('userData')){
+            theCodeUser = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
+        }
+
         const productsList = await products({
-            //"logged": false//getGlobal('isLogged') //! Ojo que acá no recuerdo cómo era
-            //"CodUser": '493'
-            "CodUser": '2'
-        })        
+            "CodUser": theCodeUser
+        })
         const aliasList = await Alias()
         secureLocalStorage.setItem('productsList', JSON.stringify(productsList))
         secureLocalStorage.setItem('aliasList', JSON.stringify(aliasList))
         setQueryEnded(true)
     }
-
-    /*const filterProduct = async (text) => {
-        //Searh the list of products that includes the text, either because it is in the "products" table or in the "alias" table        
-        let proData = pro; //The whole table "products".        
-        let aliasData = alias; //The whole table "alias".
-        //If Category is different to empty then select only the productos with that category
-        try {
-            if (category !== '') {
-                proData = pro.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
-                aliasData = alias.filter(item => item.Categoria.toLowerCase() === category.toLowerCase());
-            }
-            // Define a case-insensitive text filter function
-            const filterByText = (item) =>
-            item.Cod.toLowerCase().includes(text) ||
-            item.Descripcion.toLowerCase().includes(text);
-            // Filter products based on the text
-            const TFiltro1 = proData.filter(filterByText);
-            // Filter aliases based on the text
-            const TFiltro2 = aliasData.filter((item) => item.Alias.toLowerCase().includes(text));
-            // Extract unique cod values from aliasData
-            const CodAlias = [...new Set(TFiltro2.map((item) => item.Cod))];
-            // Filter products based on unique cod values
-            const aliasProducts = proData.filter((item) => CodAlias.includes(item.cod));
-            // Extract unique cod values from aliasProducts
-            //const uniqueAliasProducts = [...new Set(aliasProducts.map((item) => item.cod))];
-            // Combine the unique cod values from TFiltro1 and aliasProducts
-            const filtro = [...new Set([...TFiltro1, ...aliasProducts])];
-            // Convert the json into an array of objects to reorder by score
-            const dataArray = filtro.map((value, key) => ({ key, ...value }));
-            // Order the array deppending on the score
-            dataArray.sort((a, b) => b.Score - a.Scote);
-            // Convert the array into a json object
-            const sortedJson = JSON.stringify(dataArray);
-            sortedJson2 = sortedJson
-            //setFilteredProducts(sortedJson);
-        } catch (error) {
-            sortedJson2 = false                        
-        }
-    }*/
    
     if(logged) userName = JSON.parse(secureLocalStorage.getItem('userData'))['Ferreteria']
     
@@ -93,12 +44,8 @@ export function Header() {
         if (text === ''){
             setQueryEnded(false)
             uploadProducts()
-            // navigate('/productos',{state:{products: false}});
-        }else /*if (text.length > 2 && queryEnded) */{
-            //filterProduct(text)
-            //navigate('/productos',{state:{products: sortedJson2}});
+        }else{
             navigate('/productos');
-            //setToProducts(true)
         }
     }
 
@@ -109,13 +56,6 @@ export function Header() {
 
     return(
         <header style={{position: 'relative'}}>
-            { (queryEnded === false) ?
-            <div style={{position: 'absolute', right: '0', top: '0', color: "white", backgroundColor: 'black', zIndex: '1'}}>
-                cargando
-            </div>
-            : 
-            <></>
-            }            
             <div className="container-fluid px-4 g-0 cabecera">                
                 <picture>
                     <source
