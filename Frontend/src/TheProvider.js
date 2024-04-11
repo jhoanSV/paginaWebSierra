@@ -8,6 +8,7 @@ export const useTheContext = () => {
 
 export const TheProvider = ({ children }) => {
     
+    const [loading, setLoading] = useState(true);
     const [logged, setLogged] = useState(false);
     const [queryEnded, setQueryEnded] = useState();
     const [sBText, setSBText] = useState('');
@@ -20,7 +21,8 @@ export const TheProvider = ({ children }) => {
           sBText, setSBText,
           categSelect, setCategSelect,
           logged, setLogged,
-          nItemsCart, setNItemsCart
+          nItemsCart, setNItemsCart,
+          loading, setLoading
         }}>
         {children}
       </TheContext.Provider>

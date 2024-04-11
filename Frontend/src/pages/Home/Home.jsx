@@ -11,7 +11,7 @@ import secureLocalStorage from "react-secure-storage";
 export function Home() {
     
     const [bottomC, setBottomC] = useState(null);
-    const { logged, queryEnded } = useTheContext()
+    const { setLoading, logged, queryEnded } = useTheContext()
 
     const [observer, setElements, entries] = useObserver({
         treshhold: 0.25,
@@ -266,6 +266,7 @@ export function Home() {
                                         autoPlay
                                         muted
                                         loop
+                                        onCanPlay={()=>setLoading(false)}
                                     />
 
                                 </div>

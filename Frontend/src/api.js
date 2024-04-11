@@ -2,7 +2,6 @@
 //const API = 'http://192.168.1.110:3000/tasks';
 const API = process.env.REACT_APP_API;
 
-console.log(API);
 //const API = 'http://localhost:3000/tasks';
 
 export const validateUser = async(validateValueUser) => {
