@@ -2,8 +2,9 @@ import { React, useEffect, useState } from "react";
 //import { useLocation } from "react-router-dom";
 //import { PdfViewer } from "../../Componentes/PdfViewer/PdfViewer";
 import { PdfViewer2 } from "../../Componentes/PdfViewer/PdfViewer2";
+import categs from '../../Assets/jpg/categorias/categorias.json';
 import "./_Catalogo.scss";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export function Catalogo() {
 
@@ -35,7 +36,30 @@ export function Catalogo() {
             <div className="catalogo">
 
                 <div className="row">
+<<<<<<< HEAD
                     <div className="pdfViewer">
+=======
+                    <div className="pdfViewer">{/*las clase antes era "col pdfViewer"*/}
+                        {/*<PdfViewer
+                            key={refreshKey}
+                            prop={bookMark}
+                        />*/}
+                        <div className="catalogoMenu">
+                            {
+                            <ul className='m-0 catalogoMenuContainer'>
+                                {categs.map((item, index) => (
+                                    <li key={index} className='lstStylN'>
+                                        <Link to={`/catalogo/${item.descripcion}`} className={`btnMenuCatalogo ${item.color}`}>
+                                            <span style={{color: 'black'}}>
+                                                {item.descripcion.charAt(0).toUpperCase() + item.descripcion.slice(1)}
+                                            </span>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                            }
+                        </div>
+>>>>>>> MainE1
                         <PdfViewer2
                             key={refreshKey}
                             route={'Assets/imgsCatalogo/main/'}

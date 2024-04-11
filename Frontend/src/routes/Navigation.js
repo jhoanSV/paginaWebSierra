@@ -1,22 +1,29 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-//Remember remove the below comment
-// eslint-disable-next-line
-import { Home, Products, About, Privacy, Catalogo, ContactUs, Specials, SpecialCat} from "../pages";
+import { Home, Products, About, Privacy, Catalogo, ContactUs, Login,
+    ChangePass,
+    TheProfile,
+    TheCart,
+    Specials,
+    SpecialCat
+} from "../pages";
 
-export function /*LoggedNavigation*/Navigation() {
+export function Navigation() {
     return (
       <>
           <Routes>
-              <Route exact path='/' element={ <Home /> } />
-              {/*<Route path='productos' element={ <Products /> } />*/}
-              <Route path='about' element={ <About /> } />
-              <Route path='privacy' element={ <Privacy /> } />
-              <Route path='contactUs' element={ <ContactUs /> } />
-              {/*<Route path='catalogo' element={ <Catalogo /> } />*/}
+              <Route path='/' element={ <Home /> } />
+              <Route path='productos' element={ <Products/> } />
+              <Route path='nosotros' element={ <About /> } />
+              <Route path='politicas_privacidad' element={ <Privacy /> } />
+              <Route path='contactanos' element={ <ContactUs /> } />
               <Route path='catalogo/:cat' element={ <Catalogo /> } />
               <Route path='productos/especiales' element={ <Specials/> }/>
               <Route path=':espId' element={ <SpecialCat/> }/>
+              <Route path='inicio_sesion' element={ <Login/> }/>
+              <Route path='perfil' element={ <TheProfile/> }/>
+              <Route path='/perfil/seguridad' element={ <ChangePass />}/>
+              <Route path='carrito' element={ <TheCart/>}/>
           </Routes>
       </>
     );

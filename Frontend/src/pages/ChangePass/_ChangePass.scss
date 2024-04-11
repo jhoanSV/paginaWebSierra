@@ -1,0 +1,60 @@
+@import "../../scss/_colors.scss";
+
+.passLvlBarContainer{
+    display: flex;
+    width: 100%;
+}
+
+.passLvlBar{
+    width: 37px;
+    height: 10px;
+    margin-right: 4px;
+    background-color: white;
+    border: solid 1px black;
+}
+.passLvl1{
+    background-color: #ed4e50;
+}
+.passLvl2{
+    background-color: $amarilloPrincipal;
+}
+.passLvl3{
+    background-color: #24ff00;
+}
+span.noMatch{
+    color: red;
+}
+
+i.keyIcon{
+    transform: rotate(45deg);
+}
+
+.sec2{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.btnChPass, .btnChPass2{
+    width: 184px;
+    height: auto;
+    min-height: 78px;
+    border-radius: 30px;
+    background-color: #8B8B8B;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 25px auto 0;
+}
+.btnChPass:active, .btnChPass2:active{
+    background-color: $amarilloPrincipal;
+    color: white;
+}
+.btnChPass2{
+    background-color: $azulPrincipal;
+    color: $amarilloPrincipal;
+}
+
+.btnChPass2:disabled{
+    background-color: rgb(25 55 115 / 50%);
+    color: rgb(242 203 5 / 50%);    
+}

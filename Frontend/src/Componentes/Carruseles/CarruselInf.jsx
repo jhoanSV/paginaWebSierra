@@ -1,14 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./_CarruselInf.scss";
-import { ListItem } from "./index";
-//import FlatList from "flatlist-react/lib";
-
-//import data from "../../Assets/jpg/Promociones/promociones.json";
-
-//`../Assets/productosJpg/${data.cod}.jpg`
+import { ListItem } from "../Others";
 
 export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de productos.json
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth); 
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [charge, setCharge] = useState(5);//variable "SeVe"
     const [bef, setBef] = useState(0);
     const [move, setMove] = useState(0);
@@ -30,7 +25,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     }, []);
 
     useEffect(() => {
-        if(screenWidth < 636 ){
+        if(screenWidth < 701 ){
             pConte.current.style.left = "0%";
             setBef(1);//show = 1;
             setMove(-100);
@@ -45,7 +40,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     }, [screenWidth]);
 
     const check = () =>{
-        if(screenWidth < 636 ){
+        if(screenWidth < 701 ){
             setBef(1);//show = 1;
             setMove(-100);
             setBack(-100);
@@ -62,7 +57,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
         if(bef === charge && bef === lProductos){
             setMove(0);
         }else{
-            if(screenWidth < 636 ){
+            if(screenWidth < 701 ){
                 setMove(-100);
             }else{
                 setMove(-20);
@@ -74,15 +69,18 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     const listItems = () => {
         return(
             props.lista1.slice(0,charge).map((item, index) =>
-                <>  
-                    <ListItem
-                        key={index}
-                        llave = {item.id}//Para apuntar a cada modal
-                        codigo = {item.cod}
-                        descripcion = {item.descripcion}
-                        descripcionComp={item.descripcionCompleta}
-                    />
-                </>
+                <ListItem
+                    key={index}
+                    llave = {index}//Para apuntar a cada modal
+                    codigo = {item.Cod}
+                    descripcion = {item.Descripcion}
+                    descripcionComp={item.Detalle}
+                    unitPrice={item.PVenta}
+                    unitPaq={item.EsUnidadOpaquete}
+                    category={(item.Categoria).toLowerCase()}
+                    agotado={item.Agotado}
+                    lista={props.lista1}
+                />
             )
         );
     }

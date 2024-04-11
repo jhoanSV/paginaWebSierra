@@ -1,0 +1,83 @@
+@import "../../scss/_colors.scss";
+
+.descFont{
+    font-size: 1.1875rem;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.codFont{
+    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.col-6 .subTit{
+    color: black;
+    padding: 10px 0px
+}
+
+.caja{
+    position: relative;
+    height: 100%;
+    width: 14%;
+    min-width: 14%;
+    cursor: pointer;
+    margin: 0 3% 0 3%;
+    padding: 2%;
+    background-color: $blancoPrincipal;
+    border-style: solid;
+    border-color: gray;
+    border-width: 0.0625rem;
+    box-shadow: 0.1875rem 0.1875rem 0.1875rem gray;
+    transition: 200ms;
+    overflow: hidden;
+    .col{
+        height: auto;
+    }
+}
+.resizeModal{
+    --bs-modal-width: 800px;
+}
+
+.soldOutLI{
+    position: absolute;
+    padding: 0px 111px;
+    color: #FF4A4A;
+    font-weight: 700;
+    background-color: rgba(255, 0, 0, 0.34);
+    transform: translate(-50%, -50%) rotate(-45deg);
+    top: 20%;
+    left: 26%;
+}
+
+.imgProducto img{
+    border: solid;
+    border-radius: 25%;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+}
+
+.caja:hover{
+    //width: 14rem;
+    transform: scale(1.05, 1.05);
+    box-shadow: 0.2rem 0.2rem 0.2rem $azulPrincipal;
+    transition: 200ms;
+}
+
+@media (max-width: 950px){
+    .resizeModal{
+        --bs-modal-width: 80%;
+    }
+}
+
+@media (max-width: 576px){
+    .resizeModal{
+        max-width: var(--bs-modal-width);
+        margin-right: auto !important;
+        margin-left: auto !important;
+    }
+}

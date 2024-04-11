@@ -1,24 +1,78 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./_Home.scss";
-//import { Carrusel } from "../../Componentes/Carruseles/Carrusel";
 import { CarruselInf } from "../../Componentes/Carruseles";
-import arJason from "../../Assets/png/Productos/productos.json";
 import categ from "../../Assets/jpg/categorias/categorias.json";
 import { Link } from "react-router-dom";
 import { useObserver } from "../../Componentes/UseObs";
+import { BottonCarousel } from '../../api';
+import { useTheContext } from "../../TheProvider";
+import secureLocalStorage from "react-secure-storage";
 
 export function Home() {
+    
+    const [bottomC, setBottomC] = useState(null);
+    const { setLoading, logged, queryEnded } = useTheContext()
+
     const [observer, setElements, entries] = useObserver({
         treshhold: 0.25,
         rootMargin: 1,
         root: null
     });
 
-    //Funcion para mostrar las categorias en categorias.json
-    const itItems = categ.map( item => {
+    //Todo: Create the function that alternate the cathegories
+    function alternateCategoria(jsonArray) {
+        // Use Set to store unique values
+        const uniqueCategories = new Set();
+
+        // Iterate through the array and add each "Categoria" value to the Set
+        jsonArray.forEach(item => {
+            uniqueCategories.add(item.Categoria);
+        });
+
+        // Convert the Set to an array and return
+        const categories = Array.from(uniqueCategories)
+        //Create an eplty array for the new order and an index for the list of categorie
+        const reorderedArray = [];
+        
+        while (jsonArray.length > 0) {
+            for (let i = 0; i < categories.length; i++) {
+                for (let j = 0; j < jsonArray.length; j++) {
+                    if (jsonArray[j].Categoria === categories[i]) {
+                        reorderedArray.push(jsonArray[j]);
+                        jsonArray.splice(j, 1); // Remove the matched element from jsonArray
+                        break;
+                    } 
+                }
+            }
+        }
+        return reorderedArray;
+      }
+
+    const tobuttonCarousel = async() =>{
+        let theCodeUser = ''
+        let isLogged = false
+        if(logged){
+            isLogged = true
+            theCodeUser = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
+        }
+        console.log('isLogged: '+ isLogged + ' CodUser: ' + theCodeUser);
+        //*return the list of products of the button carousel, if is not logged, use the default user code
+        const bCaroucel = await BottonCarousel(
+            {
+                "logged": isLogged,
+                "CodUser": theCodeUser
+            }
+        )
+        const ReorderedList = alternateCategoria(bCaroucel)
+        return ReorderedList
+    }    
+
+    //*Funcion para mostrar las categorias en categorias.json
+    const itItems = categ.map( (item, index) => {
 
         const imgAvif = require(`../../Assets/avif/categorias/${item.descripcion}.avif`)
         const imgjpg = require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)
+<<<<<<< HEAD
         return(                        
             <>
                 <div className="ImgBtnContainer">
@@ -38,10 +92,28 @@ export function Home() {
                             />
                         </picture>
                     </Link>
+=======
+        return(
+            <div key={index} className="c-categ">
 
-                </div>
+                <Link to={`catalogo/${item.descripcion}`}>
+                    <picture>
+                        <source
+                            className="el_lazy2"
+                            type="image/avif"
+                            elsrc={imgAvif}
+                        />
+                        <img
+                            className={`${item.color} el_lazy`}                                
+                            elsrc={imgjpg}
+                            alt="categoria"
+                            decoding="async"
+                        />
+                    </picture>
+                </Link>
+>>>>>>> MainE1
 
-            </>
+            </div>
         );
     });
 
@@ -49,6 +121,17 @@ export function Home() {
         const los_elementos = document.querySelectorAll(".el_lazy2");
         setElements(los_elementos)
     }, [setElements])
+
+    useEffect(() => {
+        async function fetchData() {
+            const jsjs = await tobuttonCarousel()
+            localStorage.setItem('productsBottomCarousel', JSON.stringify(jsjs))
+            setBottomC(jsjs)
+        }
+        fetchData()
+
+        // eslint-disable-next-line
+    }, [ queryEnded ]);
 
     useEffect(() => {
         entries.forEach(entry=>{
@@ -60,16 +143,25 @@ export function Home() {
             }
         });
     }, [entries, observer])
+    
+    useEffect(() => {
+        window.scrollTo(0,0)        
+        // eslint-disable-next-line
+    }, []);
 
     return (
-        <div className="inicio">
+        <div className="inicio">            
             <section id="sierra">
                 <div className="container-fluid p-0">
                     
                     <div className="row g-0 avi fs-2">
                         <div className="col ">
                             <div className="d-flex justify-content-center gx-1">
+<<<<<<< HEAD
                             <p>Eres <span> Ferretero? </span> tenemos precios especiales para ti... <Link to="/contactUs"><span>contactanos</span></Link></p>
+=======
+                                <p>Eres <span> Ferretero? </span> tenemos precios especiales para ti... <Link to="/contactanos"><span>contactanos</span></Link></p>
+>>>>>>> MainE1
                             </div>
                         </div>
                     </div>
@@ -219,6 +311,7 @@ export function Home() {
                                         autoPlay
                                         muted
                                         loop
+                                        onCanPlay={()=>setLoading(false)}
                                     />
 
                                 </div>
@@ -273,10 +366,12 @@ export function Home() {
 
                     <div className="row g-0">
                         <div className="col">
-                            <CarruselInf 
-                                lista1={arJason}
-                            />
-                        </div>                            
+                            { bottomC &&                            
+                            <CarruselInf
+                                //lista1={arJason}
+                                lista1={bottomC}
+                            />}
+                        </div>
                     </div>
                 </div>
             </section>

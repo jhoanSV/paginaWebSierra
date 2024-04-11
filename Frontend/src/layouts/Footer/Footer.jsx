@@ -61,7 +61,7 @@ export function Footer(){
                             Cambios y Devoluciones
                         </div>
                         <div className="row g-0">
-                            <Link to="/privacy">Politica de Datos</Link>
+                            <Link to="/politicas_privacidad">Politica de Datos</Link>
                         </div>
                         <div className="row g-0 redes">
                             <div className="col-4">

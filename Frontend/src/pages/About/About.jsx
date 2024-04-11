@@ -19,7 +19,6 @@ export function About() {
                 <div className="row">
                     <div className="col">
                         <div className="col log-anima">
-
                             <img
                                 width="2207px"
                                 height="839px"
@@ -27,7 +26,6 @@ export function About() {
                                 alt="anima"                                
                                 id="anima1"
                             />
-
                         </div>
 
                         <div className="qSomos genFont">

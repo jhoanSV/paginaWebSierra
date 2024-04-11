@@ -1,0 +1,120 @@
+// const API = 'http://192.168.1.108:3000/tasks';
+//const API = 'http://192.168.1.110:3000/tasks';
+const API = process.env.REACT_APP_API;
+
+//const API = 'http://localhost:3000/tasks';
+
+export const validateUser = async(validateValueUser) => {
+    /*Validate the user information and if it's correct return the data of the user
+    you have to send a json of the form:
+    {
+        "EmailUser": "Pruebausuario1@gmail.com",
+        "Password": "123456789"
+    }
+    Dikyanid
+    06032023
+    */   
+    try {
+        const res = await fetch(`${API}/login`,{
+            method: 'POST',
+            headers: { Accept: 'application/json','Content-Type': 'application/json'},
+            body: JSON.stringify(validateValueUser)
+        })
+        return await res.json()
+    }catch(error) {
+        console.log('TheError: '+ error)
+    }
+}
+
+export const Changepassword = async(validateValueUser) => {
+    /*Validate the user information and if it's correct change the password in the database
+    you have to send a json of the form:
+    {
+        "CodUser": "493",
+        "Password": "Actual password",
+        "NewPassword": "New password"
+    }*/
+    try {
+        const res = await fetch(`${API}/Changepassword`,{
+            method: 'POST',
+            headers: { Accept: 'application/json','Content-Type': 'application/json'},
+            body: JSON.stringify(validateValueUser)
+        })
+        return await res.json()
+    }catch(error) {
+        console.log(error)
+    }
+}
+
+export const products = async(validateLogIn) => {
+    /*return the list of products deppending on if the user is logged in or not
+    you have to send a json of the form:
+    {
+        "CodUser": ''
+    }*/
+    try {
+        const res = await fetch(`${API}/productsdataweb`,{
+            method: 'POST',
+            headers: { Accept: 'application/json','Content-Type': 'application/json'},
+            body: JSON.stringify(validateLogIn)
+        })
+        return await res.json()
+    }catch(error) {
+        console.log(error)
+    }
+}
+
+export const BottonCarousel = async(validateLogIn) => {
+    /*return the list of products for the botton caroucel deppending on if the user is logged in or not
+    you have to send a json of the form:
+    {
+        "logged": false,
+        "CodUser": "494"
+    }*/
+    try {
+        const res = await fetch(`${API}/BottonCaroucel`,{
+            method: 'POST',
+            headers: { Accept: 'application/json','Content-Type': 'application/json'},
+            body: JSON.stringify(validateLogIn)
+        })
+        return await res.json()
+    }catch(error) {
+        console.log(error)
+    }
+}
+
+export const Alias = async() => {
+    /*Return the list of alias of the products*/
+    try {
+        const res = await fetch(`${API}/TAlias`, {
+            method: 'GET'})
+        return await res.json()
+    }catch(error) {
+        console.log(error)
+    }
+}
+
+export const EnviarVenta = async(Order) => {
+    /*Send the Order to the database.
+    you have to send a json of the form:
+    {
+        "CodCliente": "493",
+        "FechaFactura": "2024-02-20 00:00:00",
+        "FechaDeEstado": "2024-02-20 00:00:00",
+        "FechaDeEntrega": "2024-02-23",
+        "FechaVencimiento" : "2024-02-23",
+        "NotaVenta": "",
+        "VECommerce": "1",
+        "TIngresados": "12(cantidad),CIT05(codigo),950(PVenta);6,SP136,3500"
+    }*/
+    try {
+        const res = await fetch(`${API}/SendSale`,{
+            method: 'POST',
+            headers: { Accept: 'application/json','Content-Type': 'application/json'},
+            body: JSON.stringify(Order)
+        })
+        return await res.json()
+    }catch(error) {
+        console.log(error)
+    }
+}

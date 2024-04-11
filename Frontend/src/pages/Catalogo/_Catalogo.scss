@@ -11,5 +11,30 @@
     //background-color: darksalmon;//borrar    
     display: flex;
     justify-content: center;
+    position: relative;
     //margin: 1.25rem 0rem;
+}
+
+.catalogoMenu{    
+    position: absolute;
+    top: 10px;
+}
+
+.btnMenuCatalogo{
+    background-color: currentColor;
+    margin: 0px 4px;
+    padding: 4px 12px;
+    border: 2px black solid;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    border-radius: 20px;    
+}
+
+.catalogoMenuContainer{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0px 35px;
+    height: 72px;
+    align-items: center;
 }

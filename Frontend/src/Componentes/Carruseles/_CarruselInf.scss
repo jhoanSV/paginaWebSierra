@@ -1,4 +1,5 @@
 @import "../../scss/_colors.scss";
+@import "../../scss/mediaQueries";
 
 .cCarrusel{
     width: 100%;
@@ -13,7 +14,7 @@
     align-items: center;
 }
 
-#leftButton{
+#leftButton, #rightButton{
     position: absolute;
     z-index: 2;
     left: 0;
@@ -25,14 +26,8 @@
 }
 
 #rightButton{
-    position: absolute;
-    z-index: 2;
     right: 0;
-    top: 41%;
-    border-style: none;
-    color: transparent;
-    background-color: transparent;
-    transition: 300ms;
+    left: unset;
 }
 
 .cCarrusel:hover{
@@ -53,3 +48,12 @@
     color: $amarilloPrincipal;
 }
 
+@media (max-width: 636px){
+    #pContainer{
+        .caja{
+            margin: 0 28%;
+            min-width: 44%;
+            padding: 4%;
+        }
+    }    
+}
