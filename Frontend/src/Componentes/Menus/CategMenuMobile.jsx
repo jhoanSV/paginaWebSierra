@@ -9,7 +9,7 @@ export function CategMenuMobile() {
 
     const items = categs;
 
-    const { setCategSelect } = useTheContext()
+    const { setLoading, setCategSelect } = useTheContext()
     const [imgSel, setImgSel] = useState('logoCatalogo');
     const isActive = useRef()
     isActive.current = false
@@ -44,7 +44,7 @@ export function CategMenuMobile() {
     }
 
     //* Funcion para mostrar los logos en el menu desplegable
-    const Items = () => (        
+    const Items = () => (
         <ul className='m-0 p-0'>
           {
             items.map((item, index) => (
@@ -72,6 +72,7 @@ export function CategMenuMobile() {
                     <img                            
                         src={require(`../../Assets/png/Logos/logoCatalogo.png`)}
                         alt="imgCategory"
+                        onLoad={()=>{setLoading(false)}}
                     />
                 </picture>
             </li>

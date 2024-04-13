@@ -54,13 +54,3 @@
     opacity: 1;
     visibility: visible;
 }
-
-#logoCat:checked ~ * .items-menu-mob{
-    margin: 2px 3.2px;
-    opacity: 1;
-    visibility: visible;
-}
-
-@include tablet{
-    
-}

@@ -14,7 +14,7 @@ export function Header() {
       cuando se hace click o se pierde el focus de la caja
     */
 
-    useEffect(() => {        
+    useEffect(() => {
         uploadProducts()
         // eslint-disable-next-line
     }, [])

@@ -11,7 +11,7 @@ import secureLocalStorage from "react-secure-storage";
 export function Home() {
     
     const [bottomC, setBottomC] = useState(null);
-    const { setLoading, logged, queryEnded } = useTheContext()
+    const { logged, queryEnded } = useTheContext()
 
     const [observer, setElements, entries] = useObserver({
         treshhold: 0.25,
@@ -72,29 +72,8 @@ export function Home() {
 
         const imgAvif = require(`../../Assets/avif/categorias/${item.descripcion}.avif`)
         const imgjpg = require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)
-<<<<<<< HEAD
-        return(                        
-            <>
-                <div className="ImgBtnContainer">
-
-                    <Link to={`catalogo/${item.descripcion}`}>
-                        <picture>
-                            <source
-                                className="el_lazy2"
-                                type="image/avif"
-                                elsrc={imgAvif}
-                            />
-                            <img
-                                className={`${item.color} el_lazy`}
-                                elsrc={imgjpg}
-                                alt="categoria"
-                                decoding="async"
-                            />
-                        </picture>
-                    </Link>
-=======
         return(
-            <div key={index} className="c-categ">
+            <div key={index} className="ImgBtnContainer">
 
                 <Link to={`catalogo/${item.descripcion}`}>
                     <picture>
@@ -111,7 +90,6 @@ export function Home() {
                         />
                     </picture>
                 </Link>
->>>>>>> MainE1
 
             </div>
         );
@@ -157,11 +135,7 @@ export function Home() {
                     <div className="row g-0 avi fs-2">
                         <div className="col ">
                             <div className="d-flex justify-content-center gx-1">
-<<<<<<< HEAD
-                            <p>Eres <span> Ferretero? </span> tenemos precios especiales para ti... <Link to="/contactUs"><span>contactanos</span></Link></p>
-=======
                                 <p>Eres <span> Ferretero? </span> tenemos precios especiales para ti... <Link to="/contactanos"><span>contactanos</span></Link></p>
->>>>>>> MainE1
                             </div>
                         </div>
                     </div>
@@ -311,7 +285,6 @@ export function Home() {
                                         autoPlay
                                         muted
                                         loop
-                                        onCanPlay={()=>setLoading(false)}
                                     />
 
                                 </div>

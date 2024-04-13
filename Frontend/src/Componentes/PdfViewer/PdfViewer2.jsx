@@ -19,15 +19,15 @@ export function PdfViewer2({ route, prop, dir, show='yes' }) {
     }
 
     if (jsjs==="ebanisteria"){
-        numPag = 94
+        numPag = 112
     }else if(jsjs==="estudiantil"){
-        numPag = 136
+        numPag = 9
     }else if(jsjs==="gas"){
-        numPag = 52
+        numPag = 22
     }else if(jsjs==="griferia"){
-        numPag = 64
+        numPag = 34
     }else if(jsjs==="electricos"){
-        numPag = 6
+        numPag = 66
     }else if(jsjs==="tornilleria"||jsjs==="inicio"){
         numPag = 0
     }

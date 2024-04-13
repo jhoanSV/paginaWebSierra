@@ -36,9 +36,6 @@ export function Catalogo() {
             <div className="catalogo">
 
                 <div className="row">
-<<<<<<< HEAD
-                    <div className="pdfViewer">
-=======
                     <div className="pdfViewer">{/*las clase antes era "col pdfViewer"*/}
                         {/*<PdfViewer
                             key={refreshKey}
@@ -59,7 +56,6 @@ export function Catalogo() {
                             </ul>
                             }
                         </div>
->>>>>>> MainE1
                         <PdfViewer2
                             key={refreshKey}
                             route={'Assets/imgsCatalogo/main/'}
