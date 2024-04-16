@@ -9,7 +9,7 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [fontResize, setFontResize] = useState('');
-    const [imgSrc, setImgSrc] = useState(`https://sivar.com.co/Imgs/ProductsAVIF/${cod}.avif`);
+    const [imgSrc, setImgSrc] = useState(`http://sivar.com.co/Imgs/ProductsAVIF/${cod}.avif`);
 
     const handleDelete = () =>{        
         onDelete(id)
@@ -41,7 +41,7 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
     }
 
     useEffect(() => {        
-        setImgSrc(`https://sivar.com.co/Imgs/ProductsAVIF/${cod}.avif`)
+        setImgSrc(`http://sivar.com.co/Imgs/ProductsAVIF/${cod}.avif`)
         setCant(parseInt(cantidad))
         setTotalPrice(unitPrice*(parseInt(cantidad)))
         // eslint-disable-next-line
