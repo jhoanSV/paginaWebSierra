@@ -45,7 +45,13 @@ export const TheCart = () => {
         newCart[id].Cant = val        
         setCart(newCart)
         localStorage.setItem('cart',JSON.stringify(newCart))
-    }    
+    }
+
+    const handleModalClose = () =>{
+        setCurrentDiv(0);
+        setBtnDis2(true);
+        setRoute(false);
+    }
 
     const handleSendOrder = async() =>{
         const fecha = new Date()
@@ -132,6 +138,14 @@ export const TheCart = () => {
         // eslint-disable-next-line
     }, [cart]);
 
+    useEffect(() => {
+        if(route){
+            setSendCost(0)
+        }else{
+            setSendCost(5000)
+        }
+    }, [route]);
+
     return (
         <section className='theCart'>
             { logged ?
@@ -181,7 +195,7 @@ export const TheCart = () => {
                     <div className="modal fade" id='sendOrderMod' data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="idkLabel" aria-hidden="true">
                         <div className="modal-dialog" style={{marginTop: '25vh'}}>
                             <div className="modal-content">
-                                <button className="xButton" data-bs-dismiss="modal" aria-label="Close" onClick={()=>{setCurrentDiv(0);setBtnDis2(true)}} ref={closeRef}>
+                                <button className="xButton" data-bs-dismiss="modal" aria-label="Close" onClick={()=>{handleModalClose()}} ref={closeRef}>
                                     <i className="bi bi-x-circle-fill"></i>
                                 </button>
                                 <div className='modal-body'>
