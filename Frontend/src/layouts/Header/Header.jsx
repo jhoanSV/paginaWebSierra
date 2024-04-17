@@ -1,4 +1,4 @@
-import {React, useEffect } from "react";
+import {React, useEffect, useRef } from "react";
 import "./_header.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { products, Alias } from '../../api';
@@ -6,6 +6,7 @@ import secureLocalStorage from "react-secure-storage";
 import { useTheContext } from "../../TheProvider";
 
 export function Header() {
+    const container = useRef()
     const navigate = useNavigate()
     const { setQueryEnded, setSBText, logged, nItemsCart } = useTheContext()
     let userName = null
@@ -54,9 +55,23 @@ export function Header() {
         window.location.href = '/'
     }
 
+    window.onscroll = function() {
+        var sticky = container.current.offsetTop;
+        console.log('positionContainer: ' + container.current.offsetTop);
+        console.log('altoContainer: '+container.current.offsetHeight);
+
+        if (window.scrollY > (sticky)) {
+            //container.current.classList.add("sticky");
+            console.log('lo pega ñero');
+        } else {
+            console.log('No lo pega ñero');
+            //container.current.classList.remove("sticky");
+        }
+    };
+
     return(
         <header style={{position: 'relative'}}>
-            <div className="container-fluid px-4 g-0 cabecera">                
+            <div className="container-fluid px-4 g-0 cabecera" ref={container}>
                 <picture>
                     <source
                         type="image/avif"

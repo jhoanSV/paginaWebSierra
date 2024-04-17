@@ -251,7 +251,7 @@ export const TheCart = () => {
                                                     Volver
                                                 </button>                                                
                                                 <button type="button" className="btnModal btnConfirm" disabled={btnDis2}
-                                                    onClick={handleSendOrder}>
+                                                    onClick={()=>{handleSendOrder()}}>
                                                     Confirmar
                                                 </button>
                                             </div>
