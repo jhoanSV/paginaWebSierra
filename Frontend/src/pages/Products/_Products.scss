@@ -6,9 +6,7 @@
 
 .productsContainer{
     flex-wrap: wrap;
-    display: flex;
-    max-height: 670px;
-    overflow-y: auto;
+    display: flex;    
     .caja{
         margin: 0% 3% 3% 3%;
     }

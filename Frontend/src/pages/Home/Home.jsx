@@ -282,6 +282,7 @@ export function Home() {
                                         width="100%"
                                         height="auto"
                                         src={require("../../Assets/mp4/video1.mp4")}
+                                        poster={require('../../Assets/webp/frame1.webp')}
                                         autoPlay
                                         muted
                                         loop

@@ -13,8 +13,15 @@ export const TheCart = () => {
     const closeRef = useRef();
     const dateChosen = useRef();
     const theTextArea = useRef();
+    /*let tempTotalCost = 0, theSendCost = 0
+    JSON.parse(localStorage.getItem('cart')).forEach((item) => {
+        tempTotalCost += item.PVenta * item.Cant;
+    });
+    if(tempTotalCost>300000) theSendCost = 0
+    else theSendCost = 5000
+    console.log(theSendCost);*/
 
-    const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));    
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
     const [sendCost, setSendCost] = useState(5000);
     const [subTotalC, setSubTotalC] = useState(0);
     const [currentDiv, setCurrentDiv] = useState(0);
@@ -129,22 +136,22 @@ export const TheCart = () => {
         });
         
         setSubTotalC(totalCost);
-        if (totalCost > 300000) setSendCost(0)
+        if (totalCost > 300000 || route) setSendCost(0)
         else setSendCost(5000)
 
         if(totalCost===0){setBtnDis(true)}
         else{setBtnDis(false)}
         
         // eslint-disable-next-line
-    }, [cart]);
+    }, [cart, route]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         if(route){
             setSendCost(0)
         }else{
             setSendCost(5000)
         }
-    }, [route]);
+    }, [route]);*/
 
     return (
         <section className='theCart'>

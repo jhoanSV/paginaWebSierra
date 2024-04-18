@@ -30,8 +30,9 @@ export const Login = () => {
             if (userData.hasOwnProperty('Cod')){
                 //autorizado
                 console.log('authorized')
-                secureLocalStorage.setItem('userData', JSON.stringify(userData))
-                window.location.href = '/'
+                secureLocalStorage.setItem('userData', JSON.stringify(userData))                
+                window.location.href = '/#/productos'
+                window.location.reload()
             } else if (userData.hasOwnProperty('error')){
                 // no autorizado
                 console.log('unauthorized')

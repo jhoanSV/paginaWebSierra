@@ -1,14 +1,15 @@
 import {React, useEffect, useRef } from "react";
 import "./_header.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { products, Alias } from '../../api';
 import secureLocalStorage from "react-secure-storage";
 import { useTheContext } from "../../TheProvider";
 
 export function Header() {
-    const container = useRef()
+    const cabecera = useRef()
     const navigate = useNavigate()
     const { setQueryEnded, setSBText, logged, nItemsCart } = useTheContext()
+    const location = useLocation()
     let userName = null
 
     /*Funciones para mostrar o esconder caja de texto
@@ -56,22 +57,23 @@ export function Header() {
     }
 
     window.onscroll = function() {
-        var sticky = container.current.offsetTop;
-        console.log('positionContainer: ' + container.current.offsetTop);
-        console.log('altoContainer: '+container.current.offsetHeight);
 
-        if (window.scrollY > (sticky)) {
-            //container.current.classList.add("sticky");
-            console.log('lo pega ñero');
-        } else {
-            console.log('No lo pega ñero');
-            //container.current.classList.remove("sticky");
+        if (location.pathname==='/productos' || location.pathname==='/carrito') {
+            if (window.scrollY > (cabecera.current.offsetHeight)) {
+                cabecera.current.classList.add('sticky')
+            } else {
+                cabecera.current.classList.remove('sticky')
+            }
+        }else{
+            cabecera.current.classList.remove('sticky')
         }
-    };
+    };    
+
+    //if(location.pathname ===)
 
     return(
         <header style={{position: 'relative'}}>
-            <div className="container-fluid px-4 g-0 cabecera" ref={container}>
+            <div className="container-fluid px-4 g-0 cabecera" ref={cabecera}>
                 <picture>
                     <source
                         type="image/avif"
