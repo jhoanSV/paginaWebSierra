@@ -123,7 +123,17 @@ export function Home() {
     }, [entries, observer])
     
     useEffect(() => {
-        window.scrollTo(0,0)        
+        window.scrollTo(0,0)
+        return () => {
+            //*the code below is to solve an bug when the user try to close a modal with thw back arrow
+            try {
+                document.getElementsByTagName("body")[0].removeAttribute("style");
+                document.getElementsByTagName("body")[0].classList.remove("modal-open")
+                document.querySelector('.modal-backdrop').remove()
+            } catch (error) {
+
+            }
+        };
         // eslint-disable-next-line
     }, []);
 

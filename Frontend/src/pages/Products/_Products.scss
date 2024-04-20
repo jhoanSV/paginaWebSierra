@@ -4,6 +4,12 @@
     padding: 0.9044rem 7rem;
 }
 
+.pptn{
+    margin-left: 3%;
+    font-weight: 600;
+    font-size: 32px;
+}
+
 .productsContainer{
     flex-wrap: wrap;
     display: flex;    
@@ -62,6 +68,10 @@
         padding: 0.9044rem 4rem;
     }
 
+    .pptn{
+        margin-left: 6%;
+    }
+
     .productsContainer{        
         .caja{
             margin: 0% 6% 6% 6%;
@@ -74,6 +84,9 @@
     .products{
         padding: 0.9044rem 1rem;
     }    
+    .pptn{
+        margin-left: 3%;
+    }
     .productsContainer{        
         .caja{
             margin: 0% 2% 6% 3%;

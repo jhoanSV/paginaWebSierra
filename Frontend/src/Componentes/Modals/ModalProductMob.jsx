@@ -164,7 +164,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                 </div>
                             </div>
                             <div className="col">
-                                { logged ?
+                                { logged &&
                                     <div className="totalPrice mainBlue">
                                         <div className='subTit fw-bold'>Total:</div>
                                         <h1>
@@ -172,10 +172,6 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                                 ${Formater(totalPrice)}
                                             </span>
                                         </h1>
-                                    </div>
-                                    :
-                                    <div className="totalPrice genFont d-flex fw-bold">
-                                        Suscr&iacute;bete para más
                                     </div>
                                 }
                             </div>
@@ -187,7 +183,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                 </button>
                                 :
                                 <button className="modalBtnLogin boton" onClick={() => {navigate('/inicio_sesion')}} data-bs-dismiss="modal">
-                                    Iniciar Sesion
+                                    Suscr&iacute;bete para m&aacute;s
                                 </button>
                             }
                         </div>

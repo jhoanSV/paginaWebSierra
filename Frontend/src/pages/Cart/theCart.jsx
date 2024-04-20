@@ -152,6 +152,17 @@ export const TheCart = () => {
             setSendCost(5000)
         }
     }, [route]);*/
+    useEffect(() => {
+        return () => {
+            try {
+                document.getElementsByTagName("body")[0].removeAttribute("style");
+                document.getElementsByTagName("body")[0].classList.remove("modal-open")
+                document.querySelector('.modal-backdrop').remove()
+            } catch (error) {
+
+            }
+        };
+    }, []);
 
     return (
         <section className='theCart'>

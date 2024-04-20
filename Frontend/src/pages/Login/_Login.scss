@@ -76,6 +76,11 @@
     height: 70px;    
     margin: 25px auto 0;
 }
+.btnRegistro{
+    background-color: $amarilloPrincipal !important;
+    color: $azulPrincipal !important;
+    width: 62%;
+}
 .btnLogin:active{
     background-color: $amarilloPrincipal;
     color: white;

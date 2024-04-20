@@ -43,7 +43,10 @@ export const Login = () => {
         }
     }
 
-    const togglePass = () =>{
+    const togglePass = (e) =>{
+        e.target.classList.toggle('bi-eye-fill');
+        e.target.classList.toggle('bi-eye-slash-fill');        
+        
         if (passInput.current.type === "password") {
             passInput.current.type = "text";
         } else {
@@ -85,9 +88,14 @@ export const Login = () => {
                             onBlur={(e) => {
                                 if ((e.target.value) === ''){
                                     e.target.classList.add('fw-bold')
-                                }                                
+                                }
                             }}
-                        />
+                        />                        
+                        <i className="bi bi-eye-fill" style={{right: '0'}} onClick={(e)=>{
+                            togglePass(e);
+                        }}>
+                        </i>
+                        
                     </div>
                     <div className="mt-2">
                         <span className='fw-bold logText' role='button'
@@ -96,26 +104,24 @@ export const Login = () => {
                         </span>
                     </div>                        
                 </div>
-                <div className="mt-5 w-100">
-                    <div className='d-flex justify-content-between toDirCol'>
-                        <div>
-                            <input type='checkbox' className='theCheck' onChange={()=>{togglePass()}}/>
-                            <span className='ms-3 logText'>Mostrar contraseña</span>
-                        </div>
-                        <a href='https://wa.me/573134237538?text=Cordial%20saludo%2C%20tengo%20interes%20en%20registrarme%20en%20sivar.com.co'
-                            style={{textDecoration: 'none'}} target="_blank" rel="noreferrer">
-                            <span className='logText'>
-                                Registrarme
-                            </span>
-                        </a>
-                    </div>
+                <div className="w-100">
                     <button className='btnStlGen btnLogin' onClick={()=>{
                         LogIn()
                     }}>
                         Iniciar sesion
                     </button>
+                    <button className='btnStlGen btnLogin btnRegistro' onClick={()=>{
+                        if (window.confirm('Se abrirá WhatsApp para que nuestro equipo te guíe en el proceso de registro') === true) {
+                            window.open(
+                                'https://wa.me/573134237538?text=Cordial%20saludo%2C%20tengo%20interes%20en%20registrarme%20en%20sivar.com.co',
+                                '_blank' // <- This is what makes it open in a new window.
+                              );
+                        }
+                    }}>
+                        Registrarme
+                    </button>
                 </div>
-            </div>            
+            </div>
         </section>
     );
 }

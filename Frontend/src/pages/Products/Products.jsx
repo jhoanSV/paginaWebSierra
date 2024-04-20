@@ -93,11 +93,23 @@ export function Products() {
 
   useEffect(() => {
     window.scrollTo(0,0)
+    return () => {
+      try {
+          document.getElementsByTagName("body")[0].removeAttribute("style");
+          document.getElementsByTagName("body")[0].classList.remove("modal-open")
+          document.querySelector('.modal-backdrop').remove()
+      } catch (error) {
+
+      }
+    };
   }, []);
 
   return (
     <>
       <section className='products'>
+        <div className="pptn">
+          Pensados para tu negocio
+        </div>
         <div className="productsContainer">
           { lista === null ?
             <div className='nFound'>
