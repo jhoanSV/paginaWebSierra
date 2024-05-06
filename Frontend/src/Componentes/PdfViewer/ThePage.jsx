@@ -17,10 +17,10 @@ export const ThePage=({the_src, width}) =>{
     return(
         <div className="imgContainer">
             <picture>
-                {/*<source
+                <source
                     type="image/avif"
                     srcSet={the_src}
-                />Esto para cuando tenga las AVIF c:*/}
+                />
                 <img
                     src={src}
                     alt="categoria"

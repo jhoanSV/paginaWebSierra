@@ -7,6 +7,7 @@ import { useTheContext } from "../../TheProvider";
 
 export function Header() {
     const cabecera = useRef()
+    const userNameHead = useRef()
     const navigate = useNavigate()
     const { setQueryEnded, setSBText, logged, nItemsCart } = useTheContext()
     const location = useLocation()
@@ -14,12 +15,7 @@ export function Header() {
 
     /*Funciones para mostrar o esconder caja de texto
       cuando se hace click o se pierde el focus de la caja
-    */
-
-    useEffect(() => {
-        uploadProducts()
-        // eslint-disable-next-line
-    }, [])
+    */    
 
     const uploadProducts = async()=>{
 
@@ -60,9 +56,11 @@ export function Header() {
         if (location.pathname==='/productos') {            
             if (window.scrollY > (cabecera.current.offsetHeight)) {
                 cabecera.current.classList.add('sticky')
+                document.querySelector('.products').style.paddingTop = (cabecera.current.offsetHeight * 2) + 'px'
                 return
             } else {
                 cabecera.current.classList.remove('sticky')
+                document.querySelector('.products').style.paddingTop = ''
                 return
             }
         }else{
@@ -77,10 +75,21 @@ export function Header() {
                 document.querySelector('.theCart').style.paddingTop = ''
             }            
         }else{
-            cabecera.current.classList.remove('sticky')
-            document.querySelector('.theCart').style.paddingTop = ''
+            cabecera.current.classList.remove('sticky')            
         }
     };
+
+    useEffect(() => {
+        uploadProducts()
+        // eslint-disable-next-line
+    }, [])
+    
+    useEffect(() => {
+        if(logged && ((11 + (userName.length)) > (userNameHead.current.clientWidth / 10))){
+            console.log('se desborda');
+        }
+        // eslint-disable-next-line
+    }, [logged]);
     
     //if(location.pathname ===)
 
@@ -166,8 +175,10 @@ export function Header() {
                     <div className="col user">
                         { logged ?
                             <>
-                                <div className="Tit userNameHead">
-                                    Bienvenido {userName}
+                                <div className="userNameHead" ref={userNameHead}>
+                                    <label>
+                                        Bienvenido {userName}
+                                    </label>
                                 </div>
                                 <Link to="/carrito" type="button" className='btnCart'>
                                     <i className="bi bi-cart4"></i>

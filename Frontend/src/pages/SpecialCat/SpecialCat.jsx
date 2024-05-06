@@ -8,8 +8,8 @@ export const SpecialCat = () => {
             
             <div className="row">
                 <div className="pdfViewer">
-                    <PdfViewer2
-                        route={'Assets/imgsCatalogo/spc1/'}
+                    <PdfViewer2                    
+                        route={'imgsCatalogo/CatalogoSpcAVIF/'}
                         prop={'inicio'}
                         dir={0}
                     />

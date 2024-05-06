@@ -58,7 +58,7 @@ export function Catalogo() {
                         </div>
                         <PdfViewer2
                             key={refreshKey}
-                            route={'Assets/imgsCatalogo/main/'}
+                            route={'imgsCatalogo/CatalogoAVIF/'}
                             prop={Categoria}
                             dir={0}
                         />

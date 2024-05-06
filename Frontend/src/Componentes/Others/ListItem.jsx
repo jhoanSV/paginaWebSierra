@@ -9,7 +9,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
     const [key, setKey] = useState(0);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [isMobile, setIsMobile] = useState();
-    const [imgSrc, setImgSrc] = useState(`http://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
+    const [imgSrc, setImgSrc] = useState(`https://sivarwebresources.s3.amazonaws.com/AVIF/${codigo}.avif`)
     const [Show1, setShow1] = useState(false);
     const theCaja = useRef()
     
@@ -43,7 +43,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
 
     useEffect(() => {
         setKey(prevKey => prevKey + 1);
-        setImgSrc(`http://sivar.com.co/Imgs/ProductsAVIF/${codigo}.avif`)
+        setImgSrc(`https://sivarwebresources.s3.amazonaws.com/AVIF/${codigo}.avif`)
     }, [codigo]);
 
     return(

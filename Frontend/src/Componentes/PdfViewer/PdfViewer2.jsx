@@ -41,12 +41,12 @@ export function PdfViewer2({ route, prop, dir, show='yes' }) {
     });
     const [pages, setPages] = useState([
         //this stupid shit needs to be more standard
-        { src: require(`../../${route}Pagina ${numPag}.jpg`)},
-        { src: require(`../../${route}Pagina ${numPag+1}.jpg`)},
-        { src: require(`../../${route}Pagina ${numPag+2}.jpg`)},
-        { src: require(`../../${route}Pagina ${numPag+3}.jpg`)},
-        { src: require(`../../${route}Pagina ${numPag+4}.jpg`)},
-        { src: require(`../../${route}Pagina ${numPag+5}.jpg`)},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag}.avif`},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+1}.avif`},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+2}.avif`},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+3}.avif`},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+4}.avif`},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+5}.avif`},
     ]);
 
     const last_node = () => {
@@ -78,7 +78,7 @@ export function PdfViewer2({ route, prop, dir, show='yes' }) {
         setScreenWidth(window.innerWidth);
     });
 
-    useEffect(()=>{        
+    useEffect(()=>{
         const thePdfViewer = document.querySelector(".thePdfViewer");
         resize_ob.observe(document.querySelector(".catalogo"));
         //let movejsjs = 0
@@ -152,8 +152,9 @@ export function PdfViewer2({ route, prop, dir, show='yes' }) {
                 try {
                     const newPages = [
                         ...pages,
-                        { src: require(`../../${route}Pagina ${numPag+pages.length}.jpg`)},
-                        { src: require(`../../${route}Pagina ${numPag+pages.length+1}.jpg`)},
+                        //{ src: require(`../../${route}Pagina ${numPag+pages.length}.jpg`)},
+                        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+pages.length}.avif`},
+                        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+pages.length+1}.avif`},
                     ];
                     setPages(newPages)
                     last_node()
