@@ -2,7 +2,7 @@
 
 .thePdfViewer{    
     //width: 64.375rem;    
-    padding: 5rem 0rem;
+    padding: 4rem 0rem;
     margin: 0rem 1.25rem;
     display: flex;
     scrollbar-width: none;
@@ -59,4 +59,15 @@
 .no{
     display: none;
     visibility: hidden;
+}
+
+@media screen and (max-width: 636px) {
+    .thePdfViewer{
+        padding: 5rem 0rem;
+    }
+}
+@media screen and (max-width: 375px) {
+    .thePdfViewer{
+        padding: 7.5rem 0rem;
+    }
 }

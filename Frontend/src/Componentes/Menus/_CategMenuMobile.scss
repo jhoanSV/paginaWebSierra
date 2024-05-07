@@ -56,9 +56,10 @@
 }
 
 .mnp-container{
-    position: absolute;
-    bottom: 8px;
-    left: -193px;
+    position: fixed;
+    z-index: 1;
+    bottom: 6.6rem;
+    right: 4.7rem;
     width: 191.92px;
     height: 45px;
     padding: 0px 5px;
@@ -92,5 +93,11 @@
     }
     100%{
         transform: translate(192px, 0px);
+    }
+}
+
+@media screen and (max-width: 426px){
+    .btnRegistro{
+        width: 75%;
     }
 }

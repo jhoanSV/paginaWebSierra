@@ -45,7 +45,7 @@ export function Catalogo() {
                             {
                             <ul className='m-0 catalogoMenuContainer'>
                                 {categs.map((item, index) => (
-                                    <li key={index} className='lstStylN'>
+                                    <li key={index} className='lstStylN' style={{margin: '6px 0px'}}>
                                         <Link to={`/catalogo/${item.descripcion}`} className={`btnMenuCatalogo ${item.color}`}>
                                             <span style={{color: 'black'}}>
                                                 {item.descripcion.charAt(0).toUpperCase() + item.descripcion.slice(1)}
