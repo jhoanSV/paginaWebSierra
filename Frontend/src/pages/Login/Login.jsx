@@ -14,18 +14,6 @@ export const Login = () => {
             "EmailUser": userEmail,
             "Password": password
         })
-        /*
-        Cel : "123456789"
-        Cod : 493
-        Contacto : "don prueba"
-        Direccion : "123456789"
-        Email : "pruebausuario1@gmail.com"
-        Ferreteria : "prueba contraseña 2"
-        Telefono : "123456789"
-        */
-    //    await new Promise(resolve => setTimeout(resolve, 5000))       
-    //    const userData = JSON.parse('{"Cel" : "123456789", "Cod" : 493, "Contacto" : "don prueba", "Direccion" : "123456789", "Email" : "pruebausuario1@gmail.com", "Ferreteria" : "prueba contraseña 2", "Telefono" : "123456789"}')
-    //    console.log((userData));
         try {
             if (userData.hasOwnProperty('Cod')){
                 //autorizado

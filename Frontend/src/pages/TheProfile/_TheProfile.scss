@@ -27,7 +27,9 @@
 }
 
 .userData{
-    width: 100%;
+    width: 58%;
+    width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+    width: -moz-available;          /* WebKit-based browsers will ignore this. */
     margin-left: 42%;
 }
 
@@ -105,6 +107,9 @@
 @media screen  and (max-width: 610px){
     .userData{
         margin-left: 0;
+        width: 100%;
+        width: -webkit-fill-available;
+        width: -moz-available;  
     }
     .tuercaContainer.profile{
         top: 0%;

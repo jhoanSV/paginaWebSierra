@@ -90,12 +90,10 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                         </div>
                         <div className={`imgModal C${category}`}>
                             <picture style={{position: 'relative', overflow: 'hidden'}}>
-                                { agotado ?
+                                { agotado &&
                                     <div className='soldOutMod'>
                                         AGOTADO
                                     </div>
-                                :
-                                    <></>
                                 }
                                 <source
                                     type="image/avif"

@@ -49,7 +49,7 @@ export function Products() {
           // Convert the json into an array of objects to reorder by score
           const dataArray = filtro.map((value, key) => ({ key, ...value }));
           // Order the array deppending on the score
-          dataArray.sort((a, b) => b.Score - a.Scote);
+          dataArray.sort((a, b) => b.Score - a.Score);
           // Convert the array into a json object
           //!const sortedJson = JSON.stringify(dataArray);
           //sortedJson2 = sortedJson

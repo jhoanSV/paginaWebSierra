@@ -1,5 +1,7 @@
 // const API = 'http://000.000.0.000:0000/tasks';
-const API = process.env.REACT_APP_API;
+//const API = process.env.REACT_APP_API;
+const API = 'http://192.168.1.110:3000/tasks';
+
 
 
 //const API = 'http://localhost:3000/tasks';
