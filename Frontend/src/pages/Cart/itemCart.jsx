@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './_itemCart.scss';
 import { Formater } from '../../globals/otherFunctions';
-import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
+import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png';
+import speak from '../../InternalFunctions';
 
 export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantidad, onDelete, updtC}) => {
     
@@ -40,12 +41,36 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
         setImgSrc(imgPlaceHolder)
     }
 
-    useEffect(() => {        
+
+    //TODO: to update the image if this image is new
+    useEffect(() => {
+        const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${cod}.avif`;
+    
+        // Verificar el ETag del servidor
+        fetch(imageUrl, { method: "HEAD" })
+          .then((response) => {
+            const eTag = response.headers.get("ETag"); // Obtener el ETag
+            if (eTag) {
+              setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+            } else {
+              setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+            }
+          })
+          .catch((error) => {
+            console.error("Error verificando el ETag:", error);
+            setImgSrc(imageUrl); // En caso de error, mostrar la imagen igual
+          });
+        setCant(parseInt(cantidad));
+        setTotalPrice(unitPrice * parseInt(cantidad));
+      }, [cod]);
+    //TODO: end of the todo
+
+    /*useEffect(() => {        
         setImgSrc(`https://sivarwebresources.s3.amazonaws.com/AVIF/${cod}.avif`)
         setCant(parseInt(cantidad))
         setTotalPrice(unitPrice*(parseInt(cantidad)))
         // eslint-disable-next-line
-    }, [cod]);
+    }, [cod]);*/
 
     return (
         <div className='itemCartStyle' id={`a${id}`} >

@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 //import { getGlobal } from '../../globals/globals'; remove later
 import { useTheContext } from '../../TheProvider';
 import { useNavigate } from 'react-router-dom';
+import { speak, SpeakButton } from '../../InternalFunctions';
 //import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codigo, category,
-    unitPaq, unitPrice, lista, agotado}) => {
+    unitPaq, unitPrice, lista, agotado, onHide}) => {
 
     const [cant, setCant] = useState(0)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
@@ -63,7 +64,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
 
     return (
         <div className="modal-content productBox">
-            <button className="xButton" data-bs-dismiss="modal" aria-label="Close">
+            <button className="xButton" data-bs-dismiss="modal" aria-label="Close" onClick={()=>{onHide()}}>
                 <i className="bi bi-x-circle-fill"></i>
             </button>
             <div className="modal-body p-0">
@@ -85,7 +86,10 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                             </div>
                             <div className='subTit' id='productoLabel'>
                                 {descripcion}
-                                <div className='smolText'>Cod: {codigo}</div>
+                                <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%"}}>
+                                    <div className='smolText'>Cod: {codigo}</div>
+                                    <SpeakButton text={descripcion + "; Descripcion: " + descripcionComp + "; No esperes más, adquiérelo ahora."} />
+                                </div>
                             </div>
                         </div>
                         <div className={`imgModal C${category}`}>
@@ -194,8 +198,10 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                 <strong><u className='mainBlue'>Descripcion:</u></strong>
                             </p>
                             { showDesc &&
-                                <div className="description scrollableY genFont">
-                                    {descripcionComp}.<br/>
+                                <div>
+                                    <div className="description scrollableY genFont">
+                                        {descripcionComp}.<br/>
+                                    </div>
                                 </div>
                             }
                         </div>
