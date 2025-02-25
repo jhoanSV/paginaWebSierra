@@ -5,7 +5,7 @@ import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png';
 import { Outlet, useNavigate, useLocation, useParams } from "react-router-dom";
 
 export const ListItem=({llave, codigo, descripcion, descripcionComp,
-    unitPrice, category, unitPaq, lista, agotado, ImgName, Show1, setShow1})=>{
+    unitPrice, category, unitPaq, lista, agotado, ImgName, Show1, setShow1, callProduct})=>{
 
     const [key, setKey] = useState(0);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -58,7 +58,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         setImgSrc(imgPlaceHolder)
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         setKey(prevKey => prevKey + 1);
         //setImgSrc(`https://sivarwebresources.s3.amazonaws.com/AVIF/${codigo}.avif`)
 
@@ -78,11 +78,11 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
             console.error("Error verificando el ETag:", error);
             setImgSrc(imageUrl); // En caso de error, mostrar la imagen igual
             });
-    }, [codigo]);
+    }, [codigo]);*/
 
     return(
         <>
-            <div id={`box${llave}`} ref={theCaja} className='caja' data-bs-toggle="modal" data-bs-target={`#producto${llave}`} onClick={()=>{click_caja(codigo)}}>                
+            <div id={`box${llave}`} ref={theCaja} className='caja' data-bs-toggle="modal" data-bs-target={`#producto${llave}`} onClick={()=>{callProduct(codigo)}}>                
                 { agotado ?                    
                     <div className='soldOutLI' style={{fontSize: (theCaja.current ? theCaja.current.clientWidth - 30 : 0)+'%'}}>
                         AGOTADO
@@ -118,7 +118,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                 </div>
             </div>
             
-            <div className="modal fade" id={`producto${llave}`} tabIndex="-1" aria-labelledby="productoLabel" aria-hidden="true">
+            {/*<div className="modal fade" id={`producto${llave}`} tabIndex="-1" aria-labelledby="productoLabel" aria-hidden="true">
                 <div className="modal-dialog resizeModal">
                     { isMobile ? 
                         Show1 ? 
@@ -156,7 +156,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                         <></>
                     }
                 </div>
-            </div>
+            </div>*/}
         </>        
     );
 }

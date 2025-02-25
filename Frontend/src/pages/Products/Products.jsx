@@ -17,7 +17,7 @@ export function Products() {
   const navigate = useNavigate();
   const [ lista, setLista ] = useState([]);
   const [ screenWidth, setScreenWidth ] = useState(window.innerWidth);
-  const [modalId, setModalId] = useState("producto0");
+  const [ imgSrc, setImgSrc] = useState("");
   const [ limit, setLimit ] = useState(0);
   const [ Show1, setShow1 ] = useState(false);
   const [ isMobile, setIsMobile ] = useState(false);
@@ -69,6 +69,24 @@ export function Products() {
       setSelecteditem(selectedProduct);
       console.log("selectedProduct: ", selectedProduct)
       setShow1(true);
+
+      const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif`;
+    
+      // Verificar el ETag del servidor
+      fetch(imageUrl, { method: "HEAD", cache: "no-store"})
+          .then((response) => {
+          const eTag = response.headers.get("ETag"); // Obtener el ETag
+          if (eTag) {
+              setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+          } else {
+              setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+          }
+          })
+          .catch((error) => {
+          console.error("Error verificando el ETag:", error);
+          setImgSrc(imageUrl); // En caso de error, mostrar la imagen igual
+          });
+      navigate(`/productos/${selectedItem.Cod}`);
     } else {
         console.log("Producto no encontrado con código:", ProductCode);
     }
@@ -170,14 +188,24 @@ export function Products() {
   }, []);
 
   useEffect(() => {
-    console.log("Show1:", Show1);
-    console.log("isMobile:", isMobile);
-  }, [Show1, isMobile]);
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    
+    // Llamamos handleResize inmediatamente para inicializar el valor correctamente
+    handleResize();
+
+    return () => {
+        window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
       {!isSpecialsRoute && (
-        <section className='products'>
+        <section className='products' id={`#productWindows`}>
           <div className="pptn">
             Pensados para tu negocio
           </div>
@@ -187,7 +215,7 @@ export function Products() {
                     <ModalProductMob
                         key={selecteditem.key}
                         llave={selecteditem.llave}
-                        img={selecteditem.codigo}
+                        img={imgSrc}
                         descripcion={selecteditem.descripcion}
                         descripcionComp={selecteditem.descripcionComp}
                         codigo={selecteditem.codigo}
@@ -205,7 +233,7 @@ export function Products() {
                   <ModalProductDesk
                       key={selecteditem.key}
                       llave={selecteditem.llave}
-                      img={selecteditem.codigo}
+                      img={imgSrc}
                       descripcion={selecteditem.descripcion}
                       descripcionComp={selecteditem.descripcionComp}
                       codigo={selecteditem.codigo}
@@ -261,7 +289,8 @@ export function Products() {
                     agotado={item.Agotado}
                     lista={lista}
                     Show1={Show1}
-                    setShow1={setShow1}/>
+                    setShow1={setShow1}
+                    callProduct ={selectProductModal}/>
                 )}
                 <div className="pcFoot"/>
               </>

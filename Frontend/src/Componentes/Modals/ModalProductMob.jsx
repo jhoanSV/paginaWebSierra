@@ -63,149 +63,151 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
     }, []);
 
     return (
-        <div className="modal-content productBox">
-            <button className="xButton" data-bs-dismiss="modal" aria-label="Close" onClick={()=>{onHide()}}>
-                <i className="bi bi-x-circle-fill"></i>
-            </button>
-            <div className="modal-body p-0">
-                <div className="row row-cols-1">
-                    <div className="col d-flex flex-column">
-                        <div className="mainFeatures">
-                            <div className="theLogo">
-                                <picture>
+        <div className='theModalContainer'>
+            <div className='theModal-content' style={{width: '700px', position: 'relative'}}>
+                <div className='theModal-body'>
+                    <button className='xButton' data-bs-dismiss="modal" aria-label="Close" onClick={() => {onHide()}} style={{position: 'absolute', top: '0px', right: '0px'}}>
+                        <i className='bi bi-x-circle-fill'/>
+                    </button>
+                    <div className="row row-cols-1">
+                        <div className="col d-flex flex-column">
+                            <div className="mainFeatures">
+                                <div className="theLogo">
+                                    <picture>
+                                        <source
+                                            type="image/avif"
+                                            srcSet={catSource}
+                                        />
+                                        <img
+                                            src={catSource}                                        
+                                            alt="logo"
+                                            decoding="async"
+                                        />
+                                    </picture>
+                                </div>
+                                <div className='subTit' id='productoLabel'>
+                                    {descripcion}
+                                    <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%"}}>
+                                        <div className='smolText'>Cod: {codigo}</div>
+                                        <SpeakButton text={descripcion + "; Descripcion: " + descripcionComp + "; No esperes más, adquiérelo ahora."} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={`imgModal C${category}`}>
+                                <picture style={{position: 'relative', overflow: 'hidden'}}>
+                                    { agotado ?
+                                        <div className='soldOutMod'>
+                                            AGOTADO
+                                        </div>
+                                    :
+                                        <></>
+                                    }
                                     <source
                                         type="image/avif"
-                                        srcSet={catSource}
+                                        srcSet={img}
                                     />
                                     <img
-                                        src={catSource}                                        
-                                        alt="logo"
+                                        src={img}
+                                        alt="productImg"
                                         decoding="async"
                                     />
                                 </picture>
                             </div>
-                            <div className='subTit' id='productoLabel'>
-                                {descripcion}
-                                <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%"}}>
-                                    <div className='smolText'>Cod: {codigo}</div>
-                                    <SpeakButton text={descripcion + "; Descripcion: " + descripcionComp + "; No esperes más, adquiérelo ahora."} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className={`imgModal C${category}`}>
-                            <picture style={{position: 'relative', overflow: 'hidden'}}>
-                                { agotado ?
-                                    <div className='soldOutMod'>
-                                        AGOTADO
-                                    </div>
-                                :
-                                    <></>
-                                }
-                                <source
-                                    type="image/avif"
-                                    srcSet={img}
-                                />
+                            <div className="commingsoon">
                                 <img
-                                    src={img}
-                                    alt="productImg"
+                                    src={require("../../Assets/png/Proximamente.png")}
+                                    alt="commingsoon"
                                     decoding="async"
                                 />
-                            </picture>
-                        </div>
-                        <div className="commingsoon">
-                            <img
-                                src={require("../../Assets/png/Proximamente.png")}
-                                alt="commingsoon"
-                                decoding="async"
-                            />
-                        </div>
-                        <span className="smolText quantityText">{quantity}</span>
-                        <div className="unitPrice genFont">
-                            <span className='mainBlue fw-bold'>
-                                Valor:&nbsp;
-                            </span>
-                            { logged &&
-                            <span className="fw-bold">
-                                ${Formater(unitPrice)}
-                            </span>
-                            }
-                        </div>                        
-                        <div className='row'>
-                            <div className='col'>
-                                <div className="subTit fw-bold mainBlue">
-                                    Cantidad
-                                </div>
-                                <div className="quantityBox">
-                                    <button className="btnQuantity" onClick={() => {
-                                        if((cant-unitPaq)>=0){
-                                            setCant(cant-unitPaq)
-                                            setTotalPrice(unitPrice*(cant-unitPaq))
-                                        }
-                                    }}>
-                                        -
-                                    </button>
-                                    <input
-                                        className='quantity' type="number"
-                                        min={1}
-                                        value={cant}
-                                        style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
-                                        onChange={(e)=>{setCant(parseInt(e.target.value));}}
-                                        onBlur={(e)=>{
-                                            let theCant = parseInt(e.target.value)
-                                            if(e.target.value%unitPaq !== 0){
-                                                theCant = parseInt(Math.ceil(e.target.value / unitPaq) * unitPaq)
-                                                setCant(theCant);
+                            </div>
+                            <span className="smolText quantityText">{quantity}</span>
+                            <div className="unitPrice genFont">
+                                <span className='mainBlue fw-bold'>
+                                    Valor:&nbsp;
+                                </span>
+                                { logged &&
+                                <span className="fw-bold">
+                                    ${Formater(unitPrice)}
+                                </span>
+                                }
+                            </div>                        
+                            <div className='row'>
+                                <div className='col'>
+                                    <div className="subTit fw-bold mainBlue">
+                                        Cantidad
+                                    </div>
+                                    <div className="quantityBox">
+                                        <button className="btnQuantity" onClick={() => {
+                                            if((cant-unitPaq)>=0){
+                                                setCant(cant-unitPaq)
+                                                setTotalPrice(unitPrice*(cant-unitPaq))
                                             }
-                                            setTotalPrice(unitPrice*theCant)
-                                        }}
-                                    />
-                                    <button className="btnQuantity" onClick={() => {
-                                        setCant(parseInt(cant)+unitPaq)
-                                        setTotalPrice(unitPrice*(parseInt(cant)+unitPaq))
-                                    }}>
-                                        +
-                                    </button>
+                                        }}>
+                                            -
+                                        </button>
+                                        <input
+                                            className='quantity' type="number"
+                                            min={1}
+                                            value={cant}
+                                            style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
+                                            onChange={(e)=>{setCant(parseInt(e.target.value));}}
+                                            onBlur={(e)=>{
+                                                let theCant = parseInt(e.target.value)
+                                                if(e.target.value%unitPaq !== 0){
+                                                    theCant = parseInt(Math.ceil(e.target.value / unitPaq) * unitPaq)
+                                                    setCant(theCant);
+                                                }
+                                                setTotalPrice(unitPrice*theCant)
+                                            }}
+                                        />
+                                        <button className="btnQuantity" onClick={() => {
+                                            setCant(parseInt(cant)+unitPaq)
+                                            setTotalPrice(unitPrice*(parseInt(cant)+unitPaq))
+                                        }}>
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    { logged &&
+                                        <div className="totalPrice mainBlue">
+                                            <div className='subTit fw-bold'>Total:</div>
+                                            <h1>
+                                                <span className='text-black Tit'>
+                                                    ${Formater(totalPrice)}
+                                                </span>
+                                            </h1>
+                                        </div>
+                                    }
                                 </div>
                             </div>
-                            <div className="col">
-                                { logged &&
-                                    <div className="totalPrice mainBlue">
-                                        <div className='subTit fw-bold'>Total:</div>
-                                        <h1>
-                                            <span className='text-black Tit'>
-                                                ${Formater(totalPrice)}
-                                            </span>
-                                        </h1>
+                            <div className='mt-auto'>
+                                { logged ? 
+                                    <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart()}} data-bs-dismiss="modal">
+                                        Agregar al carrito
+                                    </button>
+                                    :
+                                    <button className="modalBtnLogin boton" onClick={() => {navigate('/inicio_sesion')}} data-bs-dismiss="modal">
+                                        Suscr&iacute;bete para m&aacute;s
+                                    </button>
+                                }
+                            </div>
+                            <div className="mt-auto">
+                                <p className="subTit" onClick={() => {
+                                    setShowDesc(!showDesc)
+                                }}>
+                                    <strong><u className='mainBlue'>Descripcion:</u></strong>
+                                </p>
+                                { showDesc &&
+                                    <div>
+                                        <div className="description scrollableY genFont">
+                                            {descripcionComp}.<br/>
+                                        </div>
                                     </div>
                                 }
                             </div>
-                        </div>
-                        <div className='mt-auto'>
-                            { logged ? 
-                                <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart()}} data-bs-dismiss="modal">
-                                    Agregar al carrito
-                                </button>
-                                :
-                                <button className="modalBtnLogin boton" onClick={() => {navigate('/inicio_sesion')}} data-bs-dismiss="modal">
-                                    Suscr&iacute;bete para m&aacute;s
-                                </button>
-                            }
-                        </div>
-                        <div className="mt-auto">
-                            <p className="subTit" onClick={() => {
-                                setShowDesc(!showDesc)
-                            }}>
-                                <strong><u className='mainBlue'>Descripcion:</u></strong>
-                            </p>
-                            { showDesc &&
-                                <div>
-                                    <div className="description scrollableY genFont">
-                                        {descripcionComp}.<br/>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>                    
+                        </div>                    
+                    </div>
                 </div>
             </div>
         </div>

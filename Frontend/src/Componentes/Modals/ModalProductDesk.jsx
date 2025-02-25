@@ -78,7 +78,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
         <div className='theModalContainer'>
             <div className='theModal-content' style={{width: '700px', position: 'relative'}}>
                 <div className='theModal-body'>
-                    <button className='btn1Stnd' onClick={() => {onHide()}} style={{position: 'absolute', top: '0px', right: '0px'}}>
+                    <button className='xButton' data-bs-dismiss="modal" aria-label="Close" onClick={() => {onHide()}} style={{position: 'absolute', top: '0px', right: '0px'}}>
                         <i className='bi bi-x-circle-fill'/>
                     </button>
                     <div className="row row-cols-2">
