@@ -39,9 +39,24 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         setShow1(false);
         navigate(`/productos`); // Regresa a la vista general sin ID en la URL
     };
+    const observeBox = () =>{
+        const elipsisjsjs = document.querySelectorAll('.ElipsJsjs')
+        const observer = new IntersectionObserver((entries)=>{
+            entries.forEach(entrie => {
+                console.log(entrie);
+                entrie.target.classList.toggle('active', entrie.isIntersecting);
+            });
+        },{
+            rootMargin: '-100px',
+        });
+        elipsisjsjs.forEach(element => {
+            observer.observe(element);
+        });
+    }
 
     useEffect(() => {
         resize_ob.observe(document.querySelector('#box'+llave));
+        observeBox();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -58,7 +73,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         setImgSrc(imgPlaceHolder)
     }
 
-    /*useEffect(() => {
+    useEffect(() => {
         setKey(prevKey => prevKey + 1);
         //setImgSrc(`https://sivarwebresources.s3.amazonaws.com/AVIF/${codigo}.avif`)
 
@@ -78,43 +93,39 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
             console.error("Error verificando el ETag:", error);
             setImgSrc(imageUrl); // En caso de error, mostrar la imagen igual
             });
-    }, [codigo]);*/
+    }, [codigo]);
 
     return(
         <>
             <div id={`box${llave}`} ref={theCaja} className='caja' data-bs-toggle="modal" data-bs-target={`#producto${llave}`} onClick={()=>{callProduct(codigo)}}>                
                 { agotado ?                    
-                    <div className='soldOutLI' style={{fontSize: (theCaja.current ? theCaja.current.clientWidth - 30 : 0)+'%'}}>
+                    <div className='soldOutLI' style={{
+                        fontSize: (theCaja.current ? theCaja.current.clientWidth - 30 : 0)+'%'}}>
                         AGOTADO
                     </div>
                 :
                     <></>
                 }
-                <div className="row">
-                    <div className="col h-100">
-                        <div className="row row-cols-1 g-0">
+                <div className={`imgProducto C${category}`}>
+                    <picture>
+                        <source
+                            type="image/avif"
+                            srcSet={imgSrc}
+                        />
+                        <img
+                            src={imgSrc}
+                            onError={handleError}
+                            alt="ImagenProducto"
+                            decoding="async"
+                        />
+                    </picture>
+                </div>
 
-                            <div className={`col imgProducto C${category}`}>
-                                <picture>
-                                    <source
-                                        type="image/avif"
-                                        srcSet={imgSrc}
-                                    />
-                                    <img
-                                        src={imgSrc}
-                                        onError={handleError}
-                                        alt="ImagenProducto"
-                                        decoding="async"
-                                    />
-                                </picture>
-                            </div>
-
-                            <div className="col">
-                                <div className="descFont titleFont">{descripcion}</div>
-                                <div className="codFont">{codigo}</div>
-                            </div>
-                        </div>
-                    </div>
+                <div>
+                    <div className="ElipsJsjs" style={{fontSize: '1.1875rem', fontWeight: '700'}}>
+                        {descripcion}</div>
+                    <div className="ElipsJsjs" style={{fontSize: '1rem'}}>
+                        {codigo}</div>
                 </div>
             </div>
             

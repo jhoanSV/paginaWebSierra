@@ -15,13 +15,6 @@ export const TheCart = () => {
     const closeRef = useRef();
     const dateChosen = useRef();
     const theTextArea = useRef();
-    /*let tempTotalCost = 0, theSendCost = 0
-    JSON.parse(localStorage.getItem('cart')).forEach((item) => {
-        tempTotalCost += item.PVenta * item.Cant;
-    });
-    if(tempTotalCost>300000) theSendCost = 0
-    else theSendCost = 5000
-    console.log(theSendCost);*/
 
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
     const [sendCost, setSendCost] = useState(5000);
