@@ -6,7 +6,7 @@ import { speak, SpeakButton } from '../../InternalFunctions';
 //import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codigo, category,
-    unitPaq, unitPrice, lista, agotado, onHide}) => {
+    unitPaq, unitPrice, lista, agotado, onHide, ImgName}) => {
 
     const [cant, setCant] = useState(0)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
@@ -43,6 +43,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
         const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
         if (productIndex !== -1) {//* if the is already the same product just increase the cant
             addToCart[productIndex].Cant += cant
+            addToCart[productIndex].ImgName = ImgName
             localStorage.setItem("cart", JSON.stringify(addToCart))
             return
         }
