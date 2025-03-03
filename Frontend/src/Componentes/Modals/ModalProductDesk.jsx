@@ -3,11 +3,11 @@ import "./_MPDesk.scss"
 //import { getGlobal } from '../../globals/globals'; remove later
 import { useTheContext } from '../../TheProvider';
 import { useNavigate } from 'react-router-dom';
-import { speak, SpeakButton } from '../../InternalFunctions';
+import { SpeakButton } from '../../InternalFunctions';
 //import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codigo, category,
-    unitPaq, unitPrice, lista, agotado, onHide}) => {
+    unitPaq, unitPrice, lista, agotado, onHide, ImgName}) => {
 
     const [cant, setCant] = useState(0)
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
@@ -45,29 +45,36 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
     }
 
     const btnCart = () => {
-        //*First search in Localstorage for 'cart'. If true, theCart contains the json cart
-        //*if false, theCart is undefined. productJson is the current product json.
-        const theCart = localStorage.getItem('cart')        
-        //const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
-        const productJson = lista[llave]
-        // if(theCart){
-        const addToCart = JSON.parse(theCart)
-        const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
-        if (productIndex !== -1) {//* if the is already the same product just increase the cant
-            addToCart[productIndex].Cant += cant
+        
+        try {
+            //console.log("entro al carrito")
+            //*First search in Localstorage for 'cart'. If true, theCart contains the json cart
+            //*if false, theCart is undefined. productJson is the current product json.
+            const theCart = localStorage.getItem('cart')        
+            //const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
+            const productJson = lista[llave]
+            // if(theCart){
+            const addToCart = JSON.parse(theCart)
+            const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
+            if (productIndex !== -1) {//* if the is already the same product just increase the cant
+                addToCart[productIndex].Cant += cant
+                addToCart[productIndex].ImgName = ImgName
+                localStorage.setItem("cart", JSON.stringify(addToCart))
+                return
+            }
+            //*Add the cant assigned
+            productJson.Cant = cant            
+            addToCart.push(productJson)
+            setNItemsCart(addToCart.length)
             localStorage.setItem("cart", JSON.stringify(addToCart))
-            return
+            // }else{   
+            //     //*Add the cant assigned
+            //     productJson.Cant = cant
+            //     localStorage.setItem("cart", JSON.stringify([productJson]))
+            // }
+        } catch (error) {
+            console.log(error)
         }
-        //*Add the cant assigned
-        productJson.Cant = cant            
-        addToCart.push(productJson)
-        setNItemsCart(addToCart.length)
-        localStorage.setItem("cart", JSON.stringify(addToCart))
-        // }else{   
-        //     //*Add the cant assigned
-        //     productJson.Cant = cant
-        //     localStorage.setItem("cart", JSON.stringify([productJson]))
-        // }
     }
 
     useEffect(() => {
@@ -75,8 +82,15 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
     }, []);
     
     return (
-        <div className='theModalContainer'>
-            <div className='theModal-content' style={{width: '700px', position: 'relative'}}>
+        <div
+            className='theModalContainer'
+            onClick={() => {onHide()}}
+            >
+            <div
+                className='theModal-content'
+                style={{width: '700px', position: 'relative'}}
+                onClick={(e) => e.stopPropagation()} // Detiene la propagación
+                >
                 <div className='theModal-body'>
                     <button className='xButton' data-bs-dismiss="modal" aria-label="Close" onClick={() => {onHide()}} style={{position: 'absolute', top: '0px', right: '0px'}}>
                         <i className='bi bi-x-circle-fill'/>
@@ -200,11 +214,15 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     }
                                 </h1>
                                 { logged ? 
-                                    <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart()}} data-bs-dismiss="modal">
+                                    <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart(); onHide()}}>
                                         Agregar al carrito
                                     </button>
                                     :
-                                    <button className="modalBtnLogin boton" onClick={() => {navigate('/inicio_sesion')}} data-bs-dismiss="modal">
+                                    <button
+                                        className="modalBtnLogin boton"
+                                        onClick={() => {navigate('/inicio_sesion')}}
+                                        //data-bs-dismiss="modal"
+                                        >
                                         Suscr&iacute;bete para m&aacute;s
                                     </button>
                                 }

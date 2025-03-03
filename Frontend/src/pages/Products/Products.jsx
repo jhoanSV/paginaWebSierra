@@ -67,7 +67,6 @@ export function Products() {
       selectedProduct.unitPrice = selectedItem.PVenta;
       selectedProduct.agotado = selectedItem.Agotado;
       setSelecteditem(selectedProduct);
-      console.log("selectedProduct: ", selectedProduct)
       setShow1(true);
 
       const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif`;
@@ -225,6 +224,7 @@ export function Products() {
                         agotado={selecteditem.agotado}
                         lista={lista}
                         onHide={closeModal}
+                        ImgName={selecteditem.ImgName}
                         />
                         :
                         <></>
@@ -243,6 +243,7 @@ export function Products() {
                       agotado={selecteditem.agotado}
                       lista={lista}
                       onHide={closeModal}
+                      ImgName={selecteditem.ImgName}
                   />
                   :
                   <></>
