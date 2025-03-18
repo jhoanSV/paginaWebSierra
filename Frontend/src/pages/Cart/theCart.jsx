@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import progress from '../../Assets/gif/progress.gif';
 import CargadoConExito from '../../Assets/gif/CargadoConExito.png'
+import { ModarSuccessfulSubmission } from '../../Componentes/Modals/ModarSuccessfulSubmission'
 
 export const TheCart = () => {
       
@@ -87,7 +88,7 @@ export const TheCart = () => {
         )
     }
 
-    const ModarSuccessfulSubmission = () => {
+    /*const ModarSuccessfulSubmission = () => {
         return(
             <div
                 className='theModalContainer'
@@ -112,7 +113,7 @@ export const TheCart = () => {
                 </div>
             </div>
         )
-    }
+    }*/
 
     const handleSendOrder = async() =>{
         //To the charge animation
@@ -153,8 +154,10 @@ export const TheCart = () => {
                 localStorage.setItem('cart',JSON.stringify([]))
                 setVisiblevCargando(false)
                 setVisibleEnvioExitoso(true)
+                navigate('/carrito/sended')
                 setTimeout(() => {  
                     setVisibleEnvioExitoso(false)
+                    navigate('/carrito')
                     }, 2000);
             }else{
             }

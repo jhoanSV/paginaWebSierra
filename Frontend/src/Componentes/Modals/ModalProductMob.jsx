@@ -184,7 +184,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                             </div>
                             <div className='mt-auto'>
                                 { logged ? 
-                                    <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart()}} data-bs-dismiss="modal">
+                                    <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart(); onHide() }} data-bs-dismiss="modal">
                                         Agregar al carrito
                                     </button>
                                     :
