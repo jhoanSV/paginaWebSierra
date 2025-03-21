@@ -5,6 +5,7 @@ import { PdfViewer2 } from "../../Componentes/PdfViewer/PdfViewer2";
 import categs from '../../Assets/jpg/categorias/categorias.json';
 import "./_Catalogo.scss";
 import { Link, useParams } from "react-router-dom";
+import { CategoryPages } from "../../api"
 
 export function Catalogo() {
 
@@ -14,7 +15,7 @@ export function Catalogo() {
     //const bookMark = nCategoria.state?.bookM;
 
     const [refreshKey, setRefreshKey] = useState(0);
-
+    const [ numPage, setNumPage ] = useState(0);
     /*useEffect(() => {
         window.scrollTo(0, 0);
         console.log("ignorar: "+refreshKey)
@@ -23,6 +24,13 @@ export function Catalogo() {
         // eslint-disable-next-line
     },[bookMark])*/
     useEffect(() => {
+        const categoryPage = async()=> {
+            const list = await CategoryPages(Categoria);
+            const categoria = list.find(cat => cat.Categoria.toUpperCase() === Categoria.toUpperCase());
+            const numberCategorory = categoria ? categoria.Pag : 0;
+            setNumPage(Number(numberCategorory))
+        }
+        categoryPage()
         window.scrollTo(0, 0);
         //console.log("ignorar: "+refreshKey)
 
@@ -61,6 +69,7 @@ export function Catalogo() {
                             route={'imgsCatalogo/CatalogoAVIF/'}
                             prop={Categoria}
                             dir={0}
+                            numPage = {numPage}
                         />
                     </div>
                 </div>

@@ -1,24 +1,27 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import "./_pdfViewer2.scss";
 import { ThePage } from "../PdfViewer/ThePage"
 import { useObserver } from "../UseObs";
 //import "../../Assets/jpg/imgsCatalogo/Pagina 1.jpg"
 
-export function PdfViewer2({ route, prop, dir, show='yes' }) {
+export function PdfViewer2({ route, prop, dir, show='yes', numPage = 0}) {
 
     //const numRandom = Math.floor(Math.random() * 91) + 1
     //numero de pagina que lleva, hacer condicional para que
     //const jsjs = "Tornilleria"
     let claseDir = null
     const jsjs = prop
-    let numPag = null
+    console.log(numPage)
+    //let numPag = numPage
+    const numPag = useRef()
+    numPag.current = numPage
     if (dir === 0){
         claseDir = 'dirRow'
     }else if(dir === 1){
         claseDir = 'dirColumn'
     }
 
-    if (jsjs==="ebanisteria"){
+    /*if (jsjs==="ebanisteria"){
         numPag = 112
     }else if(jsjs==="estudiantil"){
         numPag = 9
@@ -30,7 +33,8 @@ export function PdfViewer2({ route, prop, dir, show='yes' }) {
         numPag = 66
     }else if(jsjs==="tornilleria"||jsjs==="inicio"){
         numPag = 0
-    }
+    }*/
+
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [visorWidth, setVisorWidth] = useState(Math.floor(window.innerWidth*82/100));
     const [pageWidth, setPageWidth] = useState()
@@ -41,13 +45,29 @@ export function PdfViewer2({ route, prop, dir, show='yes' }) {
     });
     const [pages, setPages] = useState([
         //this stupid shit needs to be more standard
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag}.avif`},
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+1}.avif`},
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+2}.avif`},
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+3}.avif`},
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+4}.avif`},
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+5}.avif`},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current}.avif`},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+1}.avif`},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+2}.avif`},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+3}.avif`},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+4}.avif`},
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+5}.avif`},
     ]);
+
+    useEffect(() => {
+        numPag.current = numPage
+        setPages([
+            //this stupid shit needs to be more standard
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current}.avif`},
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+1}.avif`},
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+2}.avif`},
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+3}.avif`},
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+4}.avif`},
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+5}.avif`},
+        ])
+
+    }, [numPage])
+    
+
 
     const last_node = () => {
         //*Obtiene el ultimo nodo o ultima pagina de catalogo
@@ -56,9 +76,34 @@ export function PdfViewer2({ route, prop, dir, show='yes' }) {
         setElements([pagesContainer.childNodes[nodes-1]])
     }
 
-    const prevF = () => {
+    const prevF = async() => {
         const thePdfViewer = document.querySelector(".thePdfViewer");
         const anchoVisor = (thePdfViewer.getBoundingClientRect().width)
+        const minP = getMinPageNumber()
+        //try to search the image before to put in the list
+        const page1 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${minP - 1}.avif`;
+        const page2 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${minP - 2 }.avif`;
+
+        const [validPage1, validPage2] = await Promise.all([
+            fetch(page1, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page1 : null),
+            fetch(page2, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page2 : null)
+        ]);
+
+        if (validPage1 || validPage2) {
+            await new Promise(resolve => {
+                setPages(prevPages => {
+                    const newPages = [
+                        ...(validPage2 ? [{ src: validPage2 }] : []),
+                        ...(validPage1 ? [{ src: validPage1 }] : []),
+                        ...prevPages
+                    ];
+                    resolve(); // Asegura que la actualización del estado termine antes de seguir
+                    return newPages;
+                });
+            });
+        }
+        //End of search
+
         thePdfViewer.scrollTo({
             left: (thePdfViewer.scrollLeft - anchoVisor),
             behavior: 'smooth'
@@ -81,18 +126,8 @@ export function PdfViewer2({ route, prop, dir, show='yes' }) {
     useEffect(()=>{
         const thePdfViewer = document.querySelector(".thePdfViewer");
         resize_ob.observe(document.querySelector(".catalogo"));
-        //let movejsjs = 0
-        //* se configura este Timeout a 0 ms para que calcule el tamaño adecuadamente antes de asignarlo
-        //*Notes: there are "-6" on setPageWidth, this is because the pages has a border width=3
 
-        /*document.getElementById('idPagesContainer').addEventListener('wheel', function(e) {
-            if (e.deltaY === 0) { // Verifica que el desplazamiento sea horizontal
-              e.preventDefault(); // Evita el scroll vertical por defecto
-              this.scrollLeft += e.deltaX; // Aplica el desplazamiento horizontal
-            }
-          });*/
-
-        setTimeout(() => {
+        /*setTimeout(() => {
             if(window.innerWidth > 502){//*Pc
                 setPageWidth((visorWidth / 2)-6)
                 if(numPag!==0){
@@ -129,6 +164,32 @@ export function PdfViewer2({ route, prop, dir, show='yes' }) {
         // eslint-disable-next-line
     },[])
 
+    const getMinPageNumber = () => {
+        if (pages.length === 0) return null;
+    
+        const pageNumbers = pages
+            .map(page => {
+                const match = page.src.match(/Pagina\+(\d+)\.avif/); // Buscar número después de "Pagina+"
+                return match ? parseInt(match[1], 10) : null;
+            })
+            .filter(num => num !== null); // Filtrar valores nulos
+    
+        return Math.min(...pageNumbers);
+    };
+
+    const getMaxPageNumber = () => {
+        if (pages.length === 0) return null;
+    
+        const pageNumbers = pages
+            .map(page => {
+                const match = page.src.match(/Pagina\+(\d+)\.avif/); // Buscar número después de "Pagina+"
+                return match ? parseInt(match[1], 10) : null;
+            })
+            .filter(num => num !== null); // Filtrar valores nulos
+    
+        return Math.max(...pageNumbers);
+    };      
+
     useEffect(()=>{
         setVisorWidth(Math.floor(window.innerWidth*82/100))
     },[screenWidth])
@@ -146,18 +207,41 @@ export function PdfViewer2({ route, prop, dir, show='yes' }) {
     }, [setElements])
 
     useEffect(() => {
+        const maxP = getMaxPageNumber()
+        console.log("Pagina maxima: ", maxP)
         entries.forEach(entry=>{
             if (entry.isIntersecting){
                 observer.unobserve(entry.target)
                 try {
-                    const newPages = [
+                    //try to search the image before to put in the list
+                    const page1 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${maxP + 1}.avif`;
+                    const page2 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${maxP + 2 }.avif`;
+
+                    Promise.all([
+                        fetch(page1, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page1 : null),
+                        fetch(page2, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page2 : null)
+                    ])
+                    .then(([validPage1, validPage2]) => {
+                        const newPages = [...pages];
+                        if (validPage1) newPages.push({ src: validPage1 });
+                        if (validPage2) newPages.push({ src: validPage2 });
+
+                        if (newPages.length > pages.length) {
+                            setPages(newPages);
+                            last_node()
+                        }
+                    })
+                    .catch(error => console.error("Error verificando las imágenes:", error));
+                    //End of search
+
+                    
+                    /*const newPages = [
                         ...pages,
-                        //{ src: require(`../../${route}Pagina ${numPag+pages.length}.jpg`)},
                         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+pages.length}.avif`},
                         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag+pages.length+1}.avif`},
                     ];
                     setPages(newPages)
-                    last_node()
+                    last_node()*/
                 } catch (error) {
                     console.log("no hay más imágenes jsjs")
                 }
@@ -174,7 +258,7 @@ export function PdfViewer2({ route, prop, dir, show='yes' }) {
                         pages.map((page, index) =>(
                             <div className="page" key={index}>
                                 <ThePage
-                                    //key={index}
+                                    key={index}
                                     the_src={page.src}
                                     width={pageWidth}
                                 />
