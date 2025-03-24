@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheContext } from '../../TheProvider';
 import { useNavigate } from 'react-router-dom';
 import { speak, SpeakButton } from '../../InternalFunctions';
-//import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
+import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codigo, category,
     unitPaq, unitPrice, lista, agotado, onHide, ImgName}) => {
@@ -12,15 +12,20 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     const [showDesc, setShowDesc] = useState(false)
     const { logged, setNItemsCart } = useTheContext()
-
+    const [utterance, setUtterance] = useState(null);
     const navigate = useNavigate()
     //Para controlar la voz
     const [isSpeaking, setIsSpeaking] = useState(false);
-    let text= descripcion + "; Descripcion: " + descripcionComp + "; No esperes más, adquiérelo ahora."
+    let text= descripcion + "; Descripción: " + descripcionComp + "; No esperes más, adquiérelo ahora."
     
     const [selectedVoice, setSelectedVoice] = useState(null);
+    const [imgError, setImgError] = useState(false);
     
-        useEffect(() => {
+    const handleError = () => {
+        setImgError(true);
+    };
+
+    useEffect(() => {
         const loadVoices = () => {
             const voices = speechSynthesis.getVoices();
             const preferredVoice = voices.find(voice => 
@@ -31,10 +36,10 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
             );
             setSelectedVoice(preferredVoice || voices.find(voice => voice.lang.startsWith("es")));
         };
-    
+
         loadVoices();
         speechSynthesis.onvoiceschanged = loadVoices;
-        }, []);
+    }, []);
 
     const toggleSpeech = () => {
         if (isSpeaking) {
@@ -43,17 +48,23 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
             setIsSpeaking(false);
         } else {
             if ("speechSynthesis" in window) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = "es-US";
-            if (selectedVoice) utterance.voice = selectedVoice;
-            utterance.onstart = () => setIsSpeaking(true);
-            utterance.onend = () => setIsSpeaking(false);
-            speechSynthesis.speak(utterance);
+            const newUtterance = new SpeechSynthesisUtterance(text);
+            newUtterance.lang = "es-US";
+            if (selectedVoice) newUtterance.voice = selectedVoice;
+            newUtterance.onstart = () => {setIsSpeaking(true);console.log('esta resproduciendo')}
+            //setIsSpeaking(true);
+            newUtterance.onend = () => setIsSpeaking(false);
+            newUtterance.onerror = (event) => {
+                console.error('Ocurrió un error durante la síntesis de voz:', event.error);
+                setIsSpeaking(false);
+            };
+            setUtterance(newUtterance);
+            speechSynthesis.speak(newUtterance);
             } else {
-            alert("Tu navegador no soporta la API de síntesis de voz.");
+                alert("Tu navegador no soporta la API de síntesis de voz.");
             }
         }
-        };
+    };
     //fin de para controlar la voz
 
     //let logged = getGlobal('isLogged')
@@ -152,10 +163,11 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                     }
                                     <source
                                         type="image/avif"
-                                        srcSet={img}
+                                        srcSet={imgError ? imgPlaceHolder : img}
                                     />
                                     <img
-                                        src={img}
+                                        src={imgError ? imgPlaceHolder : img}
+                                        onError={handleError}
                                         alt="productImg"
                                         decoding="async"
                                     />
@@ -245,7 +257,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                     <p className="subTit" onClick={() => {
                                         setShowDesc(!showDesc)
                                     }}>
-                                        <strong><u className='mainBlue'>Descripcion:</u></strong>
+                                        <strong><u className='mainBlue'>Descripción:</u></strong>
                                     </p>
                                     { showDesc &&
                                         <div>

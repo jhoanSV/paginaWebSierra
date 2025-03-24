@@ -114,7 +114,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                         />
                         <img
                             src={imgSrc}
-                            onError={handleError}
+                            onError={()=>{setImgSrc(imgPlaceHolder)}}
                             alt="ImagenProducto"
                             decoding="async"
                         />

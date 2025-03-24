@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import "./_MPDesk.scss"
 //import { getGlobal } from '../../globals/globals'; remove later
 import { useTheContext } from '../../TheProvider';
 import { useNavigate } from 'react-router-dom';
 import { SpeakButton } from '../../InternalFunctions';
-//import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
+import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codigo, category,
     unitPaq, unitPrice, lista, agotado, onHide, ImgName}) => {
@@ -13,28 +13,32 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     const { logged, setNItemsCart } = useTheContext()
     const navigate = useNavigate()
-    
     //Para controlar la voz
+    //const [ imgSrc, setImgSrc] = useState(img);
     const [isSpeaking, setIsSpeaking] = useState(false);
-    let text= descripcion + "; Descripcion: " + descripcionComp + "; No esperes más, adquiérelo ahora."
+    let text= descripcion + "; Descripción: " + descripcionComp + "; No esperes más, adquiérelo ahora."
     
     const [selectedVoice, setSelectedVoice] = useState(null);
-    
-      useEffect(() => {
+    const [imgError, setImgError] = useState(false);
+
+    const handleError = () => {
+        setImgError(true);
+    };
+
+    useEffect(() => {
         const loadVoices = () => {
-          const voices = speechSynthesis.getVoices();
-          const preferredVoice = voices.find(voice => 
+            const voices = speechSynthesis.getVoices();
+            const preferredVoice = voices.find(voice => 
             voice.name.includes("Google Español") || 
             voice.name.includes("US Spanish") || 
             voice.name.includes("Microsoft Sabina") ||
             voice.lang === "es-US"
-          );
-          setSelectedVoice(preferredVoice || voices.find(voice => voice.lang.startsWith("es")));
+            );
+            setSelectedVoice(preferredVoice || voices.find(voice => voice.lang.startsWith("es")));
         };
-    
         loadVoices();
         speechSynthesis.onvoiceschanged = loadVoices;
-      }, []);
+    }, []);
 
     const toggleSpeech = () => {
         if (isSpeaking) {
@@ -119,9 +123,10 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
     }
 
     useEffect(() => {
-        setCant(0)
+        setCant(0);
     }, []);
     
+
     return (
         <div
             className='theModalContainer'
@@ -149,10 +154,11 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     }
                                     <source
                                         type="image/avif"
-                                        srcSet={img}
+                                        srcSet={imgError ? imgPlaceHolder : img}
                                     />
                                     <img
-                                        src={img}
+                                        src={imgError ? imgPlaceHolder : img}
+                                        onError={handleError}
                                         alt="productImg"
                                         decoding="async"
                                     />
@@ -166,7 +172,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                 />
                             </div>
                             <div className="mt-auto">                                        
-                                <p className="subTit"><strong>Descripcion:</strong></p>
+                                <p className="subTit"><strong>Descripción:</strong></p>
                                 <div className="description scrollableY genFont">
                                     {descripcionComp}.<br/>
                                 </div>
@@ -194,7 +200,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                         <button
                                             onClick={toggleSpeech}
                                             className="btn btn-primary"
-                                            >
+                                        >
                                             <i className={`bi ${isSpeaking ? "bi-stop-circle" : "bi-volume-up"}`}></i>
                                         </button>
                                     </div>

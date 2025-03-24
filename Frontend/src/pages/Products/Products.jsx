@@ -6,6 +6,7 @@ import secureLocalStorage from "react-secure-storage";
 import { useTheContext } from "../../TheProvider";
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { ModalProductDesk, ModalProductMob } from "../../Componentes/Modals";
+import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export function Products() {
   const location = useLocation();
