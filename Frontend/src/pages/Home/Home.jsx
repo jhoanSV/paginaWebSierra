@@ -102,9 +102,9 @@ export function Home() {
 
     useEffect(() => {
         async function fetchData() {
-            const jsjs = await tobuttonCarousel()
-            localStorage.setItem('productsBottomCarousel', JSON.stringify(jsjs))
-            setBottomC(jsjs)
+            const listOfProductCarrouselInf = await tobuttonCarousel()
+            localStorage.setItem('productsBottomCarousel', JSON.stringify(listOfProductCarrouselInf))
+            setBottomC(listOfProductCarrouselInf)
         }
         fetchData()
 

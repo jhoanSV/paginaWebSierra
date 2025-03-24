@@ -68,6 +68,7 @@ export function Products() {
       selectedProduct.agotado = selectedItem.Agotado;
       setSelecteditem(selectedProduct);
       setShow1(true);
+      document.body.style.overflow = 'hidden';
 
       const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif`;
     
@@ -154,6 +155,7 @@ export function Products() {
   const closeModal = () => {
     setShow1(false);
     navigate(`/productos`); // Regresa a la vista general sin ID en la URL
+    document.body.style.overflow = '';
   };
 
   useEffect(() => {
@@ -200,6 +202,23 @@ export function Products() {
         window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  /*
+    useEffect(() => {
+    if (Show1) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    // Limpieza al desmontar el componente
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [Show1]);
+
+  if (!Show1) return null;
+  */
 
   return (
     <>

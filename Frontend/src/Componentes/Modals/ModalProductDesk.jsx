@@ -13,7 +13,48 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
     const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
     const { logged, setNItemsCart } = useTheContext()
     const navigate = useNavigate()
+    
+    //Para controlar la voz
+    const [isSpeaking, setIsSpeaking] = useState(false);
+    let text= descripcion + "; Descripcion: " + descripcionComp + "; No esperes más, adquiérelo ahora."
+    
+    const [selectedVoice, setSelectedVoice] = useState(null);
+    
+      useEffect(() => {
+        const loadVoices = () => {
+          const voices = speechSynthesis.getVoices();
+          const preferredVoice = voices.find(voice => 
+            voice.name.includes("Google Español") || 
+            voice.name.includes("US Spanish") || 
+            voice.name.includes("Microsoft Sabina") ||
+            voice.lang === "es-US"
+          );
+          setSelectedVoice(preferredVoice || voices.find(voice => voice.lang.startsWith("es")));
+        };
+    
+        loadVoices();
+        speechSynthesis.onvoiceschanged = loadVoices;
+      }, []);
 
+    const toggleSpeech = () => {
+        if (isSpeaking) {
+          // Si ya está hablando, detenerlo
+          speechSynthesis.cancel();
+          setIsSpeaking(false);
+        } else {
+          if ("speechSynthesis" in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = "es-US";
+            if (selectedVoice) utterance.voice = selectedVoice;
+            utterance.onstart = () => setIsSpeaking(true);
+            utterance.onend = () => setIsSpeaking(false);
+            speechSynthesis.speak(utterance);
+          } else {
+            alert("Tu navegador no soporta la API de síntesis de voz.");
+          }
+        }
+      };
+    //fin de para controlar la voz
     let quantity = null
     //let logged = getGlobal('isLogged')
     let catSource
@@ -84,7 +125,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
     return (
         <div
             className='theModalContainer'
-            onClick={() => {onHide()}}
+            onClick={() => {onHide(); speechSynthesis.cancel(); setIsSpeaking(false)}}
             >
             <div
                 className='theModal-content'
@@ -92,7 +133,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                 onClick={(e) => e.stopPropagation()} // Detiene la propagación
                 >
                 <div className='theModal-body'>
-                    <button className='xButton' data-bs-dismiss="modal" aria-label="Close" onClick={() => {onHide()}} style={{position: 'absolute', top: '0px', right: '0px'}}>
+                    <button className='xButton' data-bs-dismiss="modal" aria-label="Close" onClick={() => {onHide(); speechSynthesis.cancel(); setIsSpeaking(false)}} style={{position: 'absolute', top: '0px', right: '0px'}}>
                         <i className='bi bi-x-circle-fill'/>
                     </button>
                     <div className="row row-cols-2">
@@ -150,7 +191,12 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     {descripcion}<br/>
                                     <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%"}}>
                                         <span className="smolText">Cod: {codigo}</span>
-                                        <SpeakButton text={descripcion + "; Descripcion: " + descripcionComp + "; No esperes más, adquiérelo ahora."} />
+                                        <button
+                                            onClick={toggleSpeech}
+                                            className="btn btn-primary"
+                                            >
+                                            <i className={`bi ${isSpeaking ? "bi-stop-circle" : "bi-volume-up"}`}></i>
+                                        </button>
                                     </div>
                                 </h1>                                        
                             </div>
