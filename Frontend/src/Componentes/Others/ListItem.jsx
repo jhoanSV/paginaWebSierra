@@ -43,7 +43,6 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         const elipsisjsjs = document.querySelectorAll('.ElipsJsjs')
         const observer = new IntersectionObserver((entries)=>{
             entries.forEach(entrie => {
-                console.log(entrie);
                 entrie.target.classList.toggle('active', entrie.isIntersecting);
             });
         },{
@@ -57,6 +56,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
     useEffect(() => {
         resize_ob.observe(document.querySelector('#box'+llave));
         observeBox();
+        //console.log("codigo: ", codigo, "ImgName: ", ImgName)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

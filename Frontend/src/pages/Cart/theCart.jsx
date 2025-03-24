@@ -239,7 +239,7 @@ export const TheCart = () => {
                 <>
                     <div className='banner1'>
                         <div className='textBanner1Container'>
-                            Por compras superiores a $300,000 el env&iacute;o es gratis
+                        Env&iacute;o gratis en Bogotá en compras desde $300.000. Fuera de Bogotá, aplican condiciones.
                         </div>
                     </div>
                     <div className='itemsCart grayContainer'>
