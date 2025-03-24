@@ -96,6 +96,17 @@ export const Alias = async() => {
     }
 }
 
+export const CategoryPages = async() => {
+    /*Return the list of alias of the products*/
+    try {
+        const res = await fetch(`${API}/CategriesPages`, {
+            method: 'GET'})
+        return await res.json()
+    }catch(error) {
+        console.log(error)
+    }
+}
+
 export const EnviarVenta = async(Order) => {
     /*Send the Order to the database.
     you have to send a json of the form:
