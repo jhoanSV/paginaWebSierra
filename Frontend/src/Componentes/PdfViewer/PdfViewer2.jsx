@@ -11,7 +11,7 @@ export function PdfViewer2({ route, prop, dir, show='yes', numPage = 0}) {
     //const jsjs = "Tornilleria"
     let claseDir = null
     const jsjs = prop
-    console.log(numPage)
+    //console.log(numPage)
     //let numPag = numPage
     const numPag = useRef()
     numPag.current = numPage
@@ -208,7 +208,7 @@ export function PdfViewer2({ route, prop, dir, show='yes', numPage = 0}) {
 
     useEffect(() => {
         const maxP = getMaxPageNumber()
-        console.log("Pagina maxima: ", maxP)
+        //console.log("Pagina maxima: ", maxP)
         entries.forEach(entry=>{
             if (entry.isIntersecting){
                 observer.unobserve(entry.target)

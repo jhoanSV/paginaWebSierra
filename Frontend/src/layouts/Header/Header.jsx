@@ -37,7 +37,7 @@ export function Header() {
     if(logged) userName = JSON.parse(secureLocalStorage.getItem('userData'))['Ferreteria']
     
     const searchProduct = (text) => {
-        console.log(text);
+        //console.log(text);
         setSBText(text)        
         if (text === ''){
             setQueryEnded(false)
@@ -86,7 +86,7 @@ export function Header() {
     
     useEffect(() => {
         if(logged && ((11 + (userName.length)) > (userNameHead.current.clientWidth / 10))){
-            console.log('se desborda');
+            //console.log('se desborda');
         }
         // eslint-disable-next-line
     }, [logged]);

@@ -43,7 +43,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     useEffect(() => {
         resize_ob.observe(document.querySelector("#pContainer"));
         check();//este check va acá adentro de useEffect porque si no causa re-renders
-        console.log(props.lista1)
+        //console.log(props.lista1)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -75,8 +75,8 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     }
 
     useEffect(() => {
-        console.log(bef);
-        console.log(move);
+        //console.log(bef);
+        //console.log(move);
         if(bef === charge && bef === lProductos){
             setMove(0);
         }else{
@@ -133,7 +133,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
               });
           //navigate(`/${selectedItem.Cod}`);
         } else {
-            console.log("Producto no encontrado con código:", ProductCode);
+            //console.log("Producto no encontrado con código:", ProductCode);
         }
       }
 

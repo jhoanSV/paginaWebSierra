@@ -28,16 +28,16 @@ export const ChangePass = () => {
             "Password": currentPassword,
             "NewPassword": newPassword
         })
-        console.log(dataChangePassword);
+        //console.log(dataChangePassword);
         if (dataChangePassword.hasOwnProperty('authorization') && dataChangePassword.authorization === 'Authorized'){
             //password changed
-            console.log('authorized', dataChangePassword)
+            //console.log('authorized', dataChangePassword)
             alert('Contraseña modificada correctamente')
             secureLocalStorage.removeItem('userData')
             window.location.href = '/inicio_sesion'
         } else if (dataChangePassword.hasOwnProperty('error') && dataChangePassword.error === 'Unauthorized'){
             //password not changed
-            console.log('unauthorized', dataChangePassword)
+            //console.log('unauthorized', dataChangePassword)
             alert('No se pudo cambiar la contraseña, intente de nuevo más tarde');
         }
     }

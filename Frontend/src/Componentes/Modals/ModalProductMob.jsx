@@ -51,7 +51,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
             const newUtterance = new SpeechSynthesisUtterance(text);
             newUtterance.lang = "es-US";
             if (selectedVoice) newUtterance.voice = selectedVoice;
-            newUtterance.onstart = () => {setIsSpeaking(true);console.log('esta resproduciendo')}
+            newUtterance.onstart = () => {setIsSpeaking(true)}
             //setIsSpeaking(true);
             newUtterance.onend = () => setIsSpeaking(false);
             newUtterance.onerror = (event) => {

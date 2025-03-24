@@ -100,7 +100,7 @@ export function CategMenuMobile() {
     
     useEffect(() => {
         if(!loading){
-            console.log('dam');
+            //console.log('dam');
             mnpRef.current.classList.add('mnp-animation')
         }
     }, [loading]);

@@ -11,7 +11,7 @@ export const ThePage=({the_src, width}) =>{
 
     if (!the_src){
         //document.querySelector('.page').style.display = 'none'
-        console.log("No se encontró recurso")
+        //console.log("No se encontró recurso")
     }
 
     return(

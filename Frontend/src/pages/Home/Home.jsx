@@ -55,7 +55,7 @@ export function Home() {
             isLogged = true
             theCodeUser = JSON.parse(secureLocalStorage.getItem('userData'))['Cod']
         }
-        console.log('isLogged: '+ isLogged + ' CodUser: ' + theCodeUser);
+        //console.log('isLogged: '+ isLogged + ' CodUser: ' + theCodeUser);
         //*return the list of products of the button carousel, if is not logged, use the default user code
         const bCaroucel = await BottonCarousel(
             {

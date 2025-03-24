@@ -137,7 +137,7 @@ export function Products() {
         }
     } catch (error) {
         //sortedJson2 = false
-        console.log('error-->' + error);
+        //console.log('error-->' + error);
         setLista(false)
     }
   }
@@ -146,7 +146,7 @@ export function Products() {
     const pcFoot = document.querySelector('.pcFoot')
     const observer = new IntersectionObserver((entry)=>{
       if(entry[0].isIntersecting){
-        console.log('intersecta con linea');
+        //console.log('intersecta con linea');
         setLimit(prevLim =>prevLim+10)
       }
     })

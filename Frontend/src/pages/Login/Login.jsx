@@ -17,13 +17,13 @@ export const Login = () => {
         try {
             if (userData.hasOwnProperty('Cod')){
                 //autorizado
-                console.log('authorized')
+                //console.log('authorized')
                 secureLocalStorage.setItem('userData', JSON.stringify(userData))                
                 window.location.href = '/#/productos'
                 window.location.reload()
             } else if (userData.hasOwnProperty('error')){
                 // no autorizado
-                console.log('unauthorized')
+                //console.log('unauthorized')
                 alert('unauthorized')
             }
         } catch (error) {

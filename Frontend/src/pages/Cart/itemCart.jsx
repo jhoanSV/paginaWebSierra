@@ -28,7 +28,7 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
 
     useEffect(() => {        
         if(screenWidth<431){
-            console.log(screenWidth);
+            //console.log(screenWidth);
             setFontResize('1.7rem')
         }else{
             setFontResize('')
@@ -37,7 +37,7 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
     }, [screenWidth]);
 
     const handleError = () =>{
-        console.log(`img ${cod} not found`);
+        //console.log(`img ${cod} not found`);
         setImgSrc(imgPlaceHolder)
     }
 
