@@ -19,10 +19,12 @@
     z-index: 0;
 }
 
-.Tit.userNameHead{
+.userNameHead{
     color: white;
-    font-size: 20px;
-    margin-right: 10px;
+    font-size: 14px;
+    margin: 0px 12px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
 }
 
 .userIcon{
@@ -170,6 +172,12 @@
 
 .btn.btn-navBar:hover{
     background-color: $amarilloPrincipal;
+}
+
+.sticky{
+    position: fixed;
+    top: 0;
+    z-index: 1;
 }
 
 #headLogoComp{

@@ -7,6 +7,9 @@ import secureLocalStorage from 'react-secure-storage';
 import { useTheContext } from '../../TheProvider';
 import { useNavigate } from 'react-router-dom';
 import html2canvas from 'html2canvas';
+import progress from '../../Assets/gif/progress.gif';
+import CargadoConExito from '../../Assets/gif/CargadoConExito.png'
+import { ModarSuccessfulSubmission } from '../../Componentes/Modals/ModarSuccessfulSubmission'
 
 export const TheCart = () => {
       
@@ -14,7 +17,7 @@ export const TheCart = () => {
     const dateChosen = useRef();
     const theTextArea = useRef();
 
-    const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));    
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
     const [sendCost, setSendCost] = useState(5000);
     const [subTotalC, setSubTotalC] = useState(0);
     const [currentDiv, setCurrentDiv] = useState(0);
@@ -24,6 +27,8 @@ export const TheCart = () => {
     const [consecutive, setConsecutive] = useState(0);
     const [sendDate, setSendDate] = useState('');
     const [theTotal, setTheTotal] = useState();
+    const [ visiblevCargando, setVisiblevCargando] = useState(false);
+    const [ visibleEnvioExitoso, setVisibleEnvioExitoso ] = useState(false);
     const { logged, setNItemsCart } = useTheContext()
     const navigate = useNavigate()
     const LaFecha = new Date()
@@ -53,43 +58,114 @@ export const TheCart = () => {
         setRoute(false);
     }
 
+    const ModarChargin = () => {
+        return(
+            <div
+                className='theModalContainer'
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center', // Centra horizontalmente
+                    alignItems: 'center',    // Centra verticalmente
+                    height: '100vh',         // Ocupa toda la altura de la ventana
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente (opcional)
+                    zIndex: '1060'
+                  }}>
+                <div className='theModal-content' style={{width: '400px', height: '400px', position: 'relative'}}>
+                    <div className='theModal-body' style={{display: 'flex',  flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                        <img 
+                            src={progress}
+                            style={{
+                                width: '80%',
+                                height: 'auto', // Mantiene la proporción de la imagen
+                              }}
+                            alt="Cargando..."/>
+                        <label style={{ marginTop: '10px', fontSize: '30px', textAlign: 'center', color: '#193773' }}>
+                            <strong>Cargando...</strong>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    /*const ModarSuccessfulSubmission = () => {
+        return(
+            <div
+                className='theModalContainer'
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center', // Centra horizontalmente
+                    alignItems: 'center',    // Centra verticalmente
+                    height: '100vh',         // Ocupa toda la altura de la ventana
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente (opcional)
+                    zIndex: '1060'
+                  }}>
+                <div className='theModal-content' style={{width: '400px', height: '400px', position: 'relative'}}>
+                    <div className='theModal-body' style={{display: 'flex',  flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                        <img 
+                            src={CargadoConExito}
+                            style={{
+                                width: '80%',
+                                height: 'auto', // Mantiene la proporción de la imagen
+                              }}
+                            alt="CargadoConExito"/>
+                    </div>
+                </div>
+            </div>
+        )
+    }*/
+
     const handleSendOrder = async() =>{
-        const fecha = new Date()
-        const today = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate() + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds()        
-        let TIngresados = [], notes = theTextArea.current.value, total=0, thisSendDate
-        cart.forEach((element) => {
-            TIngresados.push(`${element['Cant']},${element['Cod']},${element['PVenta']}`)
-            total = total + (element['PVenta']*element['Cant'])
-        });
-        TIngresados = TIngresados.join(';');
-        if(route){
-            setSendDate(fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate()))
-            thisSendDate = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate())
-            notes = notes + ' ...Cuadrar fecha de entrega'
-        }else{
-            thisSendDate = dateChosen.current.value
-            setSendDate(dateChosen.current.value)
-        }
-        setTheTotal(total+sendCost)
-        const orderReq  = await EnviarVenta({
-            "CodCliente": theUserCod,
-            "FechaFactura": today,
-            "FechaDeEstado": today,
-            "FechaDeEntrega": thisSendDate,
-            "FechaVencimiento" : thisSendDate,
-            "NotaVenta": notes,
-            "VECommerce": "1",
-            "TIngresados": TIngresados
-        })
-        if(orderReq['success']===true){
-            setConsecutive(orderReq['NDePedido'])            
-            setCurrentDiv(3)
-            setCart([])
-            setNItemsCart(0)
-            localStorage.setItem('cart',JSON.stringify([]))
-        }else{
+        //To the charge animation
+        try {
+            setVisiblevCargando(true)
+            const fecha = new Date()
+            const today = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate() + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds()        
+            let TIngresados = [], notes = theTextArea.current.value, total=0, thisSendDate
+            cart.forEach((element) => {
+                TIngresados.push(`${element['Cant']},${element['Cod']},${element['PVenta']}`)
+                total = total + (element['PVenta']*element['Cant'])
+            });
+            TIngresados = TIngresados.join(';');
+            if(route){
+                setSendDate(fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate()))
+                thisSendDate = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate())
+                notes = notes + ' ...Cuadrar fecha de entrega'
+            }else{
+                thisSendDate = dateChosen.current.value
+                setSendDate(dateChosen.current.value)
+            }
+            setTheTotal(total+sendCost)
+            const orderReq  = await EnviarVenta({
+                "CodCliente": theUserCod,
+                "FechaFactura": today,
+                "FechaDeEstado": today,
+                "FechaDeEntrega": thisSendDate,
+                "FechaVencimiento" : thisSendDate,
+                "NotaVenta": notes,
+                "VECommerce": "1",
+                "TIngresados": TIngresados
+            })
+            if(orderReq['success']===true){
+                setConsecutive(orderReq['NDePedido'])            
+                setCurrentDiv(3)
+                setCart([])
+                setNItemsCart(0)
+                localStorage.setItem('cart',JSON.stringify([]))
+                setVisiblevCargando(false)
+                setVisibleEnvioExitoso(true)
+                navigate('/carrito/sended')
+                setTimeout(() => {  
+                    setVisibleEnvioExitoso(false)
+                    navigate('/carrito')
+                    }, 2000);
+            }else{
+            }
+        } catch (error) {
+            setVisiblevCargando(false)
             alert('Ocurrió un error, intente de nuevo más tarde')
         }
+
     }
 
     const saveReminder = (divId, filename, windowWidth=550, windowHeight=550) => {
@@ -129,22 +205,33 @@ export const TheCart = () => {
         });
         
         setSubTotalC(totalCost);
-        if (totalCost > 300000) setSendCost(0)
+        if (totalCost > 300000 || route) setSendCost(0)
         else setSendCost(5000)
 
         if(totalCost===0){setBtnDis(true)}
         else{setBtnDis(false)}
         
         // eslint-disable-next-line
-    }, [cart]);
+    }, [cart, route]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         if(route){
             setSendCost(0)
         }else{
             setSendCost(5000)
         }
-    }, [route]);
+    }, [route]);*/
+    useEffect(() => {
+        return () => {
+            try {
+                document.getElementsByTagName("body")[0].removeAttribute("style");
+                document.getElementsByTagName("body")[0].classList.remove("modal-open")
+                document.querySelector('.modal-backdrop').remove()
+            } catch (error) {
+
+            }
+        };
+    }, []);
 
     return (
         <section className='theCart'>
@@ -152,7 +239,7 @@ export const TheCart = () => {
                 <>
                     <div className='banner1'>
                         <div className='textBanner1Container'>
-                            Por compras superiores a $300,000 el env&iacute;o es gratis
+                        Env&iacute;o gratis en Bogotá en compras desde $300.000. Fuera de Bogotá, aplican condiciones.
                         </div>
                     </div>
                     <div className='itemsCart grayContainer'>
@@ -170,6 +257,7 @@ export const TheCart = () => {
                                         cantidad={item.Cant}
                                         onDelete={deleteItemCart}
                                         updtC = {updateCant}
+                                        ImgName = {item.ImgName}
                                     />
                                 );                        
                             })
@@ -251,7 +339,7 @@ export const TheCart = () => {
                                                     Volver
                                                 </button>                                                
                                                 <button type="button" className="btnModal btnConfirm" disabled={btnDis2}
-                                                    onClick={handleSendOrder}>
+                                                    onClick={()=>{handleSendOrder()}}>
                                                     Confirmar
                                                 </button>
                                             </div>
@@ -314,6 +402,10 @@ export const TheCart = () => {
                     </button>
                 </div>
             }
+            <>
+                { visiblevCargando && <ModarChargin/>}
+                { visibleEnvioExitoso && <ModarSuccessfulSubmission/>}
+            </>
         </section>
     );
 }

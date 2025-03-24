@@ -1,23 +1,21 @@
-import {React, useEffect } from "react";
+import {React, useEffect, useRef } from "react";
 import "./_header.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { products, Alias } from '../../api';
 import secureLocalStorage from "react-secure-storage";
 import { useTheContext } from "../../TheProvider";
 
 export function Header() {
+    const cabecera = useRef()
+    const userNameHead = useRef()
     const navigate = useNavigate()
     const { setQueryEnded, setSBText, logged, nItemsCart } = useTheContext()
+    const location = useLocation()
     let userName = null
 
     /*Funciones para mostrar o esconder caja de texto
       cuando se hace click o se pierde el focus de la caja
-    */
-
-    useEffect(() => {
-        uploadProducts()
-        // eslint-disable-next-line
-    }, [])
+    */    
 
     const uploadProducts = async()=>{
 
@@ -54,9 +52,50 @@ export function Header() {
         window.location.href = '/'
     }
 
+    window.onscroll = function() {
+        if (location.pathname==='/productos') {            
+            if (window.scrollY > (cabecera.current.offsetHeight)) {
+                cabecera.current.classList.add('sticky')
+                document.querySelector('.products').style.paddingTop = (cabecera.current.offsetHeight * 2) + 'px'
+                return
+            } else {
+                cabecera.current.classList.remove('sticky')
+                document.querySelector('.products').style.paddingTop = ''
+                return
+            }
+        }else{
+            cabecera.current.classList.remove('sticky')
+        }
+        if((location.pathname==='/carrito') && window.innerWidth < 900){
+            if (window.scrollY > (cabecera.current.offsetHeight)) {
+                cabecera.current.classList.add('sticky')
+                document.querySelector('.theCart').style.paddingTop = (cabecera.current.offsetHeight * 2) + 'px'
+            } else {
+                cabecera.current.classList.remove('sticky')
+                document.querySelector('.theCart').style.paddingTop = ''
+            }            
+        }else{
+            cabecera.current.classList.remove('sticky')            
+        }
+    };
+
+    useEffect(() => {
+        uploadProducts()
+        // eslint-disable-next-line
+    }, [])
+    
+    useEffect(() => {
+        if(logged && ((11 + (userName.length)) > (userNameHead.current.clientWidth / 10))){
+            console.log('se desborda');
+        }
+        // eslint-disable-next-line
+    }, [logged]);
+    
+    //if(location.pathname ===)
+
     return(
         <header style={{position: 'relative'}}>
-            <div className="container-fluid px-4 g-0 cabecera">                
+            <div className="container-fluid px-4 g-0 cabecera" ref={cabecera}>
                 <picture>
                     <source
                         type="image/avif"
@@ -136,8 +175,10 @@ export function Header() {
                     <div className="col user">
                         { logged ?
                             <>
-                                <div className="Tit userNameHead">
-                                    Bienvenido {userName}
+                                <div className="userNameHead" ref={userNameHead}>
+                                    <label>
+                                        Bienvenido {userName}
+                                    </label>
                                 </div>
                                 <Link to="/carrito" type="button" className='btnCart'>
                                     <i className="bi bi-cart4"></i>

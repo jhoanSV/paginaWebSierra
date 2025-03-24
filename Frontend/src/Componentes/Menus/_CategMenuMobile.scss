@@ -14,7 +14,7 @@
     bottom: 6.2rem;
     right: 1rem;
     z-index: 3;
-    label, .logoCatalogo{
+    .tbplx, .logoCatalogo{
         width: 100%;
     }
 }
@@ -53,4 +53,51 @@
     margin: 2px 3.2px;
     opacity: 1;
     visibility: visible;
+}
+
+.mnp-container{
+    position: fixed;
+    z-index: 1;
+    bottom: 6.6rem;
+    right: 4.7rem;
+    width: 191.92px;
+    height: 45px;
+    padding: 0px 5px;
+    overflow: hidden;
+}
+
+
+.mnp{
+    background-color: rgba(25, 55, 115, 0.8901960784);
+    border: solid 1px $amarilloPrincipal;
+    color: white;
+    text-wrap: nowrap;
+    border-radius: 20px 70% 70% 20px;
+    padding: 9px;
+    transform: translate(192px, 0px);
+}
+
+.mnp-animation{
+    animation: mnpAnimation 8s ease-in-out forwards;
+}
+
+@keyframes mnpAnimation{
+    0%{        
+        transform: translate(192px, 0px);
+    }
+    19%{
+        transform: translate(-5px, 0px);
+    }
+    81%{
+        transform: translate(-5px, 0px);
+    }
+    100%{
+        transform: translate(192px, 0px);
+    }
+}
+
+@media screen and (max-width: 426px){
+    .btnRegistro{
+        width: 75%;
+    }
 }

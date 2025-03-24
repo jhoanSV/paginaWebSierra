@@ -102,9 +102,9 @@ export function Home() {
 
     useEffect(() => {
         async function fetchData() {
-            const jsjs = await tobuttonCarousel()
-            localStorage.setItem('productsBottomCarousel', JSON.stringify(jsjs))
-            setBottomC(jsjs)
+            const listOfProductCarrouselInf = await tobuttonCarousel()
+            localStorage.setItem('productsBottomCarousel', JSON.stringify(listOfProductCarrouselInf))
+            setBottomC(listOfProductCarrouselInf)
         }
         fetchData()
 
@@ -123,7 +123,17 @@ export function Home() {
     }, [entries, observer])
     
     useEffect(() => {
-        window.scrollTo(0,0)        
+        window.scrollTo(0,0)
+        return () => {
+            //*the code below is to solve an bug when the user try to close a modal with thw back arrow
+            try {
+                document.getElementsByTagName("body")[0].removeAttribute("style");
+                document.getElementsByTagName("body")[0].classList.remove("modal-open")
+                document.querySelector('.modal-backdrop').remove()
+            } catch (error) {
+
+            }
+        };
         // eslint-disable-next-line
     }, []);
 
@@ -282,6 +292,7 @@ export function Home() {
                                         width="100%"
                                         height="auto"
                                         src={require("../../Assets/mp4/video1.mp4")}
+                                        poster={require('../../Assets/webp/frame1.webp')}
                                         autoPlay
                                         muted
                                         loop

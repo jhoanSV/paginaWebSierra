@@ -19,23 +19,23 @@ export const TheProfile = () => {
                         <div style={{fontSize: '2.025rem', fontWeight: 'bold', marginBottom: '20px'}}>
                             {JSON.parse(secureLocalStorage.getItem('userData'))['Ferreteria']}
                         </div>
-                        <div className='subTit' style={{marginBottom: '20px'}}>
+                        <div className='subTit'>
                             <strong>Encargado:</strong><br/>                            
                             {JSON.parse(secureLocalStorage.getItem('userData'))['Contacto']}
                         </div>
-                        <div className='subTit' style={{marginBottom: '20px'}}>
+                        <div className='subTit'>
                             <strong>e-mail:</strong><br/>
                             {JSON.parse(secureLocalStorage.getItem('userData'))['Email']}
                         </div>
-                        <div className='subTit' style={{marginBottom: '20px'}}>
+                        <div className='subTit'>
                             <strong>Asesor:</strong><br/>
                             {JSON.parse(secureLocalStorage.getItem('userData'))['Asesor']}
                         </div>
-                        <div className='subTit' style={{marginBottom: '20px'}}>
+                        <div className='subTit'>
                             <strong>Direccion:</strong><br/>
                             {JSON.parse(secureLocalStorage.getItem('userData'))['Direccion']}
                         </div>
-                        <div className='subTit' style={{marginBottom: '20px'}}>
+                        <div className='subTit'>
                             <strong>Numero:</strong><br/>
                             {JSON.parse(secureLocalStorage.getItem('userData'))['Telefono']}
                         </div>

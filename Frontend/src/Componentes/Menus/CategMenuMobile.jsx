@@ -9,9 +9,10 @@ export function CategMenuMobile() {
 
     const items = categs;
 
-    const { setLoading, setCategSelect } = useTheContext()
+    const { loading, setLoading, setCategSelect } = useTheContext()
     const [imgSel, setImgSel] = useState('logoCatalogo');
     const isActive = useRef()
+    const mnpRef = useRef()
     isActive.current = false
     const targetRef = useRef(null);
     const navigate = useNavigate()
@@ -33,6 +34,7 @@ export function CategMenuMobile() {
     }
 
     const handleCatSel = (a) =>{//* handle category selection
+        window.scrollTo(0,0)
         navigate('/productos')
         if(a===''){
             setImgSel('logoCatalogo')
@@ -40,7 +42,6 @@ export function CategMenuMobile() {
             setImgSel(a)
         }
         setCategSelect(`${a}`)
-        console.log('??????');
     }
 
     //* Funcion para mostrar los logos en el menu desplegable
@@ -95,22 +96,37 @@ export function CategMenuMobile() {
         return () => {
           document.removeEventListener('click', handleClickOutside);
         };
-      }, [targetRef]);
+    }, [targetRef]);
+    
+    useEffect(() => {
+        if(!loading){
+            console.log('dam');
+            mnpRef.current.classList.add('mnp-animation')
+        }
+    }, [loading]);
 
-    return (        
-        <div ref={targetRef} className='menu-mob' onClick={showCats}>
+    return (
+        <>
+            <div className='mnp-container'>
+                <label className='mnp' ref={mnpRef}>
+                    Mira nuestros productos
+                </label>
+            </div>
+            <div ref={targetRef} className='menu-mob' onClick={showCats}>
 
-            <Items/>
-            
-            <label htmlFor='logoCat' className={imgSel==='logoCatalogo' ? '' : 'contain1'}>
-                {<img
-                    className='logoCatalogo'
-                    src={require(`../../Assets/png/Logos/${imgSel}.png`)
-                    }
-                    alt='LogoCatalogo'
-                />}
-            </label>
 
-        </div>
+                <Items/>
+                
+                <label htmlFor='logoCat' className={imgSel==='logoCatalogo' ? 'tbplx' : 'contain1 tbplx'}>
+                    {<img
+                        className='logoCatalogo'
+                        src={require(`../../Assets/png/Logos/${imgSel}.png`)
+                        }
+                        alt='LogoCatalogo'
+                    />}
+                </label>
+
+            </div>
+        </>
     );
 }

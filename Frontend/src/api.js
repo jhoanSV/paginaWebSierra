@@ -1,5 +1,7 @@
 // const API = 'http://000.000.0.000:0000/tasks';
 const API = process.env.REACT_APP_API;
+//const API = 'http://192.168.1.110:3000/tasks';
+
 
 
 //const API = 'http://localhost:3000/tasks';
@@ -87,6 +89,17 @@ export const Alias = async() => {
     /*Return the list of alias of the products*/
     try {
         const res = await fetch(`${API}/TAlias`, {
+            method: 'GET'})
+        return await res.json()
+    }catch(error) {
+        console.log(error)
+    }
+}
+
+export const CategoryPages = async() => {
+    /*Return the list of alias of the products*/
+    try {
+        const res = await fetch(`${API}/CategriesPages`, {
             method: 'GET'})
         return await res.json()
     }catch(error) {

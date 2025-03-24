@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./_CarruselInf.scss";
+import secureLocalStorage from "react-secure-storage";
 import { ListItem } from "../Others";
+import { ModalProductDesk, ModalProductMob } from "../../Componentes/Modals";
 
 export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de productos.json
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -8,9 +10,29 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     const [bef, setBef] = useState(0);
     const [move, setMove] = useState(0);
     const [back, setBack] = useState(0);
+    const [ imgSrc, setImgSrc] = useState("");
+    const [Show1, setShow1] = useState(false);
+    const [ isMobile, setIsMobile ] = useState(false);
+    const [ selecteditem, setSelecteditem ] = useState(null);
     const lProductos = props.lista1.length;
     const pConte = useRef();
     var paso = 5;//lo que se agrega para cargar
+
+    const closeModal = () => {
+        setShow1(false);
+        //navigate(`/`); // Regresa a la vista general sin ID en la URL
+        document.body.style.overflow = '';
+      };
+
+    useEffect(() => {
+        if(screenWidth < 700 ){
+            setIsMobile(true)
+        }else{
+            setIsMobile(false)
+        }            
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [screenWidth])
+
 
     if(charge > lProductos) setCharge(lProductos);
 
@@ -21,6 +43,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     useEffect(() => {
         resize_ob.observe(document.querySelector("#pContainer"));
         check();//este check va acá adentro de useEffect porque si no causa re-renders
+        console.log(props.lista1)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -66,6 +89,54 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [bef]);
 
+    const selectProductModal = async (ProductCode) => {
+        const pro = JSON.parse(secureLocalStorage.getItem('productsList'));
+        let proData = pro //The whole table "products".
+        
+        // Define a case-insensitive text filter function
+        const index = proData.findIndex(item => item.Cod.toLowerCase() === ProductCode.toLowerCase());
+        if (index !== -1) { // Verificar si se encontró el producto
+          const selectedItem = proData[index]; // Obtener el producto
+    
+          let selectedProduct = { ...selectedItem };
+    
+          // Asignar valores
+          selectedProduct.key = index; // Guardar el índice
+          selectedProduct.llave = index; // También puedes usar esto para identificar el modal
+          selectedProduct.img = selectedItem.ImgName;
+          selectedProduct.descripcion = selectedItem.Descripcion;
+          selectedProduct.descripcionComp = selectedItem.Detalle;
+          selectedProduct.codigo = selectedItem.Cod;
+          selectedProduct.category = selectedItem.Categoria.toLowerCase();
+          selectedProduct.unitPaq = selectedItem.EsUnidadOpaquete;
+          selectedProduct.unitPrice = selectedItem.PVenta;
+          selectedProduct.agotado = selectedItem.Agotado;
+          setSelecteditem(selectedProduct);
+          setShow1(true);
+          document.body.style.overflow = 'hidden';
+    
+          const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif`;
+        
+          // Verificar el ETag del servidor
+          fetch(imageUrl, { method: "HEAD", cache: "no-store"})
+              .then((response) => {
+              const eTag = response.headers.get("ETag"); // Obtener el ETag
+              if (eTag) {
+                  setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+              } else {
+                  setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+              }
+              })
+              .catch((error) => {
+              console.error("Error verificando el ETag:", error);
+              setImgSrc(imageUrl); // En caso de error, mostrar la imagen igual
+              });
+          //navigate(`/${selectedItem.Cod}`);
+        } else {
+            console.log("Producto no encontrado con código:", ProductCode);
+        }
+      }
+
     const listItems = () => {
         return(
             props.lista1.slice(0,charge).map((item, index) =>
@@ -73,6 +144,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
                     key={index}
                     llave = {index}//Para apuntar a cada modal
                     codigo = {item.Cod}
+                    ImgName = {item.ImgName}
                     descripcion = {item.Descripcion}
                     descripcionComp={item.Detalle}
                     unitPrice={item.PVenta}
@@ -80,6 +152,9 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
                     category={(item.Categoria).toLowerCase()}
                     agotado={item.Agotado}
                     lista={props.lista1}
+                    Show1={Show1}
+                    setShow1={setShow1}
+                    callProduct ={selectProductModal}
                 />
             )
         );
@@ -120,6 +195,48 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
 
 
     return (
+        <>
+        {/*Prueba de que se muestre el modal cuando cambie el link*/}
+            { isMobile ? 
+                (Show1 && selecteditem) ? 
+                <ModalProductMob
+                    key={selecteditem.key}
+                    llave={selecteditem.llave}
+                    img={imgSrc}
+                    descripcion={selecteditem.descripcion}
+                    descripcionComp={selecteditem.descripcionComp}
+                    codigo={selecteditem.codigo}
+                    category={selecteditem.category}
+                    unitPaq={selecteditem.unitPaq}
+                    unitPrice={selecteditem.unitPrice}
+                    agotado={selecteditem.agotado}
+                    lista={props.lista1}
+                    onHide={closeModal}
+                    ImgName={selecteditem.ImgName}
+                    />
+                    :
+                    <></>
+                :
+                (Show1 && selecteditem) ?
+                <ModalProductDesk
+                    key={selecteditem.key}
+                    llave={selecteditem.llave}
+                    img={imgSrc}
+                    descripcion={selecteditem.descripcion}
+                    descripcionComp={selecteditem.descripcionComp}
+                    codigo={selecteditem.codigo}
+                    category={selecteditem.category}
+                    unitPaq={selecteditem.unitPaq}
+                    unitPrice={selecteditem.unitPrice}
+                    agotado={selecteditem.agotado}
+                    lista={props.lista1}
+                    onHide={closeModal}
+                    ImgName={selecteditem.ImgName}
+                />
+                :
+                <></>
+            }
+        {/*Prueba de que se muestre el modal cuando cambie el link*/}
         <div className="containter px-0 py-4">
             <div className="cCarrusel">
 
@@ -143,6 +260,7 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
                 
             </div>
         </div>
+        </>
     );
 
 }

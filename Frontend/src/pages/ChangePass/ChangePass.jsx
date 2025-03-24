@@ -23,23 +23,22 @@ export const ChangePass = () => {
 
     const toChangePassword = async() =>{
         /*Funtion to check if the user is alowed to change the password*/
-        console.log('fuck');
         const dataChangePassword = await Changepassword({
-            "CodUser": "493",
+            "CodUser": JSON.parse(secureLocalStorage.getItem('userData'))['Cod'],
             "Password": currentPassword,
             "NewPassword": newPassword
         })
         console.log(dataChangePassword);
-        if (dataChangePassword.hasOwnProperty('authorization') & dataChangePassword.authorization === 'Authorized'){
+        if (dataChangePassword.hasOwnProperty('authorization') && dataChangePassword.authorization === 'Authorized'){
             //password changed
             console.log('authorized', dataChangePassword)
             alert('Contraseña modificada correctamente')
             secureLocalStorage.removeItem('userData')
             window.location.href = '/inicio_sesion'
-        } else if (dataChangePassword.hasOwnProperty('error') & dataChangePassword.error === 'Unauthorized'){
+        } else if (dataChangePassword.hasOwnProperty('error') && dataChangePassword.error === 'Unauthorized'){
             //password not changed
             console.log('unauthorized', dataChangePassword)
-            alert('Contraseña modificada correctamente')
+            alert('No se pudo cambiar la contraseña, intente de nuevo más tarde');
         }
     }
 

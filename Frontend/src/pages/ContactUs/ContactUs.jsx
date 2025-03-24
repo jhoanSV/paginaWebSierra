@@ -1,7 +1,7 @@
 import React from "react";
 import "./_ContactUs.scss";
 
-let source = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1406.0504614273996!2d-74.14007727913986!3d4.609903384101687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9ff5a9978939%3A0x9b8ad5e6002dd166!2sFerredistribuciones%20Sierra!5e0!3m2!1sen!2sco!4v1684385776029!5m2!1sen!2sco";
+let source = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d994.2274506098897!2d-74.1404627715297!3d4.6101644997090885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9f005e18f89d%3A0x7498088e7d597e2c!2sComercializadora%20Sivar%20S.A.S!5e0!3m2!1sen!2sco!4v1715091297261!5m2!1sen!2sco";
 
 export function ContactUs() {
 
