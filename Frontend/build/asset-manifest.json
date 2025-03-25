@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.72d23bca.css",
-    "main.js": "/static/js/main.92f80879.js",
+    "main.js": "/static/js/main.3e58eecb.js",
     "static/js/787.593ed498.chunk.js": "/static/js/787.593ed498.chunk.js",
     "static/media/Catalogo2024.pdf": "/static/media/Catalogo2024.cc66529acb4b83a90200.pdf",
     "static/media/video1.mp4": "/static/media/video1.c0e763da98ab6bfa32bc.mp4",
@@ -86,11 +86,11 @@
     "static/media/WappIcon.avif": "/static/media/WappIcon.365ae976386fe5d760bd.avif",
     "index.html": "/index.html",
     "main.72d23bca.css.map": "/static/css/main.72d23bca.css.map",
-    "main.92f80879.js.map": "/static/js/main.92f80879.js.map",
+    "main.3e58eecb.js.map": "/static/js/main.3e58eecb.js.map",
     "787.593ed498.chunk.js.map": "/static/js/787.593ed498.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.72d23bca.css",
-    "static/js/main.92f80879.js"
+    "static/js/main.3e58eecb.js"
   ]
 }
