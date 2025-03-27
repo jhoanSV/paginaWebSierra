@@ -6,24 +6,19 @@ import { speak, SpeakButton } from '../../InternalFunctions';
 import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codigo, category,
-    unitPaq, unitPrice, lista, agotado, onHide, ImgName}) => {
+    unitPaq, unitPrice, lista, agotado, onHide, ImgName, Data}) => {
 
     const [cant, setCant] = useState(0)
-    const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
+    const [totalPrice, setTotalPrice] = useState(Data.PVenta*cant)
     const [showDesc, setShowDesc] = useState(false)
     const { logged, setNItemsCart } = useTheContext()
     const [utterance, setUtterance] = useState(null);
     const navigate = useNavigate()
     //Para controlar la voz
     const [isSpeaking, setIsSpeaking] = useState(false);
-    let text= descripcion + "; Descripción: " + descripcionComp + "; No esperes más, adquiérelo ahora."
+    let text= Data.Descripcion + "; Descripción: " + Data.Detalle + "; No esperes más, adquiérelo ahora."
     
     const [selectedVoice, setSelectedVoice] = useState(null);
-    const [imgError, setImgError] = useState(false);
-    
-    const handleError = () => {
-        setImgError(true);
-    };
 
     useEffect(() => {
         const loadVoices = () => {
@@ -71,7 +66,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
     let quantity = null
     let catSource
     try {        
-        catSource = require(`../../Assets/avif/Logos/${category}.avif`)
+        catSource = require(`../../Assets/avif/Logos/${Data.Categoria}.avif`)
     } catch (error) {
         catSource = require(`../../Assets/png/LlaveSierra2.png`)
     }
@@ -80,36 +75,41 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
         return new Intl.NumberFormat().format(number);
     };
     
-    if( unitPaq > 1 ){
-        quantity = 'Paquete de ' + unitPaq + ' unidades'
+    if( Data.EsUnidadOpaquete > 1 ){
+        quantity = 'Paquete de ' + Data.EsUnidadOpaquete + ' unidades'
     }else{
         quantity = 'Unidad'
     }
 
     const btnCart = () => {
-        //*First search in Localstorage for 'cart'. If true, theCart contains the json cart
-        //*if false, theCart is undefined. productJson is the current product json.
-        const theCart = localStorage.getItem('cart')
-        const productJson = lista[llave]
-        // if(theCart){
-        const addToCart = JSON.parse(theCart)
-        const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
-        if (productIndex !== -1) {//* if the is already the same product just increase the cant
-            addToCart[productIndex].Cant += cant
-            addToCart[productIndex].ImgName = ImgName
+        try {
+            //*First search in Localstorage for 'cart'. If true, theCart contains the json cart
+            //*if false, theCart is undefined. productJson is the current product json.
+            const theCart = localStorage.getItem('cart')
+            //const productJson = lista[llave]
+            // if(theCart){
+            const productJson = Data
+            const addToCart = JSON.parse(theCart)
+            const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
+            if (productIndex !== -1) {//* if the is already the same product just increase the cant
+                addToCart[productIndex].Cant += cant
+                addToCart[productIndex].ImgName = Data.ImgName
+                localStorage.setItem("cart", JSON.stringify(addToCart))
+                return
+            }
+            //*Add the cant assigned
+            productJson.Cant = cant
+            addToCart.push(productJson)
+            setNItemsCart(addToCart.length)
             localStorage.setItem("cart", JSON.stringify(addToCart))
-            return
+            // }else{
+            //     //*Add the cant assigned
+            //     productJson.Cant = cant
+            //     localStorage.setItem("cart", JSON.stringify([productJson]))
+            // }
+        } catch (error) {
+            console.log("error al enviar producto: ", error)
         }
-        //*Add the cant assigned
-        productJson.Cant = cant
-        addToCart.push(productJson)
-        setNItemsCart(addToCart.length)
-        localStorage.setItem("cart", JSON.stringify(addToCart))
-        // }else{
-        //     //*Add the cant assigned
-        //     productJson.Cant = cant
-        //     localStorage.setItem("cart", JSON.stringify([productJson]))
-        // }
     }
     
     useEffect(() => {
@@ -140,9 +140,9 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                     </picture>
                                 </div>
                                 <div className='subTit' id='productoLabel' style={{width: '80%', paddingRight: '10px', marginRight: '5px'}}>
-                                    {descripcion}
+                                    {Data.Descripcion}
                                     <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%"}}>
-                                        <div className='smolText'>Cod: {codigo}</div>
+                                        <div className='smolText'>Cod: {Data.Cod}</div>
                                         <button
                                             onClick={toggleSpeech}
                                             className="btn btn-primary"
@@ -152,9 +152,9 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                     </div>
                                 </div>
                             </div>
-                            <div className={`imgModal C${category}`}>
+                            <div className={`imgModal C${Data.Categoria}`}>
                                 <picture style={{position: 'relative', overflow: 'hidden'}}>
-                                    { agotado ?
+                                    { Data.Agotado ?
                                         <div className='soldOutMod'>
                                             AGOTADO
                                         </div>
@@ -163,11 +163,11 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                     }
                                     <source
                                         type="image/avif"
-                                        srcSet={imgError ? imgPlaceHolder : img}
+                                        srcSet={Data.img}
                                     />
                                     <img
-                                        src={imgError ? imgPlaceHolder : img}
-                                        onError={handleError}
+                                        src={Data.img}
+                                        //onError={handleError}
                                         alt="productImg"
                                         decoding="async"
                                     />
@@ -188,7 +188,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                     </span>
                                     { logged &&
                                     <span className="fw-bold">
-                                        ${Formater(unitPrice)}
+                                        ${Formater(Data.PVenta)}
                                     </span>
                                     }
                                 </div>                        
@@ -199,9 +199,9 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                         </div>
                                         <div className="quantityBox">
                                             <button className="btnQuantity" onClick={() => {
-                                                if((cant-unitPaq)>=0){
-                                                    setCant(cant-unitPaq)
-                                                    setTotalPrice(unitPrice*(cant-unitPaq))
+                                                if((cant-Data.EsUnidadOpaquete)>=0){
+                                                    setCant(cant-Data.EsUnidadOpaquete)
+                                                    setTotalPrice(Data.PVenta*(cant-Data.EsUnidadOpaquete))
                                                 }
                                             }}>
                                                 -
@@ -214,16 +214,16 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                                 onChange={(e)=>{setCant(parseInt(e.target.value));}}
                                                 onBlur={(e)=>{
                                                     let theCant = parseInt(e.target.value)
-                                                    if(e.target.value%unitPaq !== 0){
-                                                        theCant = parseInt(Math.ceil(e.target.value / unitPaq) * unitPaq)
+                                                    if(e.target.value%Data.EsUnidadOpaquete !== 0){
+                                                        theCant = parseInt(Math.ceil(e.target.value / Data.EsUnidadOpaquete) * Data.EsUnidadOpaquete)
                                                         setCant(theCant);
                                                     }
-                                                    setTotalPrice(unitPrice*theCant)
+                                                    setTotalPrice(Data.PVenta*theCant)
                                                 }}
                                             />
                                             <button className="btnQuantity" onClick={() => {
-                                                setCant(parseInt(cant)+unitPaq)
-                                                setTotalPrice(unitPrice*(parseInt(cant)+unitPaq))
+                                                setCant(parseInt(cant)+Data.EsUnidadOpaquete)
+                                                setTotalPrice(Data.PVenta*(parseInt(cant)+Data.EsUnidadOpaquete))
                                             }}>
                                                 +
                                             </button>
@@ -244,7 +244,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                 </div>
                                 <div className='mt-auto'>
                                     { logged ? 
-                                        <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart(); onHide() }} data-bs-dismiss="modal">
+                                        <button className="btnAddCart boton" disabled={(Data.Agotado || (cant===0))} onClick={() => {btnCart(); onHide() }} data-bs-dismiss="modal">
                                             Agregar al carrito
                                         </button>
                                         :
@@ -262,7 +262,7 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                     { showDesc &&
                                         <div>
                                             <div className="description scrollableY genFont">
-                                                {descripcionComp}.<br/>
+                                                {Data.Detalle}.<br/>
                                             </div>
                                         </div>
                                     }

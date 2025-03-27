@@ -52,41 +52,63 @@ export function Products() {
     // Define a case-insensitive text filter function
     const index = proData.findIndex(item => item.Cod.toLowerCase() === ProductCode.toLowerCase());
     if (index !== -1) { // Verificar si se encontró el producto
+      
       const selectedItem = proData[index]; // Obtener el producto
-
-      let selectedProduct = { ...selectedItem };
-
-      // Asignar valores
-      selectedProduct.key = index; // Guardar el índice
-      selectedProduct.llave = index; // También puedes usar esto para identificar el modal
-      selectedProduct.img = selectedItem.ImgName;
-      selectedProduct.descripcion = selectedItem.Descripcion;
-      selectedProduct.descripcionComp = selectedItem.Detalle;
-      selectedProduct.codigo = selectedItem.Cod;
-      selectedProduct.category = selectedItem.Categoria.toLowerCase();
-      selectedProduct.unitPaq = selectedItem.EsUnidadOpaquete;
-      selectedProduct.unitPrice = selectedItem.PVenta;
-      selectedProduct.agotado = selectedItem.Agotado;
-      setSelecteditem(selectedProduct);
-      setShow1(true);
-      document.body.style.overflow = 'hidden';
-
       const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif`;
     
+      let selectedProduct = { ...selectedItem };
+      let img = imageUrl
       // Verificar el ETag del servidor
       fetch(imageUrl, { method: "HEAD", cache: "no-store"})
           .then((response) => {
-          const eTag = response.headers.get("ETag"); // Obtener el ETag
-          if (eTag) {
-              setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
-          } else {
-              setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
-          }
+            if (response.ok) {
+                const eTag = response.headers.get("ETag"); // Obtener el ETag
+              if (eTag) {
+                  setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+                  img = `${imageUrl}?v=${eTag}`
+              } else {
+                  setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+                  img = imageUrl
+              }
+
+            } else {
+              console.error("La imagen no existe o hubo un error:", response.status);
+              setImgSrc(imgPlaceHolder);
+            }
           })
           .catch((error) => {
           console.error("Error verificando el ETag:", error);
-          setImgSrc(imageUrl); // En caso de error, mostrar la imagen igual
+          setImgSrc("imageUrl"); // En caso de error, mostrar la imagen igual
+          img = "imageUrl"
           });
+      // Asignar valores
+      //selectedProduct.key = index; // Guardar el índice
+      //selectedProduct.llave = index; // También puedes usar esto para identificar el modal
+      //selectedProduct.img = selectedItem.ImgName;
+      //selectedProduct.descripcion = selectedItem.Descripcion;
+      //selectedProduct.descripcionComp = selectedItem.Detalle;
+      //selectedProduct.codigo = selectedItem.Cod;
+      //selectedProduct.category = selectedItem.Categoria.toLowerCase();
+      //selectedProduct.unitPaq = selectedItem.EsUnidadOpaquete;
+      //selectedProduct.unitPrice = selectedItem.PVenta;
+      //selectedProduct.agotado = selectedItem.Agotado;
+
+      let producto = {
+          "Agotado": selectedItem.Agotado,
+          "Categoria": selectedItem.Categoria.toLowerCase(),
+          "Cod": selectedItem.Cod,
+          "Descripcion": selectedItem.Descripcion,
+          "Detalle": selectedItem.Detalle,
+          "EsUnidadOpaquete": selectedItem.EsUnidadOpaquete,
+          "ImgName": selectedProduct.ImgName,
+          "Iva": selectedItem.Iva,
+          "PVenta": selectedItem.PVenta,
+          "img": img,
+      }
+      setSelecteditem(producto);
+      setShow1(true);
+      document.body.style.overflow = 'hidden';
+
       navigate(`/productos/${selectedItem.Cod}`);
     } else {
         console.log("Producto no encontrado con código:", ProductCode);
@@ -232,38 +254,40 @@ export function Products() {
               { isMobile ? 
                   (Show1 && selecteditem) ? 
                     <ModalProductMob
-                        key={selecteditem.key}
-                        llave={selecteditem.llave}
-                        img={imgSrc}
-                        descripcion={selecteditem.descripcion}
-                        descripcionComp={selecteditem.descripcionComp}
-                        codigo={selecteditem.codigo}
-                        category={selecteditem.category}
-                        unitPaq={selecteditem.unitPaq}
-                        unitPrice={selecteditem.unitPrice}
-                        agotado={selecteditem.agotado}
-                        lista={lista}
+                        //key={selecteditem.key}
+                        //llave={selecteditem.llave}
+                        //img={imgSrc}
+                        //descripcion={selecteditem.descripcion}
+                        //descripcionComp={selecteditem.descripcionComp}
+                        //codigo={selecteditem.codigo}
+                        //category={selecteditem.category}
+                        //unitPaq={selecteditem.unitPaq}
+                        //unitPrice={selecteditem.unitPrice}
+                        //agotado={selecteditem.agotado}
+                        //lista={lista}
                         onHide={closeModal}
-                        ImgName={selecteditem.ImgName}
+                        //ImgName={selecteditem.ImgName}
+                        Data = {selecteditem}
                         />
                         :
                         <></>
                   :
                   (Show1 && selecteditem) ?
                   <ModalProductDesk
-                      key={selecteditem.key}
-                      llave={selecteditem.llave}
-                      img={imgSrc}
-                      descripcion={selecteditem.descripcion}
-                      descripcionComp={selecteditem.descripcionComp}
-                      codigo={selecteditem.codigo}
-                      category={selecteditem.category}
-                      unitPaq={selecteditem.unitPaq}
-                      unitPrice={selecteditem.unitPrice}
-                      agotado={selecteditem.agotado}
-                      lista={lista}
+                      //key={selecteditem.key}
+                      //llave={selecteditem.llave}
+                      //img={imgSrc}
+                      //descripcion={selecteditem.descripcion}
+                      //descripcionComp={selecteditem.descripcionComp}
+                      //codigo={selecteditem.codigo}
+                      //category={selecteditem.category}
+                      //unitPaq={selecteditem.unitPaq}
+                      //unitPrice={selecteditem.unitPrice}
+                      //agotado={selecteditem.agotado}
+                      //lista={lista}
                       onHide={closeModal}
-                      ImgName={selecteditem.ImgName}
+                      //ImgName={selecteditem.ImgName}
+                      Data = {selecteditem}
                   />
                   :
                   <></>
