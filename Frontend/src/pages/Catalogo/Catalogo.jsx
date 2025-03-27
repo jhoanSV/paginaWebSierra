@@ -26,8 +26,9 @@ export function Catalogo() {
     useEffect(() => {
         const categoryPage = async()=> {
             const list = await CategoryPages(Categoria);
+            console.log("CategoryPages: ", list);
             const categoria = list.find(cat => cat.Categoria.toUpperCase() === Categoria.toUpperCase());
-            const numberCategorory = categoria ? categoria.Pag : 0;
+            const numberCategorory = categoria ? categoria.Pag : 1;
             setNumPage(Number(numberCategorory))
         }
         categoryPage()

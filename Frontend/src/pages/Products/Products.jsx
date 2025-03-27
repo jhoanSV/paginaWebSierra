@@ -79,7 +79,7 @@ export function Products() {
           .catch((error) => {
           console.error("Error verificando el ETag:", error);
           setImgSrc("imageUrl"); // En caso de error, mostrar la imagen igual
-          img = "imageUrl"
+          img = imgPlaceHolder
           });
       // Asignar valores
       //selectedProduct.key = index; // Guardar el índice
@@ -156,6 +156,8 @@ export function Products() {
           //sortedJson2 = sortedJson
           setLista(dataArray)
           //setFilteredProducts(sortedJson);
+          // Desplaza la página al inicio después de ejecutar la lógica de filtrado
+          window.scrollTo({ top: 0, behavior: 'smooth' }); // 'smooth' para una animación de desplazamiento suave
         }
     } catch (error) {
         //sortedJson2 = false

@@ -55,14 +55,15 @@ export function PdfViewer2({ route, prop, dir, show='yes', numPage = 0}) {
 
     useEffect(() => {
         numPag.current = numPage
+        const cacheBuster = Date.now();
         setPages([
             //this stupid shit needs to be more standard
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current}.avif`},
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+1}.avif`},
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+2}.avif`},
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+3}.avif`},
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+4}.avif`},
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+5}.avif`},
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current}.avif?${cacheBuster}`},
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+1}.avif?${cacheBuster}`},
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+2}.avif?${cacheBuster}`},
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+3}.avif?${cacheBuster}`},
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+4}.avif?${cacheBuster}`},
+            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${numPag.current+5}.avif?${cacheBuster}`},
         ])
 
     }, [numPage])
@@ -80,9 +81,10 @@ export function PdfViewer2({ route, prop, dir, show='yes', numPage = 0}) {
         const thePdfViewer = document.querySelector(".thePdfViewer");
         const anchoVisor = (thePdfViewer.getBoundingClientRect().width)
         const minP = getMinPageNumber()
+        const cacheBuster = Date.now();
         //try to search the image before to put in the list
-        const page1 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${minP - 1}.avif`;
-        const page2 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${minP - 2 }.avif`;
+        const page1 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${minP - 1}.avif?${cacheBuster}`;
+        const page2 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${minP - 2 }.avif?${cacheBuster}`;
 
         const [validPage1, validPage2] = await Promise.all([
             fetch(page1, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page1 : null),
@@ -110,14 +112,50 @@ export function PdfViewer2({ route, prop, dir, show='yes', numPage = 0}) {
         });
     }
 
-    const nextF = () => {
+    /*const nextF = () => {
         const thePdfViewer = document.querySelector(".thePdfViewer");
         const anchoVisor = thePdfViewer.getBoundingClientRect().width        
-        thePdfViewer.scrollTo({
-            left: (thePdfViewer.scrollLeft + anchoVisor),
-            behavior: 'smooth'
+        
+        return new Promise((resolve) => {
+            thePdfViewer.scrollTo({
+                left: (thePdfViewer.scrollLeft + anchoVisor),
+                behavior: 'smooth'
+            });
+
+            setTimeout(resolve, 500);
         });
-    }
+    }*/
+
+    const nextF = () => {
+        const thePdfViewer = document.querySelector(".thePdfViewer");
+        const anchoVisor = thePdfViewer.getBoundingClientRect().width;
+    
+        return new Promise((resolve) => {
+            const handleScrollEnd = () => {
+                thePdfViewer.removeEventListener('scrollend', handleScrollEnd);
+                resolve();
+            };
+    
+            thePdfViewer.addEventListener('scrollend', handleScrollEnd);
+    
+            thePdfViewer.scrollTo({
+                left: thePdfViewer.scrollLeft + anchoVisor,
+                behavior: 'smooth'
+            });
+        });
+    };
+    
+    // En tu componente:
+    let isScrolling = false;
+    
+    const handleNextClick = () => {
+        if (isScrolling) return; // Evita múltiples clics mientras se desplaza
+    
+        isScrolling = true;
+        nextF().then(() => {
+            isScrolling = false;
+        });
+    };
 
     const resize_ob = new ResizeObserver(function() {
         setScreenWidth(window.innerWidth);
@@ -212,10 +250,11 @@ export function PdfViewer2({ route, prop, dir, show='yes', numPage = 0}) {
         entries.forEach(entry=>{
             if (entry.isIntersecting){
                 observer.unobserve(entry.target)
+                const cacheBuster = Date.now();
                 try {
                     //try to search the image before to put in the list
-                    const page1 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${maxP + 1}.avif`;
-                    const page2 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${maxP + 2 }.avif`;
+                    const page1 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${maxP + 1}.avif?${cacheBuster}`;
+                    const page2 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina+${maxP + 2 }.avif?${cacheBuster}`;
 
                     Promise.all([
                         fetch(page1, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page1 : null),
@@ -269,7 +308,7 @@ export function PdfViewer2({ route, prop, dir, show='yes', numPage = 0}) {
                 <button onClick={prevF} className={'prev '+ show}>
                         <i className="bi bi-arrow-left-circle-fill"></i>
                 </button>
-                <button onClick={nextF} className={'next ' + show}>
+                <button onClick={handleNextClick} className={'next ' + show}>
                         <i className="bi bi-arrow-right-circle-fill"></i>
                 </button>
             </div>
