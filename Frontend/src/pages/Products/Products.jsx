@@ -7,6 +7,7 @@ import { useTheContext } from "../../TheProvider";
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { ModalProductDesk, ModalProductMob } from "../../Componentes/Modals";
 import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
+import { Outlet } from 'react-router-dom';
 
 export function Products() {
   const location = useLocation();
@@ -60,27 +61,27 @@ export function Products() {
       let img = imageUrl
       // Verificar el ETag del servidor
       fetch(imageUrl, { method: "HEAD", cache: "no-store"})
-          .then((response) => {
-            if (response.ok) {
-                const eTag = response.headers.get("ETag"); // Obtener el ETag
-              if (eTag) {
-                  setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
-                  img = `${imageUrl}?v=${eTag}`
-              } else {
-                  setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
-                  img = imageUrl
-              }
-
+        .then((response) => {
+          if (response.ok) {
+              const eTag = response.headers.get("ETag"); // Obtener el ETag
+            if (eTag) {
+                setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+                img = `${imageUrl}?v=${eTag}`
             } else {
-              console.error("La imagen no existe o hubo un error:", response.status);
-              setImgSrc(imgPlaceHolder);
+                setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+                img = imageUrl
             }
-          })
-          .catch((error) => {
+
+          } else {
+            console.error("La imagen no existe o hubo un error:", response.status);
+            setImgSrc(imgPlaceHolder);
+          }
+        })
+        .catch((error) => {
           console.error("Error verificando el ETag:", error);
           setImgSrc("imageUrl"); // En caso de error, mostrar la imagen igual
           img = imgPlaceHolder
-          });
+      });
       // Asignar valores
       //selectedProduct.key = index; // Guardar el índice
       //selectedProduct.llave = index; // También puedes usar esto para identificar el modal
@@ -100,7 +101,7 @@ export function Products() {
           "Descripcion": selectedItem.Descripcion,
           "Detalle": selectedItem.Detalle,
           "EsUnidadOpaquete": selectedItem.EsUnidadOpaquete,
-          "ImgName": selectedProduct.ImgName,
+          "ImgName": selectedItem.ImgName,
           "Iva": selectedItem.Iva,
           "PVenta": selectedItem.PVenta,
           "img": img,
@@ -108,10 +109,10 @@ export function Products() {
       setSelecteditem(producto);
       setShow1(true);
       document.body.style.overflow = 'hidden';
-
+      
       navigate(`/productos/${selectedItem.Cod}`);
     } else {
-        console.log("Producto no encontrado con código:", ProductCode);
+      console.log("Producto no encontrado con código:", ProductCode);
     }
   }
 
@@ -256,19 +257,7 @@ export function Products() {
               { isMobile ? 
                   (Show1 && selecteditem) ? 
                     <ModalProductMob
-                        //key={selecteditem.key}
-                        //llave={selecteditem.llave}
-                        //img={imgSrc}
-                        //descripcion={selecteditem.descripcion}
-                        //descripcionComp={selecteditem.descripcionComp}
-                        //codigo={selecteditem.codigo}
-                        //category={selecteditem.category}
-                        //unitPaq={selecteditem.unitPaq}
-                        //unitPrice={selecteditem.unitPrice}
-                        //agotado={selecteditem.agotado}
-                        //lista={lista}
                         onHide={closeModal}
-                        //ImgName={selecteditem.ImgName}
                         Data = {selecteditem}
                         />
                         :
@@ -345,6 +334,7 @@ export function Products() {
           </div>
         </section>
       )}
+      <Outlet />
     </>
   );
 }

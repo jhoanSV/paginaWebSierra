@@ -16,6 +16,8 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
     const [totalPrice, setTotalPrice] = useState(Data.PVenta*cant)
     const { logged, setNItemsCart } = useTheContext()
     const navigate = useNavigate()
+    const cacheBuster = Date.now();
+    const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${Data.ImgName}.avif?${cacheBuster}`
     //Para controlar la voz
     //const [ imgSrc, setImgSrc] = useState(img);
     const [isSpeaking, setIsSpeaking] = useState(false);
@@ -54,7 +56,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
             alert("Tu navegador no soporta la API de síntesis de voz.");
           }
         }
-      };
+    };
     //fin de para controlar la voz
     let quantity = null
     //let logged = getGlobal('isLogged')
@@ -81,13 +83,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
             //console.log("entro al carrito")
             //*First search in Localstorage for 'cart'. If true, theCart contains the json cart
             //*if false, theCart is undefined. productJson is the current product json.
-            const theCart = localStorage.getItem('cart')        
-            //const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
-            //const productJson = lista.find(item => item.Cod === llave)
-            //console.log("lista: ", lista)
-            //console.log(llave)
-            //console.log(productJson)
-            // if(theCart){
+            const theCart = localStorage.getItem('cart')
             const productJson = Data
             const addToCart = JSON.parse(theCart)
             const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
