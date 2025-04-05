@@ -29,8 +29,8 @@ export function Navigation() {
               <Route path='/' element={ <Home /> } />
               <Route path='productos' element={<Products />}>
                 <Route path=':id' element={<ModalProductDesk />} />
-                <Route path='especiales' element={<Specials/>} />
               </Route>
+              <Route path='especiales' element={<Specials/>} />
               <Route path='nosotros' element={ <About /> } />
               <Route path='politicas_privacidad' element={ <Privacy /> } />
               <Route path='contactanos' element={ <ContactUs /> } />

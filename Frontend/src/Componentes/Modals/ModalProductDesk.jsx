@@ -11,6 +11,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
         
     useEffect(() => {
         setCant(0);
+        console.log(Data)
     }, []);
     const [cant, setCant] = useState(0)
     const [totalPrice, setTotalPrice] = useState(Data.PVenta*cant)

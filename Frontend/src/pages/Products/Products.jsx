@@ -7,7 +7,6 @@ import { useTheContext } from "../../TheProvider";
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { ModalProductDesk, ModalProductMob } from "../../Componentes/Modals";
 import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
-import { Outlet } from 'react-router-dom';
 
 export function Products() {
   const location = useLocation();
@@ -106,6 +105,7 @@ export function Products() {
           "PVenta": selectedItem.PVenta,
           "img": img,
       }
+      console.log("producto: ", producto)
       setSelecteditem(producto);
       setShow1(true);
       document.body.style.overflow = 'hidden';
@@ -265,19 +265,7 @@ export function Products() {
                   :
                   (Show1 && selecteditem) ?
                   <ModalProductDesk
-                      //key={selecteditem.key}
-                      //llave={selecteditem.llave}
-                      //img={imgSrc}
-                      //descripcion={selecteditem.descripcion}
-                      //descripcionComp={selecteditem.descripcionComp}
-                      //codigo={selecteditem.codigo}
-                      //category={selecteditem.category}
-                      //unitPaq={selecteditem.unitPaq}
-                      //unitPrice={selecteditem.unitPrice}
-                      //agotado={selecteditem.agotado}
-                      //lista={lista}
                       onHide={closeModal}
-                      //ImgName={selecteditem.ImgName}
                       Data = {selecteditem}
                   />
                   :
@@ -334,7 +322,6 @@ export function Products() {
           </div>
         </section>
       )}
-      <Outlet />
     </>
   );
 }

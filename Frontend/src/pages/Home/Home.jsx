@@ -167,7 +167,7 @@ export function Home() {
                                         <div className="carousel-inner h-100 c-inner">
                                             <div className="carousel-item active">
                                                 <div className="test h-100">
-                                                    <Link to={'/productos/especiales'}>
+                                                    <Link to={'/especiales'}>
                                                         <picture>
                                                             <source
                                                                 type="image/avif"
@@ -302,7 +302,7 @@ export function Home() {
 
                                 <div className="col">
                                     <div className="btn-catalogo1">
-                                        <a href={require("../../Assets/docs/Catalogo2024.pdf")} download>
+                                        <a href={require("../../Assets/docs/Catalogo2025.pdf")} download>
                                             <div className='d-flex align-items-center'>
                                                 <img
                                                     src={require("../../Assets/png/DescargaCatalogo2.png")}

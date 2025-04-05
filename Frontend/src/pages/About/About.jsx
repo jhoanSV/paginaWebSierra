@@ -31,7 +31,7 @@ export function About() {
                         <div className="qSomos genFont">
                             
                                 <h1>¿Quienes Somos?</h1>
-                                <p className="font-19">Somos una empresa colombiana con más de 6 Años de experiencia en la
+                                <p className="font-19">Somos una empresa colombiana con más de 8 Años de experiencia en la
                                  industria ferretera con el objetivo de impulsar, fomentar y apoyar al sector ferretero desde la industria nacional
                                   e internacional comercializando productos y servicios basándonos en su calidad, respaldo y eficiencia.<br/><br/>
                                 Convirtiéndonos en Aliados estratégicos desde la innovación tecnológica y logística buscando que el sector ferretero 
