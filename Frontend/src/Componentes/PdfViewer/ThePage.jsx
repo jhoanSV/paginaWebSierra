@@ -1,8 +1,13 @@
-import { React/*, useEffect*/ } from "react";
+import { React, useRef} from "react";
 import "./_Page.scss";
 
-export const ThePage=({the_src, width}) =>{
-
+export const ThePage=({the_src, width, Npage, CP, onselect}) =>{
+    const imgRef = useRef(null);
+    const positionList = CP.map(item => ({
+        ...item,
+        RelativeX: item.xPosition / imgRef.current.naturalWidth,
+        RelativeY: item.yPosition / imgRef.current.naturalHeight
+    }));
     let src=null
 
     if (the_src){
@@ -17,11 +22,28 @@ export const ThePage=({the_src, width}) =>{
     return(
         <div className="imgContainer">
             <picture>
+                {positionList.map((item, index) => (
+                    <i
+                        key={index}
+                        className="bi bi-bag-check-fill"
+                        style={{
+                            position: 'absolute',
+                            left: `${item.RelativeX* 100}%`,
+                            top: `${item.RelativeY* 100}%`,
+                            transform: 'translate(0, -50%)',
+                            fontSize: '24px',
+                            zIndex: 3
+                        }}
+                        onClick={()=>{onselect(item.Cod)}}
+                    />
+                    ))
+                }
                 <source
                     type="image/avif"
                     srcSet={the_src}
                 />
                 <img
+                    ref={imgRef}
                     src={src}
                     alt="categoria"
                     decoding="async"

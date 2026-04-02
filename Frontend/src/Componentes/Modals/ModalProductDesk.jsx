@@ -6,15 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import { SpeakButton } from '../../InternalFunctions';
 import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
-export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codigo, category,
-    unitPaq, unitPrice, lista, agotado, onHide, ImgName, Data}) => {
+export const ModalProductDesk = ({indexGroup, lengthGroup, onHide, show, Data, Move}) => {
         
     useEffect(() => {
         setCant(0);
         console.log(Data)
     }, []);
     const [cant, setCant] = useState(0)
-    const [totalPrice, setTotalPrice] = useState(Data.PVenta*cant)
+    const [totalPrice, setTotalPrice] = useState({
+        Total: Data.PVenta*cant,
+        Descuento: 0
+    })
     const { logged, setNItemsCart } = useTheContext()
     const navigate = useNavigate()
     const cacheBuster = Date.now();
@@ -96,21 +98,20 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
             }
             //*Add the cant assigned
             productJson.Cant = cant
-            console.log("productJson: ", productJson)          
             addToCart.push(productJson)
             setNItemsCart(addToCart.length)
             localStorage.setItem("cart", JSON.stringify(addToCart))
-            // }else{   
-            //     //*Add the cant assigned
-            //     productJson.Cant = cant
-            //     localStorage.setItem("cart", JSON.stringify([productJson]))
-            // }
         } catch (error) {
             console.log("error al enviar producto: ", error)
         }
     }
 
-    
+    const handleTotal = (item, value)=>{
+        setTotalPrice((prev) => ({
+            ...prev,
+            [item]: value,
+        }));
+    }
 
     return (
         <div
@@ -199,7 +200,13 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     <button className="btnQuantity" onClick={() => {
                                         if((cant-Data.EsUnidadOpaquete)>=0){
                                             setCant(cant-Data.EsUnidadOpaquete)
-                                            setTotalPrice(Data.PVenta*(cant-Data.EsUnidadOpaquete))
+                                            const discountValue = (Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)
+                                            const Price = parseInt(cant)-Data.EsUnidadOpaquete > Data.APartirDe ? discountValue: Data.PVenta
+                                            //handleTotal('Total',Price*(cant-Data.EsUnidadOpaquete))
+                                            setTotalPrice({
+                                                Total: Price*(cant-Data.EsUnidadOpaquete),
+                                                Descuento: (Data.PVenta - Price)*(cant-Data.EsUnidadOpaquete)
+                                            })
                                         }
                                     }}>
                                         -
@@ -217,12 +224,23 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                                 theCant = parseInt(Math.ceil(e.target.value / Data.EsUnidadOpaquete) * Data.EsUnidadOpaquete)
                                                 setCant(theCant);
                                             }
-                                            setTotalPrice(Data.PVenta*theCant)
+                                            const discountValue = (Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)
+                                            const Price = theCant > Data.APartirDe ? discountValue: Data.PVenta
+                                            setTotalPrice({
+                                                Total:Price*theCant,
+                                                Descuento: (Data.PVenta - Price)*theCant
+                                            })
                                         }}
                                     />
                                     <button className="btnQuantity" onClick={() => {
                                         setCant(parseInt(cant)+Data.EsUnidadOpaquete)
-                                        setTotalPrice(Data.PVenta*(parseInt(cant)+Data.EsUnidadOpaquete))
+                                        const discountValue = (Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)
+                                        const Price = parseInt(cant)+Data.EsUnidadOpaquete > Data.APartirDe ? discountValue: Data.PVenta
+                                        //setTotalPrice(Price*(parseInt(cant)+Data.EsUnidadOpaquete))
+                                        setTotalPrice({
+                                            Total: Price*(cant+Data.EsUnidadOpaquete),
+                                            Descuento: (Data.PVenta - Price)*(cant+Data.EsUnidadOpaquete)
+                                        })
                                     }}>
                                         +
                                     </button>
@@ -231,26 +249,54 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     <span className='mainBlue fw-bold'>
                                         Valor:&nbsp;
                                     </span>
-                                    { logged &&
-                                    <span className="fw-bold">
-                                        ${Formater(Data.PVenta)}
-                                    </span>
-                                    }
+                                    { logged && (
+                                        <>
+                                            <span className="fw-bold">${Formater(Data.PVenta)}</span>
+                                            { Data.Porcentaje !== 0 && cant > Data.APartirDe &&
+                                                <span>
+                                                    $ {(Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)}
+                                                </span>
+                                            }
+                                        </>
+                                    )}
                                 </div>
+                                {Data.Porcentaje !== 0 &&
+                                    <div>
+                                        <span className='mainBlue fw-bold'>
+                                            A partir de {Data.APartirDe + 1} obten {Data.Porcentaje}% de descuento:&nbsp;
+                                        </span>
+                                    </div>
+                                }
                                 <h1>
                                     { logged &&
                                         <div className="totalPrice mainBlue">
                                             <div className='subTit fw-bold'>Total:</div>
                                             <h1>
                                                 <span className='text-black Tit'>
-                                                    ${Formater(totalPrice)}
+                                                    ${Formater(totalPrice.Total)}
                                                 </span>
                                             </h1>
                                         </div>
                                     }
                                 </h1>
+                                { logged && Data.Porcentaje !== 0 && cant > Data.APartirDe &&
+                                    <div className="totalPrice mainBlue">
+                                        <div className='subTit fw-bold'>Total ahorrado:</div>
+                                        <h1>
+                                            <span className='text-black Tit'>
+                                                ${Formater(totalPrice.Descuento)}
+                                            </span>
+                                        </h1>
+                                    </div>
+                                }
                                 { logged ? 
-                                    <button className="btnAddCart boton" disabled={(Data.Agotado || (cant===0))} onClick={() => {btnCart(); onHide()}}>
+                                    <button
+                                        type="button"
+                                        className="btnAddCart boton"
+                                        disabled={(Data.Agotado || (cant===0))}
+                                        onClick={() => {
+                                            btnCart(); onHide()
+                                        }}>
                                         Agregar al carrito
                                     </button>
                                     :
@@ -266,6 +312,16 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                         </div>
                     </div>
                 </div>
+                {indexGroup !==0 &&
+                    <button onClick={()=>{Move(-1)}} className={'prev ' + show}>
+                        <i class="bi bi-arrow-left-circle-fill"></i>
+                    </button>
+                }
+                {indexGroup !== lengthGroup - 1 &&
+                    <button onClick={()=>{Move(1)}} className={'next ' + show}>
+                        <i class="bi bi-arrow-right-circle-fill"></i>
+                    </button>
+                }
             </div>
         </div>
     );

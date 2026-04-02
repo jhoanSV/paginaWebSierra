@@ -1,7 +1,7 @@
 // const API = 'http://000.000.0.000:0000/tasks';
-const API = process.env.REACT_APP_API;
+//const API = process.env.REACT_APP_API;
 //const API = 'http://192.168.1.110:3000/tasks';
-
+const API = 'http://192.168.101.13:3000/tasks';
 
 
 //const API = 'http://localhost:3000/tasks';
@@ -118,7 +118,15 @@ export const EnviarVenta = async(Order) => {
         "FechaVencimiento" : "2024-02-23",
         "NotaVenta": "",
         "VECommerce": "1",
-        "TIngresados": "12(cantidad),CIT05(codigo),950(PVenta);6,SP136,3500"
+        "TIngresados": [{
+            ImgName: 'CRZ01',
+            Iva: 19,
+            PVenta: 650,
+            img: 'https://sivarwebresources.s3.amazonaws.com/AVIF/CRZ01.avif',
+            Porcentaje: 5,
+            APartirDe: 3,
+            Cant: 4
+        }]
     }*/
     try {
         const res = await fetch(`${API}/SendSale`,{
@@ -126,6 +134,17 @@ export const EnviarVenta = async(Order) => {
             headers: { Accept: 'application/json','Content-Type': 'application/json'},
             body: JSON.stringify(Order)
         })
+        return await res.json()
+    }catch(error) {
+        console.log(error)
+    }
+}
+
+export const GetCoordinatesPagesApi = async() => {
+    /*Return the list of alias of the products*/
+    try {
+        const res = await fetch(`${API}/GetCoordinatesPages`, {
+            method: 'GET'})
         return await res.json()
     }catch(error) {
         console.log(error)

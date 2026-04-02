@@ -20,6 +20,7 @@ export const TheCart = () => {
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
     const [sendCost, setSendCost] = useState(5000);
     const [subTotalC, setSubTotalC] = useState(0);
+    const [totalDisc, setTotalDisc] = useState(0);
     const [currentDiv, setCurrentDiv] = useState(0);
     const [route, setRoute] = useState(false);
     const [btnDis, setBtnDis] = useState(true);
@@ -88,44 +89,20 @@ export const TheCart = () => {
         )
     }
 
-    /*const ModarSuccessfulSubmission = () => {
-        return(
-            <div
-                className='theModalContainer'
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center', // Centra horizontalmente
-                    alignItems: 'center',    // Centra verticalmente
-                    height: '100vh',         // Ocupa toda la altura de la ventana
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente (opcional)
-                    zIndex: '1060'
-                  }}>
-                <div className='theModal-content' style={{width: '400px', height: '400px', position: 'relative'}}>
-                    <div className='theModal-body' style={{display: 'flex',  flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                        <img 
-                            src={CargadoConExito}
-                            style={{
-                                width: '80%',
-                                height: 'auto', // Mantiene la proporción de la imagen
-                              }}
-                            alt="CargadoConExito"/>
-                    </div>
-                </div>
-            </div>
-        )
-    }*/
-
     const handleSendOrder = async() =>{
         //To the charge animation
         try {
             setVisiblevCargando(true)
             const fecha = new Date()
             const today = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate() + ' ' + fecha.getHours() + ':' + fecha.getMinutes() + ':' + fecha.getSeconds()        
-            let TIngresados = [], notes = theTextArea.current.value, total=0, thisSendDate
-            cart.forEach((element) => {
-                TIngresados.push(`${element['Cant']},${element['Cod']},${element['PVenta']}`)
-                total = total + (element['PVenta']*element['Cant'])
-            });
+            let TIngresados = [],
+                notes = theTextArea.current.value,
+                total=0,
+                thisSendDate
+            //cart.forEach((element) => {
+            //    TIngresados.push(`${element['Cant']},${element['Cod']},${element['PVenta']}`)
+            //    total = total + (element['PVenta']*element['Cant'])
+            //});
             TIngresados = TIngresados.join(';');
             if(route){
                 setSendDate(fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + (fecha.getDate()))
@@ -135,7 +112,7 @@ export const TheCart = () => {
                 thisSendDate = dateChosen.current.value
                 setSendDate(dateChosen.current.value)
             }
-            setTheTotal(total+sendCost)
+            setTheTotal(subTotalC-totalDisc+sendCost)
             const orderReq  = await EnviarVenta({
                 "CodCliente": theUserCod,
                 "FechaFactura": today,
@@ -144,7 +121,7 @@ export const TheCart = () => {
                 "FechaVencimiento" : thisSendDate,
                 "NotaVenta": notes,
                 "VECommerce": "1",
-                "TIngresados": TIngresados
+                "TIngresados": cart
             })
             if(orderReq['success']===true){
                 setConsecutive(orderReq['NDePedido'])            
@@ -155,11 +132,13 @@ export const TheCart = () => {
                 setVisiblevCargando(false)
                 setVisibleEnvioExitoso(true)
                 navigate('/carrito/sended')
-                setTimeout(() => {  
+                setTimeout(() => {
                     setVisibleEnvioExitoso(false)
                     navigate('/carrito')
                     }, 2000);
             }else{
+                setVisiblevCargando(false)
+                alert('Ocurrió un error, intente de nuevo más tarde')
             }
         } catch (error) {
             setVisiblevCargando(false)
@@ -199,12 +178,14 @@ export const TheCart = () => {
     useEffect(() => {
         setNItemsCart(cart.length)
         let totalCost = 0;
-    
+        let totalDiscounts = 0;
         cart.forEach((item) => {
             totalCost += item.PVenta * item.Cant;
+            totalDiscounts += item.Cant > item.APartirDe ? item.Cant * (item.PVenta * item.Porcentaje / 100): 0
         });
         
         setSubTotalC(totalCost);
+        setTotalDisc(totalDiscounts)
         if (totalCost > 300000 || route) setSendCost(0)
         else setSendCost(5000)
 
@@ -244,20 +225,14 @@ export const TheCart = () => {
                     </div>
                     <div className='itemsCart grayContainer'>
                         {cart.length!==0 ?
-                            cart.map( (item, index) => {                                                
+                            cart.map( (item, index) => {
                                 return(
                                     <ItemCart
                                         key={index}
                                         id={index}
-                                        nombre={item.Descripcion}
-                                        cod={item.Cod}
-                                        unitPrice={item.PVenta}
-                                        unitPaq={item.EsUnidadOpaquete}
-                                        category={(item.Categoria).toLowerCase()}
-                                        cantidad={item.Cant}
                                         onDelete={deleteItemCart}
                                         updtC = {updateCant}
-                                        ImgName = {item.ImgName}
+                                        Data = {item}
                                     />
                                 );                        
                             })
@@ -270,10 +245,13 @@ export const TheCart = () => {
                     </div>
                     <div className='dtlCart grayContainer'>
                         <div>SubTotal: $ {Formater(subTotalC)}</div>
+                        {totalDisc !== 0 &&
+                            <div>Descuentos: $ {Formater(totalDisc)}</div>
+                        }
                         <div>Envio: $ {Formater(sendCost)}</div>
                         <div className='subTit' style={{marginTop: '10px'}}>
                             Total: {' '}
-                            <span className='cBlack'>${Formater(subTotalC+sendCost)}</span>
+                            <span className='cBlack'>${Formater(subTotalC-totalDisc+sendCost)}</span>
                         </div>
                         <button className="btnSendOrd boton" data-bs-toggle="modal" data-bs-target={`#sendOrderMod`} disabled={btnDis}>
                             Enviar pedido
@@ -328,10 +306,13 @@ export const TheCart = () => {
                                                 />
                                             </div>
                                             <div>SubTotal: $ {Formater(subTotalC)}</div>
+                                            {totalDisc !== 0 &&
+                                                <div>Descuentos: $ {Formater(totalDisc)}</div>
+                                            }
                                             <div>Env&iacute;o: $ {Formater(sendCost)}</div>
                                             <div className='Tit fw-bold' style={{color: '#193773'}}>
                                                 Total: {' '}
-                                                <span className='cBlack'>${Formater(subTotalC+sendCost)}</span>
+                                                <span className='cBlack'>${Formater(subTotalC-totalDisc+sendCost)}</span>
                                             </div>
                                             <div style={{display: 'flex', marginTop: '15px'}}>
                                                 <button type="button" className="btnModal btnBack"
@@ -366,7 +347,7 @@ export const TheCart = () => {
                                                 <div style={{fontWeight: 'bold'}}>Empresa:</div>
                                                 <div>{JSON.parse(secureLocalStorage.getItem('userData'))['Ferreteria']}</div>
                                                 <div style={{fontWeight: 'bold'}}>Valor:</div>
-                                                <div>$ {Formater(theTotal)}</div>
+                                                <div>$ {Formater(theTotal-totalDisc+sendCost)}</div>
                                                 <div style={{fontWeight: 'bold'}}>Fecha de entrega estimada:</div>
                                                 {route?
                                                 <div>Fecha por confirmar</div>

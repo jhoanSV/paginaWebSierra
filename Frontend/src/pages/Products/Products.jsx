@@ -24,7 +24,8 @@ export function Products() {
   const [ isMobile, setIsMobile ] = useState(false);
   const { id } = useParams();
   const [ selecteditem, setSelecteditem ] = useState(null);
-
+  const [filterGroup, setFilterGroup] = useState([]);
+  const [actualNumber, setActualNumber] = useState(0);
 
   useEffect(() => {
       if (id !== undefined) {
@@ -48,7 +49,6 @@ export function Products() {
   const selectProductModal = async (ProductCode) => {
     const pro = JSON.parse(secureLocalStorage.getItem('productsList'));
     let proData = pro //The whole table "products".
-    
     // Define a case-insensitive text filter function
     const index = proData.findIndex(item => item.Cod.toLowerCase() === ProductCode.toLowerCase());
     if (index !== -1) { // Verificar si se encontró el producto
@@ -56,7 +56,6 @@ export function Products() {
       const selectedItem = proData[index]; // Obtener el producto
       const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif`;
     
-      let selectedProduct = { ...selectedItem };
       let img = imageUrl
       // Verificar el ETag del servidor
       fetch(imageUrl, { method: "HEAD", cache: "no-store"})
@@ -81,17 +80,6 @@ export function Products() {
           setImgSrc("imageUrl"); // En caso de error, mostrar la imagen igual
           img = imgPlaceHolder
       });
-      // Asignar valores
-      //selectedProduct.key = index; // Guardar el índice
-      //selectedProduct.llave = index; // También puedes usar esto para identificar el modal
-      //selectedProduct.img = selectedItem.ImgName;
-      //selectedProduct.descripcion = selectedItem.Descripcion;
-      //selectedProduct.descripcionComp = selectedItem.Detalle;
-      //selectedProduct.codigo = selectedItem.Cod;
-      //selectedProduct.category = selectedItem.Categoria.toLowerCase();
-      //selectedProduct.unitPaq = selectedItem.EsUnidadOpaquete;
-      //selectedProduct.unitPrice = selectedItem.PVenta;
-      //selectedProduct.agotado = selectedItem.Agotado;
 
       let producto = {
           "Agotado": selectedItem.Agotado,
@@ -104,8 +92,12 @@ export function Products() {
           "Iva": selectedItem.Iva,
           "PVenta": selectedItem.PVenta,
           "img": img,
+          "Porcentaje": selectedItem.Porcentaje,
+          "APartirDe": selectedItem.APartirDe
       }
-      console.log("producto: ", producto)
+      const filterGroups = proData.filter(item => item.Grupo === selectedItem.Grupo && item.Cod !== selectedItem.Cod && item.Grupo !== 0);
+      setFilterGroup([selectedItem, ...filterGroups])
+      setActualNumber(0)
       setSelecteditem(producto);
       setShow1(true);
       document.body.style.overflow = 'hidden';
@@ -114,6 +106,55 @@ export function Products() {
     } else {
       console.log("Producto no encontrado con código:", ProductCode);
     }
+  }
+
+  const moveToGroup = (step)=>{
+    if(actualNumber + step < 0 || actualNumber + step > filterGroup.length) {
+      return
+    }
+    const selectedItem = filterGroup[actualNumber + step]
+    setActualNumber(actualNumber + step)
+    const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif`;
+    let img = imageUrl
+    // Verificar el ETag del servidor
+    fetch(imageUrl, { method: "HEAD", cache: "no-store"})
+      .then((response) => {
+        if (response.ok) {
+            const eTag = response.headers.get("ETag"); // Obtener el ETag
+          if (eTag) {
+              setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+              img = `${imageUrl}?v=${eTag}`
+          } else {
+              setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+              img = imageUrl
+          }
+
+        } else {
+          console.error("La imagen no existe o hubo un error:", response.status);
+          setImgSrc(imgPlaceHolder);
+        }
+      })
+      .catch((error) => {
+        console.error("Error verificando el ETag:", error);
+        setImgSrc("imageUrl"); // En caso de error, mostrar la imagen igual
+        img = imgPlaceHolder
+    });
+
+    let producto = {
+      "Agotado": selectedItem.Agotado,
+      "Categoria": selectedItem.Categoria.toLowerCase(),
+      "Cod": selectedItem.Cod,
+      "Descripcion": selectedItem.Descripcion,
+      "Detalle": selectedItem.Detalle,
+      "EsUnidadOpaquete": selectedItem.EsUnidadOpaquete,
+      "ImgName": selectedItem.ImgName,
+      "Iva": selectedItem.Iva,
+      "PVenta": selectedItem.PVenta,
+      "img": img,
+      "Porcentaje": selectedItem.Porcentaje,
+      "APartirDe": selectedItem.APartirDe
+    }
+    setSelecteditem(producto);
   }
 
   const filterProduct = (text) => {
@@ -267,6 +308,9 @@ export function Products() {
                   <ModalProductDesk
                       onHide={closeModal}
                       Data = {selecteditem}
+                      indexGroup = {actualNumber}
+                      lengthGroup = {filterGroup.length}
+                      Move = {moveToGroup}
                   />
                   :
                   <></>

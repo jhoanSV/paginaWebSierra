@@ -9,7 +9,10 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
     unitPaq, unitPrice, lista, agotado, onHide, ImgName, Data}) => {
 
     const [cant, setCant] = useState(0)
-    const [totalPrice, setTotalPrice] = useState(Data.PVenta*cant)
+    const [totalPrice, setTotalPrice] = useState({
+        Total: Data.PVenta*cant,
+        Descuento: 0
+    })
     const [showDesc, setShowDesc] = useState(false)
     const { logged, setNItemsCart } = useTheContext()
     const [utterance, setUtterance] = useState(null);
@@ -186,11 +189,18 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                     <span className='mainBlue fw-bold'>
                                         Valor:&nbsp;
                                     </span>
-                                    { logged &&
-                                    <span className="fw-bold">
-                                        ${Formater(Data.PVenta)}
-                                    </span>
-                                    }
+                                    { logged && (
+                                        <>
+                                            <span className="fw-bold">
+                                                ${Formater(Data.PVenta)}
+                                            </span>
+                                            { Data.Porcentaje !== 0 && cant > Data.APartirDe &&
+                                                <span>
+                                                    $ {(Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)}
+                                                </span>
+                                            }
+                                        </>
+                                    )}
                                 </div>                        
                                 <div className='row'>
                                     <div className='col'>
@@ -201,7 +211,12 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                             <button className="btnQuantity" onClick={() => {
                                                 if((cant-Data.EsUnidadOpaquete)>=0){
                                                     setCant(cant-Data.EsUnidadOpaquete)
-                                                    setTotalPrice(Data.PVenta*(cant-Data.EsUnidadOpaquete))
+                                                    const discountValue = (Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)
+                                                    const Price = parseInt(cant)-Data.EsUnidadOpaquete > Data.APartirDe ? discountValue: Data.PVenta
+                                                    setTotalPrice({
+                                                        Total: Price*(cant-Data.EsUnidadOpaquete),
+                                                        Descuento: (Data.PVenta - Price)*(cant-Data.EsUnidadOpaquete)
+                                                    })
                                                 }
                                             }}>
                                                 -
@@ -218,24 +233,51 @@ export const ModalProductMob = ({llave, img, descripcion, descripcionComp, codig
                                                         theCant = parseInt(Math.ceil(e.target.value / Data.EsUnidadOpaquete) * Data.EsUnidadOpaquete)
                                                         setCant(theCant);
                                                     }
-                                                    setTotalPrice(Data.PVenta*theCant)
+                                                    const discountValue = (Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)
+                                                    const Price = theCant > Data.APartirDe ? discountValue: Data.PVenta
+                                                    setTotalPrice({
+                                                        Total:Price*theCant,
+                                                        Descuento: (Data.PVenta - Price)*theCant
+                                                    })
                                                 }}
                                             />
                                             <button className="btnQuantity" onClick={() => {
                                                 setCant(parseInt(cant)+Data.EsUnidadOpaquete)
-                                                setTotalPrice(Data.PVenta*(parseInt(cant)+Data.EsUnidadOpaquete))
+                                                const discountValue = (Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)
+                                                const Price = parseInt(cant)+Data.EsUnidadOpaquete > Data.APartirDe ? discountValue: Data.PVenta
+                                                setTotalPrice({
+                                                    Total: Price*(cant+Data.EsUnidadOpaquete),
+                                                    Descuento: (Data.PVenta - Price)*(cant+Data.EsUnidadOpaquete)
+                                                })
                                             }}>
                                                 +
                                             </button>
                                         </div>
                                     </div>
+                                    {Data.Porcentaje !== 0 &&
+                                        <div>
+                                            <span className='mainBlue fw-bold'>
+                                                A partir de {Data.APartirDe + 1} obten {Data.Porcentaje}% de descuento:&nbsp;
+                                            </span>
+                                        </div>
+                                    }
                                     <div className="col">
                                         { logged &&
                                             <div className="totalPrice mainBlue">
                                                 <div className='subTit fw-bold'>Total:</div>
                                                 <h1>
                                                     <span className='text-black Tit'>
-                                                        ${Formater(totalPrice)}
+                                                        ${Formater(totalPrice.Total)}
+                                                    </span>
+                                                </h1>
+                                            </div>
+                                        }
+                                        { logged && Data.Porcentaje !== 0 && cant > Data.APartirDe &&
+                                            <div className="totalPrice mainBlue">
+                                                <div className='subTit fw-bold'>Total ahorrado:</div>
+                                                <h1>
+                                                    <span className='text-black Tit'>
+                                                        ${Formater(totalPrice.Descuento)}
                                                     </span>
                                                 </h1>
                                             </div>
