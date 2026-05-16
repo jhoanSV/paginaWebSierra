@@ -168,11 +168,11 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .quantity {
+    min-width: 52.2px;
     font-size: 1.5rem;
     text-align: center;
     border-style: none;
     background-color: transparent;
-    margin: 0 5px;
 }
 
 .unitPrice {

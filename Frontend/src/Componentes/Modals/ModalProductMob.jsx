@@ -150,7 +150,7 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
                         <div className="col d-flex flex-column">
                             <div className="mainFeatures">
                                 <div className='subTit' id='productoLabel' style={{ width: '100%', paddingRight: '10px', marginRight: '5px' }}>
-                                    <div style={{ fontFamily: '"norwester", sans-serif', overflow: 'hidden', maxHeight: '88px', fontSize: `${getFontSize(Data.Descripcion, 2.2)}` }}>
+                                    <div style={{ overflow: 'hidden', maxHeight: '88px', fontSize: `${getFontSize(Data.Descripcion, 1.85, 10)}` }}>
                                         {Data.Descripcion}
                                     </div>
                                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%"/*, position: 'relative'*/ }}>
@@ -329,19 +329,17 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
                                     <div className="col">
                                         {logged &&
                                             <div className="totalPrice mainBlue">
-                                                <div>
+                                                <div style={{display:'flex', alignItems:'center'}}>
                                                     <span className='subTit fw-bold'>Total:</span>
                                                     {logged && Data.Porcentaje !== 0 && cant > Data.APartirDe &&
-                                                        <span className='text-decoration-line-through' style={{ fontSize: '1.25rem', margin: '0 auto', fontWeight: 'normal' }}>
+                                                        <span className='text-decoration-line-through' style={{ fontSize: '1.25rem', fontWeight: 'normal' }}>
                                                             &nbsp;${priceValue(totalPrice.Descuento + totalPrice.Total)}
                                                         </span>
                                                     }
-                                                </div>
-                                                <h1>
                                                     <span className='text-black Tit' style={{ fontWeight: 'normal' }}>
-                                                        ${priceValue(totalPrice.Total)}
+                                                        &nbsp;${priceValue(totalPrice.Total)}
                                                     </span>
-                                                </h1>
+                                                </div>
                                             </div>
                                         }
                                     </div>

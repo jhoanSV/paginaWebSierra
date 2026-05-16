@@ -122,7 +122,7 @@ export const ItemCart = ({id, onDelete, updtC, Data}) => {
                         className='quantity' type="number"
                         min={1}
                         value={cant}
-                        style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
+                        style={{width: `${(String(cant).length*14.4)+14}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
                         onChange={(e)=>{setCant(parseInt(e.target.value));}}
                         onBlur={(e)=>{
                             let theCant = parseInt(e.target.value)                            
