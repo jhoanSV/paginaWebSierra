@@ -1,27 +1,29 @@
 @import "../../scss/_colors.scss";
 
 input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button
-{
-  -webkit-appearance: none;
-  margin: 0;
-  border-style: none;
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    border-style: none;
 }
 
-.modal-content.productBox{
+.modal-content.productBox {
     padding: 40px !important;
 }
 
-.imgModal, .theLogo{
+.imgModal,
+.theLogo {
     position: relative;
-    display: flex;
-    padding: 10px;
+    margin: 0px 10px 0px 10px;
+    padding-bottom: 10px;
     justify-content: center;
     overflow: hidden;
-    picture{
+
+    picture {
         width: 90%;
     }
-    img{
+
+    img {
         border: solid;
         border-radius: 25%;
         width: 100%;
@@ -29,21 +31,105 @@ input[type=number]::-webkit-outer-spin-button
         object-fit: contain;
     }
 }
-.theLogo{
+
+.theLogo {
+    //position: absolute;
+    display: flex;
+    margin: unset;
     justify-content: left;
     align-items: center;
-    padding: 0;    
-    picture{
+    padding: 0;
+    top: 0%;
+
+
+    picture {
         //width: 20%;
-        width: 3.625rem;
+        width: 1.925rem;
     }
-    img{
+
+    img {
         border: none;
         border-radius: 0;
     }
 }
 
-.soldOutMod{
+._paginationGroup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 0px auto;
+    margin-top: 10px;
+    color: $azulPrincipal;
+    clip-path: inset(-4px 0px);
+    width: 300px;
+    //mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+
+    .cajita {
+        border: 2px solid $azulPrincipal;
+        padding: 5px;
+        border-radius: 7px;
+        font-weight: bold;
+        opacity: 0.5;
+        cursor: pointer;
+        transition: 300ms;
+        text-wrap: nowrap;
+        user-select: none;
+
+        &.active {
+            background-color: $azulPrincipal;
+            color: white;
+            opacity: 1;
+            scale: 1.2;
+        }
+    }
+
+    // &:hover {
+
+    //     .bi-caret-left-fill,
+    //     .bi-caret-right-fill {
+    //         opacity: 1;
+    //     }
+    // }
+}
+
+._cajita-container {
+    display: flex;
+    align-items: center;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    gap: 10px;
+    font-size: 12px;
+}
+
+._pagArrow {
+    top: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    color: $azulPrincipal;
+    z-index: 3;
+    &.mob{
+        position: fixed;
+        &.bi-arrow-left-circle-fill {
+            left: 20px;
+        }
+        &.bi-arrow-right-circle-fill {
+            right: 20px;
+        }
+    }
+    &.desk{
+        position: absolute;
+        &.bi-arrow-left-circle-fill {
+            left: -7px;
+        }
+        &.bi-arrow-right-circle-fill {
+            right: -7px;
+        }
+    }
+    
+}
+
+.soldOutMod {
     position: absolute;
     padding: 0px 111px;
     color: #FF4A4A;
@@ -52,45 +138,54 @@ input[type=number]::-webkit-outer-spin-button
     transform: translate(-50%, -50%) rotate(-45deg);
     top: 20%;
     left: 20%;
+    z-index: 2;
 }
 
-.commingsoon{
+.commingsoon {
     opacity: 0;
 }
 
-.description{
+.description {
+    padding: 5px;
     height: 120px;
     background-color: #d9d9d9;
 }
 
-.mainFeatures{
+.mainFeatures {
     max-height: 300px;
     overflow-y: auto;
-    padding-bottom: 10px;
-    border-bottom: 1px solid black;
+    margin-bottom: 10px;
 }
 
-.quantityText{
+.quantityText {
     color: $azulPrincipal;
     font-weight: bold;
 }
 
-.quantity{
-    font-size: 1.5rem;
-    text-align: center;
-    border-style: none;    
+.text-decoration-line-through {
+    text-decoration: line-through;
+    color: #bf452e !important;
 }
 
-.unitPrice{
+.quantity {
+    font-size: 1.5rem;
+    text-align: center;
+    border-style: none;
+    background-color: transparent;
+    margin: 0 5px;
+}
+
+.unitPrice {
     padding-top: 8px;
 }
-.totalPrice{
+
+.totalPrice {
     flex-wrap: wrap;
     padding: 8px 0;
 }
 
 //Buttons
-.xButton{
+.xButton {
     position: absolute;
     font-size: 35px;
     z-index: 2;
@@ -101,7 +196,10 @@ input[type=number]::-webkit-outer-spin-button
     background-color: transparent;
     transition: 300ms;
 }
-.btnAddCart, .btnQuantity, .modalBtnLogin{
+
+.btnAddCart,
+.btnQuantity,
+.modalBtnLogin {
     background-color: $amarilloPrincipal;
     color: $azulPrincipal;
     border-radius: 10px;
@@ -109,62 +207,76 @@ input[type=number]::-webkit-outer-spin-button
     font-weight: bold;
     height: 50px;
 }
-.btnQuantity{
+
+.btnQuantity {
     background-color: $azulPrincipal;
     color: white;
     height: auto;
 }
-.btnAddCart, .modalBtnLogin{
+
+.btnAddCart,
+.modalBtnLogin {
     border-radius: 12px;
     width: 100%;
 }
-.modalBtnLogin.boton{
+
+.modalBtnLogin.boton {
     max-width: none;
     background-color: #0cc042;
     letter-spacing: normal;
 }
-.btnAddCart.boton{
+
+.btnAddCart.boton {
     max-width: none;
     color: $azulPrincipal;
     letter-spacing: normal;
+    width: 250px;
+    margin: 0px auto;
 }
-.btnQuantity:active{
+
+.btnQuantity:active {
     background-color: $amarilloPrincipal;
     color: $azulPrincipal;
 }
 
-.btnAddCart:disabled{
+.btnAddCart:disabled {
     opacity: 0.5;
 }
 
-@media (max-width: 700px){
+@media (max-width: 700px) {
     #productoLabel {
         margin-left: 20px;
     }
-    h1{
+
+    h1 {
         font-size: 1rem !important;
     }
-    .xButton{
+
+    .xButton {
         font-size: 25px;
     }
-    .mainFeatures{
+
+    .mainFeatures {
         display: flex;
         max-height: 167px;
         border-bottom: none;
     }
-    .modal-content.productBox{
+
+    .modal-content.productBox {
         padding: 25px !important;
     }
-    .totalPrice{
+
+    .totalPrice {
         padding: 0;
     }
 }
 
-.nextMCompras{
+.nextMCompras {
     left: 100%;
 }
 
-.nextMCompras, .prev {
+.nextMCompras,
+.prev {
     font-size: 1.875rem;
     position: absolute;
     top: 50%;

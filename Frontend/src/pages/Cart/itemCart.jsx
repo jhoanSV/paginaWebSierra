@@ -75,6 +75,7 @@ export const ItemCart = ({id, onDelete, updtC, Data}) => {
                 <i className="bi bi-trash3"></i>
             </div>
             <div className='itemCartImgContainer'>
+                <div className='smolText' style={{color: '#747474', textAlign: 'center'}}>{Data.Cod}</div>
                 <div className={`imgProducto itemCartImg C${(Data.Categoria).toLowerCase()}`}>
                     <picture>
                         <source
@@ -91,14 +92,19 @@ export const ItemCart = ({id, onDelete, updtC, Data}) => {
                 </div>
             </div>
             <div className='detailsItem'>
-                <div className='subTit' style={{lineHeight: '1.1'}}><strong>{Data.Descripcion}</strong>
-                    <div className='smolText' style={{color: '#747474'}}>{Data.Cod}</div>
-                </div>
-                <div style={{marginTop: '10px'}}>
-                    V.U: $ {Formater(Data.PVenta)} 
-                    {
-                        parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ?'$' + Formater((Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)): ''
-                    }
+                <div className='subTit' style={{lineHeight: '1.1'}}><strong>{Data.Descripcion}</strong></div>
+                <div style={{marginTop: '10px', display:'flex'}}>
+                    <div style={{alignContent:'center'}}>
+                        V.U:
+                    </div>
+                    <div>
+                        <div className={parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? 'text-decoration-line-through': ''}>$ {Formater(Data.PVenta)} </div>
+                        {
+                            <div>
+                                {parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ?'$' + Formater((Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)): ''}
+                            </div>
+                        }
+                    </div>
                 </div>
                 <div className="quantityBox">
                     <button className="btnQuantity" onClick={() => {
@@ -143,9 +149,18 @@ export const ItemCart = ({id, onDelete, updtC, Data}) => {
                 <div className="totalPrice inItemCart mainBlue">
                     <div className='subTit fw-bold'>Total:</div>
                     <h1>
-                        <span className='text-black Tit' style={{fontSize: `${fontResize}`}}>
-                            ${Formater(parseInt(cant)*(Data.PVenta))} {parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? '$' + Formater((parseInt(cant)*(Data.PVenta * (1-Data.Porcentaje/100))).toFixed(2)): ''}
-                        </span>
+                        <div className='Tit '
+                            style={
+                                parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? 
+                                {textDecoration: 'line-through', color: '#BF452E', fontSize:'1rem'}: {color: 'black'}
+                            }>
+                            ${Formater(parseInt(cant)*(Data.PVenta))}
+                        </div>
+                        {parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? 
+                            <div className='text-black Tit' style={{fontSize: `${fontResize}`}}>
+                                ${Formater((parseInt(cant)*(Data.PVenta * (1-Data.Porcentaje/100))).toFixed(2))}
+                            </div>: ''
+                        }
                     </h1>
                 </div>
             </div>

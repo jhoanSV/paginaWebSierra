@@ -1,43 +1,40 @@
-import { React, useRef} from "react";
+import { React, useRef } from "react";
 import "./_Page.scss";
 
-export const ThePage=({the_src, width, Npage, CP, onselect}) =>{
+export const ThePage = ({ the_src, width, Npage, CP, onselect }) => {
     const imgRef = useRef(null);
     const positionList = CP.map(item => ({
         ...item,
         RelativeX: item.xPosition / imgRef.current.naturalWidth,
         RelativeY: item.yPosition / imgRef.current.naturalHeight
     }));
-    let src=null
+    let src = null
 
-    if (the_src){
+    if (the_src) {
         src = the_src
     }
 
-    if (!the_src){
+    if (!the_src) {
         //document.querySelector('.page').style.display = 'none'
         //console.log("No se encontró recurso")
     }
 
-    return(
+    return (
         <div className="imgContainer">
             <picture>
                 {positionList.map((item, index) => (
-                    <i
-                        key={index}
-                        className="bi bi-bag-check-fill"
-                        style={{
-                            position: 'absolute',
-                            left: `${item.RelativeX* 100}%`,
-                            top: `${item.RelativeY* 100}%`,
-                            transform: 'translate(0, -50%)',
-                            fontSize: '24px',
-                            zIndex: 3
-                        }}
-                        onClick={()=>{onselect(item.Cod)}}
-                    />
-                    ))
-                }
+                    <div key={index} onClick={() => { onselect(item.Cod) }}>
+                        <img
+                            src={require('../../Assets/gif/shopping-cart.gif')}
+                            className="iconImg"
+                            style={{
+                                left: `${item.RelativeX * 100}%`,
+                                top: `${item.RelativeY * 100}%`,
+                            }}
+                            alt="click me"
+                        />
+                    </div>
+                ))}
                 <source
                     type="image/avif"
                     srcSet={the_src}

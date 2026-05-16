@@ -1,4 +1,4 @@
-import {useState, useRef, React} from 'react';
+import { useState, useRef, React } from 'react';
 import "./_Login.scss";
 import { validateUser } from '../../api';
 import secureLocalStorage from 'react-secure-storage';
@@ -7,21 +7,21 @@ export const Login = () => {
     const [userEmail, setUserEmail] = useState('')
     const [password, setPassword] = useState('')
     const passInput = useRef()
-    
-    const LogIn = async () =>{
+
+    const LogIn = async () => {
         /* validate if the userEmail and the ppassword matches with the information in the database*/
         const userData = await validateUser({
             "EmailUser": userEmail,
             "Password": password
         })
         try {
-            if (userData.hasOwnProperty('Cod')){
+            if (userData.hasOwnProperty('Cod')) {
                 //autorizado
                 //console.log('authorized')
-                secureLocalStorage.setItem('userData', JSON.stringify(userData))                
+                secureLocalStorage.setItem('userData', JSON.stringify(userData))
                 window.location.href = '/#/productos'
                 window.location.reload()
-            } else if (userData.hasOwnProperty('error')){
+            } else if (userData.hasOwnProperty('error')) {
                 // no autorizado
                 //console.log('unauthorized')
                 alert('unauthorized')
@@ -31,17 +31,17 @@ export const Login = () => {
         }
     }
 
-    const togglePass = (e) =>{
+    const togglePass = (e) => {
         e.target.classList.toggle('bi-eye-fill');
-        e.target.classList.toggle('bi-eye-slash-fill');        
-        
+        e.target.classList.toggle('bi-eye-slash-fill');
+
         if (passInput.current.type === "password") {
             passInput.current.type = "text";
         } else {
             passInput.current.type = "password";
         }
     }
-    
+
     return (
         <section className='py-5 d-flex justify-content-center'>
             <div className="grayContainer">
@@ -52,16 +52,16 @@ export const Login = () => {
                 <div>
                     <div className="userEmail">
                         <i className="bi bi-envelope-fill"></i>
-                        <input type="text" className="theInput fw-bold" placeholder="Correo" 
+                        <input type="email" className="theInput fw-bold" placeholder="Correo"
                             aria-label="Campo para correo"
                             onChange={(e) => {
                                 e.target.classList.remove('fw-bold')
                                 setUserEmail(e.target.value)
                             }}
                             onBlur={(e) => {
-                                if ((e.target.value) === ''){
+                                if ((e.target.value) === '') {
                                     e.target.classList.add('fw-bold')
-                                }                                
+                                }
                             }}
                         />
                     </div>
@@ -74,36 +74,36 @@ export const Login = () => {
                                 setPassword(e.target.value)
                             }}
                             onBlur={(e) => {
-                                if ((e.target.value) === ''){
+                                if ((e.target.value) === '') {
                                     e.target.classList.add('fw-bold')
                                 }
                             }}
-                        />                        
-                        <i className="bi bi-eye-fill" style={{right: '0'}} onClick={(e)=>{
+                        />
+                        <i className="bi bi-eye-fill" style={{ right: '0' }} onClick={(e) => {
                             togglePass(e);
                         }}>
                         </i>
-                        
+
                     </div>
                     <div className="mt-2">
                         <span className='fw-bold logText' role='button'
-                            onClick={()=>alert('Si has olvidado la contraseña comunicate con administracion con el icono de whatsapp ubicado en la parte inferior derecha')}>
+                            onClick={() => alert('Si has olvidado la contraseña comunicate con administracion con el icono de whatsapp ubicado en la parte inferior derecha')}>
                             Olvid&eacute; mi contraseña
                         </span>
-                    </div>                        
+                    </div>
                 </div>
                 <div className="w-100">
-                    <button className='btnStlGen btnLogin' onClick={()=>{
+                    <button className='btnStlGen btnLogin' onClick={() => {
                         LogIn()
                     }}>
                         Iniciar sesion
                     </button>
-                    <button className='btnStlGen btnLogin btnRegistro' onClick={()=>{
+                    <button className='btnStlGen btnLogin btnRegistro' onClick={() => {
                         if (window.confirm('Se abrirá WhatsApp para que nuestro equipo te guíe en el proceso de registro') === true) {
                             window.open(
                                 'https://wa.me/573134237538?text=Cordial%20saludo%2C%20tengo%20interes%20en%20registrarme%20en%20sivar.com.co',
                                 '_blank' // <- This is what makes it open in a new window.
-                              );
+                            );
                         }
                     }}>
                         Registrarme

@@ -300,17 +300,20 @@ export function Products() {
                     <ModalProductMob
                         onHide={closeModal}
                         Data = {selecteditem}
-                        />
-                        :
-                        <></>
+                        indexGroup = {actualNumber}
+                        Move = {moveToGroup}
+                        Group = {filterGroup}
+                    />
                   :
+                    <></>
+              :
                   (Show1 && selecteditem) ?
                   <ModalProductDesk
                       onHide={closeModal}
                       Data = {selecteditem}
                       indexGroup = {actualNumber}
-                      lengthGroup = {filterGroup.length}
                       Move = {moveToGroup}
+                      Group = {filterGroup}
                   />
                   :
                   <></>

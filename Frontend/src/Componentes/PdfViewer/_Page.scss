@@ -1,5 +1,13 @@
-.imgContainer{
-    box-shadow: 0px 0px 10px black;
+.iconImg {
+  position: absolute;
+  transform: translate(0px, -50%);
+  width: 8%;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.imgContainer {
+  box-shadow: 0px 0px 10px black;
 }
 
 .imgContainer {

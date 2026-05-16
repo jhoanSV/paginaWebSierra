@@ -55,7 +55,7 @@ export default function App() {
       <a href="https://api.whatsapp.com/send/?phone=573134237538&text&type=phone_number&app_absent=0" className="btn-wapp" 
         target="_blank" rel="noreferrer">
           <picture>
-            <source
+            {/*<source
               type="image/avif"
               srcSet={require("./Assets/avif/WappIcon.avif")}
             />
@@ -64,7 +64,10 @@ export default function App() {
                 width="479px"
                 height="480"
                 alt="iconWapp"
-                />
+                />*/}
+              <div>
+                WhappIconjsjs
+              </div>
           </picture>
       </a>
 
