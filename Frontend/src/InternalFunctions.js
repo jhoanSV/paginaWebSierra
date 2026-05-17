@@ -69,7 +69,7 @@ export const SpeakButton = ({ text }) => {
  * priceValue(1250.5); // Retorna "1.250,5"
  */
 export function priceValue(valor) {
-  return new Intl.NumberFormat('es-CO').format(valor);
+  return new Intl.NumberFormat('es-CO', {maximumFractionDigits: 2}).format(valor);
 }
 
 export const getFontSize = (str, base, lim) => {

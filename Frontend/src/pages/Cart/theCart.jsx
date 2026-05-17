@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './_theCart.scss'
 import { ItemCart } from './itemCart';
-import { Formater } from '../../globals/otherFunctions';
+//import { Formater } from '../../globals/otherFunctions';
 import { EnviarVenta } from '../../api';
 import secureLocalStorage from 'react-secure-storage';
 import { useTheContext } from '../../TheProvider';
@@ -10,6 +10,7 @@ import html2canvas from 'html2canvas';
 import progress from '../../Assets/gif/progress.gif';
 import CargadoConExito from '../../Assets/gif/CargadoConExito.png'
 import { ModarSuccessfulSubmission } from '../../Componentes/Modals/ModarSuccessfulSubmission'
+import { priceValue } from '../../InternalFunctions';
 
 export const TheCart = () => {
       
@@ -244,14 +245,14 @@ export const TheCart = () => {
                         }                
                     </div>
                     <div className='dtlCart grayContainer'>
-                        <div>SubTotal: $ {Formater(subTotalC)}</div>
+                        <div>SubTotal: $ {priceValue(subTotalC)}</div>
                         {totalDisc !== 0 &&
-                            <div>Descuentos: $ {Formater(totalDisc)}</div>
+                            <div>Descuentos: <span style={{color:'#f37225'}}>$ {priceValue(totalDisc)}</span></div>
                         }
-                        <div>Envio: $ {Formater(sendCost)}</div>
+                        <div>Envio: $ {priceValue(sendCost)}</div>
                         <div className='subTit' style={{marginTop: '10px'}}>
                             Total: {' '}
-                            <span className='cBlack'>${Formater(subTotalC-totalDisc+sendCost)}</span>
+                            <span className='cBlack'>${priceValue(subTotalC-totalDisc+sendCost)}</span>
                         </div>
                         <button className="btnSendOrd boton" data-bs-toggle="modal" data-bs-target={`#sendOrderMod`} disabled={btnDis}>
                             Enviar pedido
@@ -305,14 +306,14 @@ export const TheCart = () => {
                                                     placeholder='Recomendaciones/Sugerencias'                                            
                                                 />
                                             </div>
-                                            <div>SubTotal: $ {Formater(subTotalC)}</div>
+                                            <div>SubTotal: $ {priceValue(subTotalC)}</div>
                                             {totalDisc !== 0 &&
-                                                <div>Descuentos: $ {Formater(totalDisc)}</div>
+                                                <div>Descuentos: <span style={{color:'#f37225'}}>$ {priceValue(totalDisc)}</span></div>
                                             }
-                                            <div>Env&iacute;o: $ {Formater(sendCost)}</div>
+                                            <div>Env&iacute;o: $ {priceValue(sendCost)}</div>
                                             <div className='Tit fw-bold' style={{color: '#193773'}}>
                                                 Total: {' '}
-                                                <span className='cBlack'>${Formater(subTotalC-totalDisc+sendCost)}</span>
+                                                <span className='cBlack'>${priceValue(subTotalC-totalDisc+sendCost)}</span>
                                             </div>
                                             <div style={{display: 'flex', marginTop: '15px'}}>
                                                 <button type="button" className="btnModal btnBack"
@@ -347,7 +348,7 @@ export const TheCart = () => {
                                                 <div style={{fontWeight: 'bold'}}>Empresa:</div>
                                                 <div>{JSON.parse(secureLocalStorage.getItem('userData'))['Ferreteria']}</div>
                                                 <div style={{fontWeight: 'bold'}}>Valor:</div>
-                                                <div>$ {Formater(theTotal-totalDisc+sendCost)}</div>
+                                                <div>$ {priceValue(theTotal-totalDisc+sendCost)}</div>
                                                 <div style={{fontWeight: 'bold'}}>Fecha de entrega estimada:</div>
                                                 {route?
                                                 <div>Fecha por confirmar</div>

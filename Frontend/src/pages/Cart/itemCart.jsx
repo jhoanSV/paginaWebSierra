@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './_itemCart.scss';
-import { Formater } from '../../globals/otherFunctions';
+//import { Formater } from '../../globals/otherFunctions';
 import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png';
-import speak from '../../InternalFunctions';
+import speak, { priceValue } from '../../InternalFunctions';
 
 export const ItemCart = ({id, onDelete, updtC, Data}) => {
     
@@ -98,10 +98,10 @@ export const ItemCart = ({id, onDelete, updtC, Data}) => {
                         V.U:
                     </div>
                     <div>
-                        <div className={parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? 'text-decoration-line-through': ''}>$ {Formater(Data.PVenta)} </div>
+                        <div style={parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? {textDecoration: 'line-through', color: '#BF452E'}: {}}>$ {priceValue(Data.PVenta)} </div>
                         {
                             <div>
-                                {parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ?'$' + Formater((Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)): ''}
+                                {parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ?'$' + priceValue((Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)): ''}
                             </div>
                         }
                     </div>
@@ -154,11 +154,11 @@ export const ItemCart = ({id, onDelete, updtC, Data}) => {
                                 parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? 
                                 {textDecoration: 'line-through', color: '#BF452E', fontSize:'1rem'}: {color: 'black'}
                             }>
-                            ${Formater(parseInt(cant)*(Data.PVenta))}
+                            ${priceValue(parseInt(cant)*(Data.PVenta))}
                         </div>
                         {parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? 
                             <div className='text-black Tit' style={{fontSize: `${fontResize}`}}>
-                                ${Formater((parseInt(cant)*(Data.PVenta * (1-Data.Porcentaje/100))).toFixed(2))}
+                                ${priceValue((parseInt(cant)*(Data.PVenta * (1-Data.Porcentaje/100))).toFixed(2))}
                             </div>: ''
                         }
                     </h1>
