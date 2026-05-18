@@ -248,7 +248,26 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
                                         : quantity
                                     }
                                 </span>
-                                <div className='row'>
+                                <div className='row' style={{flexDirection:'column'}}>
+                                    <div className="unitPrice genFont">
+                                        <span className='mainBlue fw-bold'>
+                                            Und:&nbsp;
+                                        </span>
+                                        {logged && (
+                                            <>
+                                                <span className={Data.Porcentaje !== 0 && cant > Data.APartirDe ? "text-decoration-line-through" : "fw-bold"}
+                                                    style={{ color: Data.Porcentaje !== 0 && cant > Data.APartirDe ? '#BF452E' : '' }}
+                                                >
+                                                    ${priceValue(Data.PVenta)}
+                                                </span>
+                                                {Data.Porcentaje !== 0 && cant > Data.APartirDe &&
+                                                    <span className='fw-bold'>
+                                                        {'  '}${priceValue((Data.PVenta * (1 - Data.Porcentaje / 100)).toFixed(2))}
+                                                    </span>
+                                                }
+                                            </>
+                                        )}
+                                    </div>
                                     <div className='col' style={{ display: 'flex' }}>
                                         <div className="subTit fw-bold mainBlue" style={{ marginRight: '10px', marginTop: '5px' }}>
                                             Cantidad
@@ -299,25 +318,6 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
                                                 +
                                             </button>
                                         </div>
-                                    </div>
-                                    <div className="unitPrice genFont">
-                                        <span className='mainBlue fw-bold'>
-                                            Und:&nbsp;
-                                        </span>
-                                        {logged && (
-                                            <>
-                                                <span className={Data.Porcentaje !== 0 && cant > Data.APartirDe ? "text-decoration-line-through" : "fw-bold"}
-                                                    style={{ color: Data.Porcentaje !== 0 && cant > Data.APartirDe ? '#BF452E' : '' }}
-                                                >
-                                                    ${priceValue(Data.PVenta)}
-                                                </span>
-                                                {Data.Porcentaje !== 0 && cant > Data.APartirDe &&
-                                                    <span className='fw-bold'>
-                                                        {'  '}${priceValue((Data.PVenta * (1 - Data.Porcentaje / 100)).toFixed(2))}
-                                                    </span>
-                                                }
-                                            </>
-                                        )}
                                     </div>
                                     {Data.Porcentaje !== 0 &&
                                         <div style={{ color: '#f37225' }}>
