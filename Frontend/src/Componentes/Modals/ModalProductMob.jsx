@@ -195,14 +195,14 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
                                 onClick={() => { if (indexGroup < Group.length - 1) Move(1) }}
                             />
                             <div className={`imgModal C${Data.Categoria}`}>
+                                {Data.Agotado ?
+                                    <div className='soldOutMod'>
+                                        AGOTADO
+                                    </div>
+                                    :
+                                    <></>
+                                }
                                 <picture style={{ position: 'relative', overflow: 'hidden' }}>
-                                    {Data.Agotado ?
-                                        <div className='soldOutMod'>
-                                            AGOTADO
-                                        </div>
-                                        :
-                                        <></>
-                                    }
                                     <source
                                         type="image/avif"
                                         srcSet={Data.img}

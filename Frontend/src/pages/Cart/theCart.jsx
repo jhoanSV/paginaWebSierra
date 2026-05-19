@@ -19,7 +19,7 @@ export const TheCart = () => {
     const theTextArea = useRef();
 
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
-    const [sendCost, setSendCost] = useState(5000);
+    const [sendCost, setSendCost] = useState(8000);
     const [subTotalC, setSubTotalC] = useState(0);
     const [totalDisc, setTotalDisc] = useState(0);
     const [currentDiv, setCurrentDiv] = useState(0);
@@ -188,7 +188,7 @@ export const TheCart = () => {
         setSubTotalC(totalCost);
         setTotalDisc(totalDiscounts)
         if (totalCost > 300000 || route) setSendCost(0)
-        else setSendCost(5000)
+        else setSendCost(8000)
 
         if(totalCost===0){setBtnDis(true)}
         else{setBtnDis(false)}
@@ -245,11 +245,11 @@ export const TheCart = () => {
                         }                
                     </div>
                     <div className='dtlCart grayContainer'>
-                        <div>SubTotal: $ {priceValue(subTotalC)}</div>
+                        <div><strong>SubTotal:</strong> $ {priceValue(subTotalC)}</div>
                         {totalDisc !== 0 &&
-                            <div>Descuentos: <span style={{color:'#f37225'}}>$ {priceValue(totalDisc)}</span></div>
+                            <div><strong>Descuentos:</strong> <span style={{color:'#f37225'}}>$ {priceValue(totalDisc)}</span></div>
                         }
-                        <div>Envio: $ {priceValue(sendCost)}</div>
+                        <div><strong>Envio: </strong>$ {priceValue(sendCost)}</div>
                         <div className='subTit' style={{marginTop: '10px'}}>
                             Total: {' '}
                             <span className='cBlack'>${priceValue(subTotalC-totalDisc+sendCost)}</span>
@@ -306,11 +306,11 @@ export const TheCart = () => {
                                                     placeholder='Recomendaciones/Sugerencias'                                            
                                                 />
                                             </div>
-                                            <div>SubTotal: $ {priceValue(subTotalC)}</div>
+                                            <div><strong>SubTotal:</strong> $ {priceValue(subTotalC)}</div>
                                             {totalDisc !== 0 &&
-                                                <div>Descuentos: <span style={{color:'#f37225'}}>$ {priceValue(totalDisc)}</span></div>
+                                                <div><strong>Descuentos:</strong> <span style={{color:'#f37225'}}>$ {priceValue(totalDisc)}</span></div>
                                             }
-                                            <div>Env&iacute;o: $ {priceValue(sendCost)}</div>
+                                            <div><strong>Env&iacute;o:</strong> $ {priceValue(sendCost)}</div>
                                             <div className='Tit fw-bold' style={{color: '#193773'}}>
                                                 Total: {' '}
                                                 <span className='cBlack'>${priceValue(subTotalC-totalDisc+sendCost)}</span>

@@ -74,10 +74,8 @@ export function priceValue(valor) {
 
 export const getFontSize = (str, base, lim) => {
   const baseSize = base;
-  console.log(str, str.length, lim);
 
   if (str.length > lim) {
-    console.log('a');
     
     const newSize = baseSize - (str.length - 20) * 0.01;
     return `${Math.max(newSize, 1.2)}rem`;

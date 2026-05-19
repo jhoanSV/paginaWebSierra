@@ -86,7 +86,7 @@ export const Login = () => {
 
                     </div>
                     <div className="mt-2">
-                        <span className='fw-bold logText' role='button'
+                        <span className='fw-bold logText' role='button' tabIndex={0}
                             onClick={() => alert('Si has olvidado la contraseña comunicate con administracion con el icono de whatsapp ubicado en la parte inferior derecha')}>
                             Olvid&eacute; mi contraseña
                         </span>

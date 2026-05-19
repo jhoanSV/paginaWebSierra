@@ -95,9 +95,9 @@ export function Products() {
           "Porcentaje": selectedItem.Porcentaje,
           "APartirDe": selectedItem.APartirDe
       }
-      const filterGroups = proData.filter(item => item.Grupo === selectedItem.Grupo && item.Cod !== selectedItem.Cod && item.Grupo !== 0);
-      setFilterGroup([selectedItem, ...filterGroups])
-      setActualNumber(0)
+      const filterGroups = proData.filter(item => item.Grupo === selectedItem.Grupo && item.Grupo !== 0).sort((a, b) => a.Cod.localeCompare(b.Cod));
+      setFilterGroup([...filterGroups])
+      setActualNumber(filterGroups.findIndex(item => item.Cod === selectedItem.Cod))
       setSelecteditem(producto);
       setShow1(true);
       document.body.style.overflow = 'hidden';

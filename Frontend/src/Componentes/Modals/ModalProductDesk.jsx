@@ -151,12 +151,12 @@ export const ModalProductDesk = ({ onHide, Data, Move, indexGroup, Group }) => {
             >
                 <i
                     className="_pagArrow desk bi bi-arrow-left-circle-fill"
-                    style={{ fontSize: '24px', display: indexGroup > 0 ? 'block' : 'none' }}
+                    style={{ fontSize: '32px', display: indexGroup > 0 ? 'block' : 'none' }}
                     onClick={() => { Move(-1) }}
                 />
                 <i
                     className="_pagArrow desk bi bi-arrow-right-circle-fill"
-                    style={{ fontSize: '24px', display: indexGroup < Group.length - 1 ? 'block' : 'none' }}
+                    style={{ fontSize: '32px', display: indexGroup < Group.length - 1 ? 'block' : 'none' }}
                     onClick={() => { if (indexGroup < Group.length - 1) Move(1) }}
                 />
                 <div className='theModal-body' style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>

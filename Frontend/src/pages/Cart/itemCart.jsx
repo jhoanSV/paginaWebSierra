@@ -95,7 +95,7 @@ export const ItemCart = ({id, onDelete, updtC, Data}) => {
                 <div className='subTit' style={{lineHeight: '1.1'}}><strong>{Data.Descripcion}</strong></div>
                 <div style={{marginTop: '10px', display:'flex'}}>
                     <div style={{alignContent:'center'}}>
-                        V.U:
+                        <strong>V.U:</strong>
                     </div>
                     <div>
                         <div style={parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? {textDecoration: 'line-through', color: '#BF452E'}: {}}>$ {priceValue(Data.PVenta)} </div>
