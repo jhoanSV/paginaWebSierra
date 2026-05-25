@@ -1,13 +1,9 @@
-import { React, useRef } from "react";
+import { React, useState } from "react";
 import "./_Page.scss";
 
-export const ThePage = ({ the_src, width, Npage, CP, onselect }) => {
-    const imgRef = useRef(null);
-    const positionList = CP.map(item => ({
-        ...item,
-        RelativeX: item.xPosition / imgRef.current.naturalWidth,
-        RelativeY: item.yPosition / imgRef.current.naturalHeight
-    }));
+export const ThePage = ({ the_src, Npage, CP, onselect }) => {
+    const [positionList, setPositionList] = useState([])
+    
     let src = null
 
     if (the_src) {
@@ -19,9 +15,18 @@ export const ThePage = ({ the_src, width, Npage, CP, onselect }) => {
         //console.log("No se encontró recurso")
     }
 
+    const handleImgLoaded = () => {
+        const thePositionList = CP.map(item => ({
+            ...item,
+            RelativeX: item.xPosition / document.getElementById(`thePageImg-${Npage}`).naturalWidth,
+            RelativeY: item.yPosition / document.getElementById(`thePageImg-${Npage}`).naturalHeight
+        }));
+        setPositionList(thePositionList)
+    }
+
     return (
         <div className="imgContainer">
-            <picture>
+            <picture style={{height:'100%', width: '100%'}}>
                 {positionList.map((item, index) => (
                     <div key={index} onClick={() => { onselect(item.Cod) }}>
                         <img
@@ -40,11 +45,13 @@ export const ThePage = ({ the_src, width, Npage, CP, onselect }) => {
                     srcSet={the_src}
                 />
                 <img
-                    ref={imgRef}
+                    className="laImg"
+                    id={`thePageImg-${Npage}`}
+                    onLoad={handleImgLoaded}
+                    //ref={imgRef}
                     src={src}
-                    alt="categoria"
+                    alt={`Pagina: ${Npage}`}
                     decoding="async"
-                    width={width}
                 />
             </picture>
         </div>

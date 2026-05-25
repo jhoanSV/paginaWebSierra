@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './_CategMenuMobile.scss';
 import categs from "../../Assets/jpg/categorias/categorias.json";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheContext } from '../../TheProvider';
 //import theIcon from '../../Assets/png/Logos/logoCatalogo.png'
 
@@ -16,6 +16,7 @@ export function CategMenuMobile() {
     isActive.current = false
     const targetRef = useRef(null);
     const navigate = useNavigate()
+    const location = useLocation()
 
     const showCats = () =>{
         const items = document.querySelectorAll('.items-menu-mob')
@@ -34,8 +35,12 @@ export function CategMenuMobile() {
     }
 
     const handleCatSel = (a) =>{//* handle category selection
-        window.scrollTo(0,0)
-        navigate('/productos')
+        if(location.pathname.includes('catalogo')){
+            navigate(`/catalogo/${a==='' ? 'inicio' : a}`)
+        }else{
+            window.scrollTo(0,0)
+            navigate('/productos')
+        }
         if(a===''){
             setImgSel('logoCatalogo')
         }else{
@@ -107,12 +112,12 @@ export function CategMenuMobile() {
 
     return (
         <>
-            <div className='mnp-container'>
+            <div className={`mnp-container ${location.pathname.includes('/catalogo') ? '_mbCatMenuCat2' : ''}`}>
                 <label className='mnp' ref={mnpRef}>
                     Mira nuestros productos
                 </label>
             </div>
-            <div ref={targetRef} className='menu-mob' onClick={showCats}>
+            <div ref={targetRef} className={`menu-mob ${location.pathname.includes('/catalogo') ? '_mbCatMenuCat' : ''}`} onClick={showCats}>
 
 
                 <Items/>

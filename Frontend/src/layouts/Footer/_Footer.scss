@@ -53,6 +53,12 @@
     color: $amarilloPrincipal;
 }
 
+@media screen and (max-width: 502px) {
+    ._mbFCat{
+        display: none;
+    }
+}
+
 @include mobile{
 
     .piePagina .row.g-0{

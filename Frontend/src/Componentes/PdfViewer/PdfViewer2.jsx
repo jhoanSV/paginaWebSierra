@@ -8,12 +8,14 @@ import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png';
 import { ModalProductDesk, ModalProductMob } from "../../Componentes/Modals";
 //import "../../Assets/jpg/imgsCatalogo/Pagina 1.jpg"
 
-export function PdfViewer2({ route, prop, dir, show = 'yes', numPage = 0 }) {
+export function PdfViewer2({ route, /*prop, */dir, /*show = 'yes',*/ numPage = 1 }) {
     const [filterGroup, setFilterGroup] = useState([]);
     const [actualNumber, setActualNumber] = useState(0);
     const [selecteditem, setSelecteditem] = useState({});
+    const [loading1, setLoading1] = useState(true);
     const [show1, setShow1] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
+    //const [isMobile, setIsMobile] = useState(false);
+    const [headerSize, setHeaderSize] = useState(["120px","502px"]);
     //const numRandom = Math.floor(Math.random() * 91) + 1
     //numero de pagina que lleva, hacer condicional para que
     //const jsjs = "Tornilleria"
@@ -29,23 +31,7 @@ export function PdfViewer2({ route, prop, dir, show = 'yes', numPage = 0 }) {
         claseDir = 'dirColumn'
     }
 
-    /*if (jsjs==="ebanisteria"){
-        numPag = 112
-    }else if(jsjs==="estudiantil"){
-        numPag = 9
-    }else if(jsjs==="gas"){
-        numPag = 22
-    }else if(jsjs==="griferia"){
-        numPag = 34
-    }else if(jsjs==="electricos"){
-        numPag = 66
-    }else if(jsjs==="tornilleria"||jsjs==="inicio"){
-        numPag = 0
-    }*/
-
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-    const [visorWidth, setVisorWidth] = useState(Math.floor(window.innerWidth * 82 / 100));
-    const [pageWidth, setPageWidth] = useState()
+    //const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [observer, setElements, entries] = useObserver({
         treshhold: 0.25,
         rootMargin: 1,
@@ -53,7 +39,7 @@ export function PdfViewer2({ route, prop, dir, show = 'yes', numPage = 0 }) {
     });
     const ListCp = useRef([])
     const [pages, setPages] = useState([
-        //this stupid shit needs to be more standard
+        //( ._.)
         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current}.avif`, Npage: numPag.current },
         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 1}.avif`, Npage: numPag.current + 1 },
         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 2}.avif`, Npage: numPag.current + 2 },
@@ -62,29 +48,28 @@ export function PdfViewer2({ route, prop, dir, show = 'yes', numPage = 0 }) {
         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 5}.avif`, Npage: numPag.current + 5 },
     ]);
 
-    useEffect(() => {
-        numPag.current = numPage
-        const cacheBuster = Date.now();
-        setPages([
-            //this stupid shit needs to be more standard
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current}.avif?${cacheBuster}`, Npage: numPag.current },
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 1}.avif?${cacheBuster}`, Npage: numPag.current + 1 },
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 2}.avif?${cacheBuster}`, Npage: numPag.current + 2 },
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 3}.avif?${cacheBuster}`, Npage: numPag.current + 3 },
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 4}.avif?${cacheBuster}`, Npage: numPag.current + 4 },
-            { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 5}.avif?${cacheBuster}`, Npage: numPag.current + 5 },
-        ])
+    // useEffect(() => {
+    //     console.log('render2.1');
+        
+    //     numPag.current = numPage
+    //     const cacheBuster = Date.now();
+    //     setPages([
+    //         //( ._.)
+    //         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current}.avif?${cacheBuster}`, Npage: numPag.current },
+    //         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 1}.avif?${cacheBuster}`, Npage: numPag.current + 1 },
+    //         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 2}.avif?${cacheBuster}`, Npage: numPag.current + 2 },
+    //         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 3}.avif?${cacheBuster}`, Npage: numPag.current + 3 },
+    //         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 4}.avif?${cacheBuster}`, Npage: numPag.current + 4 },
+    //         { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 5}.avif?${cacheBuster}`, Npage: numPag.current + 5 },
+    //     ])
 
-    }, [numPage])
+    // }, [numPage])
 
     const getGetCP = async () => {
         const CPList = await GetCoordinatesPagesApi()
+        setLoading1(false);
         ListCp.current = CPList
     }
-
-    useEffect(() => {
-        getGetCP()
-    }, [])
 
     const last_node = () => {
         //*Obtiene el ultimo nodo o ultima pagina de catalogo
@@ -93,130 +78,12 @@ export function PdfViewer2({ route, prop, dir, show = 'yes', numPage = 0 }) {
         setElements([pagesContainer.childNodes[nodes - 1]])
     }
 
-    const prevF = async () => {
-        const thePdfViewer = document.querySelector(".thePdfViewer");
-        const anchoVisor = (thePdfViewer.getBoundingClientRect().width)
-        const minP = getMinPageNumber()
-        const cacheBuster = Date.now();
-        //try to search the image before to put in the list
-        const page1 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${minP - 1}.avif?${cacheBuster}`;
-        const page2 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${minP - 2}.avif?${cacheBuster}`;
-
-        const [validPage1, validPage2] = await Promise.all([
-            fetch(page1, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page1 : null),
-            fetch(page2, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page2 : null)
-        ]);
-
-        if (validPage1 || validPage2) {
-            await new Promise(resolve => {
-                setPages(prevPages => {
-                    const newPages = [
-                        ...(validPage2 ? [{ src: validPage2 }] : []),
-                        ...(validPage1 ? [{ src: validPage1 }] : []),
-                        ...prevPages
-                    ];
-                    resolve(); // Asegura que la actualización del estado termine antes de seguir
-                    return newPages;
-                });
-            });
-        }
-        //End of search
-
-        thePdfViewer.scrollTo({
-            left: (thePdfViewer.scrollLeft - anchoVisor),
-            behavior: 'smooth'
-        });
-    }
-
-    /*const nextF = () => {
-        const thePdfViewer = document.querySelector(".thePdfViewer");
-        const anchoVisor = thePdfViewer.getBoundingClientRect().width        
-        
-        return new Promise((resolve) => {
-            thePdfViewer.scrollTo({
-                left: (thePdfViewer.scrollLeft + anchoVisor),
-                behavior: 'smooth'
-            });
-
-            setTimeout(resolve, 500);
-        });
-    }*/
-
-    const nextF = () => {
-        const thePdfViewer = document.querySelector(".thePdfViewer");
-        const anchoVisor = thePdfViewer.getBoundingClientRect().width;
-
-        return new Promise((resolve) => {
-            const handleScrollEnd = () => {
-                thePdfViewer.removeEventListener('scrollend', handleScrollEnd);
-                resolve();
-            };
-
-            thePdfViewer.addEventListener('scrollend', handleScrollEnd);
-
-            thePdfViewer.scrollTo({
-                left: thePdfViewer.scrollLeft + anchoVisor,
-                behavior: 'smooth'
-            });
-        });
-    };
-
-    // En tu componente:
-    let isScrolling = false;
-
-    const handleNextClick = () => {
-        if (isScrolling) return; // Evita múltiples clics mientras se desplaza
-
-        isScrolling = true;
-        nextF().then(() => {
-            isScrolling = false;
-        });
-    };
-
     const resize_ob = new ResizeObserver(function () {
-        setScreenWidth(window.innerWidth);
+        const header = document.getElementById('theHeader');
+        if (!header) return;
+
+        setHeaderSize([`${header.clientHeight}px`, `${header.clientWidth}px`]);
     });
-
-    useEffect(() => {
-        const thePdfViewer = document.querySelector(".thePdfViewer");
-        resize_ob.observe(document.querySelector(".catalogo"));
-
-        /*setTimeout(() => {
-            if(window.innerWidth > 502){//*Pc
-                setPageWidth((visorWidth / 2)-6)
-                if(numPag!==0){
-                    thePdfViewer.scrollTo({
-                        left: visorWidth,
-                        behavior: "auto"
-                    });
-                }
-            }else{//*Celular
-                setPageWidth((visorWidth - 6))
-                if(numPag===0){
-                    thePdfViewer.scrollTo({
-                        left: visorWidth,
-                        behavior: "auto"
-                    });
-                }else if(numPag===52 || numPag===6){
-                    thePdfViewer.scrollTo({
-                        left: visorWidth*3,
-                        behavior: "auto"
-                    });
-                }else{
-                    thePdfViewer.scrollTo({
-                        left: visorWidth*2,
-                        behavior: "auto"
-                    });
-                }
-            }
-        }, 0);
-
-        /*return () => {
-            document.getElementById('idPagesContainer').removeEventListener('wheel')
-        };*/
-
-        // eslint-disable-next-line
-    }, [])
 
     const getMinPageNumber = () => {
         if (pages.length === 0) return null;
@@ -245,20 +112,11 @@ export function PdfViewer2({ route, prop, dir, show = 'yes', numPage = 0 }) {
     };
 
     useEffect(() => {
-        setVisorWidth(Math.floor(window.innerWidth * 82 / 100))
-    }, [screenWidth])
-    useEffect(() => {
-        if (window.innerWidth > 502) {
-            setPageWidth((visorWidth / 2) - 6)
-        } else {
-            setPageWidth((visorWidth - 6))
+        if(!loading1){
+            last_node()
         }
-    }, [visorWidth])
-
-    useEffect(() => {
-        last_node()
         // eslint-disable-next-line
-    }, [setElements])
+    }, [setElements, loading1])
 
     useEffect(() => {
         const maxP = getMaxPageNumber()
@@ -278,8 +136,8 @@ export function PdfViewer2({ route, prop, dir, show = 'yes', numPage = 0 }) {
                     ])
                         .then(([validPage1, validPage2]) => {
                             const newPages = [...pages];
-                            if (validPage1) newPages.push({ src: validPage1 });
-                            if (validPage2) newPages.push({ src: validPage2 });
+                            if (validPage1) newPages.push({ src: validPage1, Npage: maxP + 1 });
+                            if (validPage2) newPages.push({ src: validPage2, Npage: maxP + 2 });
 
                             if (newPages.length > pages.length) {
                                 setPages(newPages);
@@ -296,15 +154,11 @@ export function PdfViewer2({ route, prop, dir, show = 'yes', numPage = 0 }) {
         // eslint-disable-next-line
     }, [entries, observer]);
 
-    //ToDo: Select the product and open the modal to buy it
     useEffect(() => {
-        if (screenWidth < 700) {
-            setIsMobile(true)
-        } else {
-            setIsMobile(false)
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [screenWidth]);
+        resize_ob.observe(document.getElementById("theHeader"));
+
+        getGetCP()
+    }, [])
 
     const closeModal = () => {
         setShow1(false);
@@ -427,33 +281,29 @@ export function PdfViewer2({ route, prop, dir, show = 'yes', numPage = 0 }) {
 
     return (
         <>
-            <div className="thePdfViewer" style={{ width: visorWidth }}>
-                <div id='idPagesContainer' className={"pagesContainer " + claseDir} /*style={{ minWidth: "80000px"}}*/>
-                    {
+            <div className="thePdfViewer" style={{ '--header-height': `${headerSize[0]}`, '--header-width': `${headerSize[1]}`,}}>
+                <div id='idPagesContainer' className={"pagesContainer " + claseDir}>
+                    {!loading1 ? 
                         pages.map((page, index) => {
                             const Cp = ListCp.current.filter(item => item.Pag === page.Npage)
                             return (
-                                <div className="page" key={index}>
+                                <div className="page" key={page.Npage}>
                                     <ThePage
-                                        key={index}
+                                        key={page.Npage}
                                         the_src={page.src}
-                                        width={pageWidth}
                                         Npage={page.Npage}
                                         CP={Cp}
                                         onselect={selectProductModal}
                                     />
                                 </div>
                             )
-                        })
+                        }) : 
+                        <>
+                            ...cargando
+                        </>
                     }
                 </div>
-                <button onClick={prevF} className={'prev ' + show}>
-                    <i className="bi bi-arrow-left-circle-fill"></i>
-                </button>
-                <button onClick={handleNextClick} className={'next ' + show}>
-                    <i className="bi bi-arrow-right-circle-fill"></i>
-                </button>
-                {isMobile ?
+                {headerSize[1] < 700 ?
                     (show1 && selecteditem) ?
                         <ModalProductMob
                             onHide={closeModal}

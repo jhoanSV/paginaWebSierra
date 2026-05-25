@@ -53,7 +53,7 @@ export function Header() {
     }
 
     window.onscroll = function() {
-        if (location.pathname==='/productos') {            
+        if (location.pathname==='/productos') {
             if (window.scrollY > (cabecera.current.offsetHeight)) {
                 cabecera.current.classList.add('sticky')
                 document.querySelector('.products').style.paddingTop = (cabecera.current.offsetHeight * 2) + 'px'
@@ -95,7 +95,7 @@ export function Header() {
 
     return(
         <header style={{position: 'relative'}}>
-            <div className="container-fluid px-4 g-0 cabecera" ref={cabecera}>
+            <div id='theHeader' className="container-fluid px-4 g-0 cabecera" ref={cabecera}>
                 <picture>
                     <source
                         type="image/avif"

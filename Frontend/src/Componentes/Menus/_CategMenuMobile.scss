@@ -57,7 +57,7 @@
 
 .mnp-container{
     position: fixed;
-    z-index: 1;
+    z-index: 4;
     bottom: 6.6rem;
     right: 4.7rem;
     width: 191.92px;
@@ -93,6 +93,27 @@
     }
     100%{
         transform: translate(192px, 0px);
+    }
+}
+
+@media screen and (max-width: 502px) {
+    ._mbCatMenuCat{
+        width: 2rem;
+        bottom: 0.5rem;
+    }
+    ._mbCatMenuCat2{
+        bottom: 0.5rem;
+    }
+    .logoMenuCat {
+        width: 25.34px;
+    }
+    .items-menu-mob {
+        width: 85%;
+        padding: 0px;
+        margin: -25px 2.2px;
+    }
+    .contain1 {
+        padding: 0px;
     }
 }
 

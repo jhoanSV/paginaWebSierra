@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import "./_Footer.scss";
 
 export function Footer(){
+    const location = useLocation()
     return(
-        <footer>
+        <footer className={location.pathname.includes('/catalogo') ? '_mbFCat' : ''}>
             
             <div className="container-fluid px-4 py-4 piePagina">                
                 <div className="row g-0">
