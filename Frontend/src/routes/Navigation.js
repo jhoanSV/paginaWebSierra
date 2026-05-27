@@ -34,7 +34,9 @@ export function Navigation() {
               <Route path='nosotros' element={ <About /> } />
               <Route path='politicas_privacidad' element={ <Privacy /> } />
               <Route path='contactanos' element={ <ContactUs /> } />
-              <Route path='catalogo/:cat' element={ <Catalogo /> } />
+              <Route path='catalogo/:cat' element={ <Catalogo /> }>
+                <Route path=':pag' element={<Catalogo />} />
+              </Route>
               <Route path=':espId' element={ <SpecialCat/> }/>
               <Route path='inicio_sesion' element={ <Login/> }/>
               <Route path='perfil' element={ <TheProfile/> }/>

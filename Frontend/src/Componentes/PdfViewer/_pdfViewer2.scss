@@ -3,8 +3,17 @@
 .thePdfViewer{    
     //width: 64.375rem;
     max-width: calc(var(--header-width) - 10px);
-    padding: 1rem 0rem;
+    padding: 0rem;
     display: flex;
+    &.pdfVDesk{
+        aspect-ratio: 24 / 18;
+        animation: expandirCatalogo linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0px var(--header-height);
+    }
+    // &.pdfVMobile{
+
+    // }
 }
 .thePdfViewer::-webkit-scrollbar {
     display: none;
@@ -53,18 +62,27 @@
 .page{
     border-width: 3px;
     border-style: groove;
-    flex: 0 0 50%;
-    margin: auto 0;
-    scroll-snap-align: none;
-    scroll-snap-stop: normal;
     &:nth-child(odd) {
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
     }
     & .laImg{
         width: 100%;
         height: 100%;
         object-fit: contain;
+    }
+}
+._mobile{
+    .page{
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+    }
+}
+._desk{
+    .page{
+        flex: 0 0 50%;
+        margin: auto 0;
     }
 }
 
@@ -98,14 +116,11 @@
   }
 }
 
-@media screen and (min-width: 502px) {
-    .thePdfViewer {
-        aspect-ratio: 24 / 18;
-        animation: expandirCatalogo linear both;
-        animation-timeline: scroll(root);
-        animation-range: 0px var(--header-height);
-    }
-}
+// @media screen and (min-width: 502px) {
+//     .thePdfViewer {
+        
+//     }
+// }
 
 // @media screen and (max-width: 375px) {
 //     .thePdfViewer{
@@ -113,10 +128,8 @@
 //     }
 // }
 
-@media screen and (max-width: 502px) {
-    .page{
-        flex: 0 0 100%;
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
-    }
-}
+// @media screen and (max-width: 502px) {
+//     .page{
+        
+//     }
+// }

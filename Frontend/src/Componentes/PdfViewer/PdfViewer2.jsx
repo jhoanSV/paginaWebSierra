@@ -9,12 +9,13 @@ import { ModalProductDesk, ModalProductMob } from "../../Componentes/Modals";
 //import "../../Assets/jpg/imgsCatalogo/Pagina 1.jpg"
 
 export function PdfViewer2({ route, /*prop, */dir, /*show = 'yes',*/ numPage = 1 }) {
+    const cacheBuster = Date.now();
     const [filterGroup, setFilterGroup] = useState([]);
     const [actualNumber, setActualNumber] = useState(0);
     const [selecteditem, setSelecteditem] = useState({});
     const [loading1, setLoading1] = useState(true);
     const [show1, setShow1] = useState(false);
-    //const [isMobile, setIsMobile] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < window.innerHeight);
     const [headerSize, setHeaderSize] = useState(["120px","502px"]);
     //const numRandom = Math.floor(Math.random() * 91) + 1
     //numero de pagina que lleva, hacer condicional para que
@@ -23,6 +24,7 @@ export function PdfViewer2({ route, /*prop, */dir, /*show = 'yes',*/ numPage = 1
     //const jsjs = prop
     //console.log(numPage)
     //let numPag = numPage
+    const loading2 = useRef(false);
     const numPag = useRef()
     numPag.current = numPage
     if (dir === 0) {
@@ -32,20 +34,25 @@ export function PdfViewer2({ route, /*prop, */dir, /*show = 'yes',*/ numPage = 1
     }
 
     //const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-    const [observer, setElements, entries] = useObserver({
-        treshhold: 0.25,
-        rootMargin: 1,
-        root: null
-    });
+    // const [observer, setElements, entries] = useObserver({
+    //     treshhold: 0.25,
+    //     rootMargin: 1,
+    //     root: null
+    // });
+    // const [observer2, setElements2, entries2] = useObserver({
+    //     treshhold: 1,
+    //     rootMargin: '0px -25% 0px -25%',
+    //     root: null
+    // });
     const ListCp = useRef([])
     const [pages, setPages] = useState([
         //( ._.)
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current}.avif`, Npage: numPag.current },
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 1}.avif`, Npage: numPag.current + 1 },
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 2}.avif`, Npage: numPag.current + 2 },
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 3}.avif`, Npage: numPag.current + 3 },
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 4}.avif`, Npage: numPag.current + 4 },
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 5}.avif`, Npage: numPag.current + 5 },
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current}.avif?${cacheBuster}`, Npage: numPag.current },
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 1}.avif?${cacheBuster}`, Npage: numPag.current + 1 },
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 2}.avif?${cacheBuster}`, Npage: numPag.current + 2 },
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 3}.avif?${cacheBuster}`, Npage: numPag.current + 3 },
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 4}.avif?${cacheBuster}`, Npage: numPag.current + 4 },
+        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPag.current + 5}.avif?${cacheBuster}`, Npage: numPag.current + 5 },
     ]);
 
     // useEffect(() => {
@@ -71,16 +78,23 @@ export function PdfViewer2({ route, /*prop, */dir, /*show = 'yes',*/ numPage = 1
         ListCp.current = CPList
     }
 
-    const last_node = () => {
-        //*Obtiene el ultimo nodo o ultima pagina de catalogo
-        const pagesContainer = document.querySelector(".pagesContainer");
-        const nodes = pagesContainer.childNodes.length
-        setElements([pagesContainer.childNodes[nodes - 1]])
-    }
+    // const last_node = () => {
+    //     //*Obtiene el ultimo nodo o ultima pagina de catalogo
+    //     const pagesContainer = document.querySelector(".pagesContainer");
+    //     const nodes = pagesContainer.childNodes.length
+    //     setElements([pagesContainer.childNodes[nodes - 1]])
+    // }
+
+    // const first_node = () => {
+    //     const pagesContainer = document.querySelector(".pagesContainer");
+    //     setElements2([pagesContainer.childNodes[0]])
+    // }
 
     const resize_ob = new ResizeObserver(function () {
         const header = document.getElementById('theHeader');
         if (!header) return;
+        
+        setIsMobile(window.innerWidth < window.innerHeight);
 
         setHeaderSize([`${header.clientHeight}px`, `${header.clientWidth}px`]);
     });
@@ -111,49 +125,123 @@ export function PdfViewer2({ route, /*prop, */dir, /*show = 'yes',*/ numPage = 1
         return Math.max(...pageNumbers);
     };
 
-    useEffect(() => {
-        if(!loading1){
-            last_node()
-        }
-        // eslint-disable-next-line
-    }, [setElements, loading1])
+    // useEffect(() => {
+    //     if(!loading1){
+    //         last_node()
+    //         first_node()
+    //     }
+    //     // eslint-disable-next-line
+    // }, [setElements, setElements2, loading1])
 
-    useEffect(() => {
+    const handleTryAdd = (entry, opt) =>{
         const maxP = getMaxPageNumber()
-        //console.log("Pagina maxima: ", maxP)
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                observer.unobserve(entry.target)
-                const cacheBuster = Date.now();
-                try {
-                    //try to search the image before to put in the list
-                    const page1 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${maxP + 1}.avif?${cacheBuster}`;
-                    const page2 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${maxP + 2}.avif?${cacheBuster}`;
-
-                    Promise.all([
-                        fetch(page1, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page1 : null),
-                        fetch(page2, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page2 : null)
-                    ])
-                        .then(([validPage1, validPage2]) => {
-                            const newPages = [...pages];
-                            if (validPage1) newPages.push({ src: validPage1, Npage: maxP + 1 });
-                            if (validPage2) newPages.push({ src: validPage2, Npage: maxP + 2 });
-
-                            if (newPages.length > pages.length) {
-                                setPages(newPages);
-                                last_node()
-                            }
-                        })
-                        .catch(error => console.error("Error verificando las imágenes:", error));
-                    //End of search
-                } catch (error) {
-                    console.log("no hay más imágenes jsjs")
-                }
+        const minP = getMinPageNumber()
+        console.log("Pagina maxima: ", maxP)
+        console.log("pagina minima: ", minP)
+        console.log(loading2.current);
+        
+        if (!loading2.current) return;
+        loading2.current = true;
+        // if(opt===1){observer.unobserve(entry.target)}
+        // if(opt===2){observer2.unobserve(entry.target)}
+        
+        const cacheBuster = Date.now();
+        try {
+            //try to search the image before to put in the list
+            let page1, page2
+            if(opt===1){
+                page1 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${maxP + 1}.avif?${cacheBuster}`;
+                page2 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${maxP + 2}.avif?${cacheBuster}`;
             }
-        });
-        // eslint-disable-next-line
-    }, [entries, observer]);
+            if(opt===2){
+                page1 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${minP - 1}.avif?${cacheBuster}`;
+                page2 = `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${minP - 2}.avif?${cacheBuster}`;
+            }
 
+            Promise.all([
+                fetch(page1, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page1 : null),
+                fetch(page2, { method: "HEAD", cache: "no-store" }).then(res => res.ok ? page2 : null),
+            ])
+                .then(([validPage1, validPage2]) => {
+                    const newPages = [...pages];
+                    if (validPage1&&opt===1) newPages.push({ src: validPage1, Npage: maxP + 1 });
+                    if (validPage2&&opt===1) newPages.push({ src: validPage2, Npage: maxP + 2 });
+                    if (validPage1&&opt===2) newPages.unshift({ src: validPage1, Npage: minP - 1 });
+                    if (validPage2&&opt===2) newPages.unshift({ src: validPage2, Npage: minP - 2 });
+
+                    if (newPages.length > pages.length) {
+                        console.log(newPages);
+                        setPages(newPages);
+                        // if(opt===1){last_node()}
+                        // if(opt===2){first_node()}
+                    }
+                })
+                .catch(error => console.error("Error verificando las imágenes:", error));
+            //End of search
+        } catch (error) {
+            console.log("no hay más imágenes jsjs")
+        }
+        setTimeout(() => {
+            loading2.current = false;
+        }, 100);
+        // if (entry.isIntersecting) {
+        // }
+    }
+    // useEffect(() => {
+    //     entries.forEach(entry => {handleTryAdd(entry, 1)});
+    //     // eslint-disable-next-line
+    // }, [entries]);
+    
+    // useEffect(() => {
+    //     entries2.forEach(entry => {handleTryAdd(entry, 2)});
+    //     // eslint-disable-next-line
+    // }, [entries2]);
+
+    useEffect(() => {
+
+        if(loading1)return
+        const pagesContainer = document.querySelector(".pagesContainer");
+        const nodes = pagesContainer.childNodes.length
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !loading2.current) {
+                    
+                    const nPage = Number(entry.target.getAttribute('data-page'));
+                    console.log(nPage);
+                    
+                    const fstP = pages[0].Npage;
+                    console.log(fstP);
+                    const lstPage = pages[pages.length - 1].Npage;
+
+                    if (nPage === fstP || nPage === 0) {
+                        console.log("¡Es la PRIMERA página! Cargando hacia atrás...");
+                        loading2.current = true;
+                        observer.unobserve(entry.target);
+                        
+                        handleTryAdd(entry, 2); // Tu función para hacer unshift
+                    }else if (nPage === lstPage) {
+                        console.log("¡Es la ÚLTIMA página! Cargando hacia adelante...");
+                        loading2.current = true;
+                        observer.unobserve(entry.target);
+                        
+                        handleTryAdd(entry, 1); // Tu función para hacer push
+                    }
+                }
+            });
+        }, { threshold: 0.25 });
+
+        if (nodes > 0) {
+            console.log(pagesContainer.childNodes[nodes - 1]);
+            observer.observe(pagesContainer.childNodes[nodes - 1]);
+            observer.observe(pagesContainer.childNodes[1]);
+        }
+        return () => {
+            observer.disconnect();
+        };
+        
+    }, [loading1, pages])
+    
     useEffect(() => {
         resize_ob.observe(document.getElementById("theHeader"));
 
@@ -174,7 +262,7 @@ export function PdfViewer2({ route, /*prop, */dir, /*show = 'yes',*/ numPage = 1
         if (index !== -1) { // Verificar si se encontró el producto
 
             const selectedItem = proData[index]; // Obtener el producto
-            const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif`;
+            const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif?${cacheBuster}`;
 
             let img = imageUrl
             // Verificar el ETag del servidor
@@ -215,11 +303,10 @@ export function PdfViewer2({ route, /*prop, */dir, /*show = 'yes',*/ numPage = 1
                 "Porcentaje": selectedItem.Porcentaje,
                 "APartirDe": selectedItem.APartirDe
             }
-            const filterGroups = proData.filter(item => item.Grupo === selectedItem.Grupo && item.Cod !== selectedItem.Cod && item.Grupo !== 0);
-            setFilterGroup([selectedItem, ...filterGroups]);
-            console.log("filterGroups: ", [selectedItem, ...filterGroups]);
+            const filterGroups = proData.filter(item => item.Grupo === selectedItem.Grupo && item.Grupo !== 0).sort((a, b) => a.Cod.localeCompare(b.Cod));
+            setFilterGroup([...filterGroups])
 
-            setActualNumber(0)
+            setActualNumber(filterGroups.findIndex(item => item.Cod === selectedItem.Cod))
             setSelecteditem(producto);
             setShow1(true);
             document.body.style.overflow = 'hidden';
@@ -281,13 +368,19 @@ export function PdfViewer2({ route, /*prop, */dir, /*show = 'yes',*/ numPage = 1
 
     return (
         <>
-            <div className="thePdfViewer" style={{ '--header-height': `${headerSize[0]}`, '--header-width': `${headerSize[1]}`,}}>
-                <div id='idPagesContainer' className={"pagesContainer " + claseDir}>
+            <div className={isMobile? "thePdfViewer pdfVMobile" : "thePdfViewer pdfVDesk"} style={{ '--header-height': `${headerSize[0]}`, '--header-width': `${headerSize[1]}`,}}>
+                <div id='idPagesContainer' className={ isMobile? 
+                        `pagesContainer ${claseDir} _mobile` :
+                         `pagesContainer ${claseDir} _desk`
+                        }>
+                        {pages[0]?.Npage > 1 && (
+                            <div className="centinela-atras" data-page={0} style={{ minWidth: '10px', height: '100%' }} />
+                        )}
                     {!loading1 ? 
                         pages.map((page, index) => {
                             const Cp = ListCp.current.filter(item => item.Pag === page.Npage)
                             return (
-                                <div className="page" key={page.Npage}>
+                                <div className="page" key={page.Npage} data-page={page.Npage}>
                                     <ThePage
                                         key={page.Npage}
                                         the_src={page.src}
@@ -303,7 +396,7 @@ export function PdfViewer2({ route, /*prop, */dir, /*show = 'yes',*/ numPage = 1
                         </>
                     }
                 </div>
-                {headerSize[1] < 700 ?
+                {parseInt(headerSize[1],10) < 502 ?
                     (show1 && selecteditem) ?
                         <ModalProductMob
                             onHide={closeModal}

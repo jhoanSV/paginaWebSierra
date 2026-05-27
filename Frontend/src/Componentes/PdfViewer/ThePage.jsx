@@ -27,6 +27,9 @@ export const ThePage = ({ the_src, Npage, CP, onselect }) => {
     return (
         <div className="imgContainer">
             <picture style={{height:'100%', width: '100%'}}>
+                <span style={{position:'absolute', top:'0.5%', left:'1%', fontSize:'0.6rem'}}>
+                    Pag-{Npage}
+                </span>
                 {positionList.map((item, index) => (
                     <div key={index} onClick={() => { onselect(item.Cod) }}>
                         <img

@@ -1,12 +1,13 @@
 import { React, useEffect, useState } from "react";
 import { PdfViewer2 } from "../../Componentes/PdfViewer/PdfViewer2";
 import "./_Catalogo.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CategoryPages } from "../../api"
 
 export function Catalogo() {
 
     const nCategoria = useParams();
+    const navigate = useNavigate();
     
     let Categoria = nCategoria.cat;
 
@@ -24,6 +25,7 @@ export function Catalogo() {
                 const numberCategory = categoria ? categoria.Pag : 1;
                 
                 setNumPage(Number(numberCategory));
+                navigate(`/catalogo/${Categoria}/${Number(numberCategory)}`);
             
             } catch (error) {
                 console.error("Error cargando categorías:", error);
