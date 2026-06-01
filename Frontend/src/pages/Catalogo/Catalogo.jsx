@@ -6,10 +6,8 @@ import { CategoryPages } from "../../api"
 
 export function Catalogo() {
 
-    const nCategoria = useParams();
+    const {cat} = useParams();
     const navigate = useNavigate();
-    
-    let Categoria = nCategoria.cat;
 
     const [loading, setLoading] = useState(true);
     const [ numPage, setNumPage ] = useState(1);
@@ -19,13 +17,17 @@ export function Catalogo() {
             try {
                 setLoading(true);
                 
-                const list = await CategoryPages(Categoria);
+                const list = await CategoryPages(cat);
                 
-                const categoria = list.find(cat => cat.Categoria.toUpperCase() === Categoria.toUpperCase());
+                const categoria = list.find(cate => cate.Categoria.toUpperCase() === cat.toUpperCase());
                 const numberCategory = categoria ? categoria.Pag : 1;
                 
-                setNumPage(Number(numberCategory));
-                navigate(`/catalogo/${Categoria}/${Number(numberCategory)}`);
+                const nc = window.innerWidth < window.innerHeight ? 
+                    Number(numberCategory) 
+                    : Number(numberCategory) % 2 !== 0 ?  Number(numberCategory) : Number(numberCategory) + 1
+                
+                setNumPage(nc);
+                navigate(`/catalogo/${cat}/${nc}`);
             
             } catch (error) {
                 console.error("Error cargando categorías:", error);
@@ -40,7 +42,7 @@ export function Catalogo() {
 
         //setRefreshKey(prevKey => prevKey + 1);
         // eslint-disable-next-line
-    },[Categoria])
+    },[cat])
 
     if(loading){
         return <div>Loading...</div>
@@ -49,18 +51,15 @@ export function Catalogo() {
     return (
         <>
             <div className="catalogo">
-
-                <div>
-                    <div className="pdfViewer">
-                        <PdfViewer2
-                            route={'imgsCatalogo/CatalogoAVIF/'}
-                            //prop={Categoria}
-                            dir={0}
-                            numPage = {numPage}
-                        />
-                    </div>
+                <div className="pdfViewer">
+                    <PdfViewer2
+                        route={'imgsCatalogo/CatalogoAVIF/'}
+                        //prop={Categoria}
+                        //dir={0}
+                        numPage = {numPage}
+                        cacheB = {'20260528'} //modif catalogue date 
+                    />
                 </div>
-                
             </div>
 
         </>
