@@ -166,9 +166,9 @@ export function Products() {
     let aliasData = alias//The whole table "alias".
     //If categSelect is different to empty then select only the productos with that category
     try {
-        if (categSelect !== '') {
-            proData = pro.filter(item => item.Categoria.toLowerCase() === categSelect.toLowerCase());
-            aliasData = alias.filter(item => item.Categoria.toLowerCase() === categSelect.toLowerCase());
+        if (categSelect.Categoria !== '') {
+            proData = pro.filter(item => item.Categoria.toLowerCase() === categSelect.Categoria.toLowerCase());
+            aliasData = alias.filter(item => item.Categoria.toLowerCase() === categSelect.Categoria.toLowerCase());
         }
         if (text === '' || text < 2) {
           setLista(proData);

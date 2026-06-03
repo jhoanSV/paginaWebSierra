@@ -136,7 +136,7 @@ export function Header() {
                                     Productos
                                 </Link>
                             </li>
-                            <li><Link to="/catalogo/inicio" type="button" className="dropdown-item">Catalogo</Link></li>
+                            <li><Link to="/catalogo/1" type="button" className="dropdown-item">Catalogo</Link></li>
                             <li><Link to="/nosotros" type="button" className="dropdown-item">Quienes somos</Link></li>
                             <li><Link to="/contactanos" type="button" className="dropdown-item">Contactanos</Link></li>
                         </ul>
@@ -231,7 +231,7 @@ export function Header() {
                                 <Link to="productos" type="button" className="btn btn-navBar btn-lg">
                                     Productos
                                 </Link>
-                                <Link to="/catalogo/inicio" type="button" className="btn btn-navBar btn-lg">Catalogo</Link>
+                                <Link to="/catalogo/1" type="button" className="btn btn-navBar btn-lg">Catalogo</Link>
                                 <Link to="/nosotros" type="button" className="btn btn-navBar btn-lg">Quienes somos</Link>
                                 <Link to="/contactanos" type="button" className="btn btn-navBar btn-lg">Contactanos</Link>
                             </div>

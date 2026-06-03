@@ -6,7 +6,7 @@ import "./_Footer.scss";
 export function Footer(){
     const location = useLocation()
     return(
-        <footer className={location.pathname.includes('/catalogo') ? '_mbFCat' : ''}>
+        <footer className={(location.pathname.includes('/catalogo')&&(window.innerWidth < window.innerHeight)) ? '_mbFCat' : ''}>
             
             <div className="container-fluid px-4 py-4 piePagina">                
                 <div className="row g-0">

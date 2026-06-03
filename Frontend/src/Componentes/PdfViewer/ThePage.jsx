@@ -43,6 +43,17 @@ export const ThePage = ({ the_src, Npage, CP, onselect }) => {
                         />
                     </div>
                 ))}
+                <a href="https://api.whatsapp.com/send/?phone=573134237538&text&type=phone_number&app_absent=0" target="_blank" rel="noreferrer">
+                    <img
+                        src={require('../../Assets/gif/clickHereWapp.gif')}
+                        className="clickMeWapp"
+                        style={{
+                            left: `12%`,
+                            bottom: `0%`
+                        }}
+                        alt="click me for "
+                    />
+                </a>
                 <source
                     type="image/avif"
                     srcSet={the_src}

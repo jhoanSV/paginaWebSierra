@@ -12,7 +12,7 @@ export const TheProvider = ({ children }) => {
     const [logged, setLogged] = useState(false);
     const [queryEnded, setQueryEnded] = useState();
     const [sBText, setSBText] = useState('');
-    const [categSelect, setCategSelect] = useState('');
+    const [categSelect, setCategSelect] = useState({Categoria: '', Pag: 1});
     const [nItemsCart, setNItemsCart] = useState(0);
   
     return (

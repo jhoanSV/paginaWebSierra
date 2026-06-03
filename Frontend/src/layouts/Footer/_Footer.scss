@@ -53,11 +53,12 @@
     color: $amarilloPrincipal;
 }
 
-@media screen and (max-width: 502px) {
-    ._mbFCat{
-        display: none;
-    }
+._mbFCat{
+    display: none;
 }
+
+// @media screen and (max-width: 502px) {
+// }
 
 @include mobile{
 

@@ -19,10 +19,8 @@
     opacity: 1;
 }
 
-@media screen and (max-width: 502px) {
-    ._mbWappIconCat{
-        display: none;
-    }
+._mbWappIconCat{
+    display: none;
 }
 
 @include tablet{
