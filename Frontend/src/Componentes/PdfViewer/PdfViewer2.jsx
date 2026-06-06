@@ -2,15 +2,13 @@ import { React, useState, useEffect, useRef } from "react";
 import "./_pdfViewer2.scss";
 import { ThePage } from "../PdfViewer/ThePage"
 import { GetCoordinatesPagesApi } from "../../api";
-import { useObserver } from "../UseObs";
 import secureLocalStorage from "react-secure-storage";
 import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png';
 import { ModalProductDesk, ModalProductMob } from "../../Componentes/Modals";
-import { right } from "@popperjs/core";
 import { useNavigate, useParams } from "react-router-dom";
 //import "../../Assets/jpg/imgsCatalogo/Pagina 1.jpg"
 
-export function PdfViewer2({ route, /*dir, show = 'yes',*/ numPage = 1, cacheB }) {
+export function PdfViewer2({ route, /*dir, show = 'yes',*/ numPage = 1, cacheB, lastP }) {
     const cacheBuster = Date.now()
     
     const [filterGroup, setFilterGroup] = useState([]);
@@ -21,14 +19,11 @@ export function PdfViewer2({ route, /*dir, show = 'yes',*/ numPage = 1, cacheB }
     const [isMobile, setIsMobile] = useState(window.innerWidth < window.innerHeight);
     const [headerSize, setHeaderSize] = useState(["120px","502px"]);
     const [anchoHoja, setAnchoHoja] = useState(362.2);
-    let claseDir = null
-    const loading2 = useRef(false);
+    //let claseDir = null
     const containerRef = useRef(null);
     const timeoutUrlRef = useRef(null);
 
-    const seMovioPorClick = useRef(false);
     const currentPage = useRef(null);
-    const ejecutadoAlInicio = useRef(true);
     
     const navigate = useNavigate();
     const { pag } = useParams();
@@ -74,18 +69,29 @@ export function PdfViewer2({ route, /*dir, show = 'yes',*/ numPage = 1, cacheB }
         const visor = document.querySelector('.thePdfViewer');
         if (visor) {
             visor.classList.add('is-navigating');
-            console.log(pag);
 
-            const posicionDestino = (pag - 1) * anchoHoja;
-            console.log(posicionDestino);
+            let destPage
+
+            if(window.innerWidth < window.innerHeight){
+                destPage = pag
+            }else{
+                if(pag%2!==0){
+                    destPage = pag
+                }else{
+                    destPage = pag - 1
+                }
+            }
             
-            currentPage.current = pag;
+            const posicionDestino = (destPage - 1) * anchoHoja;
+            
+            currentPage.current = destPage;
             visor.scrollLeft = posicionDestino;
 
             setTimeout(() => {
                 visor.classList.remove('is-navigating');
             }, 50);
         }
+        // eslint-disable-next-line
     }, [pag]);
     
     useEffect(() => {
@@ -93,6 +99,7 @@ export function PdfViewer2({ route, /*dir, show = 'yes',*/ numPage = 1, cacheB }
         resize_ob2.observe(document.querySelector('.thePdfViewer'));
 
         getGetCP()
+        // eslint-disable-next-line
     }, [])
 
     const closeModal = () => {
@@ -259,11 +266,11 @@ export function PdfViewer2({ route, /*dir, show = 'yes',*/ numPage = 1, cacheB }
 
         if (paginaInicio < 1) {
             paginaInicio = 1;
-            paginaFin = Math.min(isMobile ? 6 : 10, TOTAL_PAGINAS);
+            paginaFin = Math.min(isMobile ? 6 : 10, lastP);
         }
-        if (paginaFin > TOTAL_PAGINAS) {
-            paginaFin = TOTAL_PAGINAS;
-            paginaInicio = Math.max(1, TOTAL_PAGINAS - (isMobile ? 5 : 9));
+        if (paginaFin > lastP) {
+            paginaFin = lastP;
+            paginaInicio = Math.max(1, lastP - (isMobile ? 5 : 9));
         }
 
         const nuevasPaginas = [];
@@ -289,8 +296,7 @@ export function PdfViewer2({ route, /*dir, show = 'yes',*/ numPage = 1, cacheB }
         }, 400);
     };
 
-    const TOTAL_PAGINAS = 144;
-    const ANCHO_TOTAL_CONTAINER = TOTAL_PAGINAS * anchoHoja;
+    const ANCHO_TOTAL_CONTAINER = lastP * anchoHoja;
 
     return (
         <>
@@ -315,27 +321,27 @@ export function PdfViewer2({ route, /*dir, show = 'yes',*/ numPage = 1, cacheB }
 
                             return (
                                 <div 
-                                className="page" 
-                                key={page.Npage} 
-                                data-page={page.Npage}
-                                style={{
-                                    position: 'absolute',
-                                    width: `${anchoHoja}px`,
-                                    left: `${posicionLeft}px`,
-                                    //height: '100%',
-                                    scrollSnapAlign: (window.innerWidth < window.innerHeight) ? 
-                                        'start'
-                                    :
-                                        page.Npage % 2 !== 0 ? 'start' : 'none'
-                                }}
-                                >
-                                <ThePage
-                                    key={page.Npage}
-                                    the_src={page.src}
-                                    Npage={page.Npage}
-                                    CP={Cp}
-                                    onselect={selectProductModal}
-                                />
+                                    className="page" 
+                                    key={page.Npage} 
+                                    data-page={page.Npage}
+                                    style={{
+                                        position: 'absolute',
+                                        width: `${anchoHoja}px`,
+                                        left: `${posicionLeft}px`,
+                                        //height: '100%',
+                                        scrollSnapAlign: (window.innerWidth < window.innerHeight) ? 
+                                            'start'
+                                        :
+                                            page.Npage % 2 !== 0 ? 'start' : 'none'
+                                    }}
+                                    >
+                                    <ThePage
+                                        key={page.Npage}
+                                        the_src={page.src}
+                                        Npage={page.Npage}
+                                        CP={Cp}
+                                        onselect={selectProductModal}
+                                    />
                                 </div>
                             );
                         })
