@@ -1,12 +1,14 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { PdfViewer2 } from "../../Componentes/PdfViewer/PdfViewer2";
 import "./_Catalogo.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CategoryPages } from "../../api"
 
 export function Catalogo() {
 
     const { pag } = useParams();
+
+    const navigate = useNavigate();
 
     const [theLastPage, setTheLastPage] = useState();
 
@@ -18,7 +20,15 @@ export function Catalogo() {
 
     findLastPage();
 
-    if(!theLastPage){
+    useEffect(()=>{
+        window.scrollTo(0,0)
+        if(!pag){
+            navigate('/catalogo/1');
+        }
+        // eslint-disable-next-line
+    },[pag])
+
+    if(!theLastPage && !pag){
         return(
             <>
                 Loading...
@@ -27,20 +37,17 @@ export function Catalogo() {
     }
 
     return (
-        <>
-            <section className="catalogo">
-                <div className="pdfViewer">
-                    <PdfViewer2
-                        route={'imgsCatalogo/CatalogoAVIF/'}
-                        //prop={Categoria}
-                        //dir={0}
-                        numPage = {parseInt(pag,10)}
-                        lastP = {theLastPage}
-                        cacheB = {'20260603'} //modif catalogue date
-                    />
-                </div>
-            </section>
-
-        </>
+        <section className="catalogo">
+            <div className="pdfViewer">
+                <PdfViewer2
+                    route={'imgsCatalogo/CatalogoAVIF/'}
+                    //prop={Categoria}
+                    //dir={0}
+                    numPage = {parseInt(pag,10)}
+                    lastP = {theLastPage}
+                    cacheB = {'20260611'} //modif catalogue date
+                />
+            </div>
+        </section>
     );
 }

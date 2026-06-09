@@ -7,7 +7,7 @@ import { Home, Products, About, Privacy, Catalogo, ContactUs, Login,
     Specials,
     SpecialCat
 } from "../pages";
-import { ModalProductDesk, ModalProductMob, ModarSuccessfulSubmission } from '../Componentes/Modals';
+import { ModalProductDesk/*, ModalProductMob*/, ModarSuccessfulSubmission } from '../Componentes/Modals';
 import ReactGA from 'react-ga4'; // Usa react-ga4 en lugar de react-ga
 
 const GA_TRACKING_ID = "G-X11YSX874T"; // Reemplaza con tu ID de medición de GA4
@@ -34,7 +34,9 @@ export function Navigation() {
               <Route path='nosotros' element={ <About /> } />
               <Route path='politicas_privacidad' element={ <Privacy /> } />
               <Route path='contactanos' element={ <ContactUs /> } />
-              <Route path='catalogo/:pag' element={ <Catalogo /> } />
+              <Route path='catalogo' element={ <Catalogo /> }>
+                <Route path=':pag' element={<Catalogo />} />
+              </Route>
               <Route path=':espId' element={ <SpecialCat/> }/>
               <Route path='inicio_sesion' element={ <Login/> }/>
               <Route path='perfil' element={ <TheProfile/> }/>

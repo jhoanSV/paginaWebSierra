@@ -5,14 +5,14 @@ import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png';
 import { Outlet, useNavigate, useLocation, useParams } from "react-router-dom";
 
 export const ListItem=({llave, codigo, descripcion, descripcionComp,
-    unitPrice, category, unitPaq, lista, agotado, ImgName, Show1, setShow1, callProduct})=>{
+    unitPrice, category, unitPaq, agotado, ImgName, setShow1, callProduct})=>{
 
     const [key, setKey] = useState(0);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [isMobile, setIsMobile] = useState();
-    const [imgSrc, setImgSrc] = useState(`https://sivarwebresources.s3.amazonaws.com/AVIF/${ImgName}.avif`)
+    const [imgSrc, setImgSrc] = useState(`https://sivarwebresources.s3.amazonaws.com/AVIF/${ImgName}.avif`);
     //const [Show1, setShow1] = useState(false);
-    const theCaja = useRef()
+    const theCaja = useRef();
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -53,6 +53,11 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         });
     }
 
+    const handleError = () =>{
+        //alert('sin imagen: '+codigo);
+        setImgSrc(imgPlaceHolder);
+    }
+
     useEffect(() => {
         resize_ob.observe(document.querySelector('#box'+llave));
         observeBox();
@@ -65,13 +70,9 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
             setIsMobile(true)
         }else{
             setIsMobile(false)
-        }            
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [screenWidth])    
-
-    const handleError = () =>{
-        setImgSrc(imgPlaceHolder)
-    }
+    }, [screenWidth])
 
     useEffect(() => {
         setKey(prevKey => prevKey + 1);
@@ -82,16 +83,20 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
         // Verificar el ETag del servidor
         fetch(imageUrl, { method: "HEAD", cache: "no-store"})
             .then((response) => {
-            const eTag = response.headers.get("ETag"); // Obtener el ETag
-            if (eTag) {
-                setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
-            } else {
-                setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
-            }
+                if(response.ok){
+                    const eTag = response.headers.get("ETag"); // Obtener el ETag
+                    if (eTag) {
+                        setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+                    } else {
+                        setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+                    }
+                }else{
+                    setImgSrc(imgPlaceHolder);
+                }
             })
             .catch((error) => {
-            console.error("Error verificando el ETag:", error);
-            setImgSrc(imageUrl); // En caso de error, mostrar la imagen igual
+                console.error("Error verificando el ETag:", error);
+                setImgSrc(imageUrl); // En caso de error, mostrar la imagen igual
             });
     }, [codigo]);
 
@@ -114,7 +119,7 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                         />
                         <img
                             src={imgSrc}
-                            onError={()=>{setImgSrc(imgPlaceHolder)}}
+                            onError={()=>{handleError()}}
                             alt="ImagenProducto"
                             decoding="async"
                         />
@@ -128,46 +133,6 @@ export const ListItem=({llave, codigo, descripcion, descripcionComp,
                         {codigo}</div>
                 </div>
             </div>
-            
-            {/*<div className="modal fade" id={`producto${llave}`} tabIndex="-1" aria-labelledby="productoLabel" aria-hidden="true">
-                <div className="modal-dialog resizeModal">
-                    { isMobile ? 
-                        Show1 ? 
-                        <ModalProductMob
-                            key={key}
-                            llave={llave}
-                            img={imgSrc}
-                            descripcion={descripcion}
-                            descripcionComp={descripcionComp}
-                            codigo={codigo}
-                            category={category}
-                            unitPaq={unitPaq}
-                            unitPrice={unitPrice}
-                            agotado={agotado}
-                            lista={lista}
-                            onHide={closeModal}
-                        />:<></>
-                        :
-                        Show1 ?
-                        <ModalProductDesk
-                            key={key}
-                            llave={llave}
-                            img={imgSrc}
-                            descripcion={descripcion}
-                            descripcionComp={descripcionComp}
-                            codigo={codigo}
-                            category={category}
-                            unitPaq={unitPaq}
-                            unitPrice={unitPrice}
-                            agotado={agotado}
-                            lista={lista}
-                            onHide={closeModal}
-                        />
-                        :
-                        <></>
-                    }
-                </div>
-            </div>*/}
         </>        
     );
 }

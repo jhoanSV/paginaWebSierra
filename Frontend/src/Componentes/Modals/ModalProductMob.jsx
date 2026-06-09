@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTheContext } from '../../TheProvider';
 import { useNavigate } from 'react-router-dom';
 import { getFontSize, priceValue/*, speak, SpeakButton */ } from '../../InternalFunctions';
-import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
+//import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, codigo, category,
     unitPaq, unitPrice, lista, agotado,*/ onHide, /*ImgName,*/ Data, Move, indexGroup, Group }) => {
@@ -15,7 +15,7 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
     })
     const [showDesc, setShowDesc] = useState(false)
     const { logged, setNItemsCart } = useTheContext()
-    const [utterance, setUtterance] = useState(null);
+    //const [utterance, setUtterance] = useState(null);
     const navigate = useNavigate()
     //Para controlar la voz
     const [isSpeaking, setIsSpeaking] = useState(false);
@@ -34,6 +34,7 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
             Total: Price * (cant),
             Descuento: (Data.PVenta - Price) * (cant)
         })
+        // eslint-disable-next-line
     }, [Data]);
 
     useEffect(() => {
@@ -80,8 +81,8 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
                     console.error('Ocurrió un error durante la síntesis de voz:', event.error);
                     setIsSpeaking(false);
                 };
-                setUtterance(newUtterance);
-                speechSynthesis.speak(newUtterance);
+                // setUtterance(newUtterance);
+                // speechSynthesis.speak(newUtterance);
             } else {
                 alert("Tu navegador no soporta la API de síntesis de voz.");
             }

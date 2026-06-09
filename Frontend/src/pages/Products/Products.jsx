@@ -62,22 +62,21 @@ export function Products() {
         .then((response) => {
           if (response.ok) {
               const eTag = response.headers.get("ETag"); // Obtener el ETag
-            if (eTag) {
-                setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
-                img = `${imageUrl}?v=${eTag}`
-            } else {
-                setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
-                img = imageUrl
-            }
-
+              if (eTag) {
+                  //setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+                  img = `${imageUrl}?v=${eTag}`
+              } else {
+                  //setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+                  img = imageUrl
+              }
           } else {
             console.error("La imagen no existe o hubo un error:", response.status);
-            setImgSrc(imgPlaceHolder);
+            img = imgPlaceHolder
           }
         })
         .catch((error) => {
           console.error("Error verificando el ETag:", error);
-          setImgSrc("imageUrl"); // En caso de error, mostrar la imagen igual
+          //setImgSrc("imageUrl"); // En caso de error, mostrar la imagen igual
           img = imgPlaceHolder
       });
 
@@ -122,21 +121,21 @@ export function Products() {
         if (response.ok) {
             const eTag = response.headers.get("ETag"); // Obtener el ETag
           if (eTag) {
-              setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+              //setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
               img = `${imageUrl}?v=${eTag}`
           } else {
-              setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+              //setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
               img = imageUrl
           }
 
         } else {
           console.error("La imagen no existe o hubo un error:", response.status);
-          setImgSrc(imgPlaceHolder);
+          img = imgPlaceHolder
         }
       })
       .catch((error) => {
         console.error("Error verificando el ETag:", error);
-        setImgSrc("imageUrl"); // En caso de error, mostrar la imagen igual
+        //setImgSrc("imageUrl"); // En caso de error, mostrar la imagen igual
         img = imgPlaceHolder
     });
 

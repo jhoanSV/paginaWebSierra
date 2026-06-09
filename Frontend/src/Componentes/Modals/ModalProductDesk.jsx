@@ -16,8 +16,8 @@ export const ModalProductDesk = ({ onHide, Data, Move, indexGroup, Group }) => {
     })
     const { logged, setNItemsCart } = useTheContext()
     const navigate = useNavigate()
-    const cacheBuster = Date.now();
-    const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${Data.ImgName}.avif?${cacheBuster}`
+    //const cacheBuster = Date.now();
+    //const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${Data.ImgName}.avif?${cacheBuster}`
     //Para controlar la voz
     //const [ imgSrc, setImgSrc] = useState(img);
     const [isSpeaking, setIsSpeaking] = useState(false);
@@ -41,6 +41,8 @@ export const ModalProductDesk = ({ onHide, Data, Move, indexGroup, Group }) => {
         }
     }, [indexGroup]);
 
+    console.log('heeeeeey',Data.img);
+
     useEffect(() => {
         setCant(0);
     }, []);
@@ -52,6 +54,7 @@ export const ModalProductDesk = ({ onHide, Data, Move, indexGroup, Group }) => {
             Total: Price * (cant),
             Descuento: (Data.PVenta - Price) * (cant)
         })
+        // eslint-disable-next-line
     }, [Data]);
 
     useEffect(() => {
@@ -96,9 +99,9 @@ export const ModalProductDesk = ({ onHide, Data, Move, indexGroup, Group }) => {
         catSource = require(`../../Assets/png/LlaveSierra2.png`)
     }
 
-    function Formater(number) {
-        return new Intl.NumberFormat().format(number);
-    };
+    // function Formater(number) {
+    //     return new Intl.NumberFormat().format(number);
+    // };
 
     if (Data.EsUnidadOpaquete > 1) {
         quantity = 'Paquete de ' + Data.EsUnidadOpaquete + ' unidades'
@@ -132,12 +135,12 @@ export const ModalProductDesk = ({ onHide, Data, Move, indexGroup, Group }) => {
         }
     }
 
-    const handleTotal = (item, value) => {
-        setTotalPrice((prev) => ({
-            ...prev,
-            [item]: value,
-        }));
-    }
+    // const handleTotal = (item, value) => {
+    //     setTotalPrice((prev) => ({
+    //         ...prev,
+    //         [item]: value,
+    //     }));
+    // }
 
     return (
         <div
