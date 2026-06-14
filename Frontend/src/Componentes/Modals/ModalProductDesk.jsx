@@ -7,23 +7,24 @@ import { SpeakButton } from '../../InternalFunctions';
 import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codigo, category,
-    unitPaq, unitPrice, lista, agotado, onHide, ImgName}) => {
-
+    unitPaq, unitPrice, lista, agotado, onHide, ImgName, Data}) => {
+        
+    useEffect(() => {
+        setCant(0);
+        console.log(Data)
+    }, []);
     const [cant, setCant] = useState(0)
-    const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
+    const [totalPrice, setTotalPrice] = useState(Data.PVenta*cant)
     const { logged, setNItemsCart } = useTheContext()
     const navigate = useNavigate()
+    const cacheBuster = Date.now();
+    const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${Data.ImgName}.avif?${cacheBuster}`
     //Para controlar la voz
     //const [ imgSrc, setImgSrc] = useState(img);
     const [isSpeaking, setIsSpeaking] = useState(false);
-    let text= descripcion + "; Descripción: " + descripcionComp + "; No esperes más, adquiérelo ahora."
+    let text= Data.Descripcion + "; Descripción: " + Data.Detalle + "; No esperes más, adquiérelo ahora."
     
     const [selectedVoice, setSelectedVoice] = useState(null);
-    const [imgError, setImgError] = useState(false);
-
-    const handleError = () => {
-        setImgError(true);
-    };
 
     useEffect(() => {
         const loadVoices = () => {
@@ -36,7 +37,6 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
             );
             setSelectedVoice(preferredVoice || voices.find(voice => voice.lang.startsWith("es")));
         };
-        loadVoices();
         speechSynthesis.onvoiceschanged = loadVoices;
     }, []);
 
@@ -57,34 +57,23 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
             alert("Tu navegador no soporta la API de síntesis de voz.");
           }
         }
-      };
+    };
     //fin de para controlar la voz
     let quantity = null
     //let logged = getGlobal('isLogged')
     let catSource
     try {        
-        catSource = require(`../../Assets/avif/Logos/${category}.avif`)
+        catSource = require(`../../Assets/avif/Logos/${Data.Categoria}.avif`)
     } catch (error) {
         catSource = require(`../../Assets/png/LlaveSierra2.png`)
     }
-    /*const productJson ={        
-        "Cod": codigo,
-        "Descripcion": descripcion,
-        "Categoria": category,
-        "PVenta": unitPrice,
-        "EsUnidadOpaquete": unitPaq,
-        "Iva": 19,
-        "Agotado": 0,
-        "Detalle": "",
-        "Score": 2.10383333333          
-    }*/
 
     function Formater(number){
         return new Intl.NumberFormat().format(number);
     };
     
-    if( unitPaq > 1 ){
-        quantity = 'Paquete de ' + unitPaq + ' unidades'
+    if( Data.EsUnidadOpaquete > 1 ){
+        quantity = 'Paquete de ' + Data.EsUnidadOpaquete + ' unidades'
     }else{
         quantity = 'Unidad'
     }
@@ -95,20 +84,19 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
             //console.log("entro al carrito")
             //*First search in Localstorage for 'cart'. If true, theCart contains the json cart
             //*if false, theCart is undefined. productJson is the current product json.
-            const theCart = localStorage.getItem('cart')        
-            //const productJson = JSON.parse(localStorage.getItem('productsBottomCarousel'))[llave]
-            const productJson = lista[llave]
-            // if(theCart){
+            const theCart = localStorage.getItem('cart')
+            const productJson = Data
             const addToCart = JSON.parse(theCart)
             const productIndex = addToCart.findIndex(item => item.Cod === productJson.Cod);
             if (productIndex !== -1) {//* if the is already the same product just increase the cant
                 addToCart[productIndex].Cant += cant
-                addToCart[productIndex].ImgName = ImgName
+                addToCart[productIndex].ImgName = Data.ImgName
                 localStorage.setItem("cart", JSON.stringify(addToCart))
                 return
             }
             //*Add the cant assigned
-            productJson.Cant = cant            
+            productJson.Cant = cant
+            console.log("productJson: ", productJson)          
             addToCart.push(productJson)
             setNItemsCart(addToCart.length)
             localStorage.setItem("cart", JSON.stringify(addToCart))
@@ -118,13 +106,10 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
             //     localStorage.setItem("cart", JSON.stringify([productJson]))
             // }
         } catch (error) {
-            console.log(error)
+            console.log("error al enviar producto: ", error)
         }
     }
 
-    useEffect(() => {
-        setCant(0);
-    }, []);
     
 
     return (
@@ -143,9 +128,9 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                     </button>
                     <div className="row row-cols-2">
                         <div className="col d-flex flex-column">
-                            <div className={`imgModal C${category}`}>
+                            <div className={`imgModal C${Data.Categoria}`}>
                                 <picture style={{position: 'relative', overflow: 'hidden'}}>
-                                    { agotado ?
+                                    { Data.Agotado ?
                                         <div className='soldOutMod'>
                                             AGOTADO
                                         </div>
@@ -154,11 +139,10 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     }
                                     <source
                                         type="image/avif"
-                                        srcSet={imgError ? imgPlaceHolder : img}
+                                        srcSet={Data.img}
                                     />
                                     <img
-                                        src={imgError ? imgPlaceHolder : img}
-                                        onError={handleError}
+                                        src={Data.img}
                                         alt="productImg"
                                         decoding="async"
                                     />
@@ -174,7 +158,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                             <div className="mt-auto">                                        
                                 <p className="subTit"><strong>Descripción:</strong></p>
                                 <div className="description scrollableY genFont">
-                                    {descripcionComp}.<br/>
+                                    {Data.Detalle}.<br/>
                                 </div>
                             </div>
                         </div>
@@ -194,9 +178,9 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     </picture>
                                 </div>
                                 <h1 id="productolLabel">
-                                    {descripcion}<br/>
+                                    {Data.Descripcion}<br/>
                                     <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%"}}>
-                                        <span className="smolText">Cod: {codigo}</span>
+                                        <span className="smolText">Cod: {Data.Cod}</span>
                                         <button
                                             onClick={toggleSpeech}
                                             className="btn btn-primary"
@@ -213,9 +197,9 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                 </div>
                                 <div className="quantityBox">
                                     <button className="btnQuantity" onClick={() => {
-                                        if((cant-unitPaq)>=0){
-                                            setCant(cant-unitPaq)
-                                            setTotalPrice(unitPrice*(cant-unitPaq))
+                                        if((cant-Data.EsUnidadOpaquete)>=0){
+                                            setCant(cant-Data.EsUnidadOpaquete)
+                                            setTotalPrice(Data.PVenta*(cant-Data.EsUnidadOpaquete))
                                         }
                                     }}>
                                         -
@@ -228,17 +212,17 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                         onChange={(e)=>{setCant(parseInt(e.target.value));}}
                                         onBlur={(e)=>{
                                             let theCant = parseInt(e.target.value)
-                                            if(e.target.value%unitPaq !== 0){
+                                            if(e.target.value%Data.EsUnidadOpaquete !== 0){
                                                 // Math.ceil(e.target.value / unitPaq) * unitPaq --> this calculates the min cant depends on unitPaq
-                                                theCant = parseInt(Math.ceil(e.target.value / unitPaq) * unitPaq)
+                                                theCant = parseInt(Math.ceil(e.target.value / Data.EsUnidadOpaquete) * Data.EsUnidadOpaquete)
                                                 setCant(theCant);
                                             }
-                                            setTotalPrice(unitPrice*theCant)
+                                            setTotalPrice(Data.PVenta*theCant)
                                         }}
                                     />
                                     <button className="btnQuantity" onClick={() => {
-                                        setCant(parseInt(cant)+unitPaq)
-                                        setTotalPrice(unitPrice*(parseInt(cant)+unitPaq))
+                                        setCant(parseInt(cant)+Data.EsUnidadOpaquete)
+                                        setTotalPrice(Data.PVenta*(parseInt(cant)+Data.EsUnidadOpaquete))
                                     }}>
                                         +
                                     </button>
@@ -249,7 +233,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     </span>
                                     { logged &&
                                     <span className="fw-bold">
-                                        ${Formater(unitPrice)}
+                                        ${Formater(Data.PVenta)}
                                     </span>
                                     }
                                 </div>
@@ -266,7 +250,7 @@ export const ModalProductDesk = ({llave, img, descripcion, descripcionComp, codi
                                     }
                                 </h1>
                                 { logged ? 
-                                    <button className="btnAddCart boton" disabled={(agotado || (cant===0))} onClick={() => {btnCart(); onHide()}}>
+                                    <button className="btnAddCart boton" disabled={(Data.Agotado || (cant===0))} onClick={() => {btnCart(); onHide()}}>
                                         Agregar al carrito
                                     </button>
                                     :

@@ -3,6 +3,7 @@ import "./_CarruselInf.scss";
 import secureLocalStorage from "react-secure-storage";
 import { ListItem } from "../Others";
 import { ModalProductDesk, ModalProductMob } from "../../Componentes/Modals";
+import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png'
 
 export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de productos.json
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -99,41 +100,58 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
           const selectedItem = proData[index]; // Obtener el producto
     
           let selectedProduct = { ...selectedItem };
-    
-          // Asignar valores
-          selectedProduct.key = index; // Guardar el índice
-          selectedProduct.llave = index; // También puedes usar esto para identificar el modal
-          selectedProduct.img = selectedItem.ImgName;
-          selectedProduct.descripcion = selectedItem.Descripcion;
-          selectedProduct.descripcionComp = selectedItem.Detalle;
-          selectedProduct.codigo = selectedItem.Cod;
-          selectedProduct.category = selectedItem.Categoria.toLowerCase();
-          selectedProduct.unitPaq = selectedItem.EsUnidadOpaquete;
-          selectedProduct.unitPrice = selectedItem.PVenta;
-          selectedProduct.agotado = selectedItem.Agotado;
-          setSelecteditem(selectedProduct);
-          setShow1(true);
           document.body.style.overflow = 'hidden';
     
           const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif`;
+          let img = imageUrl
         
           // Verificar el ETag del servidor
           fetch(imageUrl, { method: "HEAD", cache: "no-store"})
-              .then((response) => {
+            .then((response) => {
               const eTag = response.headers.get("ETag"); // Obtener el ETag
               if (eTag) {
                   setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+                  img = `${imageUrl}?v=${eTag}`
               } else {
                   setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+                  img = imageUrl
               }
               })
-              .catch((error) => {
+            .catch((error) => {
               console.error("Error verificando el ETag:", error);
               setImgSrc(imageUrl); // En caso de error, mostrar la imagen igual
-              });
-          //navigate(`/${selectedItem.Cod}`);
+              img = imgPlaceHolder
+            });
+    
+          // Asignar valores
+          //selectedProduct.key = index; // Guardar el índice
+          //selectedProduct.llave = index; // También puedes usar esto para identificar el modal
+          //selectedProduct.img = selectedItem.ImgName;
+          //selectedProduct.descripcion = selectedItem.Descripcion;
+          //selectedProduct.descripcionComp = selectedItem.Detalle;
+          //selectedProduct.codigo = selectedItem.Cod;
+          //selectedProduct.category = selectedItem.Categoria.toLowerCase();
+          //selectedProduct.unitPaq = selectedItem.EsUnidadOpaquete;
+          //selectedProduct.unitPrice = selectedItem.PVenta;
+          //selectedProduct.agotado = selectedItem.Agotado;
+          setShow1(true);
+          
+          let producto = {
+              "Agotado": selectedItem.Agotado,
+              "Categoria": selectedItem.Categoria.toLowerCase(),
+              "Cod": selectedItem.Cod,
+              "Descripcion": selectedItem.Descripcion,
+              "Detalle": selectedItem.Detalle,
+              "EsUnidadOpaquete": selectedItem.EsUnidadOpaquete,
+              "ImgName": selectedItem.ImgName,
+              "Iva": selectedItem.Iva,
+              "PVenta": selectedItem.PVenta,
+              "img": img,
+            }
+            setSelecteditem(producto);
+            //navigate(`/${selectedItem.Cod}`);
         } else {
-            //console.log("Producto no encontrado con código:", ProductCode);
+            console.log("Producto no encontrado con código:", ProductCode);
         }
       }
 
@@ -200,38 +218,40 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
             { isMobile ? 
                 (Show1 && selecteditem) ? 
                 <ModalProductMob
-                    key={selecteditem.key}
-                    llave={selecteditem.llave}
-                    img={imgSrc}
-                    descripcion={selecteditem.descripcion}
-                    descripcionComp={selecteditem.descripcionComp}
-                    codigo={selecteditem.codigo}
-                    category={selecteditem.category}
-                    unitPaq={selecteditem.unitPaq}
-                    unitPrice={selecteditem.unitPrice}
-                    agotado={selecteditem.agotado}
-                    lista={props.lista1}
+                    //key={selecteditem.key}
+                    //llave={selecteditem.llave}
+                    //img={imgSrc}
+                    //descripcion={selecteditem.descripcion}
+                    //descripcionComp={selecteditem.descripcionComp}
+                    //codigo={selecteditem.codigo}
+                    //category={selecteditem.category}
+                    //unitPaq={selecteditem.unitPaq}
+                    //unitPrice={selecteditem.unitPrice}
+                    //agotado={selecteditem.agotado}
+                    //lista={props.lista1}
                     onHide={closeModal}
-                    ImgName={selecteditem.ImgName}
+                    //ImgName={selecteditem.ImgName}
+                    Data = {selecteditem}
                     />
                     :
                     <></>
                 :
                 (Show1 && selecteditem) ?
                 <ModalProductDesk
-                    key={selecteditem.key}
-                    llave={selecteditem.llave}
-                    img={imgSrc}
-                    descripcion={selecteditem.descripcion}
-                    descripcionComp={selecteditem.descripcionComp}
-                    codigo={selecteditem.codigo}
-                    category={selecteditem.category}
-                    unitPaq={selecteditem.unitPaq}
-                    unitPrice={selecteditem.unitPrice}
-                    agotado={selecteditem.agotado}
-                    lista={props.lista1}
+                    //key={selecteditem.key}
+                    //llave={selecteditem.llave}
+                    //img={imgSrc}
+                    //descripcion={selecteditem.descripcion}
+                    //descripcionComp={selecteditem.descripcionComp}
+                    //codigo={selecteditem.codigo}
+                    //category={selecteditem.category}
+                    //unitPaq={selecteditem.unitPaq}
+                    //unitPrice={selecteditem.unitPrice}
+                    //agotado={selecteditem.agotado}
+                    //lista={props.lista1}
                     onHide={closeModal}
-                    ImgName={selecteditem.ImgName}
+                    //ImgName={selecteditem.ImgName}
+                    Data = {selecteditem}
                 />
                 :
                 <></>
