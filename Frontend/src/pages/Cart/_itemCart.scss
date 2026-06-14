@@ -29,8 +29,10 @@
 
 .itemCartImgContainer{
     display: flex;
+    flex-direction: column;
     width: min-content;
     padding-right: 18px;
+    justify-content: center;
 }
 
 .imgProducto.itemCartImg {
@@ -44,8 +46,14 @@
 .totalPrice.inItemCart{
     position: absolute;
     text-align: center;
-    top: 35%;
-    left: 63%;
+    bottom: 0;
+    right: 3%;
+}
+
+.detailsItem{
+    .text-decoration-line-through{
+        font-size: 1rem;
+    }
 }
 
 @media screen and (max-width: 900px) {

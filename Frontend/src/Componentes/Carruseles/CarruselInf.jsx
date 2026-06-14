@@ -11,10 +11,11 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     const [bef, setBef] = useState(0);
     const [move, setMove] = useState(0);
     const [back, setBack] = useState(0);
-    const [ imgSrc, setImgSrc] = useState("");
     const [Show1, setShow1] = useState(false);
     const [ isMobile, setIsMobile ] = useState(false);
     const [ selecteditem, setSelecteditem ] = useState(null);
+    const [filterGroup, setFilterGroup] = useState([]);
+    const [actualNumber, setActualNumber] = useState(0);
     const lProductos = props.lista1.length;
     const pConte = useRef();
     var paso = 5;//lo que se agrega para cargar
@@ -44,7 +45,6 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     useEffect(() => {
         resize_ob.observe(document.querySelector("#pContainer"));
         check();//este check va acá adentro de useEffect porque si no causa re-renders
-        //console.log(props.lista1)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -76,8 +76,6 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     }
 
     useEffect(() => {
-        //console.log(bef);
-        //console.log(move);
         if(bef === charge && bef === lProductos){
             setMove(0);
         }else{
@@ -93,67 +91,64 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
     const selectProductModal = async (ProductCode) => {
         const pro = JSON.parse(secureLocalStorage.getItem('productsList'));
         let proData = pro //The whole table "products".
-        
         // Define a case-insensitive text filter function
         const index = proData.findIndex(item => item.Cod.toLowerCase() === ProductCode.toLowerCase());
         if (index !== -1) { // Verificar si se encontró el producto
-          const selectedItem = proData[index]; // Obtener el producto
-    
-          let selectedProduct = { ...selectedItem };
-          document.body.style.overflow = 'hidden';
-    
-          const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif`;
-          let img = imageUrl
-        
-          // Verificar el ETag del servidor
-          fetch(imageUrl, { method: "HEAD", cache: "no-store"})
-            .then((response) => {
-              const eTag = response.headers.get("ETag"); // Obtener el ETag
-              if (eTag) {
-                  setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
-                  img = `${imageUrl}?v=${eTag}`
-              } else {
-                  setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
-                  img = imageUrl
-              }
-              })
-            .catch((error) => {
-              console.error("Error verificando el ETag:", error);
-              setImgSrc(imageUrl); // En caso de error, mostrar la imagen igual
-              img = imgPlaceHolder
-            });
-    
-          // Asignar valores
-          //selectedProduct.key = index; // Guardar el índice
-          //selectedProduct.llave = index; // También puedes usar esto para identificar el modal
-          //selectedProduct.img = selectedItem.ImgName;
-          //selectedProduct.descripcion = selectedItem.Descripcion;
-          //selectedProduct.descripcionComp = selectedItem.Detalle;
-          //selectedProduct.codigo = selectedItem.Cod;
-          //selectedProduct.category = selectedItem.Categoria.toLowerCase();
-          //selectedProduct.unitPaq = selectedItem.EsUnidadOpaquete;
-          //selectedProduct.unitPrice = selectedItem.PVenta;
-          //selectedProduct.agotado = selectedItem.Agotado;
-          setShow1(true);
-          
-          let producto = {
-              "Agotado": selectedItem.Agotado,
-              "Categoria": selectedItem.Categoria.toLowerCase(),
-              "Cod": selectedItem.Cod,
-              "Descripcion": selectedItem.Descripcion,
-              "Detalle": selectedItem.Detalle,
-              "EsUnidadOpaquete": selectedItem.EsUnidadOpaquete,
-              "ImgName": selectedItem.ImgName,
-              "Iva": selectedItem.Iva,
-              "PVenta": selectedItem.PVenta,
-              "img": img,
+
+            const selectedItem = proData[index]; // Obtener el producto
+            const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif?`;
+
+            let img = imageUrl
+            // Verificar el ETag del servidor
+            fetch(imageUrl, { method: "HEAD", cache: "no-store" })
+                .then((response) => {
+                    if (response.ok) {
+                        const eTag = response.headers.get("ETag"); // Obtener el ETag
+                        if (eTag) {
+                            //setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+                            img = `${imageUrl}?v=${eTag}`
+                        } else {
+                            //setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+                            img = imageUrl
+                        }
+
+                    } else {
+                        console.error("La imagen no existe o hubo un error:", response.status);
+                        //setImgSrc(imgPlaceHolder);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error verificando el ETag:", error);
+                    //setImgSrc("imageUrl"); // En caso de error, mostrar la imagen igual
+                    img = imgPlaceHolder
+                });
+
+            let producto = {
+                "Agotado": selectedItem.Agotado,
+                "Categoria": selectedItem.Categoria.toLowerCase(),
+                "Cod": selectedItem.Cod,
+                "Descripcion": selectedItem.Descripcion,
+                "Detalle": selectedItem.Detalle,
+                "EsUnidadOpaquete": selectedItem.EsUnidadOpaquete,
+                "ImgName": selectedItem.ImgName,
+                "Iva": selectedItem.Iva,
+                "PVenta": selectedItem.PVenta,
+                "img": img,
+                "Porcentaje": selectedItem.Porcentaje,
+                "APartirDe": selectedItem.APartirDe
             }
+            const filterGroups = proData.filter(item => item.Grupo === selectedItem.Grupo && item.Grupo !== 0).sort((a, b) => a.Cod.localeCompare(b.Cod));
+            setFilterGroup([...filterGroups])
+
+            setActualNumber(filterGroups.findIndex(item => item.Cod === selectedItem.Cod))
             setSelecteditem(producto);
-            //navigate(`/${selectedItem.Cod}`);
+            setShow1(true);
+            document.body.style.overflow = 'hidden';
+
         } else {
             console.log("Producto no encontrado con código:", ProductCode);
         }
-      }
+    }
 
     const listItems = () => {
         return(
@@ -176,6 +171,55 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
                 />
             )
         );
+    }
+
+    const moveToGroup = (step) => {
+        if (actualNumber + step < 0 || actualNumber + step > filterGroup.length) {
+            return
+        }
+        const selectedItem = filterGroup[actualNumber + step]
+        setActualNumber(actualNumber + step)
+        const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${selectedItem.ImgName}.avif`;
+        let img = imageUrl
+        // Verificar el ETag del servidor
+        fetch(imageUrl, { method: "HEAD", cache: "no-store" })
+            .then((response) => {
+                if (response.ok) {
+                    const eTag = response.headers.get("ETag"); // Obtener el ETag
+                    if (eTag) {
+                        //setImgSrc(`${imageUrl}?v=${eTag}`); // Agregar el ETag como versión
+                        img = `${imageUrl}?v=${eTag}`
+                    } else {
+                        //setImgSrc(imageUrl); // Si no hay ETag, usar la URL normal
+                        img = imageUrl
+                    }
+
+                } else {
+                    console.error("La imagen no existe o hubo un error:", response.status);
+                    //setImgSrc(imgPlaceHolder);
+                }
+            })
+            .catch((error) => {
+                console.error("Error verificando el ETag:", error);
+                //setImgSrc("imageUrl"); // En caso de error, mostrar la imagen igual
+                img = imgPlaceHolder
+            });
+
+        let producto = {
+            "Agotado": selectedItem.Agotado,
+            "Categoria": selectedItem.Categoria.toLowerCase(),
+            "Cod": selectedItem.Cod,
+            "Descripcion": selectedItem.Descripcion,
+            "Detalle": selectedItem.Detalle,
+            "EsUnidadOpaquete": selectedItem.EsUnidadOpaquete,
+            "ImgName": selectedItem.ImgName,
+            "Iva": selectedItem.Iva,
+            "PVenta": selectedItem.PVenta,
+            "img": img,
+            "Porcentaje": selectedItem.Porcentaje,
+            "APartirDe": selectedItem.APartirDe
+        }
+        setSelecteditem(producto);
     }
 
     function lazy (){
@@ -218,40 +262,22 @@ export function CarruselInf(props){//Aquí recibe la LIST1 que es la lista de pr
             { isMobile ? 
                 (Show1 && selecteditem) ? 
                 <ModalProductMob
-                    //key={selecteditem.key}
-                    //llave={selecteditem.llave}
-                    //img={imgSrc}
-                    //descripcion={selecteditem.descripcion}
-                    //descripcionComp={selecteditem.descripcionComp}
-                    //codigo={selecteditem.codigo}
-                    //category={selecteditem.category}
-                    //unitPaq={selecteditem.unitPaq}
-                    //unitPrice={selecteditem.unitPrice}
-                    //agotado={selecteditem.agotado}
-                    //lista={props.lista1}
                     onHide={closeModal}
-                    //ImgName={selecteditem.ImgName}
                     Data = {selecteditem}
+                    Move={moveToGroup}
+                    indexGroup={actualNumber}
+                    Group={filterGroup}
                     />
                     :
                     <></>
                 :
                 (Show1 && selecteditem) ?
                 <ModalProductDesk
-                    //key={selecteditem.key}
-                    //llave={selecteditem.llave}
-                    //img={imgSrc}
-                    //descripcion={selecteditem.descripcion}
-                    //descripcionComp={selecteditem.descripcionComp}
-                    //codigo={selecteditem.codigo}
-                    //category={selecteditem.category}
-                    //unitPaq={selecteditem.unitPaq}
-                    //unitPrice={selecteditem.unitPrice}
-                    //agotado={selecteditem.agotado}
-                    //lista={props.lista1}
                     onHide={closeModal}
-                    //ImgName={selecteditem.ImgName}
                     Data = {selecteditem}
+                    Move={moveToGroup}
+                    indexGroup={actualNumber}
+                    Group={filterGroup}
                 />
                 :
                 <></>

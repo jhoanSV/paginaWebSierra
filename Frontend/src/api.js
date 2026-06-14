@@ -1,12 +1,12 @@
 // const API = 'http://000.000.0.000:0000/tasks';
-const API = process.env.REACT_APP_API;
+//const API = process.env.REACT_APP_API;
 //const API = 'http://192.168.1.110:3000/tasks';
+//const API = 'http://192.168.101.17:3000/tasks'; //My computer
+//const API = 'http://44.209.105.117/tasks'; //URL de pruebas remoto
 
+const API = 'https://sivar.com.co/tasks';
 
-
-//const API = 'http://localhost:3000/tasks';
-
-export const validateUser = async(validateValueUser) => {
+export const validateUser = async (validateValueUser) => {
     /*Validate the user information and if it's correct return the data of the user
     you have to send a json of the form:
     {
@@ -15,20 +15,20 @@ export const validateUser = async(validateValueUser) => {
     }
     Dikyanid
     06032023
-    */   
+    */
     try {
-        const res = await fetch(`${API}/login`,{
+        const res = await fetch(`${API}/login`, {
             method: 'POST',
-            headers: { Accept: 'application/json','Content-Type': 'application/json'},
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify(validateValueUser)
         })
         return await res.json()
-    }catch(error) {
-        console.log('TheError: '+ error)
+    } catch (error) {
+        console.log('TheError: ' + error)
     }
 }
 
-export const Changepassword = async(validateValueUser) => {
+export const Changepassword = async (validateValueUser) => {
     /*Validate the user information and if it's correct change the password in the database
     you have to send a json of the form:
     {
@@ -37,36 +37,36 @@ export const Changepassword = async(validateValueUser) => {
         "NewPassword": "New password"
     }*/
     try {
-        const res = await fetch(`${API}/Changepassword`,{
+        const res = await fetch(`${API}/Changepassword`, {
             method: 'POST',
-            headers: { Accept: 'application/json','Content-Type': 'application/json'},
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify(validateValueUser)
         })
         return await res.json()
-    }catch(error) {
+    } catch (error) {
         console.log(error)
     }
 }
 
-export const products = async(validateLogIn) => {
+export const products = async (validateLogIn) => {
     /*return the list of products deppending on if the user is logged in or not
     you have to send a json of the form:
     {
         "CodUser": ''
     }*/
     try {
-        const res = await fetch(`${API}/productsdataweb`,{
+        const res = await fetch(`${API}/productsdataweb`, {
             method: 'POST',
-            headers: { Accept: 'application/json','Content-Type': 'application/json'},
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify(validateLogIn)
         })
         return await res.json()
-    }catch(error) {
+    } catch (error) {
         console.log(error)
     }
 }
 
-export const BottonCarousel = async(validateLogIn) => {
+export const BottonCarousel = async (validateLogIn) => {
     /*return the list of products for the botton caroucel deppending on if the user is logged in or not
     you have to send a json of the form:
     {
@@ -74,40 +74,42 @@ export const BottonCarousel = async(validateLogIn) => {
         "CodUser": "494"
     }*/
     try {
-        const res = await fetch(`${API}/BottonCaroucel`,{
+        const res = await fetch(`${API}/BottonCaroucel`, {
             method: 'POST',
-            headers: { Accept: 'application/json','Content-Type': 'application/json'},
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify(validateLogIn)
         })
         return await res.json()
-    }catch(error) {
+    } catch (error) {
         console.log(error)
     }
 }
 
-export const Alias = async() => {
+export const Alias = async () => {
     /*Return the list of alias of the products*/
     try {
         const res = await fetch(`${API}/TAlias`, {
-            method: 'GET'})
+            method: 'GET'
+        })
         return await res.json()
-    }catch(error) {
+    } catch (error) {
         console.log(error)
     }
 }
 
-export const CategoryPages = async() => {
+export const CategoryPages = async () => {
     /*Return the list of alias of the products*/
     try {
         const res = await fetch(`${API}/CategriesPages`, {
-            method: 'GET'})
+            method: 'GET'
+        })
         return await res.json()
-    }catch(error) {
+    } catch (error) {
         console.log(error)
     }
 }
 
-export const EnviarVenta = async(Order) => {
+export const EnviarVenta = async (Order) => {
     /*Send the Order to the database.
     you have to send a json of the form:
     {
@@ -118,16 +120,36 @@ export const EnviarVenta = async(Order) => {
         "FechaVencimiento" : "2024-02-23",
         "NotaVenta": "",
         "VECommerce": "1",
-        "TIngresados": "12(cantidad),CIT05(codigo),950(PVenta);6,SP136,3500"
+        "TIngresados": [{
+            ImgName: 'CRZ01',
+            Iva: 19,
+            PVenta: 650,
+            img: 'https://sivarwebresources.s3.amazonaws.com/AVIF/CRZ01.avif',
+            Porcentaje: 5,
+            APartirDe: 3,
+            Cant: 4
+        }]
     }*/
     try {
-        const res = await fetch(`${API}/SendSale`,{
+        const res = await fetch(`${API}/SendSale`, {
             method: 'POST',
-            headers: { Accept: 'application/json','Content-Type': 'application/json'},
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify(Order)
         })
         return await res.json()
-    }catch(error) {
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const GetCoordinatesPagesApi = async () => {
+    /*Return the list of alias of the products*/
+    try {
+        const res = await fetch(`${API}/GetCoordinatesPages`, {
+            method: 'GET'
+        })
+        return await res.json()
+    } catch (error) {
         console.log(error)
     }
 }
