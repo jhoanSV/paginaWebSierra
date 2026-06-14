@@ -1,8 +1,8 @@
 // const API = 'http://000.000.0.000:0000/tasks';
 //const API = process.env.REACT_APP_API;
 //const API = 'http://192.168.1.110:3000/tasks';
-//const API = 'http://192.168.101.15:3000/tasks';
-const API = 'http://44.209.105.117/tasks'; //URL de pruebas remoto
+const API = 'http://192.168.101.17:3000/tasks'; //My computer
+//const API = 'http://44.209.105.117/tasks'; //URL de pruebas remoto
 
 //const API = 'https://sivar.com.co/tasks';
 

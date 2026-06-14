@@ -14,12 +14,15 @@ export function Catalogo() {
 
     const findLastPage = async() =>{
         const list = await CategoryPages();
-        
-        setTheLastPage(Number(list.find(cate => cate.Categoria.toUpperCase() === 'HOJAFINAL').Pag));
+        const FinalPague = Number(list.find(cate => cate.Categoria.toUpperCase() === 'HOJAFINAL').Pag)
+        setTheLastPage(FinalPague);
+        console.log(FinalPague)
     }
 
-    findLastPage();
-
+    useEffect(() => {
+        findLastPage();
+    }, [])
+    
     useEffect(()=>{
         window.scrollTo(0,0)
         if(!pag){
@@ -28,7 +31,8 @@ export function Catalogo() {
         // eslint-disable-next-line
     },[pag])
 
-    if(!theLastPage && !pag){
+    if(!theLastPage || !pag){
+        console.log('!theLastPage', !theLastPage, '!pag', !pag)
         return(
             <>
                 Loading...

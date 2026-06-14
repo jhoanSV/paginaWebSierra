@@ -48,7 +48,7 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
         }
     }, [indexGroup]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const loadVoices = () => {
             const voices = speechSynthesis.getVoices();
             const preferredVoice = voices.find(voice =>
@@ -59,8 +59,7 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
             );
             setSelectedVoice(preferredVoice || voices.find(voice => voice.lang.startsWith("es")));
         };
-
-        loadVoices();
+        //loadVoices();
         speechSynthesis.onvoiceschanged = loadVoices;
     }, []);
 
@@ -87,7 +86,41 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
                 alert("Tu navegador no soporta la API de síntesis de voz.");
             }
         }
+    };*/
+
+    useEffect(() => {
+        const loadVoices = () => {
+            const voices = speechSynthesis.getVoices();
+            const preferredVoice = voices.find(voice =>
+                voice.name.includes("Google Español") ||
+                voice.name.includes("US Spanish") ||
+                voice.name.includes("Microsoft Sabina") ||
+                voice.lang === "es-US"
+            );
+            setSelectedVoice(preferredVoice || voices.find(voice => voice.lang.startsWith("es")));
+        };
+        speechSynthesis.onvoiceschanged = loadVoices;
+    }, []);
+
+    const toggleSpeech = () => {
+        if (isSpeaking) {
+            // Si ya está hablando, detenerlo
+            speechSynthesis.cancel();
+            setIsSpeaking(false);
+        } else {
+            if ("speechSynthesis" in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = "es-US";
+                if (selectedVoice) utterance.voice = selectedVoice;
+                utterance.onstart = () => setIsSpeaking(true);
+                utterance.onend = () => setIsSpeaking(false);
+                speechSynthesis.speak(utterance);
+            } else {
+                alert("Tu navegador no soporta la API de síntesis de voz.");
+            }
+        }
     };
+
     //fin de para controlar la voz
 
     //let logged = getGlobal('isLogged')
@@ -172,9 +205,9 @@ export const ModalProductMob = ({ /*llave, img, descripcion, descripcionComp, co
                                             <span style={{ padding: '5px 0px' }}>Cod: {Data.Cod}</span>
                                         </div>
                                         <div>
-                                            <button className='btnQuantity' style={{ lineHeight: '28px', fontSize: '2rem', backgroundColor: 'red' }}>
+                                            {/*<button className='btnQuantity' style={{ lineHeight: '28px', fontSize: '2rem', backgroundColor: 'red' }}>
                                                 <i className='bi bi-youtube'></i>
-                                            </button>
+                                            </button>*/}
                                             <button className='btnQuantity' style={{ fontSize: '2rem', lineHeight: '28px', marginLeft: '5px' }}>
                                                 <i
                                                     onClick={toggleSpeech}

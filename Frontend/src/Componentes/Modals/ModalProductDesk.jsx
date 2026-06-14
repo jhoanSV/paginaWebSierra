@@ -135,13 +135,6 @@ export const ModalProductDesk = ({ onHide, Data, Move, indexGroup, Group }) => {
         }
     }
 
-    // const handleTotal = (item, value) => {
-    //     setTotalPrice((prev) => ({
-    //         ...prev,
-    //         [item]: value,
-    //     }));
-    // }
-
     return (
         <div
             className='theModalContainer'
@@ -188,9 +181,9 @@ export const ModalProductDesk = ({ onHide, Data, Move, indexGroup, Group }) => {
                                 <span style={{ padding: '5px 0px' }}>Cod: {Data.Cod}</span>
                             </div>
                             <div>
-                                <button className='btnQuantity' style={{ lineHeight: '28px', fontSize: '2rem', backgroundColor: 'red' }}>
+                                {/*<button className='btnQuantity' style={{ lineHeight: '28px', fontSize: '2rem', backgroundColor: 'red' }}>
                                     <i className='bi bi-youtube'></i>
-                                </button>
+                                </button>*/}
                                 <button className='btnQuantity' style={{ fontSize: '2rem', lineHeight: '28px', marginLeft: '5px' }}>
                                     <i
                                         onClick={toggleSpeech}

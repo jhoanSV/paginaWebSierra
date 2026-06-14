@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import "./_Home.scss";
 import { CarruselInf } from "../../Componentes/Carruseles";
 import categ from "../../Assets/jpg/categorias/categorias.json";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useObserver } from "../../Componentes/UseObs";
-import { BottonCarousel } from '../../api';
+import { BottonCarousel, CategoryPages } from '../../api';
 import { useTheContext } from "../../TheProvider";
 import secureLocalStorage from "react-secure-storage";
 
 export function Home() {
-    
+    const [CategoryList, setCategoryList] = useState(categ);
     const [bottomC, setBottomC] = useState(null);
     const [car1imgs, setCar1imgs] = useState(1);
     const { logged, queryEnded } = useTheContext()
+
+    const navigate = useNavigate();
 
     const [observer, setElements, entries] = useObserver({
         treshhold: 0.25,
@@ -20,6 +22,39 @@ export function Home() {
         root: null
     });
 
+    // Tu función original se queda tal cual la diseñaste
+    const getPage = async () => {
+        try {
+            const Categorias = await CategoryPages(); // Traemos la lista de la API
+            
+            // Recorremos tu JSON estático 'categ' para inyectarle la página de la API
+            const jsonConPropiedadAñadida = categ.map((itemJson) => {
+                // Buscamos la coincidencia en los datos de la API
+                const coincidenciaAPI = Categorias.find(
+                    (e) => e.Categoria?.toLowerCase() === itemJson.descripcion?.toLowerCase()
+                );
+
+                // Retornamos el ítem original del JSON pero LE AÑADIMOS la propiedad 'Page' de la API
+                return {
+                    ...itemJson,
+                    Page: coincidenciaAPI?.Pag ?? 1 // Si la API lo tiene usa ese, si no pone 1
+                };
+            });
+
+            // Guardamos en el estado el JSON modificado con la nueva propiedad
+            console.log('jsonConPropiedadAñadida', jsonConPropiedadAñadida)
+            setCategoryList(jsonConPropiedadAñadida);
+
+        } catch (error) {
+            console.error("Error al sincronizar páginas:", error);
+        }
+    };
+
+    // 2. Al cargar el componente, modificamos los datos
+    useEffect(() => {
+        getPage()
+    }, []);
+  
     //Todo: Create the function that alternate the cathegories
     function alternateCategoria(jsonArray) {
         // Use Set to store unique values
@@ -69,14 +104,32 @@ export function Home() {
     }    
 
     //*Funcion para mostrar las categorias en categorias.json
-    const itItems = categ.map( (item, index) => {
+    const itItems = CategoryList.map( (item, index) => {
 
         const imgAvif = require(`../../Assets/avif/categorias/${item.descripcion}.avif`)
         const imgjpg = require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)
-        return(
-            <div key={index} className="ImgBtnContainer">
 
-                <Link to={`catalogo/${item.pag}`}>
+        const handleNavigation = () => {
+            // Si la API aún no ha inyectado 'Page', frenamos la navegación
+            if (!item.Page) {
+                console.log("Esperando datos de la API...");
+                return; 
+            }
+            
+            // Capturamos exactamente qué está leyendo JavaScript en este botón
+            console.log("=== DATOS DEL CLICK ===");
+            console.log("Categoría clickeada visualmente:", item.descripcion);
+            console.log("ID del objeto actual:", item.id);
+            console.log("Page que va a mandar al navigate:", item.Page);
+            navigate(`/catalogo/${item.Page}`);
+        };
+        return(
+            <div
+                key={index}
+                className="ImgBtnContainer"
+                onClick={handleNavigation}
+            >
+                {/*<Link to={`catalogo/${item.Page}`}>*/}
                     <picture>
                         <source
                             className="el_lazy2"
@@ -90,8 +143,7 @@ export function Home() {
                             decoding="async"
                         />
                     </picture>
-                </Link>
-
+                {/*</Link>*/}
             </div>
         );
     });

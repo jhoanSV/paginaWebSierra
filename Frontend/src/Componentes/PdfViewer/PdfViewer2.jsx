@@ -31,12 +31,12 @@ export function PdfViewer2({ route, /*dir, show = 'yes',*/ numPage = 1, cacheB, 
     const ListCp = useRef([])
     const [pages, setPages] = useState([
         //( ._.)
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPage}.avif?${cacheB}`, Npage: numPage },
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPage + 1}.avif?${cacheB}`, Npage: numPage + 1 },
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPage + 2}.avif?${cacheB}`, Npage: numPage + 2 },
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPage + 3}.avif?${cacheB}`, Npage: numPage + 3 },
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPage + 4}.avif?${cacheB}`, Npage: numPage + 4 },
-        { src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPage + 5}.avif?${cacheB}`, Npage: numPage + 5 },
+        { src: `https://d1w9pov8bh9gl7.cloudfront.net/${route}Pagina${numPage}.avif`, Npage: numPage },
+        { src: `https://d1w9pov8bh9gl7.cloudfront.net/${route}Pagina${numPage + 1}.avif`, Npage: numPage + 1 },
+        { src: `https://d1w9pov8bh9gl7.cloudfront.net/${route}Pagina${numPage + 2}.avif`, Npage: numPage + 2 },
+        { src: `https://d1w9pov8bh9gl7.cloudfront.net/${route}Pagina${numPage + 3}.avif`, Npage: numPage + 3 },
+        { src: `https://d1w9pov8bh9gl7.cloudfront.net/${route}Pagina${numPage + 4}.avif`, Npage: numPage + 4 },
+        { src: `https://d1w9pov8bh9gl7.cloudfront.net/${route}Pagina${numPage + 4}.avif`, Npage: numPage + 5 }//{ src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${numPage + 5}.avif`, Npage: numPage + 5 },
     ]);
 
     const getGetCP = async () => {
@@ -239,7 +239,7 @@ export function PdfViewer2({ route, /*dir, show = 'yes',*/ numPage = 1, cacheB, 
         
     }
 
-    const handleVirtualScroll = (e) => {
+    const handleVirtualScroll = async(e) => {
             
         const container = e.target;
 
@@ -278,7 +278,7 @@ export function PdfViewer2({ route, /*dir, show = 'yes',*/ numPage = 1, cacheB, 
 
         for (let p = paginaInicio; p <= paginaFin; p++) {
             nuevasPaginas.push({
-                src: `https://sivarwebresources.s3.amazonaws.com/${route}Pagina${p}.avif?v=${cacheBuster}`,
+                src: `https://d1w9pov8bh9gl7.cloudfront.net/${route}Pagina${p}.avif`,
                 Npage: p
             });
         }

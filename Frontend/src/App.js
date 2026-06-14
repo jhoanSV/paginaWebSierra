@@ -59,7 +59,7 @@ export default function App() {
           <picture>
             <source
               type="image/avif"
-              srcSet={require("./Assets/avif/wappicon.avif")}
+              srcSet={require("./Assets/avif/WappIcon.avif")}
             />
             <img
                 src={require("./Assets/png/wappicon.png")}
