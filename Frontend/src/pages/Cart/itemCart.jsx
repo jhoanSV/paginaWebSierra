@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './_itemCart.scss';
-import { Formater } from '../../globals/otherFunctions';
+//import { Formater } from '../../globals/otherFunctions';
 import imgPlaceHolder from '../../Assets/png/placeHolderProduct.png';
-import speak from '../../InternalFunctions';
+import speak, { priceValue } from '../../InternalFunctions';
 
-export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantidad, onDelete, updtC, ImgName}) => {
+export const ItemCart = ({id, onDelete, updtC, Data}) => {
     
-    const [cant, setCant] = useState(parseInt(cantidad))
-    const [totalPrice, setTotalPrice] = useState(unitPrice*cant)
+    const [cant, setCant] = useState(parseInt(Data.Cant))
+    const [totalPrice, setTotalPrice] = useState(Data.PVenta*cant)
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [fontResize, setFontResize] = useState('');
-    const [imgSrc, setImgSrc] = useState(`https://sivarwebresources.s3.amazonaws.com/AVIF/${ImgName}.avif`);
+    const [imgSrc, setImgSrc] = useState(`https://sivarwebresources.s3.amazonaws.com/AVIF/${Data.ImgName}.avif`);
 
     const handleDelete = () =>{        
         onDelete(id)
@@ -23,6 +23,7 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
     useEffect(() => {
         const theId = 'a' + id
         resize_ob.observe(document.querySelector('#'+theId));
+        console.table(Data)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -44,7 +45,7 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
 
     //TODO: to update the image if this image is new
     useEffect(() => {
-        const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${ImgName}.avif`;
+        const imageUrl = `https://sivarwebresources.s3.amazonaws.com/AVIF/${Data.ImgName}.avif`;
     
         // Verificar el ETag del servidor
         fetch(imageUrl, { method: "HEAD" })
@@ -60,17 +61,10 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
             console.error("Error verificando el ETag:", error);
             setImgSrc(imageUrl); // En caso de error, mostrar la imagen igual
           });
-        setCant(parseInt(cantidad));
-        setTotalPrice(unitPrice * parseInt(cantidad));
-      }, [cod]);
+        setCant(parseInt(Data.Cant));
+        setTotalPrice(Data.PVenta * parseInt(Data.Cant));
+      }, [Data.Cod]);
     //TODO: end of the todo
-
-    /*useEffect(() => {        
-        setImgSrc(`https://sivarwebresources.s3.amazonaws.com/AVIF/${cod}.avif`)
-        setCant(parseInt(cantidad))
-        setTotalPrice(unitPrice*(parseInt(cantidad)))
-        // eslint-disable-next-line
-    }, [cod]);*/
 
     return (
         <div className='itemCartStyle' id={`a${id}`} >
@@ -81,7 +75,8 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
                 <i className="bi bi-trash3"></i>
             </div>
             <div className='itemCartImgContainer'>
-                <div className={`imgProducto itemCartImg C${category}`}>
+                <div className='smolText' style={{color: '#747474', textAlign: 'center'}}>{Data.Cod}</div>
+                <div className={`imgProducto itemCartImg C${(Data.Categoria).toLowerCase()}`}>
                     <picture>
                         <source
                             type="image/avif"
@@ -97,18 +92,28 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
                 </div>
             </div>
             <div className='detailsItem'>
-                <div className='subTit' style={{lineHeight: '1.1'}}><strong>{nombre}</strong>
-                    <div className='smolText' style={{color: '#747474'}}>{cod}</div>
-                </div>
-                <div style={{marginTop: '10px'}}>
-                    V.U: $ {Formater(unitPrice)}
+                <div className='subTit' style={{lineHeight: '1.1'}}><strong>{Data.Descripcion}</strong></div>
+                <div style={{marginTop: '10px', display:'flex'}}>
+                    <div style={{alignContent:'center'}}>
+                        <strong>V.U:</strong>
+                    </div>
+                    <div>
+                        <div style={parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? {textDecoration: 'line-through', color: '#BF452E'}: {}}>$ {priceValue(Data.PVenta)} </div>
+                        {
+                            <div>
+                                {parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ?'$' + priceValue((Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)): ''}
+                            </div>
+                        }
+                    </div>
                 </div>
                 <div className="quantityBox">
                     <button className="btnQuantity" onClick={() => {
-                        if((cant-unitPaq)>0){
-                            updtC(id, parseInt(cant)-unitPaq)
-                            setCant(cant-unitPaq)
-                            setTotalPrice(unitPrice*(cant-unitPaq))
+                        if((cant-Data.EsUnidadOpaquete)>0){
+                            updtC(id, parseInt(cant)-Data.EsUnidadOpaquete)
+                            setCant(cant-Data.EsUnidadOpaquete)
+                            const discountValue = (Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)
+                            const Price = parseInt(cant)-Data.EsUnidadOpaquete > Data.APartirDe ? discountValue: Data.PVenta
+                            setTotalPrice(Price*(parseInt(cant)-Data.EsUnidadOpaquete))
                         }
                     }}>
                         -
@@ -117,22 +122,26 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
                         className='quantity' type="number"
                         min={1}
                         value={cant}
-                        style={{width: `${(String(cant).length*14.4)+24}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
+                        style={{width: `${(String(cant).length*14.4)+14}px`}} //here i change the with in function of the length of the content plus 24 of padding                        
                         onChange={(e)=>{setCant(parseInt(e.target.value));}}
                         onBlur={(e)=>{
                             let theCant = parseInt(e.target.value)                            
-                            if(e.target.value%unitPaq !== 0){
-                                theCant = parseInt(Math.ceil(e.target.value / unitPaq) * unitPaq)
+                            if(e.target.value%Data.EsUnidadOpaquete !== 0){
+                                theCant = parseInt(Math.ceil(e.target.value / Data.EsUnidadOpaquete) * Data.EsUnidadOpaquete)
                                 setCant(theCant);
                             }
-                            setTotalPrice(unitPrice*theCant)
+                            const discountValue = (Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)
+                            const Price = parseInt(cant) > Data.APartirDe ? discountValue: Data.PVenta
+                            setTotalPrice(Price*theCant)
                             updtC(id, theCant)
                         }}
                     />
                     <button className="btnQuantity" onClick={() => {
-                        updtC(id, parseInt(cant)+unitPaq)
-                        setCant(parseInt(cant)+unitPaq)
-                        setTotalPrice(unitPrice*(parseInt(cant)+unitPaq))                        
+                        updtC(id, parseInt(cant)+Data.EsUnidadOpaquete)
+                        setCant(parseInt(cant)+Data.EsUnidadOpaquete)
+                        const discountValue = (Data.PVenta * (1-Data.Porcentaje/100)).toFixed(2)
+                        const Price = parseInt(cant)+Data.EsUnidadOpaquete > Data.APartirDe ? discountValue: Data.PVenta
+                        setTotalPrice(Price*(parseInt(cant)+Data.EsUnidadOpaquete))
                     }}>
                         +
                     </button>
@@ -140,9 +149,18 @@ export const ItemCart = ({id, nombre, cod, unitPrice, unitPaq, category, cantida
                 <div className="totalPrice inItemCart mainBlue">
                     <div className='subTit fw-bold'>Total:</div>
                     <h1>
-                        <span className='text-black Tit' style={{fontSize: `${fontResize}`}}>
-                            ${Formater(totalPrice)}
-                        </span>
+                        <div className='Tit '
+                            style={
+                                parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? 
+                                {textDecoration: 'line-through', color: '#BF452E', fontSize:'1rem'}: {color: 'black'}
+                            }>
+                            ${priceValue(parseInt(cant)*(Data.PVenta))}
+                        </div>
+                        {parseInt(cant) > Data.APartirDe && Data.Porcentaje !== 0 ? 
+                            <div className='text-black Tit' style={{fontSize: `${fontResize}`}}>
+                                ${priceValue((parseInt(cant)*(Data.PVenta * (1-Data.Porcentaje/100))).toFixed(2))}
+                            </div>: ''
+                        }
                     </h1>
                 </div>
             </div>

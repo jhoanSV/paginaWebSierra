@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import "./_Home.scss";
 import { CarruselInf } from "../../Componentes/Carruseles";
 import categ from "../../Assets/jpg/categorias/categorias.json";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useObserver } from "../../Componentes/UseObs";
-import { BottonCarousel } from '../../api';
+import { BottonCarousel, CategoryPages } from '../../api';
 import { useTheContext } from "../../TheProvider";
 import secureLocalStorage from "react-secure-storage";
 
 export function Home() {
-    
+    const [CategoryList, setCategoryList] = useState(categ);
     const [bottomC, setBottomC] = useState(null);
+    const [car1imgs, setCar1imgs] = useState(1);
     const { logged, queryEnded } = useTheContext()
+
+    const navigate = useNavigate();
 
     const [observer, setElements, entries] = useObserver({
         treshhold: 0.25,
@@ -19,6 +22,39 @@ export function Home() {
         root: null
     });
 
+    // Tu función original se queda tal cual la diseñaste
+    const getPage = async () => {
+        try {
+            const Categorias = await CategoryPages(); // Traemos la lista de la API
+            
+            // Recorremos tu JSON estático 'categ' para inyectarle la página de la API
+            const jsonConPropiedadAñadida = categ.map((itemJson) => {
+                // Buscamos la coincidencia en los datos de la API
+                const coincidenciaAPI = Categorias.find(
+                    (e) => e.Categoria?.toLowerCase() === itemJson.descripcion?.toLowerCase()
+                );
+
+                // Retornamos el ítem original del JSON pero LE AÑADIMOS la propiedad 'Page' de la API
+                return {
+                    ...itemJson,
+                    Page: coincidenciaAPI?.Pag ?? 1 // Si la API lo tiene usa ese, si no pone 1
+                };
+            });
+
+            // Guardamos en el estado el JSON modificado con la nueva propiedad
+            console.log('jsonConPropiedadAñadida', jsonConPropiedadAñadida)
+            setCategoryList(jsonConPropiedadAñadida);
+
+        } catch (error) {
+            console.error("Error al sincronizar páginas:", error);
+        }
+    };
+
+    // 2. Al cargar el componente, modificamos los datos
+    useEffect(() => {
+        getPage()
+    }, []);
+  
     //Todo: Create the function that alternate the cathegories
     function alternateCategoria(jsonArray) {
         // Use Set to store unique values
@@ -68,14 +104,32 @@ export function Home() {
     }    
 
     //*Funcion para mostrar las categorias en categorias.json
-    const itItems = categ.map( (item, index) => {
+    const itItems = CategoryList.map( (item, index) => {
 
         const imgAvif = require(`../../Assets/avif/categorias/${item.descripcion}.avif`)
         const imgjpg = require(`../../Assets/jpg/categorias/${item.descripcion}.jpg`)
-        return(
-            <div key={index} className="ImgBtnContainer">
 
-                <Link to={`catalogo/${item.descripcion}`}>
+        const handleNavigation = () => {
+            // Si la API aún no ha inyectado 'Page', frenamos la navegación
+            if (!item.Page) {
+                console.log("Esperando datos de la API...");
+                return; 
+            }
+            
+            // Capturamos exactamente qué está leyendo JavaScript en este botón
+            console.log("=== DATOS DEL CLICK ===");
+            console.log("Categoría clickeada visualmente:", item.descripcion);
+            console.log("ID del objeto actual:", item.id);
+            console.log("Page que va a mandar al navigate:", item.Page);
+            navigate(`/catalogo/${item.Page}`);
+        };
+        return(
+            <div
+                key={index}
+                className="ImgBtnContainer"
+                onClick={handleNavigation}
+            >
+                {/*<Link to={`catalogo/${item.Page}`}>*/}
                     <picture>
                         <source
                             className="el_lazy2"
@@ -89,11 +143,28 @@ export function Home() {
                             decoding="async"
                         />
                     </picture>
-                </Link>
-
+                {/*</Link>*/}
             </div>
         );
     });
+
+    const CarrouselItems = ({ baseSrc }) => {
+
+        return Array.from({ length: car1imgs }).map((_, i) => (
+            <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`}>
+                <div className="test h-100">
+                    <Link to={i===0? '/catalogo/1':'productos'}>
+                        <img
+                            className="d-block w-100 h-100"
+                            src={`${baseSrc}CARRUSEL_${i+1}.gif`}
+                            alt={`Slide ${i+1}`}
+                            decoding="async"
+                        />
+                    </Link>
+                </div>
+            </div>
+        ));
+    }
 
     useEffect(() => {
         const los_elementos = document.querySelectorAll(".el_lazy2");
@@ -123,6 +194,25 @@ export function Home() {
     }, [entries, observer])
     
     useEffect(() => {
+        let index = 1;
+
+        const checkCar1Imgs = async () => {
+            const theUrl = `https://sivarwebresources.s3.amazonaws.com/IMG_CARRUSEL/CARRUSEL_${index}.gif`;
+            try {
+                const res = await fetch(theUrl, { method: 'HEAD', cache: "no-store" });
+                
+                if (res.ok) {
+                    index++;
+                    await checkCar1Imgs();
+                } else {
+                    setCar1imgs(index - 1);
+                }
+            } catch (error) {
+                setCar1imgs(index - 1);
+            }
+        };
+
+        checkCar1Imgs();
         window.scrollTo(0,0)
         return () => {
             //*the code below is to solve an bug when the user try to close a modal with thw back arrow
@@ -155,17 +245,30 @@ export function Home() {
                         <div className="col-5 caja-carrusel">
                         
 
-                            <div className="row row-cols-1 gy-2">
+                            <div className="row gy-2">
 
                                 <div className="col ">
                                     <div id='carrusel1' className="carousel slide" data-bs-ride="carousel">
                                         <div className="carousel-indicators">
-                                            <button id="color-indicator" type="button" data-bs-target="#carrusel1" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                                            <button id="color-indicator" type="button" data-bs-target="#carrusel1" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                            <button id="color-indicator" type="button" data-bs-target="#carrusel1" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                            {Array.from({ length: car1imgs }).map((_, i) => 
+                                                <button 
+                                                    key={i}
+                                                    id="color-indicator"
+                                                    type="button"
+                                                    data-bs-target="#carrusel1"
+                                                    data-bs-slide-to={`${i}`}
+                                                    className={i===0 ? 'active':''}
+                                                    aria-current={i===0 ? 'true':'false'}
+                                                    aria-label={`Slide ${i+1}`}></button>
+                                            )}
+                                            {/* <button id="color-indicator" type="button" data-bs-target="#carrusel1" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button id="color-indicator" type="button" data-bs-target="#carrusel1" data-bs-slide-to="2" aria-label="Slide 3"></button> */}
                                         </div>
                                         <div className="carousel-inner h-100 c-inner">
-                                            <div className="carousel-item active">
+
+                                            <CarrouselItems baseSrc="https://sivarwebresources.s3.amazonaws.com/IMG_CARRUSEL/" />
+
+                                            {/* <div className="carousel-item active">
                                                 <div className="test h-100">
                                                     <Link to={'/especiales'}>
                                                         <picture>
@@ -214,7 +317,7 @@ export function Home() {
                                                         />
                                                     </picture>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <button className="carousel-control-prev" type="button" data-bs-target={`#carrusel1`} data-bs-slide="prev">
                                             <span id="color-indicator" className="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -226,66 +329,11 @@ export function Home() {
                                         </button>
                                     </div>
                                 </div>
-
-                                <div className="col">
-                                    <div id='carrusel2' className="carousel slide" data-bs-ride="carrusel2">
-                                        <div className="carousel-indicators">
-                                            <button id="color-indicator" type="button" data-bs-target={`#carrusel2`} data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                                            <button id="color-indicator" type="button" data-bs-target={`#carrusel2`} data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                        </div>
-                                        <div className="carousel-inner h-100 c-inner">
-                                            <div className="carousel-item active">
-                                                <div className="test h-100">                                                    
-                                                    <picture>
-                                                        <source
-                                                            type="image/avif"
-                                                            srcSet={require("../../Assets/avif/PromoPegante.avif")}
-                                                        />
-                                                        <img
-                                                            className="d-block w-100 h-100 el_lazy"
-                                                            src={require(`../../Assets/jpg/Promociones/PromoPegante.jpg`)}
-                                                            alt="..."
-                                                            decoding="async"
-                                                        />
-                                                    </picture>
-                                                </div>
-                                            </div>
-                                            <div className="carousel-item">
-                                                <div className="test h-100">
-                                                    <picture>
-                                                        <source
-                                                            type="image/avif"
-                                                            srcSet={require("../../Assets/avif/PromoSilicona.avif")}
-                                                        />
-                                                        <img
-                                                            className="d-block w-100 h-100 el_lazy"
-                                                            src={require(`../../Assets/jpg/Promociones/PromoSilicona.jpg`)}
-                                                            alt="..."
-                                                            decoding="async"
-                                                        />
-                                                    </picture>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button className="carousel-control-prev" type="button" data-bs-target={`#carrusel2`} data-bs-slide="prev">
-                                            <span id="color-indicator" className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span className="visually-hidden">Previous</span>
-                                        </button>
-                                        <button className="carousel-control-next" type="button" data-bs-target={`#carrusel2`} data-bs-slide="next">
-                                            <span id="color-indicator" className="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span className="visually-hidden">Next</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-
-                            </div>   
-
-
+                            </div>
                         </div>
 
                         <div className="caja-video">
-                            <div className="row row-cols-1 g-0">
+                            <div className="row g-0">
                                 
                                 <div className="col">
                                     <video 
@@ -297,22 +345,6 @@ export function Home() {
                                         muted
                                         loop
                                     />
-
-                                </div>
-
-                                <div className="col">
-                                    <div className="btn-catalogo1">
-                                        <a href={require("../../Assets/docs/Catalogo2025.pdf")} download>
-                                            <div className='d-flex align-items-center'>
-                                                <img
-                                                    src={require("../../Assets/png/DescargaCatalogo2.png")}
-                                                    alt="BotonCatalogo"
-                                                    className="el_lazy"
-                                                />
-                                                <h1><span>DESCARGA NUESTRO <br/>CATALOGO!</span></h1>
-                                            </div>
-                                        </a>
-                                    </div>
                                 </div>
 
                             </div>

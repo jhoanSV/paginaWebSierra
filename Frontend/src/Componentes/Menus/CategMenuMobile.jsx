@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './_CategMenuMobile.scss';
 import categs from "../../Assets/jpg/categorias/categorias.json";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheContext } from '../../TheProvider';
+import { CategoryPages } from '../../api';
 //import theIcon from '../../Assets/png/Logos/logoCatalogo.png'
 
 export function CategMenuMobile() {
@@ -16,6 +17,7 @@ export function CategMenuMobile() {
     isActive.current = false
     const targetRef = useRef(null);
     const navigate = useNavigate()
+    const location = useLocation()
 
     const showCats = () =>{
         const items = document.querySelectorAll('.items-menu-mob')
@@ -33,15 +35,32 @@ export function CategMenuMobile() {
         }
     }
 
-    const handleCatSel = (a) =>{//* handle category selection
-        window.scrollTo(0,0)
-        navigate('/productos')
-        if(a===''){
-            setImgSel('logoCatalogo')
-        }else{
-            setImgSel(a)
+    const handleCatSel = async(a) =>{//* handle category selection
+        try {
+            const list = await CategoryPages();
+            
+            
+            const categoria = list.find(cate => cate.Categoria.toUpperCase() === a.toUpperCase());
+            
+            const epa = categoria ? {Categoria: categoria.Categoria, Pag: categoria.Pag} : {Categoria: '', Pag: 1};
+
+            setCategSelect(epa);
+
+            if(location.pathname.includes('catalogo')){
+                navigate(`/catalogo/${a==='' ? '1' : epa.Pag}`,{ replace: true })
+            }else{
+                window.scrollTo(0,0)
+                navigate('/productos')
+            }
+            if(a===''){
+                setImgSel('logoCatalogo')
+            }else{
+                setImgSel(a)
+            }
+
+        } catch (error) {
+            console.error("Error cargando categorías:", error);
         }
-        setCategSelect(`${a}`)
     }
 
     //* Funcion para mostrar los logos en el menu desplegable
@@ -105,14 +124,39 @@ export function CategMenuMobile() {
         }
     }, [loading]);
 
+    // useEffect(()=>{
+    //     const categoryPage = async () => {
+    //         try {
+    //             const list = await CategoryPages();
+                
+    //             const categoria = list.find(cate => cate.Categoria.toUpperCase() === categSelect.toUpperCase());
+    //             console.log(categoria);
+
+                
+    //             const numberCategory = categoria ? categoria.Pag : 1;
+
+    //             console.log(numberCategory);
+
+    //         } catch (error) {
+    //             console.error("Error cargando categorías:", error);
+    //         } finally {
+    //             setLoading(false); 
+    //         }
+    //     };
+
+    //     categoryPage();
+    // },[])
+
     return (
         <>
-            <div className='mnp-container'>
+            <div className={`mnp-container ${location.pathname.includes('/catalogo') ? '_mbCatMenuCat2' : ''}`}>
                 <label className='mnp' ref={mnpRef}>
-                    Mira nuestros productos
+                    {location.pathname.includes('/catalogo') ?
+                    'Explora categorias':
+                    'Mira nuestros productos' }
                 </label>
             </div>
-            <div ref={targetRef} className='menu-mob' onClick={showCats}>
+            <div ref={targetRef} className={`menu-mob ${location.pathname.includes('/catalogo') ? '_mbCatMenuCat' : ''}`} onClick={showCats}>
 
 
                 <Items/>
@@ -120,8 +164,7 @@ export function CategMenuMobile() {
                 <label htmlFor='logoCat' className={imgSel==='logoCatalogo' ? 'tbplx' : 'contain1 tbplx'}>
                     {<img
                         className='logoCatalogo'
-                        src={require(`../../Assets/png/Logos/${imgSel}.png`)
-                        }
+                        src={require(`../../Assets/png/Logos/${imgSel}.png`)}
                         alt='LogoCatalogo'
                     />}
                 </label>

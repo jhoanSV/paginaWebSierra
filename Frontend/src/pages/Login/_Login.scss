@@ -14,6 +14,10 @@
     .logText{
         color: #8b8b8b;
         font-weight: bold;
+        &:focus-visible{
+            text-decoration: underline;
+            outline: none;
+        }
     }
 }
 

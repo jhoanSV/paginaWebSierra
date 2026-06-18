@@ -55,12 +55,17 @@
     left: 26%;
 }
 
-.imgProducto img{
-    border: solid;
-    border-radius: 25%;
-    width: 100%;
+.imgProducto{
     aspect-ratio: 1 / 1;
-    object-fit: contain;
+    img{
+        border: solid;
+        border-radius: 25%;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: contain;
+        max-width: stretch;
+        min-height: 100%;
+    }
 }
 
 .caja:hover{

@@ -7,11 +7,13 @@ import { setGlobal } from "./globals/globals";
 import './_App.scss';
 import { useTheContext } from "./TheProvider";
 import { Loader } from "./Componentes/Loader/Loader";
+import { useLocation } from "react-router-dom";
 
 export default function App() {
   let ud = secureLocalStorage.getItem('userData')
   //const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const { loading, setLogged, setNItemsCart } = useTheContext()
+  const location = useLocation()
   
   secureLocalStorage.removeItem('EveryPro')
   secureLocalStorage.removeItem('alias')
@@ -52,7 +54,7 @@ export default function App() {
       { loading &&
       <Loader/>
       }
-      <a href="https://api.whatsapp.com/send/?phone=573134237538&text&type=phone_number&app_absent=0" className="btn-wapp" 
+      <a href="https://api.whatsapp.com/send/?phone=573134237538&text&type=phone_number&app_absent=0" className={`btn-wapp ${location.pathname.includes('catalogo') ? '_mbWappIconCat' : ''}`}
         target="_blank" rel="noreferrer">
           <picture>
             <source
@@ -60,7 +62,7 @@ export default function App() {
               srcSet={require("./Assets/avif/WappIcon.avif")}
             />
             <img
-                src={require("./Assets/png/WappIcon.png")}
+                src={require("./Assets/png/wappicon.png")}
                 width="479px"
                 height="480"
                 alt="iconWapp"

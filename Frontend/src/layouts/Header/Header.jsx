@@ -53,7 +53,7 @@ export function Header() {
     }
 
     window.onscroll = function() {
-        if (location.pathname==='/productos') {            
+        if (location.pathname==='/productos') {
             if (window.scrollY > (cabecera.current.offsetHeight)) {
                 cabecera.current.classList.add('sticky')
                 document.querySelector('.products').style.paddingTop = (cabecera.current.offsetHeight * 2) + 'px'
@@ -95,7 +95,7 @@ export function Header() {
 
     return(
         <header style={{position: 'relative'}}>
-            <div className="container-fluid px-4 g-0 cabecera" ref={cabecera}>
+            <div id='theHeader' className="container-fluid px-4 g-0 cabecera" ref={cabecera}>
                 <picture>
                     <source
                         type="image/avif"
@@ -136,7 +136,7 @@ export function Header() {
                                     Productos
                                 </Link>
                             </li>
-                            <li><Link to="/catalogo/inicio" type="button" className="dropdown-item">Catalogo</Link></li>
+                            <li><Link to="/catalogo/1" type="button" className="dropdown-item">Catalogo</Link></li>
                             <li><Link to="/nosotros" type="button" className="dropdown-item">Quienes somos</Link></li>
                             <li><Link to="/contactanos" type="button" className="dropdown-item">Contactanos</Link></li>
                         </ul>
@@ -231,7 +231,7 @@ export function Header() {
                                 <Link to="productos" type="button" className="btn btn-navBar btn-lg">
                                     Productos
                                 </Link>
-                                <Link to="/catalogo/inicio" type="button" className="btn btn-navBar btn-lg">Catalogo</Link>
+                                <Link to="/catalogo/1" type="button" className="btn btn-navBar btn-lg">Catalogo</Link>
                                 <Link to="/nosotros" type="button" className="btn btn-navBar btn-lg">Quienes somos</Link>
                                 <Link to="/contactanos" type="button" className="btn btn-navBar btn-lg">Contactanos</Link>
                             </div>
